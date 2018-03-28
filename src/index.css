@@ -9,7 +9,16 @@ body {
   color: #4C5062;
 }
 
+
+
 .App {
+  /*display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;*/
+}
+
+.Welcome {
   display: flex;
   align-items: center;
   justify-content: center;
