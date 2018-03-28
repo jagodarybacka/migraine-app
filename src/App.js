@@ -1,21 +1,34 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import styled from 'styled-components';
 import logo from './logo.svg';
-import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+const Logo = styled.img `
+  width: 100px;
+  height: 100px;
+`;
+
+const Text = styled.h1`
+  font-weight: 900;
+  text-transform: uppercase;
+  display: block;
+`;
+
+const MiniText = styled.h1`
+  font-weight: 300;
+  font-size: 1.2rem;
+  margin-top: 20%;
+  display: block;
+`;
+
+const App = () => {
+  return (
+    <div className="App">
+      <Logo src={logo}></Logo>
+      <Text>Migraine</Text>
+      <MiniText>Tap to start...</MiniText>
+    </div>
+  );
 }
+
 
 export default App;
