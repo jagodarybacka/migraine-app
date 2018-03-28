@@ -3,26 +3,36 @@
 body {
   margin: 0;
   padding: 0;
+
+  color: #4C5062;
+  background-color: #FAF8F1;
+
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  background-color: #FAF8F1;
-  color: #4C5062;
 }
 
 
-
-.App {
+.App > * {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-}
+  justify-content: center;
 
-.Welcome {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   height: 100vh;
-  /*margin: 10% 0;*/
 }
+
+p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  display: block;
+  margin: 10px;
+}
+
+/*.Welcome {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100vh;
+}*/
