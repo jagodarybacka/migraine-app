@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
 
+input, button {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
 body {
   margin: 0;
   padding: 0;
@@ -9,6 +13,7 @@ body {
 
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
+
 }
 
 
@@ -17,22 +22,19 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
+  padding: 0 5%;
   height: 100vh;
 }
 
 p {
-  font-weight: 300;
-  font-size: 1.2rem;
   display: block;
+
   margin: 10px;
+
+  font-size: 1.2rem;
+  font-weight: 300;
 }
 
-/*.Welcome {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-
-  height: 100vh;
-}*/
+input:focus {
+  outline: none;
+}

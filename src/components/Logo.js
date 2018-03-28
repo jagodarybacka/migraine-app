@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import logo from '../logo.svg'
+import logo from '../svg/logo.svg'
 
 const LogoImg = styled.img `
   width: ${props => props.size || '100px'};
