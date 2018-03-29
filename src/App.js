@@ -10,7 +10,7 @@ import TextInput from './components/TextInput'
 const App = () => {
   return (
     <div className="App">
-      <Join />
+      <Login />
     </div>
   );
 }

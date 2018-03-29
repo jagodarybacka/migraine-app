@@ -9,9 +9,11 @@ const Input = styled.input`
   margin-top: 10px;
   margin-bottom: 30px;
   padding: 10px 5%;
+  background: transparent;
+
 
   border: none;
-  border-bottom: solid 2px #006fd2;
+  border-bottom: solid 1px #4c5062;
 
   font-weight: 300;
 `

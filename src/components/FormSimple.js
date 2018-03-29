@@ -15,7 +15,7 @@ const FormSimple = (props) => {
       <h1>{props.name}</h1>
       <Logo size="80px" margin="0 0 10% 0"/>
       {props.children}
-      <Button text="Submit" />
+      <Button text={props.submit} />
     </FormComp>
   )
 }

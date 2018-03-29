@@ -8,7 +8,7 @@ import TextInput from '../components/TextInput'
 
 const Login = (props) => {
   return (
-      <FormSimple name="Log In">
+      <FormSimple name="Welcome Back" submit="Log In">
         <TextInput
           type="email"
           id="email"
