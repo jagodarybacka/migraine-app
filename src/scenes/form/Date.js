@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 import Button from '../../components/Button'
-import Clock from '../../components/Clock'
+import DateTime from '../../components/DateTime'
 
 const Time = styled.section`
   display: flex;
@@ -27,8 +27,9 @@ const Buttons = styled.div `
 const Date = (props) => {
   return (
     <Time className="Date">
-      <h2>Pain {props.end ? 'End' : 'Start'}</h2>
-      <Clock />
+      <h2>Pain {props.end ? 'Ended' : 'Started'} at</h2>
+      <DateTime time/>
+      <DateTime date/>
       <Buttons>
         <Button text="Now"/>
         <Button text="-1h" primary/>

@@ -4,15 +4,21 @@ import styled from 'styled-components';
 import Button from '../components/Button'
 import Header from '../components/Header';
 import Date from './form/Date';
+import SingleChoice from './form/SingleChoice';
 
 
 const RecordForm = styled.article`
   h2 {
     text-transform: uppercase;
-    font-size: 1.2rem;
     font-weight: 900;
+    text-align: center;
   }
 
+  p {
+    text-transform: uppercase;
+    font-size: 1rem;
+
+  }
 `
 
 const Buttons = styled.div `
@@ -21,6 +27,7 @@ const Buttons = styled.div `
   display: flex;
   width: 90%;
   justify-content: space-between;
+  align-items: center;
   > button {
     min-width: auto;
     font-size: 1rem;
@@ -36,10 +43,11 @@ const Form = () => {
     <RecordForm className="Form">
       <Header />
       <form>
-        <Date end/>
+        <SingleChoice title="menstruation"/>
       </form>
       <Buttons>
         <Button text="<"/>
+        <p> Migraine Record</p>
         <Button text=">"/>
       </Buttons>
     </RecordForm>
