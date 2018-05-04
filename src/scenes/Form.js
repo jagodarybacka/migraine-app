@@ -5,6 +5,7 @@ import Button from '../components/Button'
 import Header from '../components/Header';
 import Date from './form/Date';
 import SingleChoice from './form/SingleChoice';
+import MultipleChoice from './form/MultipleChoice';
 
 
 const RecordForm = styled.article`
@@ -26,6 +27,7 @@ const Buttons = styled.div `
   bottom: 0;
   display: flex;
   width: 90%;
+  max-width: 860px;
   justify-content: space-between;
   align-items: center;
   > button {
@@ -43,7 +45,7 @@ const Form = () => {
     <RecordForm className="Form">
       <Header />
       <form>
-        <SingleChoice title="menstruation"/>
+        <MultipleChoice title="menstruation"/>
       </form>
       <Buttons>
         <Button text="<"/>

@@ -26,6 +26,10 @@ body {
   height: 100vh;
 }
 
+@media screen and (min-width: 860px) {
+
+}
+
 p {
   display: block;
 
