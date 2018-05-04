@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
-import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button'
 
