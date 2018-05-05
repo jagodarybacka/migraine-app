@@ -5,12 +5,14 @@ import Checkbox from '../../components/Checkbox'
 
 
 const MultipleChoice = (props) => {
+  const answers = props.answers;
+  const items =
+    answers.map((answer, index) =>
+      <Checkbox small={props.small} text={answer} key={index}/>)
   return (
     <div>
       <h2>{props.title}</h2>
-      <Checkbox small text="Yes"/>
-      <Checkbox small text="Coming Soon"/>
-      <Checkbox small text="No"/>
+      {items}
     </div>
   );
 }

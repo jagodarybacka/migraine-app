@@ -7,6 +7,7 @@ const Check = styled.label`
   font-size: ${props => props.small ? '1.2rem' : '1.8rem' };
   padding-left: ${props => props.small ? '0.5rem' : '1rem' };
   opacity: 0.7;
+  margin-bottom: 0.3rem;
 
   input {
     opacity: 0;

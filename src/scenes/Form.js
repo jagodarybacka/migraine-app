@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import { Route, Switch } from "react-router-dom";
 
 import Button from '../components/Button'
 import Header from '../components/Header';
-import Date from './form/Date';
-import SingleChoice from './form/SingleChoice';
-import MultipleChoice from './form/MultipleChoice';
+import {
+  Start,
+  End,
+  Menstruation,
+  Localization,
+  Mood,
+  Pain,
+  Medicines,
+  Triggers
+} from './form/AddForm';
 
 
 const RecordForm = styled.article`
@@ -41,11 +49,12 @@ const Buttons = styled.div `
   }
 `
 const Form = () => {
+
   return (
     <RecordForm className="Form">
       <Header />
       <form>
-        
+        <Triggers />
       </form>
       <Buttons>
         <Button text="<"/>

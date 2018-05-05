@@ -5,12 +5,14 @@ import styled from 'styled-components';
 import RadioButton from '../../components/RadioButton'
 
 const SingleChoice = (props) => {
+  const answers = props.answers;
+  const items =
+    answers.map((answer, index) =>
+      <RadioButton small={props.small} text={answer} key={index}/>)
   return (
     <div>
       <h2>{props.title}</h2>
-      <RadioButton text="Yes"/>
-      <RadioButton text="Coming Soon"/>
-      <RadioButton text="No"/>
+      {items}
     </div>
   );
 }
