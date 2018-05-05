@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import {Link} from "react-router-dom";
 
 import Logo from '../components/Logo';
 
@@ -19,11 +20,13 @@ const MiniText = styled.p`
 
 const Welcome = () => {
   return (
-    <div className="Welcome">
-      <Logo></Logo>
-      <Text>Migraine</Text>
-      <MiniText>Tap to start...</MiniText>
-    </div>
+    <Link to="/join">
+      <div className="Welcome">
+        <Logo notlink></Logo>
+        <Text>Migraine</Text>
+        <MiniText>Tap to start...</MiniText>
+      </div>
+    </Link>
   );
 }
 

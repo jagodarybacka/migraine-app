@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {Link} from "react-router-dom";
 
 import logo from '../svg/logo.svg'
 
@@ -11,11 +12,17 @@ const LogoImg = styled.img `
 `;
 
 const Logo = (props) => {
-  return (
-    <LogoImg size={props.size}
-             margin={props.margin}
-             src={logo}></LogoImg>
-  )
+  const linking = props.notlink ?
+     <LogoImg size={props.size}
+              margin={props.margin}
+              src={logo}></LogoImg>
+    :
+    (<Link to="/home">
+        <LogoImg size={props.size}
+          margin={props.margin}
+          src={logo}></LogoImg>
+      </Link>)
+    return linking
 }
 
 Logo.propTypes = {

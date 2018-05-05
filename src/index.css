@@ -4,6 +4,11 @@ input, button {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }
+a {
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+}
 body {
   margin: 0;
   padding: 0;
@@ -24,6 +29,10 @@ body {
   justify-content: center;
   padding: 0 5%;
   height: 100vh;
+}
+
+@media screen and (min-width: 860px) {
+
 }
 
 p {
