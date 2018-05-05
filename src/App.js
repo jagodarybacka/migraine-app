@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from 'styled-components'
 
 import Welcome from './scenes/Welcome'
@@ -12,7 +13,16 @@ import TextInput from './components/TextInput'
 const App = () => {
   return (
     <div className="App">
-      <Form />
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Welcome}/>
+          <Route path="/join" component={Join}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/register" component={Register}/>
+          <Route path="/home" component={Home}/>
+          <Route path="/add" component={Form}/>
+        </Switch>
+      </Router>
     </div>
   );
 }

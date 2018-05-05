@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {Link} from "react-router-dom";
+
 
 import Logo from '../components/Logo'
 import Button from '../components/Button'
@@ -12,8 +14,12 @@ const Join = (props) => {
     <div>
       <h1 style={{textTransform: 'uppercase'}}>Migraine</h1>
       <Logo size='80px' margin='5% 0'/>
-      <Button primary text='Log In' />
-      <Button text='Sign Up' />
+      <Link to="/login">
+        <Button primary text='Log In' />
+      </Link>
+      <Link to="/register">
+        <Button text='Sign Up' />
+      </Link>
       <p>or join with</p>
       <div>
         <ButtonBrand brand="google" />

@@ -45,7 +45,7 @@ const Form = () => {
     <RecordForm className="Form">
       <Header />
       <form>
-        <MultipleChoice title="menstruation"/>
+        
       </form>
       <Buttons>
         <Button text="<"/>

@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
+
 import RadioButton from '../../components/RadioButton'
-
-const Single = styled.section`
-`
-
 
 const SingleChoice = (props) => {
   return (
@@ -17,6 +14,5 @@ const SingleChoice = (props) => {
     </div>
   );
 }
-
 
 export default SingleChoice;
