@@ -48,22 +48,38 @@ const Buttons = styled.div `
     background-color: #f0908b;
   }
 `
-const Form = () => {
+const Hello = () => (<h1>Record new Migraine</h1>)
+const Bye = () => (<h1>Added new Migraine</h1>)
 
+const Form = () => {
+  let n = 0;
   return (
     <RecordForm className="Form">
       <Header />
       <form>
-        <Triggers />
+      {  n == 1 ?  <Start /> : <Hello /> }
       </form>
       <Buttons>
-        <Button text="<"/>
+        <Button text='<'/>
         <p> Migraine Record</p>
         <Button text=">"/>
       </Buttons>
     </RecordForm>
   );
 }
+
+/*
+<Hello />
+<Start />
+<End />
+<Pain />
+<Mood />
+<Medicines />
+<Localization />
+<Menstruation />
+<Triggers />
+<Bye />
+*/
 
 
 export default Form;
