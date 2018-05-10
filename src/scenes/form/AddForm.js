@@ -15,7 +15,7 @@ const Menstruation = () => {
 }
 
 const Localization = () => {
-  const answers = ['Home', 'Outside', 'Transit', 'Work', 'Bed']
+  const answers = ['Home', 'Outside', 'Transit', 'Work', 'Bed','School']
   return <SingleChoice title="Localization" answers={answers} />
 }
 
