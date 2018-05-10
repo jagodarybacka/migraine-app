@@ -11,14 +11,16 @@ const FormComp = styled.form`
 `
 
 const FormSimple = (props) => {
+  const { name, submit, children, onSubmit } = props;
+
   return (
-    <FormComp>
-      <h1>{props.name}</h1>
+    <FormComp method="POST" onSubmit={onSubmit} noValidate="noValidate">
+      <h1>{name}</h1>
       <Logo size="80px" margin="0 0 10% 0"/>
-      {props.children}
-      <Link to={props.link}>
-        <Button text={props.submit} />
-      </Link>
+      <div>
+        {children}
+        <Button type="submit" text={submit} />
+      </div>
     </FormComp>
   )
 }
