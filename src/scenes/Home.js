@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Link} from "react-router-dom";
 
 import Header from '../components/Header';
+import Menubar from '../components/Menubar';
 import Button from '../components/Button'
 
 
@@ -13,6 +14,7 @@ const Home = () => {
       <Link to="/add">
         <Button text="Add headache" />
       </Link>
+      <Menubar />
     </div>
   );
 }
