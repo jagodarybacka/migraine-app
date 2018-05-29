@@ -27,7 +27,12 @@ const Box = styled.span`
 const Checkbox = (props) => {
   return (
     <Check small={props.small}>
-      <input type="checkbox"/>
+      <input
+        name={props.name}
+        type="checkbox"
+        value={props.value}
+        onChange={props.onChange}
+      />
       <Box className="Box"></Box>
       {props.text}
     </Check>

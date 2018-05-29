@@ -26,7 +26,13 @@ const ButtonComp = styled.button`
 
 const Button = (props) => {
   return (
-    <ButtonComp primary={props.primary}>{props.text}</ButtonComp>
+    <ButtonComp
+      primary={props.primary}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      {props.text}
+    </ButtonComp>
   )
 }
 

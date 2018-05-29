@@ -8,26 +8,9 @@ import Welcome from './scenes/Welcome'
 import Join from './scenes/Join'
 import Login from './scenes/Login'
 import Home from './scenes/Home'
-import Form from './scenes/Form'
+import RecordForm from './scenes/RecordForm'
 import Register from './scenes/Register'
 import TextInput from './components/TextInput'
-
-// const App = () => {
-//   return (
-//     <div className="App">
-      // <Router>
-      //   <Switch>
-      //     <Route exact path="/" component={Welcome}/>
-      //     <Route path="/join" component={Join}/>
-      //     <Route path="/login" component={Login}/>
-      //     <Route path="/register" component={Register}/>
-      //     <Route path="/home" component={Home}/>
-      //     <Route path="/add" component={Form}/>
-      //   </Switch>
-      // </Router>
-//     </div>
-//   );
-// }
 
 class App extends Component {
   constructor(props) {
@@ -42,15 +25,15 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-        <Switch>
-          <Route exact path="/" component={Welcome}/>
-          <Route path="/join" component={Join}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
-          <Route path="/home" component={Home}/>
-          <Route path="/add" component={Form}/>
-        </Switch>
-      </Router>
+          <Switch>
+            <Route exact path="/" component={Welcome}/>
+            <Route path="/join" component={Join}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/register" component={Register}/>
+            <Route path="/home" component={Home}/>
+            <Route path="/add" component={RecordForm}/>
+          </Switch>
+        </Router>
       </div>
     );
   }

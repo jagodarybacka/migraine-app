@@ -11,7 +11,7 @@ import TextInput from '../components/TextInput'
 class Login extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+
     this.state = {
       fields: {
         email: {
