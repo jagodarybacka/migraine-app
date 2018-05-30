@@ -35,6 +35,22 @@ const Records = styled.ul`
     }
 `
 
+const DividerComponent = styled.h3`
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0.5;
+  width: 100%;
+  padding-top: 1rem;
+  border-top: 2px solid #eee;
+`
+
+const Divider = (props) => {
+  return (
+    <DividerComponent>{props.text}</DividerComponent>
+  )
+}
+
 const History = () => {
   return (
     <HistoryComponent >
@@ -45,7 +61,7 @@ const History = () => {
         <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
         </li>
         <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+          <Divider text="May" />
         </li>
         <li>
         <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
@@ -57,10 +73,19 @@ const History = () => {
         <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
         </li>
         <li>
+          <Divider text="March" />
+        </li>
+        <li>
         <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
         </li>
         <li>
         <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        </li>
+        <li>
+        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        </li>
+        <li>
+          <Divider text="No more entries" />
         </li>
       </Records>
       <Menubar />
