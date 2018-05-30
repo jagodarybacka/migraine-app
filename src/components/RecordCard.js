@@ -5,10 +5,10 @@ import {Link} from "react-router-dom";
 const Card = styled.div`
   background-color: #f45757;
   color: #fff;
-  width: 80%;
   border-radius: 2px 20px 20px 20px;
   padding: 0.5rem;
   position: relative;
+  margin: 0 10%;
 
   time {
     position: absolute;
