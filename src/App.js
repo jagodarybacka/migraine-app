@@ -10,6 +10,7 @@ import Login from './scenes/Login'
 import Home from './scenes/Home'
 import RecordForm from './scenes/RecordForm'
 import Register from './scenes/Register'
+import History from './scenes/history/History'
 import TextInput from './components/TextInput'
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path="/register" component={Register}/>
             <Route path="/home" component={Home}/>
             <Route path="/add" component={RecordForm}/>
+            <Route path="/history" component={History}/>
           </Switch>
         </Router>
       </div>
