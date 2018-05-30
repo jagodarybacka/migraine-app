@@ -32,13 +32,17 @@ const Radio = styled.input`
 const RadioButton = (props) => {
   return (
     <RadioComponent
-      small={props.small}>
-    <Radio  type="radio"
-            small={props.small}
-            id={props.name}
-            name={props.name}
-            value={props.value}/>
-    <label htmlFor={props.name}>{props.text}</label>
+      small={props.small}
+    >
+    <Radio
+      type="radio"
+      small={props.small}
+      id={props.id}
+      name={props.name}
+      value={props.value}
+      onChange={props.onChange}
+    />
+    <label htmlFor={props.id}>{props.text}</label>
     </RadioComponent>
   )
 }

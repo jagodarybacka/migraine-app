@@ -28,8 +28,16 @@ const Date = (props) => {
   return (
     <Time className="Date">
       <h2>Pain {props.end ? 'Ended' : 'Started'} at</h2>
-      <DateTime time/>
-      <DateTime date/>
+      <DateTime
+        onChange={props.onChange}
+        name={props.name}
+        time
+      />
+      <DateTime
+        onChange={props.onChange}
+        name={props.name}
+        date
+      />
       <Buttons>
         <Button text="Now"/>
         <Button text="-1h" primary/>

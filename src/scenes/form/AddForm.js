@@ -5,38 +5,96 @@ import Date from './Date';
 import SingleChoice from './SingleChoice';
 import MultipleChoice from './MultipleChoice';
 
-const Start = () => <Date />
+const Start = props => {
+  return (
+    <Date
+      name="start"
+      onChange={props.onChange}
+    />
+  )
+}
 
-const End = () => <Date end />
+const End = props => {
+  return (
+    <Date
+      name="end"
+      onChange={props.onChange}
+      end
+    />
+  )
+}
 
-const Menstruation = () => {
+const Menstruation = props => {
   const answers = ['Yes', 'Coming Soon', 'No']
-  return <SingleChoice title="Menstruation" answers={answers} />
+  return (
+    <SingleChoice
+      title="Menstruation"
+      name="menstruation"
+      answers={answers}
+      onChange={props.onChange}
+    />
+  );
 }
 
-const Localization = () => {
-  const answers = ['Home', 'Outside', 'Transit', 'Work', 'Bed']
-  return <SingleChoice title="Localization" answers={answers} />
+const Localization = props => {
+  const answers = ['Home', 'Outside', 'Transit', 'Work', 'Bed','School']
+  return (
+    <SingleChoice
+      title="Localization"
+      name="localization"
+      answers={answers}
+      onChange={props.onChange}
+    />
+  );
 }
 
-const Mood = () => {
+const Mood = props => {
   const answers = ['Very Good', 'Good', 'Ok', 'Bad', 'Very Bad']
-  return <SingleChoice title="Mood" answers={answers} />
+  return (
+    <SingleChoice
+      title="Mood"
+      name="mood"
+      answers={answers}
+      onChange={props.onChange}
+    />
+  );
 }
 
-const Pain = () => {
+const Pain = props => {
   const answers = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum']
-  return <SingleChoice title="Pain Intensity" answers={answers} />
+  return (
+    <SingleChoice
+      title="Pain Intensity"
+      name="pain"
+      answers={answers}
+      onChange={props.onChange}
+    />
+  );
 }
 
-const Medicines = () => {
+const Medicines = props => {
   const answers = ['Ibuprofen', 'Paracetamol', 'Codeine', 'Triptans']
-  return <MultipleChoice title="Medicines" answers={answers} />
+  return (
+    <MultipleChoice
+      title="Medicines"
+      name="medicines"
+      answers={answers}
+      onChange={props.onChange}
+    />
+  );
 }
 
-const Triggers = () => {
+const Triggers = props => {
   const answers = ['Alcohol', 'Stress', 'Tiredness', 'Dehydration', 'Hunger', 'Sport']
-  return <MultipleChoice small title="Possible Triggers" answers={answers} />
+  return (
+    <MultipleChoice
+      title="Possible Triggers"
+      name="triggers"
+      answers={answers}
+      onChange={props.onChange}
+      small
+    />
+  );
 }
 
 
