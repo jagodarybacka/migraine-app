@@ -9,12 +9,12 @@ import Menubar from '../../components/Menubar';
 
 const HistoryComponent = styled.section`
   display: block;
-  padding: 6rem 0;
+  padding: 7rem 0;
   margin: 0;
   h2 {
     text-transform: uppercase;
     font-weight: 300;
-    margin: 1rem 0;
+    margin: 0 0 2rem 0;
     text-align: center;
   }
 
