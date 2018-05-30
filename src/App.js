@@ -8,6 +8,7 @@ import Login from './scenes/Login'
 import Home from './scenes/Home'
 import Form from './scenes/Form'
 import Register from './scenes/Register'
+import History from './scenes/history/History'
 import TextInput from './components/TextInput'
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/register" component={Register}/>
           <Route path="/home" component={Home}/>
           <Route path="/add" component={Form}/>
+          <Route path="/history" component={History}/>
         </Switch>
       </Router>
     </div>

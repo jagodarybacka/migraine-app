@@ -8,7 +8,7 @@ import settings from '../assets/settings.png'
 import stats from '../assets/stats.png'
 
 const Menu = styled.ul`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   display: flex;
@@ -37,7 +37,6 @@ const MenuButton = styled.li`
     heigth: 30px;
   }
 `
-
 
 const Menubar = () => {
   return (

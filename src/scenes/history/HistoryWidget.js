@@ -32,7 +32,7 @@ const HistoryWidget = () => {
     <Widget >
       <h3>Recent migraine</h3>
       <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
-      <Link to="#">See all...</Link>
+      <Link to="/history">See all...</Link>
     </Widget>
   );
 }

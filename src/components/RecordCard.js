@@ -26,7 +26,7 @@ const Card = styled.div`
 
 const RecordCard = (props) => {
   return (
-    <Card >
+    <Card className="RecordCard">
       <time>{props.date}</time>
       <h4>{props.type ? props.type : "Migraine"}</h4>
       <p>{props.duration}, {props.strength}</p>
