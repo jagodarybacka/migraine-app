@@ -52,37 +52,60 @@ const Divider = (props) => {
 }
 
 const History = () => {
+  const HistoryList = [
+    {
+      month: "June",
+      entries: [
+        { date: "20 June", duration: 10, intensity: 2},
+        { date: "6 June", duration: 5, intensity: 1},
+        { date: "5 June", duration: 7, intensity: 5}
+      ]
+    },
+    {
+      month: "May",
+      entries: [
+        { date: "12 May", duration: 3, intensity: 1},
+        { date: "10 May", duration: 5, intensity: 4}
+      ]
+    },
+    {
+      month: "March",
+      entries: [
+        { date: "19 March", duration: 3, intensity: 3},
+        { date: "14 March", duration: 7, intensity: 1},
+        { date: "9 March", duration: 5, intensity: 4}
+      ]
+    }
+  ]
   return (
     <HistoryComponent >
       <Header />
       <h2>Recent migraines</h2>
       <Records>
-        <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
-        </li>
+
         <li>
           <Divider text="May" />
         </li>
         <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        <RecordCard date="12 May" duration="3 hours" intensity="1"/>
         </li>
         <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        <RecordCard date="12 May" duration="3 hours" intensity="4"/>
         </li>
         <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        <RecordCard date="12 May" duration="3 hours" intensity="5"/>
         </li>
         <li>
           <Divider text="March" />
         </li>
         <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        <RecordCard date="12 May" duration="3 hours" intensity="3"/>
         </li>
         <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        <RecordCard date="12 May" duration="3 hours" intensity="2"/>
         </li>
         <li>
-        <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+        <RecordCard date="12 May" duration="3 hours" intensity="1"/>
         </li>
         <li>
           <Divider text="No more entries" />

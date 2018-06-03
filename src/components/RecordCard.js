@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Link} from "react-router-dom";
 
 const Card = styled.div`
-  background-color: #f45757;
+  background-color: ${props => props.color};
   color: #fff;
   border-radius: 2px 20px 20px 20px;
   padding: 0.5rem;
@@ -25,11 +25,15 @@ const Card = styled.div`
 `
 
 const RecordCard = (props) => {
+  const colorList = ['#AADD6D', '#A7C651', '#EAB933', '#ED8836', '#EF6F5A']
+  const color = colorList[props.intensity-1] || colorList[0] ;
+  const strengthList = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum']
+  const strength = strengthList[props.intensity-1];
   return (
-    <Card className="RecordCard">
+    <Card className="RecordCard" color={color}>
       <time>{props.date}</time>
       <h4>{props.type ? props.type : "Migraine"}</h4>
-      <p>{props.duration}, {props.strength}</p>
+      <p>{props.duration}  {strength}</p>
     </Card>
   );
 }
