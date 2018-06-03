@@ -29,7 +29,6 @@ const Records = styled.ul`
     list-style-type: none;
 
     li {
-      margin: 0 10%;
       margin-bottom:1rem;
       width: 100%;
     }
@@ -52,62 +51,59 @@ const Divider = (props) => {
 }
 
 const History = () => {
+  // TODO: What date format will front receive?
   const HistoryList = [
     {
       month: "June",
       entries: [
-        { date: "20 June", duration: 10, intensity: 2},
-        { date: "6 June", duration: 5, intensity: 1},
-        { date: "5 June", duration: 7, intensity: 5}
+        { date: new Date('20 June 2018'), duration: 10, intensity: 2},
+        { date: new Date('6 June 2018'), duration: 5, intensity: 1},
+        { date: new Date('5 June 2018'), duration: 7, intensity: 5}
       ]
     },
     {
       month: "May",
       entries: [
-        { date: "12 May", duration: 3, intensity: 1},
-        { date: "10 May", duration: 5, intensity: 4}
+        { date: new Date('12 May 2018'), duration: 3, intensity: 1},
+        { date: new Date('10 May 2018'), duration: 5, intensity: 4}
       ]
     },
     {
       month: "March",
       entries: [
-        { date: "19 March", duration: 3, intensity: 3},
-        { date: "14 March", duration: 7, intensity: 1},
-        { date: "9 March", duration: 5, intensity: 4}
+        { date: new Date('19 March 2018'), duration: 3, intensity: 3},
+        { date: new Date('14 March 2018'), duration: 7, intensity: 1},
+        { date: new Date('9 March 2018'), duration: 5, intensity: 4}
       ]
     }
   ]
+  let index = 0;
+  const records = HistoryList.map(e => {
+    let divider = <li key={index++}><Divider text={e.month}/></li>
+    let entries = e.entries.map(m => {
+      return (
+        <li key={index++}>
+          <RecordCard date={m.date.toLocaleDateString()}
+                      duration={m.duration + "h"}
+                      intensity={m.intensity}/>
+        </li>
+      )
+    })
+    return (
+      <div key={index++} style={{width: '100%'}}>
+        {divider}
+        {entries}
+      </div>
+    )
+  })
+
   return (
     <HistoryComponent >
       <Header />
       <h2>Recent migraines</h2>
       <Records>
-
-        <li>
-          <Divider text="May" />
-        </li>
-        <li>
-        <RecordCard date="12 May" duration="3 hours" intensity="1"/>
-        </li>
-        <li>
-        <RecordCard date="12 May" duration="3 hours" intensity="4"/>
-        </li>
-        <li>
-        <RecordCard date="12 May" duration="3 hours" intensity="5"/>
-        </li>
-        <li>
-          <Divider text="March" />
-        </li>
-        <li>
-        <RecordCard date="12 May" duration="3 hours" intensity="3"/>
-        </li>
-        <li>
-        <RecordCard date="12 May" duration="3 hours" intensity="2"/>
-        </li>
-        <li>
-        <RecordCard date="12 May" duration="3 hours" intensity="1"/>
-        </li>
-        <li>
+        {records}
+        <li key="9999">
           <Divider text="No more entries" />
         </li>
       </Records>
