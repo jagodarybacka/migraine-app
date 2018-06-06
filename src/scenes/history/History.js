@@ -6,6 +6,7 @@ import RecordCard from '../../components/RecordCard'
 
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
+import Divider from '../../components/Divider';
 
 const HistoryComponent = styled.section`
   display: block;
@@ -33,22 +34,6 @@ const Records = styled.ul`
       width: 100%;
     }
 `
-
-const DividerComponent = styled.h3`
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  opacity: 0.5;
-  width: 100%;
-  padding-top: 1rem;
-  border-top: 2px solid #eee;
-`
-
-const Divider = (props) => {
-  return (
-    <DividerComponent>{props.text}</DividerComponent>
-  )
-}
 
 const History = () => {
   // TODO: What date format will front receive?

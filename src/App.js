@@ -12,6 +12,8 @@ import Register from './scenes/Register'
 import History from './scenes/history/History'
 import TextInput from './components/TextInput'
 
+import Summary from './scenes/form/Summary'
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,8 @@ class App extends Component {
             <Route path="/home" component={Home}/>
             <Route path="/add" component={RecordForm}/>
             <Route path="/history" component={History}/>
+
+            <Route path="/summary" component={Summary}/>
           </Switch>
         </Router>
       </div>
