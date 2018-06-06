@@ -97,7 +97,7 @@ const Summary = (props) => {
       <Bubble text="Intense" img={faceNeutral} color='#ED8836'/>
 
       <Divider text="Menstruation" />
-      <Bubble text="Yes" img={drop} color='#f44336'/>
+      <Bubble text="Yes" img={drop} color='#E91E63'/>
 
       <Divider text="Mood" />
       <Bubble text="Good" img={faceSmile} color='#ffc107'/>

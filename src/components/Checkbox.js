@@ -50,8 +50,6 @@ const FauxBg = styled.div`
   z-index: -1;
 `
 
-let style = { opacity: "0.6" }
-
 const Checkbox = (props) => {
   let color = props.color || '#9E9E9E';
   return (
