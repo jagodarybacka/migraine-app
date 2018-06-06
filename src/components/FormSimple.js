@@ -8,6 +8,7 @@ import Logo from '../components/Logo'
 
 
 const FormComp = styled.form`
+  text-align: center;
 `
 
 const FormSimple = (props) => {

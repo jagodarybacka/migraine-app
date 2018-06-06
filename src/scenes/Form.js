@@ -43,6 +43,7 @@ const Buttons = styled.div `
     font-size: 1rem;
     padding: 10px 15px;
     background-color: #f0908b80;
+    boxShadow: "0px 1px 12px 0px rgba(0,0,0,0.5);
   }
   > button:hover {
     background-color: #f0908b;
@@ -60,9 +61,9 @@ const Form = () => {
       {  n == 1 ?  <Start /> : <Hello /> }
       </form>
       <Buttons>
-        <Button text='<'/>
+        <Button style={style} text='<'/>
         <p> Migraine Record</p>
-        <Button text=">"/>
+        <Button style={style} text=">"/>
       </Buttons>
     </RecordForm>
   );
