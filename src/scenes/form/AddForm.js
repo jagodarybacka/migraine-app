@@ -10,6 +10,7 @@ const Start = props => {
     <Date
       name="start"
       onChange={props.onChange}
+      id='start'
     />
   )
 }
@@ -19,6 +20,7 @@ const End = props => {
     <Date
       name="end"
       onChange={props.onChange}
+      id='end'
       end
     />
   )

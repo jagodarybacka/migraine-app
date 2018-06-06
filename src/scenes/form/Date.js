@@ -23,21 +23,36 @@ const Buttons = styled.div `
     margin: 2rem 5% 1rem 5%;
   }
 `
+const DateInputs = styled.div `
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  border-radius: ${150/2}px;
+`
 
 const Date = (props) => {
   return (
     <Time className="Date">
       <h2>Pain {props.end ? 'Ended' : 'Started'} at</h2>
-      <DateTime
-        onChange={props.onChange}
-        name={props.name}
-        time
-      />
-      <DateTime
-        onChange={props.onChange}
-        name={props.name}
-        date
-      />
+      <DateInputs>
+        <DateTime
+          onChange={props.onChange}
+          name={props.name}
+          id={'time' + props.id + props.end}
+          time
+        />
+        <DateTime
+          onChange={props.onChange}
+          name={props.name}
+          id={'date' + props.id + props.end}
+          date
+        />
+      </DateInputs>
       <Buttons>
         <Button text="Now"/>
         <Button text="-1h" primary/>
