@@ -24,14 +24,12 @@ const RecordForm = styled.article`
   }
 
   p {
-    text-transform: uppercase;
-    font-size: 1rem;
-
+    font-size: 1.2rem;
   }
 `
 
 const Buttons = styled.div `
-  position: absolute;
+  position: fixed;
   bottom: 0;
   display: flex;
   width: 90%;

@@ -19,6 +19,7 @@ import {
 
 const Container = styled.article`
   padding: 0;
+  text-align: center;
 
   h2 {
     text-transform: uppercase;
@@ -28,8 +29,7 @@ const Container = styled.article`
 
   p {
     text-transform: uppercase;
-    font-size: 1rem;
-
+    font-size: 1.2rem;
   }
 
   form {
@@ -57,6 +57,8 @@ const Buttons = styled.div `
     padding: 10px 15px;
     background-color: #f0908b80;
     cursor: pointer;
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.5);
+
   }
 
   > button:hover {

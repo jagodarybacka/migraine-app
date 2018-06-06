@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
+import Bubble from '../../components/Bubble';
 
 import date from '../../assets/date.png'
 import time from '../../assets/time.png'
@@ -53,39 +54,6 @@ const TimeDate = (props) => {
       <img src={time}/>
       <p>{props.time}</p>
     </TimeDateComponent>
-  )
-}
-
-const BubbleComponent = styled.div`
-  background-color: ${props => props.color};
-  color: white;
-  display: flex;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px 10px;
-  border-radius: 10px;
-  margin: 0.5rem;
-
-  img {
-    width: 28px;
-    height: 28px;
-  }
-
-  p {
-    font-weight: 400;
-  }
-`
-
-
-const Bubble = (props) => {
-  const img = props.img ? <img src={props.img} /> : "";
-
-  return (
-    <BubbleComponent color={props.color}>
-      {img}
-      <p>{props.text}</p>
-    </BubbleComponent>
   )
 }
 
