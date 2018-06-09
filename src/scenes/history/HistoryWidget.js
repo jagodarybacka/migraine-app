@@ -6,10 +6,12 @@ import RecordCard from '../../components/RecordCard'
 
 
 const Widget = styled.section`
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   position: relative;
+  margin: 0 10%;
+  text-align: initial;
 
   h3 {
     text-transform: uppercase;

@@ -83,7 +83,6 @@ class RadioButton extends React.Component {
             this.props.onChange(e)
           }}
           onClick={(e) => {
-            console.log(this.state.isActive);
           }}
           color={this.props.color}
           />

@@ -6,10 +6,14 @@ import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button'
 import HistoryWidget from './history/HistoryWidget'
+import WeatherWidget from './weather/WeatherWidget'
 
 const HomeComponent = styled.div`
-  margin-top: 6rem;
-  justify-content: normal;
+  justify-content: center;
+  display: block;
+  padding: 7rem 0;
+  margin: 0;
+  text-align: center;
 `
 
 const Home = () => {
@@ -20,6 +24,7 @@ const Home = () => {
         <Button text="Add headache" />
       </Link>
       <HistoryWidget />
+      <WeatherWidget />
       <Menubar />
     </HomeComponent>
   );
