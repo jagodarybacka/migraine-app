@@ -22,10 +22,15 @@ const RadioComponent = styled.div`
     margin: 10px;
     display: flex;
     align-items: center;
+    position: relative;
     img {
       width: 24px;
       height: 24px;
       margin-right: 0.5rem;
+    }
+    .imgChecked {
+      position: absolute;
+      opacity: 0;
     }
   }
 
@@ -50,7 +55,10 @@ const Radio = styled.input`
     border: none;
   }
   &:checked ~ label {
-    color: white
+    color: white;
+  }
+  &:checked ~ label .imgChecked {
+    opacity: 1;
   }
 `
 
@@ -58,17 +66,8 @@ class RadioButton extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isActive: false
     }
-    this.handleClick = this.handleClick.bind(this);
   }
-
-  handleClick() {
-    this.setState(prevState => ({
-      isActive: !prevState.isActive
-    }))
-  }
-
   render() {
     return (
       <RadioComponent small={this.props.small} color={this.props.color}>
@@ -78,19 +77,13 @@ class RadioButton extends React.Component {
           id={this.props.id}
           name={this.props.name}
           value={this.props.value}
-          onChange={(e) => {
-            this.handleClick()
-            this.props.onChange(e)
-          }}
-          onClick={(e) => {
-          }}
+          onChange={this.props.onChange}
           color={this.props.color}
           />
         <FauxBg class="bg" color={this.props.color}/>
         <label htmlFor={this.props.id}>
-          <img src={
-              this.state.isActive ? this.props.img : this.props.imgColor
-            } />
+          <img src={this.props.imgColor} />
+          <img className="imgChecked" src={this.props.img} />
           {this.props.text}
         </label>
       </RadioComponent>
