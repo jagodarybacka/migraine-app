@@ -35,10 +35,6 @@ const Check = styled.label`
   input:checked ~ p{
     color: white;
   }
-
-  input:checked ~ img {
-
-  }
 `
 
 const FauxBg = styled.div`
@@ -51,22 +47,39 @@ const FauxBg = styled.div`
   z-index: -1;
 `
 
-const Checkbox = (props) => {
-  let color = props.color;
+class Checkbox extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isActive: false
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  return (
-    <Check class="Check" color={color}>
-      <input
-        name={props.name}
-        type="checkbox"
-        value={props.value}
-        onChange={props.onChange}
-      />
-      <FauxBg class="bg" color={color}/>
-      <img src={props.imgColor} />
-      <p>{props.text}</p>
-    </Check>
-  )
+  handleClick() {
+    this.setState(prevState => ({
+      isActive: !prevState.isActive
+    }))
+  }
+
+  render() {
+    return (
+      <Check class="Check" color={this.props.color}>
+        <input
+          name={this.props.name}
+          type="checkbox"
+          value={this.props.value}
+          onChange={this.props.onChange}
+          onClick={this.handleClick}
+          />
+        <FauxBg class="bg" color={this.props.color}/>
+        <img src={
+            this.state.isActive ? this.props.img : this.props.imgColor
+          } />
+        <p>{this.props.text}</p>
+      </Check>
+    )
+  }
 }
 
 

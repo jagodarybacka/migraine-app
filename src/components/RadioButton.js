@@ -54,26 +54,49 @@ const Radio = styled.input`
   }
 `
 
-const RadioButton = (props) => {
-  let color = props.color || '#9E9E9E';
-  return (
-    <RadioComponent small={props.small} color={color}>
-    <Radio
-      type="radio"
-      small={props.small}
-      id={props.id}
-      name={props.name}
-      value={props.value}
-      onChange={props.onChange}
-      color={color}
-    />
-    <FauxBg class="bg" color={color}/>
-    <label htmlFor={props.id}>
-      <img src={props.imgColor} />
-      {props.text}
-    </label>
-    </RadioComponent>
-  )
+class RadioButton extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isActive: false
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState(prevState => ({
+      isActive: !prevState.isActive
+    }))
+  }
+
+  render() {
+    return (
+      <RadioComponent small={this.props.small} color={this.props.color}>
+        <Radio
+          type="radio"
+          small={this.props.small}
+          id={this.props.id}
+          name={this.props.name}
+          value={this.props.value}
+          onChange={(e) => {
+            this.handleClick()
+            this.props.onChange(e)
+          }}
+          onClick={(e) => {
+            console.log(this.state.isActive);
+          }}
+          color={this.props.color}
+          />
+        <FauxBg class="bg" color={this.props.color}/>
+        <label htmlFor={this.props.id}>
+          <img src={
+              this.state.isActive ? this.props.img : this.props.imgColor
+            } />
+          {this.props.text}
+        </label>
+      </RadioComponent>
+    )
+  }
 }
 
 
