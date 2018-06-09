@@ -28,7 +28,7 @@ const DateInputs = styled.div `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+//  background-color: #fff;
   text-align: center;
   width: 150px;
   height: 150px;
