@@ -93,7 +93,7 @@ const Summary = (props) => {
       <Divider text="End" />
       <TimeDate date="Wed, 11 may" time="09:00" />
 
-      <Divider text="Intensity" />
+      <Divider text="Pain Intensity" />
       <Bubble text="Intense" img={faceNeutral} color='#ED8836'/>
 
       <Divider text="Menstruation" />

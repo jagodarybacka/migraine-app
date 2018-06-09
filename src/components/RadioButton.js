@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import medicine from '../assets/medicine.png'
 
 
 const RadioComponent = styled.div`
@@ -47,8 +46,11 @@ const Radio = styled.input`
   appearance: none;
   display: none;
   &:checked ~ div {
-    background-color: black;
+    background-color: ${props => props.color};
     border: none;
+  }
+  &:checked ~ label {
+    color: white
   }
 `
 
@@ -63,10 +65,13 @@ const RadioButton = (props) => {
       name={props.name}
       value={props.value}
       onChange={props.onChange}
+      color={color}
     />
     <FauxBg class="bg" color={color}/>
-    <label htmlFor={props.id}>    <img src={medicine} />
-{props.text}</label>
+    <label htmlFor={props.id}>
+      <img src={props.imgColor} />
+      {props.text}
+    </label>
     </RadioComponent>
   )
 }

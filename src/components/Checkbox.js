@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import medicine from '../assets/medicine.png'
 
 const Check = styled.label`
   color: white;
@@ -37,7 +36,9 @@ const Check = styled.label`
     color: white;
   }
 
+  input:checked ~ img {
 
+  }
 `
 
 const FauxBg = styled.div`
@@ -51,9 +52,10 @@ const FauxBg = styled.div`
 `
 
 const Checkbox = (props) => {
-  let color = props.color || '#9E9E9E';
+  let color = props.color;
+
   return (
-    <Check class="Check" small={props.small} color={color}>
+    <Check class="Check" color={color}>
       <input
         name={props.name}
         type="checkbox"
@@ -61,7 +63,7 @@ const Checkbox = (props) => {
         onChange={props.onChange}
       />
       <FauxBg class="bg" color={color}/>
-      <img src={medicine} />
+      <img src={props.imgColor} />
       <p>{props.text}</p>
     </Check>
   )
