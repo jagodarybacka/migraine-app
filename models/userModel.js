@@ -23,8 +23,8 @@ var UserSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'Report'
 	}],
-	resetPasswordToken: String,
-	resetPasswordExpires: Date,
+	// resetPasswordToken: String,
+	// resetPasswordExpires: Date,
     // isAdmin: {type: Boolean, default: false}
 });
 UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' });

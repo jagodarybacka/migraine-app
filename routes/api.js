@@ -48,7 +48,7 @@ router.post("/users",
 	user_controller.validateRegister,
 	user_controller.register,
 	//upload,
-	passport.authenticate("local"),
+	passport.authenticate("local", {session: true}),
 	(req,res)=>{
 		console.log(res);
 		res.json(
@@ -61,14 +61,15 @@ router.post("/users",
 router.get("/users",auth_controller.isLoggedIn,user_controller.user_data);
 
 /* Login User POST */
-router.post("/login", passport.authenticate("local", {session: true}),
+router.post("/login", passport.authenticate("local", {failureFlash: true, session: true}),
 	(req,res)=>{
+		console.log(req.session);
 		req.session.userId = req.user._id;
 		res.json(
-			{redirectURL:"/user",
+			{redirectURL:"/home",
 			userId: req.user._id,
 			userMail: req.user.email,
-			userName: req.user.username 
+			userName: req.user.username
 			});
 	}
 );

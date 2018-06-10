@@ -17,10 +17,22 @@ const InputDate = Input.extend`
 `
 
 const DateTime = (props) => {
-  const el = props.date ?
-        <InputDate type="date" placeholder="dd:mm:rr"/>
-        :
-        <Input type="time" placeholder="12:00"/>
+  const el = props.date ? (
+    <InputDate
+      name={`${props.name}_date`}
+      type="date"
+      placeholder="dd:mm:rr"
+      onChange={props.onChange}
+    />
+  ) : (
+    <Input
+      name={`${props.name}_time`}
+      type="time"
+      placeholder="12:00"
+      onChange={props.onChange}
+    />
+  );
+
   return el;
 }
 
