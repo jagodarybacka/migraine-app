@@ -9,38 +9,39 @@ user: {
 },
 start: {
     type: Date, 
-    required: true
+    // required: true
 },
 end: {
     type: Date, 
-    required: true
+    // required: true
 },
 menstruation: {
     type: String, 
     enum: ['Yes', 'Coming Soon', 'No'], 
-    required: true
+    // required: true
 },
 localization: {
     type: String,
     enum: ['Home', 'Outside', 'Transit', 'Work', 'Bed','School'],
-    required: true },
+    // required: true 
+},
 mood: {
     type: String,
     enum: ['Very Good', 'Good', 'Ok', 'Bad', 'Very Bad'],
-    required: true
+    // required: true
 },
 pain: {
     type: String,
     enum: ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum'],
-    required: true
+    // required: true
 },
 medicines: [{
     type: String,
-    required: true
+    // required: true
 }],
 triggers: [{
     type: String,
-    required: true
+    // required: true
 }]
 });
 

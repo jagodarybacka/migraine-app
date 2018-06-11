@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 import Logo from './Logo';
-
+import { Link } from 'react-router-dom'
 import home from '../assets/home.png'
 import settings from '../assets/settings.png'
 import stats from '../assets/stats.png'
@@ -42,12 +42,16 @@ const Menubar = () => {
   return (
     <Menu>
       <MenuButton>
+        <Link to="/home">
         <img src={home} />
         <h6>Home</h6>
+        </Link>
       </MenuButton>
       <MenuButton>
+        <Link to="/history">
         <img src={stats} />
         <h6>Raports</h6>
+        </Link>
       </MenuButton>
       <MenuButton>
         <img src={settings} />
