@@ -24,14 +24,12 @@ const RecordForm = styled.article`
   }
 
   p {
-    text-transform: uppercase;
-    font-size: 1rem;
-
+    font-size: 1.2rem;
   }
 `
 
 const Buttons = styled.div `
-  position: absolute;
+  position: fixed;
   bottom: 0;
   display: flex;
   width: 90%;
@@ -43,27 +41,44 @@ const Buttons = styled.div `
     font-size: 1rem;
     padding: 10px 15px;
     background-color: #f0908b80;
+    boxShadow: "0px 1px 12px 0px rgba(0,0,0,0.5);
   }
   > button:hover {
     background-color: #f0908b;
   }
 `
-const Form = () => {
+const Hello = () => (<h1>Record new Migraine</h1>)
+const Bye = () => (<h1>Added new Migraine</h1>)
 
+const Form = () => {
+  let n = 0;
   return (
     <RecordForm className="Form">
       <Header />
       <form>
-        <Triggers />
+      {  n == 1 ?  <Start /> : <Hello /> }
       </form>
       <Buttons>
-        <Button text="<"/>
+        <Button style={style} text='<'/>
         <p> Migraine Record</p>
-        <Button text=">"/>
+        <Button style={style} text=">"/>
       </Buttons>
     </RecordForm>
   );
 }
+
+/*
+<Hello />
+<Start />
+<End />
+<Pain />
+<Mood />
+<Medicines />
+<Localization />
+<Menstruation />
+<Triggers />
+<Bye />
+*/
 
 
 export default Form;

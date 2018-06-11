@@ -24,9 +24,9 @@ class Login extends Component {
           value: '',
           isValid: false,
           errorMsg: '',
-        },
-        errors: []
-      }
+        }
+      },
+      errors: []
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -83,7 +83,12 @@ class Login extends Component {
 					localStorage.setItem('userName', response.data.userName);
 					console.log('redirect url to: ' + response.data.redirectURL);
 					window.location=response.data.redirectURL;
-				}
+        }
+        else {
+          _this.state.errors.push(response.data.flashes.error);
+          console.log(_this.state.errors);
+          alert(_this.state.errors);
+        }
 		}).catch(error => {
 			console.error(error);
 		});

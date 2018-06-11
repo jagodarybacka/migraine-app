@@ -20,7 +20,6 @@ exports.user_data = function(req,res,next) {
 exports.validateRegister = (req, res, next) => {
 	console.log(req.body);
 	req.sanitizeBody('username');
-	console.log(req.body.username);
 	req.checkBody('username', 'You must supply a name!').notEmpty();
 	req.checkBody('email', 'That Email is not valid!').isEmail();
 	req.sanitizeBody('email').normalizeEmail({
@@ -48,7 +47,7 @@ exports.validateRegister = (req, res, next) => {
 			 .exec(function(err, user) {
 				 if (err) { return next(err); }
 					if (user) {
-							console.log(user);
+							console.log('user',user);
 							req.flash('error', 'user already exist');
 	  						res.json({body: req.body, flashes: req.flash() });
 							return;

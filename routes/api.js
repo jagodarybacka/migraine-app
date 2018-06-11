@@ -52,7 +52,10 @@ router.post("/users",
 	(req,res)=>{
 		console.log(res);
 		res.json(
-			{redirectURL:"/home"
+			{redirectURL:"/home",
+			userId: req.user._id,
+			userMail: req.user.email,
+			userName: req.user.username
 			});
 	}
 );
@@ -61,18 +64,40 @@ router.post("/users",
 router.get("/users",auth_controller.isLoggedIn,user_controller.user_data);
 
 /* Login User POST */
-router.post("/login", passport.authenticate("local", {failureFlash: true, session: true}),
-	(req,res)=>{
-		console.log(req.session);
-		req.session.userId = req.user._id;
-		res.json(
-			{redirectURL:"/home",
-			userId: req.user._id,
-			userMail: req.user.email,
-			userName: req.user.username
-			});
-	}
-);
+// router.post("/login", passport.authenticate("local", {session: true}),
+// 	(req,res)=>{
+// 		console.log('session',req.session);
+// 		req.session.userId = req.user._id;
+// 		res.json(
+// 			{redirectURL:"/home",
+// 			userId: req.user._id,
+// 			userMail: req.user.email,
+// 			userName: req.user.username
+// 			});
+// 	}
+// );
+
+router.post("/login",function(req,res,next){
+	passport.authenticate('local', {session: true}, function(err,user, info) {
+		if(err) {return next(err);}
+		if(!user) {
+			req.flash('error', 'invalid username or password');
+	  		res.json({body: req.body, flashes: req.flash() });
+			return;}
+		req.logIn(user,function(err){
+			if(err) { return next(err);}
+			console.log('session',req.session);
+			req.session.userId = req.user._id;
+			res.json(
+				{redirectURL:"/home",
+				userId: req.user._id,
+				userMail: req.user.email,
+				userName: req.user.username
+				});
+		});
+	})(req, res, next);
+});
+
 
 /* Logout User */
 router.get("/logout", auth_controller.logout);
