@@ -41,6 +41,9 @@ router.delete("/reports/:id", auth_controller.isLoggedIn, report_controller.repo
 /* Change Report */
 router.put("/reports/:id", auth_controller.isLoggedIn, report_controller.report_update);
 
+/*  GET User data */
+router.get("/reports",auth_controller.isLoggedIn,user_controller.user_data);
+
 /// USER ROUTES ///
 
 /* Register User */
@@ -60,8 +63,7 @@ router.post("/users",
 	}
 );
 
-/*  GET User data */
-router.get("/users",auth_controller.isLoggedIn,user_controller.user_data);
+
 
 /* Login User POST */
 // router.post("/login", passport.authenticate("local", {session: true}),
