@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import axios from 'axios';
 
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
@@ -16,30 +17,39 @@ const HomeComponent = styled.div`
   margin: 0;
   text-align: center;
 `
-      
-const Home = () => {
-  if(localStorage.getItem('isLogged') === 'true'){
+
+class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      recentMigraine: null,
+    }
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:3001/api/reports')
+      .then(({ data }) => {
+        this.setState({ recentMigraine: data.reverse()[0] });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  render() {
+    const { recentMigraine } = this.state;
+
     return (
       <HomeComponent className="Home">
         <Header />
         <Link to="/add">
           <Button text="Add headache" />
         </Link>
-        <HistoryWidget />
+        <HistoryWidget item={recentMigraine} />
         <WeatherWidget />
         <Menubar />
       </HomeComponent>
     );
   }
-  else {
-    return (
-      // <HomeComponent className="Home">
-      //   <Header />
-      // </HomeComponent>
-      <Join></Join>
-    )
-  }
 }
-
 
 export default Home;
