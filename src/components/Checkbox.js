@@ -2,84 +2,41 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 const Check = styled.label`
-  color: white;
   display: flex;
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 5px 10px;
-  border-radius: 10px;
-  margin: 0.5rem;
-  position: relative;
-
-  p {
-    font-weight: 400;
-    text-transform: none !important;
-    font-size: 1.2rem;
-    color: ${props => props.color};
-  }
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
+  font-size: ${props => props.small ? '1.2rem' : '1.8rem' };
+  padding-left: ${props => props.small ? '0.5rem' : '1rem' };
+  opacity: 0.7;
+  margin-bottom: 0.3rem;
 
   input {
-    display: none;
+    opacity: 0;
   }
-
-  input:checked ~ div{
-    background-color: ${props => props.color};
-    border: none;
-  }
-  input:checked ~ p{
-    color: white;
+  input:checked ~ .Box {
+    border: 8px solid #999;
   }
 `
-
-const FauxBg = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  border-radius: 10px;
-  border: 2px solid ${props => props.color};
-  z-index: -1;
+const Box = styled.span`
+    width: ${props => props.small ? '1rem' : '1.4rem' };
+    height: ${props => props.small ? '1rem' : '1.4rem' };;
+    border: 3px solid #999;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 1rem;
 `
-
-class Checkbox extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isActive: false
-    }
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.setState(prevState => ({
-      isActive: !prevState.isActive
-    }))
-  }
-
-  render() {
-    return (
-      <Check class="Check" color={this.props.color}>
-        <input
-          name={this.props.name}
-          type="checkbox"
-          value={this.props.value}
-          onChange={this.props.onChange}
-          onClick={this.handleClick}
-          />
-        <FauxBg class="bg" color={this.props.color}/>
-        <img src={
-            this.state.isActive ? this.props.img : this.props.imgColor
-          } />
-        <p>{this.props.text}</p>
-      </Check>
-    )
-  }
+const Checkbox = (props) => {
+  return (
+    <Check small={props.small}>
+      <input
+        name={props.name}
+        type="checkbox"
+        value={props.value}
+        onChange={props.onChange}
+      />
+      <Box className="Box"></Box>
+      {props.text}
+    </Check>
+  )
 }
 
 

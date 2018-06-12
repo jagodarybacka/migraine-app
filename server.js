@@ -19,11 +19,11 @@ var app = express();
 var port = process.env.API_PORT || 3001;
 
 mongoose.connect("mongodb://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@ds119090.mlab.com:19090/migraine-app");
-mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise; 
+
 mongoose.connection.on("error", (err) => {
 	console.error(`${err.message}`);
 });
-
 app.use(express.static(path.join(__dirname, "public")));
 
 // cookie-parser
@@ -38,20 +38,21 @@ app.use(expressValidator());
 
 
 // Sessions
-app.use(session({
-	cookie: {maxAge: 10 * 60 * 60 * 1000}, // make it short for debugging reasons
-	secret: process.env.SECRET,
-	resave: true,
-	saveUninitialized: false,
-	store: new MongoStore({ mongooseConnection: mongoose.connection })
-}));
+// app.use(session({
+// 	cookie: {maxAge: 10 * 60 * 60 * 1000}, // make it short for debugging reasons
+// 	secret: process.env.SECRET,
+// 	resave: true,
+// 	saveUninitialized: false,
+// 	store: new MongoStore({ mongooseConnection: mongoose.connection })
+// }));
 
 // // Passport JS
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 //flash
-app.use(flash());
+// app.use(flash());
+
 
 // promisify
 // app.use((req, res, next) => {
@@ -69,16 +70,24 @@ app.use(function(req, res, next) {
 });
 
 // // cors for session
-app.use(cors({
-    origin:['http://localhost:3000'],
-    methods:['GET','POST','PUT'],
-    credentials: true // enable set cookie
-}));
+// app.use(cors({
+//     origin:['http://localhost:3000'],
+//     methods:['GET','POST','PUT'],
+//     credentials: true // enable set cookie
+// }));
 
 app.use("/api", api);
 
-app.use(errorHandlers.notFound);
-app.use(errorHandlers.flashValidationErrors);
+// app.use(errorHandlers.notFound);
+
+// app.use(errorHandlers.flashValidationErrors);
+
+// if (app.get("env") === "development") {
+// 	app.use(errorHandlers.developmentErrors);
+// }
+
+// app.use(errorHandlers.productionErrors);
+
 
 app.listen(port, function() {
 	console.log(`api running on port ${port}`);

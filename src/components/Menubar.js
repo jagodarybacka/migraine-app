@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 import Logo from './Logo';
-import { Link } from 'react-router-dom'
+
 import home from '../assets/home.png'
 import settings from '../assets/settings.png'
 import stats from '../assets/stats.png'
@@ -23,13 +23,11 @@ const Menu = styled.ul`
 
 const MenuButton = styled.li`
   margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   opacity: 0.6;
-  a {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
   h6 {
     margin: 5px 0 0 0;
     text-transform: uppercase;
@@ -44,22 +42,16 @@ const Menubar = () => {
   return (
     <Menu>
       <MenuButton>
-        <Link to="/home">
         <img src={home} />
         <h6>Home</h6>
-        </Link>
       </MenuButton>
       <MenuButton>
-        <Link to="/history">
         <img src={stats} />
         <h6>Raports</h6>
-        </Link>
       </MenuButton>
       <MenuButton>
-        <Link to="/settings">
-          <img src={settings} />
-          <h6>Settings</h6>
-        </Link>
+        <img src={settings} />
+        <h6>Settings</h6>
       </MenuButton>
     </Menu>
   );

@@ -22,14 +22,12 @@ exports.report_detail = function(req, res, next) {
 
 // Create Report
 exports.report_add = function(req, res,next) {
-   userId = req.session.userId;
+   // userId = req.session.userId;
     var report = new Report({
-        user: userId,
-        // user: req.body.userId,
-        start_date: new Date(req.body.start_date),
-        end_date: new Date(req.body.end_date),
-        start_time: req.body.start_time,
-        end_time: req.body.end_time,
+        // user: userId,
+        user: req.body.userId,
+        start: req.body.start,
+        end: req.body.end,
         menstruation: req.body.menstruation,
         localization: req.body.localization,
         mood: req.body.mood,
@@ -59,14 +57,14 @@ exports.report_delete = function(req, res, next) {
 // Change Report
 exports.report_update = function(req, res, next) {
     var id = mongoose.Types.ObjectId(req.params.id.trim());
-    userId = req.session.userId;
+    //userId = req.session.userId;
     Report.findById(id)
     .exec( function(err, found_report) {
             if (err) { return next(err); }
             if (found_report) {
                 var report = new Report({
-                    user: userId,
-                    //user: req.body.userId,
+                    //user: userId,
+                    user: req.body.userId,
                     start: req.body.start,
                     end: req.body.end,
                     menstruation: req.body.menstruation,

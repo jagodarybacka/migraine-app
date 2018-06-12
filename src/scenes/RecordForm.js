@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
+import { getGeolocation } from '../utils/GetGeolocation';
+import { getWeather } from './Weather';
 import Button from '../components/Button'
 import Header from '../components/Header';
 import {
@@ -19,7 +21,6 @@ import {
 
 const Container = styled.article`
   padding: 0;
-  text-align: center;
 
   h2 {
     text-transform: uppercase;
@@ -29,7 +30,8 @@ const Container = styled.article`
 
   p {
     text-transform: uppercase;
-    font-size: 1.2rem;
+    font-size: 1rem;
+
   }
 
   form {
@@ -57,8 +59,6 @@ const Buttons = styled.div `
     padding: 10px 15px;
     background-color: #f0908b80;
     cursor: pointer;
-    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.5);
-
   }
 
   > button:hover {
@@ -76,7 +76,7 @@ class RecordForm extends Component {
 
     this.state = {
       currentTab: 0,
-      data: {}
+      data: {} 
     };
 
     this.firstTab = 0;
@@ -84,6 +84,12 @@ class RecordForm extends Component {
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
+  }
+  
+  async componentDidMount() {
+    const geolocation = await getGeolocation()
+    const weather = await getWeather(geolocation)
+    console.log('weather: ', weather);
   }
 
   handleChangeTabValue(evt) {
@@ -135,7 +141,6 @@ class RecordForm extends Component {
 
   render() {
     const { currentTab } = this.state;
-    console.log(this.state.data);
 
     return (
       <Container className="Form">

@@ -1,21 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
-import date from '../../assets/date.png'
-import time from '../../assets/time.png'
-import faceNeutral from '../../assets/face-neutral.png'
-import faceSmile from '../../assets/face-smile.png'
-import drop from '../../assets/drop.png'
-import localization from '../../assets/localization.png'
-import medicine from '../../assets/medicine.png'
-import questionmark from '../../assets/questionmark.png'
-import faceNeutralColor from '../../assets/face-neutral-color.png'
-import faceSmileColor from '../../assets/face-smile-color.png'
-import dropColor from '../../assets/drop-color.png'
-import localizationColor from '../../assets/localization-color.png'
-import medicineColor from '../../assets/medicine-color.png'
-import questionmarkColor from '../../assets/questionmark-color.png'
-
 import Date from './Date';
 import SingleChoice from './SingleChoice';
 import MultipleChoice from './MultipleChoice';
@@ -25,7 +10,6 @@ const Start = props => {
     <Date
       name="start"
       onChange={props.onChange}
-      id='start'
     />
   )
 }
@@ -35,7 +19,6 @@ const End = props => {
     <Date
       name="end"
       onChange={props.onChange}
-      id='end'
       end
     />
   )
@@ -49,7 +32,6 @@ const Menstruation = props => {
       name="menstruation"
       answers={answers}
       onChange={props.onChange}
-      img={drop} imgColor={dropColor} color='#E91E63'
     />
   );
 }
@@ -62,7 +44,6 @@ const Localization = props => {
       name="localization"
       answers={answers}
       onChange={props.onChange}
-      img={localization} imgColor={localizationColor} color='#cddc39'
     />
   );
 }
@@ -75,7 +56,6 @@ const Mood = props => {
       name="mood"
       answers={answers}
       onChange={props.onChange}
-      img={faceSmile} imgColor={faceSmileColor} color='#ffc107'
     />
   );
 }
@@ -88,7 +68,6 @@ const Pain = props => {
       name="pain"
       answers={answers}
       onChange={props.onChange}
-      img={faceNeutral} imgColor={faceNeutralColor} color='#ED8836'
     />
   );
 }
@@ -101,7 +80,6 @@ const Medicines = props => {
       name="medicines"
       answers={answers}
       onChange={props.onChange}
-      img={medicine} imgColor={medicineColor} color='#00bcd4'
     />
   );
 }
@@ -114,7 +92,7 @@ const Triggers = props => {
       name="triggers"
       answers={answers}
       onChange={props.onChange}
-      img={questionmark} imgColor={questionmarkColor} color='#607d8b'
+      small
     />
   );
 }

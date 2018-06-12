@@ -9,17 +9,14 @@ import Login from './scenes/Login'
 import Home from './scenes/Home'
 import RecordForm from './scenes/RecordForm'
 import Register from './scenes/Register'
-import Settings from './scenes/Settings'
 import History from './scenes/history/History'
 import TextInput from './components/TextInput'
-
-import Summary from './scenes/form/Summary'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      logged: false,
+      logged: true,
       user: {}
     }
   }
@@ -36,8 +33,6 @@ class App extends Component {
             <Route path="/home" component={Home}/>
             <Route path="/add" component={RecordForm}/>
             <Route path="/history" component={History}/>
-            <Route path="/settings" component={Settings}/>
-            <Route path="/summary" component={Summary}/>
           </Switch>
         </Router>
       </div>
