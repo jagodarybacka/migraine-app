@@ -17,17 +17,26 @@ const HomeComponent = styled.div`
 `
       
 const Home = () => {
-  return (
-    <HomeComponent className="Home">
-      <Header />
-      <Link to="/add">
-        <Button text="Add headache" />
-      </Link>
-      <HistoryWidget />
-      <WeatherWidget />
-      <Menubar />
-    </HomeComponent>
-  );
+  if(localStorage.getItem('isLogged') === 'true'){
+    return (
+      <HomeComponent className="Home">
+        <Header />
+        <Link to="/add">
+          <Button text="Add headache" />
+        </Link>
+        <HistoryWidget />
+        <WeatherWidget />
+        <Menubar />
+      </HomeComponent>
+    );
+  }
+  else {
+    return (
+      <HomeComponent className="Home">
+        <Header />
+      </HomeComponent>
+    )
+  }
 }
 
 

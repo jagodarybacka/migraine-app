@@ -4,7 +4,8 @@ import {Link} from "react-router-dom";
 
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
-import Button from '../components/Button'
+import Button from '../components/Button';
+import axios from 'axios';
 
 const SettingsComponent = styled.div`
   justify-content: center;
@@ -13,17 +14,57 @@ const SettingsComponent = styled.div`
   margin: 0;
   text-align: center;
 `
+class Settings extends Component {
+  constructor(props){
+    super(props);
 
-const Settings = () => {
-  return (
-    <SettingsComponent className="Settings">
-      <Header />
-      <Link to="/">
-        <Button text="Log out" primary />
-      </Link>
-      <Menubar />
-    </SettingsComponent>
-  );
+    const isLoggedIn = localStorage.getItem('isLogged');
+    this.state = {
+      isLogged: isLoggedIn === 'true',
+      message: 'Waiting to log out'
+    }
+    this.handleLogOut = this.handleLogOut.bind(this);
+  }  
+
+  logout(){
+    localStorage.setItem('isLogged',false);
+    this.setState((prevState) =>(
+      {
+        isLogged: false
+      }
+    ))
+  }
+
+  handleLogOut() {
+    axios.get('http://localhost:3001/api/logout').then(res => {
+      this.setState({message: res.data.message});
+      this.logout();
+      console.log(this.state.message);
+		}).catch(err =>{
+			console.log(err);
+			this.setState({message: "Failed to log out!"});
+		});
+  };
+
+  componentWillMount(){
+    const isLoggedIn = localStorage.getItem('isLogged');
+    this.setState((prevState) => (
+      {
+        isLogged: isLoggedIn === 'true'
+      }
+    ))
+    console.log(this.state.isLogged)
+  }
+
+  render() {
+    return (
+      <SettingsComponent className="Settings">
+        <Header />
+          <Button type="submit" onClick={this.handleLogOut} text="Log out" primary />
+        <Menubar />
+      </SettingsComponent>
+    );
+  }
 }
 
 
