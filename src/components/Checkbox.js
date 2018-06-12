@@ -11,6 +11,7 @@ const Check = styled.label`
   border-radius: 10px;
   margin: 0.5rem;
   position: relative;
+  cursor: pointer;
 
   p {
     font-weight: 400;

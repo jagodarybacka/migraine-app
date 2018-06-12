@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
 import Button from '../components/Button'
@@ -70,6 +70,8 @@ const Buttons = styled.div `
   }
 `;
 
+const Hello = () => (<h1>Record new Migraine</h1>)
+
 class RecordForm extends Component {
   constructor(props) {
     super(props);
@@ -80,7 +82,7 @@ class RecordForm extends Component {
     };
 
     this.firstTab = 0;
-    this.lastTab = 7;
+    this.lastTab = 8;
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
@@ -133,15 +135,32 @@ class RecordForm extends Component {
     this.setState({ currentTab: nextTab });
   }
 
+  isComplete() {
+    const { data } = this.state;
+    
+    return (
+      data.start_date &&
+      data.start_time &&
+      data.pain &&
+      data.menstruation &&
+      data.mood &&
+      data.localization &&
+      (data.medicines && !!data.medicines.length) &&
+      (data.triggers && !!data.triggers.length)      
+    )
+  }
+
   render() {
-    const { currentTab } = this.state;
-    console.log(this.state.data);
+    const { currentTab, data } = this.state;
 
     return (
       <Container className="Form">
         <Header />
         <form>
           <SwipeableViews index={currentTab}>
+            <div className="record-tab">
+              <Hello />
+            </div>
             <div className="record-tab">
               <Start onChange={this.handleChangeTabValue} />
             </div>
@@ -168,6 +187,14 @@ class RecordForm extends Component {
             </div>
           </SwipeableViews>
         </form>
+
+        {this.isComplete() && (
+          <div>
+            <Link to={{ pathname: '/summary', state: { data }}}>
+              <Button text="Summary" />
+            </Link>
+          </div>
+        )}
 
         <Buttons>
           <Button

@@ -8,18 +8,18 @@ const RadioComponent = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 10px;
   padding-left: 0;
   border-radius: 10px;
   margin: 0.5rem;
   position: relative;
 
   label {
+    cursor: pointer;
     font-weight: 400;
     text-transform: none !important;
     font-size: 1.2rem;
     color: ${props => props.color};
-    margin: 10px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     position: relative;
