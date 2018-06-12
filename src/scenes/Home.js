@@ -7,6 +7,7 @@ import Menubar from '../components/Menubar';
 import Button from '../components/Button'
 import HistoryWidget from './history/HistoryWidget'
 import WeatherWidget from './weather/WeatherWidget'
+import Join from './Join'
 
 const HomeComponent = styled.div`
   justify-content: center;
@@ -32,9 +33,10 @@ const Home = () => {
   }
   else {
     return (
-      <HomeComponent className="Home">
-        <Header />
-      </HomeComponent>
+      // <HomeComponent className="Home">
+      //   <Header />
+      // </HomeComponent>
+      <Join></Join>
     )
   }
 }

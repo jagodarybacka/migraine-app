@@ -33,13 +33,15 @@ class Settings extends Component {
         isLogged: false
       }
     ))
+    console.log(this.state)
   }
 
   handleLogOut() {
     axios.get('http://localhost:3001/api/logout').then(res => {
+      console.log(this.state.message); 
       this.setState({message: res.data.message});
       this.logout();
-      console.log(this.state.message);
+      window.location = '/';
 		}).catch(err =>{
 			console.log(err);
 			this.setState({message: "Failed to log out!"});
