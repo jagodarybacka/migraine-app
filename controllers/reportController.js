@@ -26,8 +26,10 @@ exports.report_add = function(req, res,next) {
     var report = new Report({
         user: userId,
         // user: req.body.userId,
-        start: req.body.start,
-        end: req.body.end,
+        start_date: new Date(req.body.start_date),
+        end_date: new Date(req.body.end_date),
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
         menstruation: req.body.menstruation,
         localization: req.body.localization,
         mood: req.body.mood,

@@ -91,7 +91,7 @@ class Register extends Component {
           localStorage.setItem('isLogged', true);
 					localStorage.setItem('userId', response.data.userId);
 					localStorage.setItem('userMail', response.data.userMail);
-					localStorage.setItem('userName', response.data.userName);
+          localStorage.setItem('userName', response.data.userName);
           window.location = response.data.redirectURL;
         } else {
           _this.state.errors.push(...response.data.flashes.error);
