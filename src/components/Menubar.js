@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import {Link} from "react-router-dom";
 
 import Logo from './Logo';
 
@@ -23,11 +24,13 @@ const Menu = styled.ul`
 
 const MenuButton = styled.li`
   margin: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   opacity: 0.6;
+  a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   h6 {
     margin: 5px 0 0 0;
     text-transform: uppercase;
@@ -42,16 +45,22 @@ const Menubar = () => {
   return (
     <Menu>
       <MenuButton>
-        <img src={home} />
-        <h6>Home</h6>
+        <Link to="/home">
+          <img src={home} />
+          <h6>Home</h6>
+        </Link>
       </MenuButton>
       <MenuButton>
+        <Link to="/home">
         <img src={stats} />
         <h6>Raports</h6>
+        </Link>
       </MenuButton>
       <MenuButton>
-        <img src={settings} />
-        <h6>Settings</h6>
+        <Link to="/settings">
+          <img src={settings} />
+          <h6>Settings</h6>
+        </Link>
       </MenuButton>
     </Menu>
   );
