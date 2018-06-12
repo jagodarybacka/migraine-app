@@ -15,7 +15,7 @@ exports.user_data = function(req,res,next) {
 		{
 			console.log('user');
 			console.log(found_user);
-			Report.find({user: found_user._id})
+			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
 				if(err) {return next(err);}
 				console.log('reports');

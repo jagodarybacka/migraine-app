@@ -30,7 +30,7 @@ class Home extends Component {
   componentDidMount() {
     axios.get('http://localhost:3001/api/reports')
       .then(({ data }) => {
-        this.setState({ recentMigraine: data.reverse()[0] });
+        this.setState({ recentMigraine: data[0] });
       })
       .catch((err) => console.log(err));
   }
