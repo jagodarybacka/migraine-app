@@ -6,7 +6,7 @@ const ButtonComp = styled.button`
   min-width: 150px;
   margin: 10px 0;
   padding: 20px 25px;
-
+  cursor: pointer;
   text-transform: uppercase;
 
   color: white;

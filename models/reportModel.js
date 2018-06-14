@@ -16,12 +16,6 @@ end_date: {
     type: Date, 
     // required: true
 },
-start_time: {
-    type: String
-},
-end_time: {
-    type: String
-},
 menstruation: {
     type: String, 
     enum: ['Yes', 'Coming Soon', 'No'], 

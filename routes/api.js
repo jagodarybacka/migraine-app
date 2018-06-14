@@ -41,8 +41,12 @@ router.delete("/reports/:id", auth_controller.isLoggedIn, report_controller.repo
 /* Change Report */
 router.put("/reports/:id", auth_controller.isLoggedIn, report_controller.report_update);
 
-/*  GET User data */
-router.get("/reports",auth_controller.isLoggedIn,user_controller.user_data);
+/*  GET Reports */
+router.get("/reports",auth_controller.isLoggedIn,report_controller.reports_all);
+
+/*  GET Reports */
+router.get("/recent",auth_controller.isLoggedIn,report_controller.report_recent);
+
 
 /// USER ROUTES ///
 

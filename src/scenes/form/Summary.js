@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
@@ -75,50 +77,92 @@ const AcceptComponent = styled.button`
 
 const AcceptButton = (props) => {
   return (
-    <AcceptComponent>
+    <AcceptComponent
+      onClick={props.onClick}
+    >
       <img src={accept} />
     </AcceptComponent>
   )
 }
 
-const Summary = (props) => {
-  return (
-    <SummaryComponent>
-      <Header />
-      <h2>Summary</h2>
 
-      <Divider text="Start" />
-      <TimeDate date="Wed, 10 may" time="20:00" />
+class Summary extends Component {
+  constructor(props) {
+    super(props);
 
-      <Divider text="End" />
-      <TimeDate date="Wed, 11 may" time="09:00" />
+    this.submit = this.submit.bind(this);
+  }
 
-      <Divider text="Pain Intensity" />
-      <Bubble text="Intense" img={faceNeutral} color='#ED8836'/>
+  componentDidMount() {
+    const { state } = this.props.location;
 
-      <Divider text="Menstruation" />
-      <Bubble text="Yes" img={drop} color='#E91E63'/>
+    if (!state || !state.data || !Object.keys(state.data).length) {
+      this.props.history.push('/add');
+    }
+  }
 
-      <Divider text="Mood" />
-      <Bubble text="Good" img={faceSmile} color='#ffc107'/>
+  submit() {
+    const { data } = this.props.location.state;
 
-      <Divider text="Localization" />
-      <Bubble text="Home" img={localization} color='#cddc39'/>
+    axios.post("http://localhost:3001/api/reports", data)
+      .then(() => this.props.history.push('/home'))
+      .catch((err) => console.log(err));
+  }
 
-      <Divider text="Medicines" />
-      <Bubble text="Ibuprofen" img={medicine} color='#00bcd4'/>
-      <Bubble text="Paracetamol" img={medicine} color='#00bcd4'/>
+  render() {
+    const { state } = this.props.location;
+    let result = (
+      <div>Loading...</div>
+    );
 
-      <Divider text="Triggers" />
-      <Bubble text="Caffeine" img={questionmark} color='#607d8b'/>
-      <Bubble text="Cheese" img={questionmark} color='#607d8b'/>
-      <Bubble text="Stress" img={questionmark} color='#607d8b'/>
+    if (state && state.data) {
+      const { data } = state;
 
-      <Divider text="Accept Raport?" />
-      <AcceptButton />
-    </SummaryComponent>
-  )
+      result = (
+        <SummaryComponent>
+          <Header />
+          <h2>Summary</h2>
+
+          <Divider text="Start" />
+          <TimeDate date={data.start_date} time={data.start_time} />
+
+          <Divider text="End" />
+          {!!data.end_date && !!data.end_time ? (
+            <TimeDate date={data.end_date} time={data.end_time} />            
+          ) : (
+            <TimeDateComponent>Not yet</TimeDateComponent>
+          )}
+
+          <Divider text="Pain Intensity" />
+          <Bubble text={data.pain} img={faceNeutral} color='#ED8836' />
+
+          <Divider text="Menstruation" />
+          <Bubble text={data.menstruation} img={drop} color='#E91E63' />
+
+          <Divider text="Mood" />
+          <Bubble text={data.mood} img={faceSmile} color='#ffc107' />
+
+          <Divider text="Localization" />
+          <Bubble text={data.localization} img={localization} color='#cddc39' />
+
+          <Divider text="Medicines" />
+          {data.medicines.map(name => (
+            <Bubble key={name} text={name} img={medicine} color='#00bcd4' />
+          ))}
+
+          <Divider text="Triggers" />
+          {data.triggers.map(name => (
+            <Bubble key={name} text={name} img={questionmark} color='#607d8b' />
+          ))}
+
+          <Divider text="Accept Raport?" />
+          <AcceptButton onClick={this.submit} />
+        </SummaryComponent>
+      );
+    }
+
+    return result;
+  }
 }
 
-
-export default Summary;
+export default withRouter(Summary);

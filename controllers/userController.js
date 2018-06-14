@@ -4,28 +4,6 @@ const Report = require("../models/ReportModel");
 const promisify = require('es6-promisify');
 const mongoose = require("mongoose");
 
-//GET User data
-exports.user_data = function(req,res,next) {
-	userId = req.session.userId;
-	User.findById(userId, 'username _id email')
-	//.populate('reports')
-	.exec(function(err,found_user){
-		if(err) {return next(err);}
-		if(found_user)
-		{
-			console.log('user');
-			console.log(found_user);
-			Report.find({user: found_user._id})
-			.exec(function(err,found_reports){
-				if(err) {return next(err);}
-				console.log('reports');
-				console.log(found_reports);
-				res.json(found_reports);
-			});
-		}
-	});
-	//res.json({message: "Not implemented - user list!"});
-};
 
 exports.validateRegister = (req, res, next) => {
 	console.log(req.body);

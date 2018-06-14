@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import moment from 'moment';
 
 import RecordCard from '../../components/RecordCard'
 
@@ -28,11 +29,17 @@ const Widget = styled.section`
 
 
 `
-const HistoryWidget = () => {
+const HistoryWidget = ({ item }) => {
   return (
     <Widget >
       <h3>Recent migraine</h3>
-      <RecordCard date="12 May" duration="3 hours" strength="Mild"/>
+      {item && (
+        <RecordCard 
+          date={`${moment(item.start_date).format('MMMM Do YYYY')} ${moment(item.start_date).format('HH:mm')}`} 
+          duration="3 hours" 
+          strength={item.pain} 
+        />        
+      )}
       <Link to="/history">See all...</Link>
     </Widget>
   );
