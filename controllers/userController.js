@@ -1,6 +1,6 @@
 
 const User = require("../models/userModel");
-const Report = require("../models/ReportModel");
+const Report = require("../models/reportModel");
 const promisify = require('es6-promisify');
 const mongoose = require("mongoose");
 

@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-var Report = require("../models/ReportModel");
+var Report = require("../models/reportModel");
 var mongoose = require('mongoose');
 var async = require('async');
 
