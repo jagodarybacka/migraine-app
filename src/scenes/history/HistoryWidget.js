@@ -35,7 +35,7 @@ const HistoryWidget = ({ item }) => {
       <h3>Recent migraine</h3>
       {item && (
         <RecordCard 
-          date={`${moment(item.start_date).format('MMMM Do YYYY')} ${item.start_time}`} 
+          date={`${moment(item.start_date).format('MMMM Do YYYY')} ${moment(item.start_date).format('HH:mm')}`} 
           duration="3 hours" 
           strength={item.pain} 
         />        

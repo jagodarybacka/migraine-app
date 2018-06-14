@@ -28,9 +28,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/api/reports')
+    axios.get('http://localhost:3001/api/recent')
       .then(({ data }) => {
-        this.setState({ recentMigraine: data[0] });
+        this.setState({ recentMigraine: data });
       })
       .catch((err) => console.log(err));
   }
@@ -38,17 +38,27 @@ class Home extends Component {
   render() {
     const { recentMigraine } = this.state;
 
-    return (
-      <HomeComponent className="Home">
-        <Header />
-        <Link to="/add">
-          <Button text="Add headache" />
-        </Link>
-        <HistoryWidget item={recentMigraine} />
-        <WeatherWidget />
-        <Menubar />
-      </HomeComponent>
-    );
+    if(localStorage.getItem('isLogged') === 'true'){
+      return (
+        <HomeComponent className="Home">
+          <Header />
+          <Link to="/add">
+            <Button text="Add headache" />
+          </Link>
+          <HistoryWidget item={recentMigraine} />
+          <WeatherWidget />
+          <Menubar />
+        </HomeComponent>
+      );
+    }
+    else {
+      return (
+        // <HomeComponent className="Home">
+        //   <Header />
+        // </HomeComponent>
+        <Join></Join>
+      )
+    }
   }
 }
 
