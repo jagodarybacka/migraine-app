@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
+import axios from'axios';
 
 import { validateEmail, validateLength } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
@@ -24,7 +25,8 @@ class Login extends Component {
           isValid: false,
           errorMsg: '',
         }
-      }
+      },
+      errors: []
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -67,7 +69,29 @@ class Login extends Component {
     this.setState({ fields });
 
     if (isValid) {
-      this.props.history.push('/home')
+      // this.props.history.push('/home')
+      var _this = this;
+		    console.log(this);
+		 axios.post("http://localhost:3001/api/login",
+			{	email: email.value,
+				password: password.value
+			}).then(response => {
+				if(response.data.redirectURL){ // save basic info on user in session for other components
+					localStorage.setItem('isLogged', true);
+					localStorage.setItem('userId', response.data.userId);
+					localStorage.setItem('userMail', response.data.userMail);
+					localStorage.setItem('userName', response.data.userName);
+					console.log('redirect url to: ' + response.data.redirectURL);
+					window.location=response.data.redirectURL;
+        }
+        else {
+          _this.state.errors.push(response.data.flashes.error);
+          console.log(_this.state.errors);
+          alert(_this.state.errors);
+        }
+		}).catch(error => {
+			console.error(error);
+		});
     }
   }
 

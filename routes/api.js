@@ -29,17 +29,20 @@ router.get('/', function(req, res, next) {
 ///REPORT ROUTES ///
 
 /* ADD REPORT */
- router.post('/report',report_controller.report_add);
-// router.post('/report',auth.controller.isLoggedIn,report_controller.report_add);
+//  router.post('/report',report_controller.report_add);
+router.post('/reports', auth_controller.isLoggedIn, report_controller.report_add);
 
 /* Report Details */
-router.get("/report/:id", report_controller.report_detail);
+router.get("/reports/:id", auth_controller.isLoggedIn, report_controller.report_detail);
 
 /* Delete Report */
-router.delete("/report/:id", report_controller.report_delete);
+router.delete("/reports/:id", auth_controller.isLoggedIn, report_controller.report_delete);
 
 /* Change Report */
-router.put("/report/:id", report_controller.report_update);
+router.put("/reports/:id", auth_controller.isLoggedIn, report_controller.report_update);
+
+/*  GET User data */
+router.get("/reports",auth_controller.isLoggedIn,user_controller.user_data);
 
 /// USER ROUTES ///
 
@@ -48,30 +51,55 @@ router.post("/users",
 	user_controller.validateRegister,
 	user_controller.register,
 	//upload,
-	passport.authenticate("local"),
+	passport.authenticate("local", {session: true}),
 	(req,res)=>{
 		console.log(res);
 		res.json(
-			{redirectURL:"/home"
-			});
-	}
-);
-
-/*  GET User data */
-router.get("/users",auth_controller.isLoggedIn,user_controller.user_data);
-
-/* Login User POST */
-router.post("/login", passport.authenticate("local", {session: true}),
-	(req,res)=>{
-		req.session.userId = req.user._id;
-		res.json(
-			{redirectURL:"/user",
+			{redirectURL:"/home",
 			userId: req.user._id,
 			userMail: req.user.email,
-			userName: req.user.username 
+			userName: req.user.username
 			});
 	}
 );
+
+
+
+/* Login User POST */
+// router.post("/login", passport.authenticate("local", {session: true}),
+// 	(req,res)=>{
+// 		console.log('session',req.session);
+// 		req.session.userId = req.user._id;
+// 		res.json(
+// 			{redirectURL:"/home",
+// 			userId: req.user._id,
+// 			userMail: req.user.email,
+// 			userName: req.user.username
+// 			});
+// 	}
+// );
+
+router.post("/login",function(req,res,next){
+	passport.authenticate('local', {session: true}, function(err,user, info) {
+		if(err) {return next(err);}
+		if(!user) {
+			req.flash('error', 'invalid username or password');
+	  		res.json({body: req.body, flashes: req.flash() });
+			return;}
+		req.logIn(user,function(err){
+			if(err) { return next(err);}
+			console.log('session',req.session);
+			req.session.userId = req.user._id;
+			res.json(
+				{redirectURL:"/home",
+				userId: req.user._id,
+				userMail: req.user.email,
+				userName: req.user.username
+				});
+		});
+	})(req, res, next);
+});
+
 
 /* Logout User */
 router.get("/logout", auth_controller.logout);

@@ -7,44 +7,48 @@ user: {
     ref: 'User', 
     required: true
 },
-start: {
+start_date: {
     type: Date, 
-    required: true
+    default: Date.now()
+    // required: true
 },
-end: {
+end_date: {
     type: Date, 
-    required: true
+    // required: true
+},
+start_time: {
+    type: String
+},
+end_time: {
+    type: String
 },
 menstruation: {
     type: String, 
     enum: ['Yes', 'Coming Soon', 'No'], 
-    required: true
+    // required: true
 },
 localization: {
     type: String,
     enum: ['Home', 'Outside', 'Transit', 'Work', 'Bed','School'],
-    required: true },
+    // required: true 
+},
 mood: {
     type: String,
     enum: ['Very Good', 'Good', 'Ok', 'Bad', 'Very Bad'],
-    required: true
+    // required: true
 },
 pain: {
     type: String,
     enum: ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum'],
-    required: true
+    // required: true
 },
 medicines: [{
     type: String,
-    required: true
+    // required: true
 }],
 triggers: [{
     type: String,
-    required: true
-}],
-weather: [{
-  type: Object,
-  required: false
+    // required: true
 }]
 });
 

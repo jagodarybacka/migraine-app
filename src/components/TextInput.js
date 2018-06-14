@@ -18,7 +18,7 @@ const Input = styled.input`
 
 const Label = styled.label`
   text-transform: uppercase;
-
+  left: 0;
   font-weight: 700;
 `;
 

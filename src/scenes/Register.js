@@ -28,8 +28,9 @@ class Register extends Component {
           value: '',
           isValid: false,
           errorMsg: '',
-        },
+        }
       },
+      errors: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -87,6 +88,10 @@ class Register extends Component {
       }).then(response => {
         console.log(response);
         if (response.data.redirectURL) {
+          localStorage.setItem('isLogged', true);
+					localStorage.setItem('userId', response.data.userId);
+					localStorage.setItem('userMail', response.data.userMail);
+          localStorage.setItem('userName', response.data.userName);
           window.location = response.data.redirectURL;
         } else {
           _this.state.errors.push(...response.data.flashes.error);
