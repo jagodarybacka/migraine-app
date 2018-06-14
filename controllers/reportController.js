@@ -69,9 +69,10 @@ exports.report_recent = function(req,res,next) {
 exports.report_add = function(req, res,next) {
    userId = req.session.userId;
    start_time = req.body.start_time.split(":");
-   end_time = req.body.end_time.split(":");
    start_date = req.body.start_date.split("-");
-   end_date = req.body.end_date.split("-");
+   if(req.body.end_date && req.body.end_time){
+    end_time = req.body.end_time.split(":");
+    end_date = req.body.end_date.split("-");
     var report = new Report({
         user: userId,
         start_date: new Date(start_date[0],start_date[1],start_date[2],start_time[0],start_time[1],0,0),
@@ -88,6 +89,25 @@ exports.report_add = function(req, res,next) {
         console.log(saved);
         res.json(saved);
     });
+   }
+   else {
+    var report = new Report({
+        user: userId,
+        start_date: new Date(start_date[0],start_date[1],start_date[2],start_time[0],start_time[1],0,0),
+        // end_date: new Date(end_date[0],end_date[1],end_date[2],end_time[0],end_time[1],0,0),
+        menstruation: req.body.menstruation,
+        localization: req.body.localization,
+        mood: req.body.mood,
+        pain: req.body.pain,
+        medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
+        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers
+         });
+    report.save(function (err,saved) {
+        if (err) { return next(err); }
+        console.log(saved);
+        res.json(saved);
+    });
+   }
 };
 
 // Delete Report
