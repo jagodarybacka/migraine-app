@@ -16,7 +16,7 @@ require("dotenv").config();
 var api = require("./routes/api");
 
 var app = express();
-var port = process.env.API_PORT || 8080;
+var port = process.env.PORT || 8080;
 
 mongoose.connect("mongodb://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + process.env.DB_URI);
 mongoose.Promise = global.Promise;
