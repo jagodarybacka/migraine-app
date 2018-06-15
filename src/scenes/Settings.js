@@ -37,7 +37,7 @@ class Settings extends Component {
   }
 
   handleLogOut() {
-    axios.get('http://localhost:3001/api/logout').then(res => {
+    axios.get('/api/logout').then(res => {
       console.log(this.state.message); 
       this.setState({message: res.data.message});
       this.logout();

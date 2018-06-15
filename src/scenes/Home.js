@@ -28,7 +28,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/api/recent')
+    axios.get('/api/recent')
       .then(({ data }) => {
         this.setState({ recentMigraine: data });
       })

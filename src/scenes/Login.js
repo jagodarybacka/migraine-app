@@ -72,7 +72,7 @@ class Login extends Component {
       // this.props.history.push('/home')
       var _this = this;
 		    console.log(this);
-		 axios.post("http://localhost:3001/api/login",
+		 axios.post("/api/login",
 			{	email: email.value,
 				password: password.value
 			}).then(response => {

@@ -16,9 +16,9 @@ require("dotenv").config();
 var api = require("./routes/api");
 
 var app = express();
-var port = process.env.API_PORT || 3001;
+var port = process.env.API_PORT || 8080;
 
-mongoose.connect("mongodb://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@ds119090.mlab.com:19090/migraine-app");
+mongoose.connect("mongodb://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + process.env.DB_URI);
 mongoose.Promise = global.Promise;
 mongoose.connection.on("error", (err) => {
 	console.error(`${err.message}`);
@@ -27,7 +27,7 @@ mongoose.connection.on("error", (err) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 // cookie-parser
-app.use(cookieParser(process.env.SECRET));
+app.use(cookieParser(process.env.SECRET || "sekretny_sekret_tworczosc_szalona_panda"));
 
 // body parser
 app.use(bodyParser.json());
@@ -70,7 +70,7 @@ app.use(function(req, res, next) {
 
 // // cors for session
 app.use(cors({
-    origin:['http://localhost:3000'],
+    // origin:['http://localhost:3000'],
     methods:['GET','POST','PUT'],
     credentials: true // enable set cookie
 }));

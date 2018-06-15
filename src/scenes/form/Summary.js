@@ -104,7 +104,7 @@ class Summary extends Component {
   submit() {
     const { data } = this.props.location.state;
 
-    axios.post("http://localhost:3001/api/reports", data)
+    axios.post("/api/reports", data)
       .then(() => this.props.history.push('/home'))
       .catch((err) => console.log(err));
   }
