@@ -1,2 +1,2 @@
 web: react-scripts start
-api: node server.js
+worker: node server.js
