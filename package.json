@@ -27,7 +27,6 @@
     "styled-components": "^3.2.3"
   },
   "scripts": {
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "start": "nf start -p 3000",
     "react-start": "react-scripts start",
     "build": "react-scripts build",
