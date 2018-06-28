@@ -38,27 +38,17 @@ class Home extends Component {
   render() {
     const { recentMigraine } = this.state;
 
-    if(localStorage.getItem('isLogged') === 'true'){
-      return (
-        <HomeComponent className="Home">
-          <Header />
-          <Link to="/add">
-            <Button text="Add headache" />
-          </Link>
-          <HistoryWidget item={recentMigraine} />
-          <WeatherWidget />
-          <Menubar />
-        </HomeComponent>
-      );
-    }
-    else {
-      return (
-        // <HomeComponent className="Home">
-        //   <Header />
-        // </HomeComponent>
-        <Join></Join>
-      )
-    }
+    return (
+      <HomeComponent className="Home">
+        <Header />
+        <Link to="/add">
+          <Button text="Add headache" />
+        </Link>
+        <HistoryWidget item={recentMigraine} />
+        <WeatherWidget />
+        <Menubar />
+      </HomeComponent>
+    );
   }
 }
 

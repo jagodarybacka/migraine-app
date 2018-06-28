@@ -1,9 +1,8 @@
-// import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import React, { Component } from "react";
-import axios from "axios";
-import { Route, Redirect } from "react-router";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Route, Redirect } from 'react-router';
 
 import { validateEmail, validateLength } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
@@ -11,7 +10,12 @@ import TextInput from '../components/TextInput'
 
 class Register extends Component {
 	constructor(props) {
-		super(props);
+    super(props);
+    
+    if (window.localStorage.getItem('isLogged') === 'true') {
+      props.history.push('/home');
+    }
+
 		this.state = {
       fields: {
         username: {

@@ -9,6 +9,10 @@ import Button from '../components/Button'
 import ButtonBrand from '../components/ButtonBrand'
 
 const Join = (props) => {
+  if (window.localStorage.getItem('isLogged') === 'true') {
+    props.history.push('/home');
+  }
+  
   const logoMargin = '10% 0';
   return (
     <div>

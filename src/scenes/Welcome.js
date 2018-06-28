@@ -18,7 +18,11 @@ const MiniText = styled.p`
   display: block;
 `;
 
-const Welcome = () => {
+const Welcome = props => {
+  if (window.localStorage.getItem('isLogged') === 'true') {
+    props.history.push('/home');
+  }
+
   return (
     <Link to="/join">
       <div className="Welcome">
