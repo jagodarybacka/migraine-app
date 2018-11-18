@@ -11,9 +11,10 @@ import RecordForm from './scenes/RecordForm'
 import Register from './scenes/Register'
 import Settings from './scenes/Settings'
 import History from './scenes/history/History'
-import TextInput from './components/TextInput'
 
 import Summary from './scenes/form/Summary'
+
+import AtmosphericPressure from './components/reports/atmosphericPressure'
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/" component={Welcome}/>
+            <Route exact path="/" component={AtmosphericPressure}/>
             <Route path="/join" component={Join}/>
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>

@@ -4,9 +4,9 @@ const _ = require('lodash')
 /**
  * parsing 5 days forecast to array of pressure and dates
  * @param  {array} forecast json forecast data
- * @return {array}          
+ * @return {array}
  */
-const parseForcast = (forecast) => {
+const parseForecast = (forecast) => {
   return forecast[0].list.map((el) => {
     return {
       pressure: el.main.pressure,
@@ -25,6 +25,10 @@ const getRange = (data) => ({
   min: _.min(data)
 })
 
+const getDaysBetween = (a, b) => Math.ceil(Math.abs(a.getTime() - b.getTime()) / (1000 * 3600 * 24))
+
+const getNiceDateFormat = (dates) => dates.map((d) => `${d.getDate()}/${d.getMonth()}`)
+
 
 /**
  * Get parsed forecast and creates array of pressures
@@ -37,6 +41,16 @@ const parsePressure = (forecast) => forecast.map(el => parseInt(el.pressure))
  */
 const parseDate = (forecast) => forecast.map(el => new Date(el.date))
 
+
 module.exports = {
-  parseForcast
+  get: {
+    range: getRange,
+    daysBetween: getDaysBetween,
+    niceDateFormat: getNiceDateFormat
+  },
+  parse: {
+    forecast: parseForecast,
+    pressure: parsePressure,
+    date: parseDate
+  }
 }
