@@ -46,6 +46,7 @@ class AtmosphericPressure extends Component {
 
     this.drawDateAxis(ctx);
     this.drawPressureAxis(ctx);
+    this.drawMigraine(ctx)
   }
 
   drawDateAxis(ctx) {
@@ -102,10 +103,25 @@ class AtmosphericPressure extends Component {
     ctx.stroke();
   }
 
+  drawMigraine(ctx) {
+    const canvas = this.refs.canvas;
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+    const axisStart = canvasHeight - 30;
+    const axisEnd = 30;
+
+    const blockHeight =  canvasHeight - 60
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300)
+    gradient.addColorStop(0, 'rgba(250, 250, 250, 0)');
+    gradient.addColorStop(1, '#fde');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(50, 30, 50, blockHeight)
+  }
+
   render() {
     return (
       <AtmosphericPressureComponent width={300} height={300}>
-        <canvas ref='canvas' width = {300} height = {500}/>
+        <canvas ref='canvas' width = {300} height = {400}/>
       </AtmosphericPressureComponent>
     )
   }
