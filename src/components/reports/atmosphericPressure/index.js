@@ -9,6 +9,11 @@ import mockedData from './mock/mock.json'
 
 const FONT = '10px Roboto'
 
+const MARGIN_LEFT = 50;
+const MARGIN_RIGHT = 15;
+const MARGIN_TOP = 20;
+const MARGIN_BOTTOM = 30;
+
 const AtmosphericPressureComponent = styled.div`
   canvas {
     background-color: #fff;
@@ -46,24 +51,28 @@ class AtmosphericPressure extends Component {
 
     this.drawDateAxis(ctx);
     this.drawPressureAxis(ctx);
-    this.drawMigraine(ctx)
+    this.drawMigraine(ctx);
+    this.drawGraph(ctx)
   }
 
   drawDateAxis(ctx) {
     const parsedDates = parse.date(this.state.data);
     const canvas = this.refs.canvas;
     const canvasWidth = canvas.width;
-    const bottomPadding = canvas.height - 15;
+    const bottomPadding = canvas.height - 10;
 
-    const axisStart = 40;
-    const axisEnd = canvasWidth;
+    const axisStart = MARGIN_LEFT;
+    const axisEnd = canvasWidth - MARGIN_RIGHT;
 
-    const listOfDates = _.uniq(get.niceDateFormat(parsedDates))
+    const listOfDates = _.uniq(get.niceDateFormat(parsedDates)) // TODO: refactor
     const daysBetween = listOfDates.length;
     const padding = (axisEnd - axisStart) / daysBetween
 
+    const dateCoordinates = this.getDateCoordinates(parsedDates)
+
     let x = axisStart;
     listOfDates.forEach((date) => {
+      // console.log(x, date, dateCoordinates.find(entry => entry.date === date)) // TODO: refactor to ue dateCoordinates
       ctx.fillText(date, x, bottomPadding);
       x += padding;
     })
@@ -76,20 +85,23 @@ class AtmosphericPressure extends Component {
     const canvasHeight = canvas.height;
 
     const leftPadding = 15;
-    const rightPadding = canvasWidth - 15;
-    const axisStart = canvasHeight - 30;
-    const axisEnd = 30;
+    const rightPadding = canvasWidth - MARGIN_RIGHT;
+    const canvasBottom = canvasHeight - MARGIN_BOTTOM;
+    const canvasTop = MARGIN_TOP;
 
     const rangeOfPressure = get.range(parsedPressures)
     const pressureDifference = rangeOfPressure.max - rangeOfPressure.min;
 
-    const step = pressureDifference <= 10 ? 1 : 3;
+    const step = pressureDifference <= 10 ? 1 : 2;
     const numberOfSteps = pressureDifference / step;
-    const padding = (axisStart - axisEnd) / numberOfSteps;
+    const padding = (canvasBottom - canvasTop) / numberOfSteps;
 
-    for (let i = rangeOfPressure.min, y = axisStart; i <= rangeOfPressure.max; i += step, y -= padding) {
-      this.drawHorizontalLine(ctx, [leftPadding, y], [rightPadding, y])
-      ctx.fillText(`${i}`, leftPadding, y - 3);
+    const pressureCoordinates = this.getPressureCoordinates(rangeOfPressure.min, rangeOfPressure.max)
+
+    for (let i = rangeOfPressure.min; i <= rangeOfPressure.max; i += step) {
+      const coord = pressureCoordinates.find(el => el.pressure == i).coordY
+      this.drawHorizontalLine(ctx, [leftPadding, coord], [rightPadding, coord])
+      ctx.fillText(`${i}`, leftPadding, coord - 4);
     }
   }
 
@@ -103,12 +115,36 @@ class AtmosphericPressure extends Component {
     ctx.stroke();
   }
 
+  drawDot(ctx, x, y) {
+    ctx.fillStyle = "#4C5062";
+    ctx.fillRect(x,y,3,3);
+  }
+
+  drawGraph(ctx) {
+    const data = this.state.data;
+    const parsedPressures = _.uniq(parse.pressure(data)).sort()
+    const parsedDates = parse.date(this.state.data);
+    const rangeOfPressure = get.range(parsedPressures)
+
+    const pressureCoordinates = this.getPressureCoordinates(rangeOfPressure.min, rangeOfPressure.max);
+    const dateCoordinates = this.getDateCoordinates(parsedDates)
+
+    data.forEach(entry => {
+      console.log(entry)
+      const coordX = dateCoordinates.find(date => date.date.toString() == new Date(entry.date).toString()).coordX;
+      const coordY = pressureCoordinates.find(pressure => pressure.pressure == Math.floor(entry.pressure)).coordY;
+      this.drawDot(ctx, coordX, coordY)
+      console.log(coordX, coordY)
+    })
+    console.log(data)
+  }
+
   drawMigraine(ctx) {
     const canvas = this.refs.canvas;
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const axisStart = canvasHeight - 30;
-    const axisEnd = 30;
+    const axisStart = canvasHeight - MARGIN_BOTTOM;
+    const axisEnd = MARGIN_TOP;
 
     const blockHeight =  canvasHeight - 60
     const gradient = ctx.createLinearGradient(0, 0, 0, 300)
@@ -116,6 +152,41 @@ class AtmosphericPressure extends Component {
     gradient.addColorStop(1, '#fde');
     ctx.fillStyle = gradient;
     ctx.fillRect(50, 30, 50, blockHeight)
+  }
+
+  getPressureCoordinates(min, max) {
+    const canvas = this.refs.canvas;
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    const yBottom = canvasHeight - 30;
+    const yTop = 30
+
+    min = Math.floor(min)
+    max = Math.floor(max)
+
+    const padding = Math.floor((yBottom - yTop) / (max - min))
+    const pressureCoordinates = []
+
+    for (let i = min, y = yBottom; i <= max; i += 1, y -= padding) {
+      pressureCoordinates.push({pressure: i, coordY: y})
+    }
+    return pressureCoordinates
+  }
+
+  getDateCoordinates(datesList) {
+    const canvas = this.refs.canvas;
+    const canvasWidth = canvas.width;
+    const xStart = MARGIN_LEFT;
+    const xEnd = canvasWidth - MARGIN_RIGHT;
+
+    const padding = (xEnd - xStart) / datesList.length;
+    let x = xStart;
+    return datesList.map(date => {
+      const record = { date, coordX: x };
+      x += padding;
+      return record;
+    })
   }
 
   render() {
