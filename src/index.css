@@ -3,7 +3,7 @@
 *{
   -webkit-tap-highlight-color: transparent;
 }
-input, button {
+input, button, span, select {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }

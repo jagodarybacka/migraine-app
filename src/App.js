@@ -13,6 +13,7 @@ import Settings from './scenes/Settings'
 import History from './scenes/history/History'
 import Summary from './scenes/form/Summary'
 import AtmosphericPressure from './components/reports/atmosphericPressure'
+import SummaryReport from './components/reports/summary'
 import TextInput from './components/TextInput'
 
 const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {
@@ -35,7 +36,7 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/" component={AtmosphericPressure}/>
+            <Route exact path="/" component={SummaryReport}/>
             <Route path="/join" component={Join}/>
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
