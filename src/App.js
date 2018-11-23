@@ -14,7 +14,6 @@ import History from './scenes/history/History'
 import Summary from './scenes/form/Summary'
 import AtmosphericPressure from './components/reports/atmosphericPressure'
 import TextInput from './components/TextInput'
-import Summary from './scenes/form/Summary'
 
 const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {
   return (
