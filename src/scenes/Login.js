@@ -13,6 +13,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
+    if (window.localStorage.getItem('isLogged') === 'true') {
+      props.history.push('/home');
+    }
+
     this.state = {
       fields: {
         email: {

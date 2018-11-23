@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from 'axios';
+import moment from 'moment';
 
 import RecordCard from '../../components/RecordCard'
 
@@ -35,67 +37,98 @@ const Records = styled.ul`
     }
 `
 
-const History = () => {
-  // TODO: What date format will front receive?
-  const HistoryList = [
-    {
-      month: "June",
-      entries: [
-        { date: new Date('20 June 2018'), duration: 10, intensity: 2},
-        { date: new Date('6 June 2018'), duration: 5, intensity: 1},
-        { date: new Date('5 June 2018'), duration: 7, intensity: 5}
-      ]
-    },
-    {
-      month: "May",
-      entries: [
-        { date: new Date('12 May 2018'), duration: 3, intensity: 1},
-        { date: new Date('10 May 2018'), duration: 5, intensity: 4}
-      ]
-    },
-    {
-      month: "March",
-      entries: [
-        { date: new Date('19 March 2018'), duration: 3, intensity: 3},
-        { date: new Date('14 March 2018'), duration: 7, intensity: 1},
-        { date: new Date('9 March 2018'), duration: 5, intensity: 4}
-      ]
+class History extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      history: {},
+      order: [],
     }
-  ]
-  let index = 0;
-  const records = HistoryList.map(e => {
-    let divider = <li key={index++}><Divider text={e.month}/></li>
-    let entries = e.entries.map(m => {
-      return (
-        <li key={index++}>
-          <RecordCard date={m.date.toLocaleDateString()}
-                      duration={m.duration + "h"}
-                      intensity={m.intensity}/>
-        </li>
-      )
-    })
+  }
+
+  componentDidMount() {
+    axios.get('/api/reports')
+      .then(({ data }) => {
+        this.parseHistory(data);
+      })
+      .catch((err) => console.log(err));
+  }
+  
+  getIntensity(key) {
+    const options = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum'];
+    return options.indexOf(key) + 1;
+  }
+
+  parseHistory(data) {
+    let history = {};
+    let order = [];
+
+    if (data.length) {
+      data.forEach((item) => {
+        const key = moment(item.start_date).format('YYYYMM');
+        const month = history[key] || [];
+        history = {
+          ...history,
+          [key]: [
+            ...month,
+            item,
+          ]
+        };
+      })
+
+      order = Object.keys(history).sort((objA, objB) => {
+        return objB - objA;
+      });
+    }
+
+    this.setState({ history, order });
+  }
+
+  render() {
+    const { history, order } = this.state;
+
     return (
-      <div key={index++} style={{width: '100%'}}>
-        {divider}
-        {entries}
-      </div>
-    )
-  })
+      <HistoryComponent >
+        <Header />
+        <h2>Recent migraines</h2>
+        <div style={{ width: '100%' }}>
+          <Records>
+            {!!order.length && order.map((chunk) => {
+              const month = chunk.substring(4);
+              const monthName = moment(month, 'MM').format('MMMM');
 
-  return (
-    <HistoryComponent >
-      <Header />
-      <h2>Recent migraines</h2>
-      <Records>
-        {records}
-        <li key="9999">
-          <Divider text="No more entries" />
-        </li>
-      </Records>
-      <Menubar />
-    </HistoryComponent>
-  );
+              return (
+                <li key={chunk}>
+                  <Records>
+                    <Divider text={monthName} />
+                    {history[chunk].map((item) => {
+                      const startDate = moment(item.start_date);
+                      const endDate = moment(item.end_date);
+                      const duration = moment.duration(endDate.diff(startDate));
+                      const formattedDuration = duration.asHours().toFixed(2).replace(/\.00$/, '');
+
+                      return (
+                        <li key={item._id}>
+                          <RecordCard date={startDate.format('DD.MM.YYYY')}
+                            duration={formattedDuration + "h"}
+                            intensity={this.getIntensity(item.pain)} />
+                        </li>
+                      )
+                    })}
+                  </Records>
+                </li>
+              );
+            })}
+            <li key="9999">
+              <Divider text="No more entries" />
+            </li>
+          </Records>
+        </div>
+        <Menubar />
+      </HistoryComponent>
+    );
+  }
 }
-
 
 export default History;
