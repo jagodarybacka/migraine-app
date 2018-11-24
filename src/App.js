@@ -12,10 +12,8 @@ import Register from './scenes/Register'
 import Settings from './scenes/Settings'
 import History from './scenes/history/History'
 import Summary from './scenes/form/Summary'
-import AtmosphericPressure from './components/reports/atmosphericPressure'
-import SummaryReport from './components/reports/summary'
-import OftenTogether from './components/reports/oftenTogether'
 import TextInput from './components/TextInput'
+import Reports from './scenes/Reports'
 
 const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {
   return (
@@ -31,13 +29,13 @@ const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {
 class App extends Component {
   render() {
     axios.defaults.withCredentials = true; // very important for session
-    const isLogged = window.localStorage.getItem('isLogged') === 'true';
+    const isLogged = true; //window.localStorage.getItem('isLogged') === 'true';
 
     return (
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/" component={OftenTogether}/>
+            <Route exact path="/" component={Reports}/>
             <Route path="/join" component={Join}/>
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
@@ -46,6 +44,7 @@ class App extends Component {
             <PrivateRoute exact isLogged={isLogged} path="/history" component={History} />
             <PrivateRoute exact isLogged={isLogged} path="/settings" component={Settings} />
             <PrivateRoute exact isLogged={isLogged} path="/summary" component={Summary} />
+            <PrivateRoute exact isLogged={isLogged} path="/reports" component={Reports} />
           </Switch>
         </Router>
       </div>

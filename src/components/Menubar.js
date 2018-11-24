@@ -50,7 +50,7 @@ const Menubar = () => {
         </Link>
       </MenuButton>
       <MenuButton>
-        <Link to="/history">
+        <Link to="/reports">
         <img src={stats} />
         <h6>Raports</h6>
         </Link>

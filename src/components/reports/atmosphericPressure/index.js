@@ -17,6 +17,7 @@ const MARGIN_BOTTOM = 30;
 const AtmosphericPressureComponent = styled.div`
   canvas {
     background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   }
 `
 
@@ -130,13 +131,10 @@ class AtmosphericPressure extends Component {
     const dateCoordinates = this.getDateCoordinates(parsedDates)
 
     data.forEach(entry => {
-      console.log(entry)
       const coordX = dateCoordinates.find(date => date.date.toString() == new Date(entry.date).toString()).coordX;
       const coordY = pressureCoordinates.find(pressure => pressure.pressure == Math.floor(entry.pressure)).coordY;
       this.drawDot(ctx, coordX, coordY)
-      console.log(coordX, coordY)
     })
-    console.log(data)
   }
 
   drawMigraine(ctx) {
@@ -192,7 +190,7 @@ class AtmosphericPressure extends Component {
   render() {
     return (
       <AtmosphericPressureComponent width={300} height={300}>
-        <canvas ref='canvas' width = {300} height = {400}/>
+        <canvas ref='canvas' width = {300} height = {350}/>
       </AtmosphericPressureComponent>
     )
   }

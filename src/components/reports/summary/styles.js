@@ -3,8 +3,11 @@ import styled from 'styled-components'
  export const SummaryComponent = styled.div`
   margin: 0 5%;
   background-color: #fff;
-  height: 100%;
   padding: 1.5em 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
 
   .summary__number {
     font-size: 1.8em;
@@ -26,6 +29,7 @@ import styled from 'styled-components'
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
   .summary__container--row {
     flex-direction: row;
@@ -35,6 +39,7 @@ import styled from 'styled-components'
   .summary__row {
     display: flex;
     margin-top: 1em;
+    justify-content: center;
   }
 `
 
@@ -43,5 +48,6 @@ import styled from 'styled-components'
   font-size: 0.9em;
   font-weight: 300;
   border-radius: 22px;
-  padding: 11px 27px
+  padding: 11px 27px;
+  margin: auto;
 `

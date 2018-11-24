@@ -1,10 +1,13 @@
 import styled from 'styled-components'
 
 export const OftenTogetherComponent = styled.div`
-  height: 100%;
   background: #fff;
   margin: 0 5%;
   padding: 1.5em 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
   .together__header {
     text-transform: uppercase;
     text-align: center;
@@ -25,7 +28,8 @@ export const Select = styled.select`
   font-size: 0.9em;
   font-weight: 300;
   border-radius: 22px;
-  padding: 11px 27px
+  padding: 11px 27px;
+  margin: auto;
 `
 export const TogetherField = styled.div`
   background: ${props => (props.color || '#00bcd4')};
