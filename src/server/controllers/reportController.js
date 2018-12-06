@@ -173,14 +173,14 @@ exports.report_stats = function(req, res, next) {
                 Report.find({user: found_user._id, start_date : { $gte: endDate }}).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
-                    const stats = tools.computeStats(found_reports, days);
+                    const stats = tools.computeStats(found_reports, days, now);
                     res.json(stats);
                 });
             } else {
                 Report.find({user: found_user._id}).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
-                    const stats = tools.computeStats(found_reports, days);
+                    const stats = tools.computeStats(found_reports, days, now);
                     res.json(stats);
                 });
             }
