@@ -123,7 +123,7 @@ class History extends Component {
                       const startDate = moment(item.start_date);
                       const endDate = moment(item.end_date);
                       const duration = moment.duration(endDate.diff(startDate));
-                      const formattedDuration = duration.asHours().toFixed(2).replace(/\.00$/, '');
+                      const formattedDuration = duration.asHours().toFixed(1).replace(/\.0$/, '');
 
                       return (
                         <li key={item._id}>
