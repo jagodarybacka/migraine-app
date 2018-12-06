@@ -32,10 +32,11 @@ p {
 h3 {
   text-transform: uppercase;
   font-size: 30px;
-  margin: 0 1rem;
+  margin: 0 1rem 0 0.5rem;
   font-weight: 300;
 }
 img {
+  padding: 0 0.5rem 0 1rem;
   width: 60px;
   height: 60px;
 }

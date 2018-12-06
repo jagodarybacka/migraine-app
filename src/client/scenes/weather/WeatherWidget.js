@@ -9,11 +9,16 @@ import partlyCloudyIcon from "../../assets/weather/partly-cloudy.png"
 import pressureIcon from "../../assets/weather/pressure.png"
 import rainIcon from "../../assets/weather/rain.png"
 import rainyIcon from "../../assets/weather/rainy.png"
+import rainyNightIcon from "../../assets/weather/rainy-night.png"
 import snowIcon from "../../assets/weather/snow.png"
 import stormIcon from "../../assets/weather/storm.png"
 import sunnyIcon from "../../assets/weather/sunny.png"
+import nightIcon from "../../assets/weather/clear-night.png"
+import cloudyNightIcon from "../../assets/weather/cloudy-night.png"
+import veryCloudyIcon from "../../assets/weather/very-cloudy.png"
+import foggyIcon from "../../assets/weather/foggy.png"
 import temperatureIcon from "../../assets/weather/temperature.png"
-import windyIcon from "../../assets/weather/windy.png"
+import windIcon from "../../assets/weather/wind.png"
 import lastDayIcon from "../../assets/weather/last-day.png"
 import { getGeolocation } from '../../utils/GetGeolocation'
 import { getWeather } from '../Weather'
@@ -21,15 +26,24 @@ import {Widget, Header, Element, Footer} from './WeatherWidget.styles'
 
 class WeatherWidget extends Component {
   icons = {
-    '01d' : sunnyIcon,
-    '02d' : partlyCloudyIcon,
-    '03d' : cloudyIcon,
-    '04d' : cloudyIcon,
-    '09d' : rainyIcon,
-    '10d' : rainyIcon,
-    '11d' : stormIcon,
-    '13d' : snowIcon,
-    '50d' : humidityIcon,
+    '01d' : sunnyIcon,        //clear
+    '02d' : partlyCloudyIcon, //few clouds
+    '03d' : cloudyIcon,       //cloudy
+    '04d' : veryCloudyIcon,   //very cloudy
+    '09d' : rainyIcon,        //strong rain
+    '10d' : rainyIcon,        //light rain
+    '11d' : stormIcon,        //storm
+    '13d' : snowIcon,         //snow
+    '50n' : foggyIcon,     //mist
+    '01n' : nightIcon,
+    '02n' : cloudyNightIcon,
+    '03n' : cloudyIcon,
+    '04n' : veryCloudyIcon,
+    '09n' : rainyIcon,
+    '10n' : rainyNightIcon,
+    '11n' : stormIcon,
+    '13n' : snowIcon,
+    '50n' : foggyIcon,
   }
   async componentDidMount() {
     const geolocation = await getGeolocation()
@@ -78,7 +92,7 @@ class WeatherWidget extends Component {
           </p>
         </Element>
         <Element>
-          <img src={windyIcon}/>
+          <img src={windIcon}/>
           <p>
             <span className="name">Wind speed</span>
             <span className="value">{wind}m/s</span>
