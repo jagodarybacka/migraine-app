@@ -9,6 +9,7 @@ const ButtonComp = styled.button`
   cursor: pointer;
   text-transform: uppercase;
 
+  outline: none;
   color: white;
   border: none;
   border-radius: 7px;

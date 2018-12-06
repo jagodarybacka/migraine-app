@@ -30,6 +30,7 @@ export const Select = styled.select`
   border-radius: 22px;
   padding: 11px 27px;
   margin: auto;
+  outline: none;
 `
 export const TogetherField = styled.div`
   background: ${props => (props.color || '#00bcd4')};

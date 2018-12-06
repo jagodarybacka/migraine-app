@@ -50,6 +50,7 @@ const Buttons = styled.div `
   max-width: 860px;
   justify-content: space-between;
   align-items: center;
+  outline: none;
 
   > button {
     min-width: auto;

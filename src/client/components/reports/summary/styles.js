@@ -50,4 +50,5 @@ import styled from 'styled-components'
   border-radius: 22px;
   padding: 11px 27px;
   margin: auto;
+  outline: none;
 `

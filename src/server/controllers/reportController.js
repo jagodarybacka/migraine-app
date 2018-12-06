@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 var Report = require("../models/reportModel");
 var mongoose = require('mongoose');
 var async = require('async');
-
+var tools = require('../helpers/stats.js');
 
 // Display report detail
 exports.report_detail = function(req, res, next) {
@@ -24,7 +24,6 @@ exports.report_detail = function(req, res, next) {
 exports.reports_all = function(req,res,next) {
 	userId = req.session.userId;
 	User.findById(userId, 'username _id email')
-	//.populate('reports')
 	.exec(function(err,found_user){
 		if(err) {return next(err);}
 		if(found_user)
@@ -149,6 +148,45 @@ exports.report_update = function(req, res, next) {
                 if (err) { return next(err); }
                 res.json(report);
             });
+        }
+    });
+};
+
+exports.report_stats = function(req, res, next) {
+    var days = req.params.days;
+    const now = new Date();
+    let endDate;
+    if(days == 30){
+        endDate = new Date(now.getFullYear(), now.getMonth()-1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    } else if(days == 60) {
+        endDate = new Date(now.getFullYear(), now.getMonth()-2, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    } else if(days ==365) {
+        endDate = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    }
+    console.log(endDate);
+    userId = req.session.userId;
+    User.findById(userId, 'username _id email')
+    .exec(function(err,found_user){
+        if(err) {return next(err);}
+        if(found_user)
+        {
+            if(endDate) {
+                Report.find({user: found_user._id, start_date : { $gte: endDate }}).sort({start_date: -1})
+                .exec(function(err,found_reports){
+                    if(err) {return next(err);}
+                    const stats = tools.computeStats(found_reports, days);
+                    console.log('stats',stats);
+                    res.json(stats);
+                });
+            } else {
+                Report.find({user: found_user._id}).sort({start_date: -1})
+                .exec(function(err,found_reports){
+                    if(err) {return next(err);}
+                    const stats = tools.computeStats(found_reports, days);
+                    console.log('stats',stats);
+                    res.json(stats);
+                });
+            }
         }
     });
 };

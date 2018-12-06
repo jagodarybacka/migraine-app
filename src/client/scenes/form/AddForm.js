@@ -94,7 +94,7 @@ const Pain = props => {
 }
 
 const Medicines = props => {
-  const answers = ['Ibuprofen', 'Paracetamol', 'Codeine', 'Triptans', 'Other']
+  const answers = ['Ibuprofen', 'Paracetamol', 'Codeine', 'Triptans']
   return (
     <MultipleChoice
       title="Medicines"
@@ -107,7 +107,7 @@ const Medicines = props => {
 }
 
 const Triggers = props => {
-  const answers = ['Alcohol', 'Stress', 'Tiredness', 'Dehydration', 'Hunger', 'Sport', 'Other']
+  const answers = ['Alcohol', 'Stress', 'Tiredness', 'Dehydration', 'Hunger', 'Sport']
   return (
     <MultipleChoice
       title="Possible Triggers"

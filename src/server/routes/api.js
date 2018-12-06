@@ -48,9 +48,14 @@ router.put("/reports/:id", auth_controller.isLoggedIn, report_controller.report_
 router.get("/reports",auth_controller.isLoggedIn,report_controller.reports_all);
 // router.get("/reports", report_controller.reports_all);
 
-/*  GET Reports */
+/*  GET most recent report */
 router.get("/recent",auth_controller.isLoggedIn,report_controller.report_recent);
 // router.get("/recent", report_controller.report_recent);
+
+/*  GET most recent report */
+router.get("/reports/stats/:days",auth_controller.isLoggedIn, report_controller.report_stats);
+
+
 
 /// USER ROUTES ///
 
