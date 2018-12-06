@@ -163,7 +163,6 @@ exports.report_stats = function(req, res, next) {
     } else if(days ==365) {
         endDate = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
     }
-    console.log(endDate);
     userId = req.session.userId;
     User.findById(userId, 'username _id email')
     .exec(function(err,found_user){
@@ -175,7 +174,6 @@ exports.report_stats = function(req, res, next) {
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
                     const stats = tools.computeStats(found_reports, days);
-                    console.log('stats',stats);
                     res.json(stats);
                 });
             } else {
@@ -183,7 +181,6 @@ exports.report_stats = function(req, res, next) {
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
                     const stats = tools.computeStats(found_reports, days);
-                    console.log('stats',stats);
                     res.json(stats);
                 });
             }
