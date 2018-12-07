@@ -34,7 +34,7 @@ class WeatherWidget extends Component {
     '10d' : rainyIcon,        //light rain
     '11d' : stormIcon,        //storm
     '13d' : snowIcon,         //snow
-    '50n' : foggyIcon,     //mist
+    '50d' : foggyIcon,        //mist
     '01n' : nightIcon,
     '02n' : cloudyNightIcon,
     '03n' : cloudyIcon,
@@ -45,7 +45,33 @@ class WeatherWidget extends Component {
     '13n' : snowIcon,
     '50n' : foggyIcon,
   }
-  async componentDidMount() {
+
+  componentDidMount() {
+    if(!localStorage.getItem('weather')  || !localStorage.getItem('weather_time')) {
+      this.saveWeather()
+    } else {
+      const now = new Date()
+      const then = new Date(localStorage.getItem('weather_time'))
+      const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
+      if(diff > 30) {
+        this.saveWeather();
+      } else {
+        const weather = JSON.parse(localStorage.getItem('weather')).weather
+        this.setState({
+          weather: weather,
+          temperature: weather.main.temp,
+          icon: String(weather.weather[0].icon),
+          description: weather.weather[0].description,
+          humidity: weather.main.humidity,
+          pressure: weather.main.pressure,
+          rain: weather.rain ? weather.rain.rain : 0,
+          wind: weather.wind.speed
+        })
+      }
+    }
+  }
+
+  async saveWeather(){
     const geolocation = await getGeolocation()
     const weather = await getWeather(geolocation)
     this.setState({
@@ -58,6 +84,8 @@ class WeatherWidget extends Component {
       rain: weather.rain ? weather.rain.rain : 0,
       wind: weather.wind.speed
     })
+    localStorage.setItem('weather', JSON.stringify(this.state));
+    localStorage.setItem('weather_time', new Date());
   }
   
   render() {

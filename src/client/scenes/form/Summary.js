@@ -67,7 +67,8 @@ const AcceptComponent = styled.button`
   border-radius: 32px;
   margin: 0 0 3rem 0;
   box-shadow: 0px 1px 12px 0px rgba(0,0,0,0.5);
-
+  outline: none; 
+  
   img {
     width: 28px;
     height: 28px;

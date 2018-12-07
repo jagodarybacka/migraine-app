@@ -39,13 +39,11 @@ exports.reports_all = function(req,res,next) {
 			});
 		}
 	});
-	//res.json({message: "Not implemented - user list!"});
 };
 
 exports.report_recent = function(req,res,next) {
 	userId = req.session.userId;
 	User.findById(userId, 'username _id email')
-	//.populate('reports')
 	.exec(function(err,found_user){
 		if(err) {return next(err);}
 		if(found_user)
@@ -68,10 +66,10 @@ exports.report_add = function(req, res,next) {
    userId = req.session.userId;
    start_time = req.body.start_time.split(":");
    start_date = req.body.start_date.split("-");
-   if(req.body.end_date && req.body.end_time){
+   start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
+   if(req.body.end_date && req.body.end_time) {
     end_time = req.body.end_time.split(":");
-    end_date = req.body.end_date.split("-");
-    start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
+    end_date = req.body.end_date.split("-"); 
     end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
     var report = new Report({
         user: userId,
@@ -82,8 +80,9 @@ exports.report_add = function(req, res,next) {
         mood: req.body.mood,
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
-        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers
-         });
+        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        weather: req.body.weather
+        });
     report.save(function (err,saved) {
         if (err) { return next(err); }
         console.log(saved);
@@ -91,7 +90,6 @@ exports.report_add = function(req, res,next) {
     });
    }
    else {
-    start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
     var report = new Report({
         user: userId,
         start_date: start,
@@ -100,7 +98,8 @@ exports.report_add = function(req, res,next) {
         mood: req.body.mood,
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
-        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers
+        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        weather: req.body.weather
          });
     report.save(function (err,saved) {
         if (err) { return next(err); }
@@ -142,6 +141,7 @@ exports.report_update = function(req, res, next) {
                     pain: req.body.pain,
                     medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
                     triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+                    weather: req.body.weather,
                     _id: id
                      });
             Report.findByIdAndUpdate(id, report, {}, function (err,mod_report) {

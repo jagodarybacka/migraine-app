@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
 import Button from '../components/Button'
-import Header from '../components/Header';
+import Header from '../components/Header'
+import FormSimple from '../components/FormSimple'
+import TextInput from '../components/TextInput'
+
 import {
   Start,
   End,
@@ -79,7 +82,16 @@ class RecordForm extends Component {
 
     this.state = {
       currentTab: 0,
-      data: {}
+      data: {
+        weather: JSON.parse(localStorage.getItem('weather')) || undefined
+      },
+      // addAnswer: false,
+      // placeToAdd: "",
+      // field: {
+      //   value: '',
+      //   isValid: true,
+      //   errorMsg: ''
+      // }
     };
 
     this.firstTab = 0;
@@ -87,39 +99,61 @@ class RecordForm extends Component {
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
   handleChangeTabValue(evt) {
     const { data } = this.state;
     const { name, value, type } = evt.target;
     let result;
-
-    if (type === 'checkbox') {
-      result = data[name] || [];
-      const shouldUncheck = result.indexOf(value);
-
-      if (shouldUncheck >= 0) {
-        result.splice(shouldUncheck, 1);
-      } else {
-        result = [
-          ...result,
-          value,
-        ];
-      }
-    } else {
-      result = value;
-    }
-
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        data: {
-          ...prevState.data,
-          [name]: result,
+    // if(value == "Other"){
+    //   this.setState(prevState => ({
+    //     addAnswer: !prevState.addAnswer,
+    //     placeToAdd: name
+    //   }))
+    // }
+    // else {
+      if (type === 'checkbox') {
+        result = data[name] || [];
+        const shouldUncheck = result.indexOf(value);
+  
+        if (shouldUncheck >= 0) {
+          result.splice(shouldUncheck, 1);
+        } else {
+          result = [
+            ...result,
+            value,
+          ];
         }
+      } else {
+        result = value;
       }
-    })
+  
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          data: {
+            ...prevState.data,
+            [name]: result,
+          }
+        }
+      })
+    // }
   }
+
+  // handleChange(event) {
+  //   const { value } = event.target;
+  //   console.log(value);
+  //   this.setState((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       field: {
+  //         ...prevState.field,
+  //         value : value,
+  //       }
+  //     }
+  //   })
+  // }
 
   changeTab(direction) {
     const { currentTab } = this.state;
@@ -138,7 +172,6 @@ class RecordForm extends Component {
 
   isComplete() {
     const { data } = this.state;
-    
     return (
       data.start_date &&
       data.start_time &&
@@ -153,7 +186,6 @@ class RecordForm extends Component {
 
   render() {
     const { currentTab, data } = this.state;
-
     return (
       <Container className="Form">
         <Header />

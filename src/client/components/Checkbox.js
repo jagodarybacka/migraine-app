@@ -52,23 +52,15 @@ class Checkbox extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isActive: false,
-      addAnswer: false
+      isActive: false
     }
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
-    // console.log(this.state);
+  handleClick(event) {
     this.setState(prevState => ({
       isActive: !prevState.isActive
     }))
-    // if(this.props.value == "Other"){
-    //   console.log("other")
-    //   this.setState(prevState => ({
-    //     addAnswer: !prevState.addAnswer
-    //   }))
-    // }
   }
 
   render() {

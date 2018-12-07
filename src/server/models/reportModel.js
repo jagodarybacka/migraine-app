@@ -43,7 +43,10 @@ medicines: [{
 triggers: [{
     type: String,
     // required: true
-}]
+}],
+weather: {
+    type: Object
+}
 });
 
 module.exports = mongoose.model('Report', ReportSchema);
