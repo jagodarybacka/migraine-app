@@ -71,7 +71,7 @@ const DateTime = (props) => {
 
   const el = props.date ? (
     <TimeDateComponent>
-      <label>Date</label>
+      <label>{props.label || 'Date'}</label>
       <img src={dateImg}/>
       <input
         name={`${props.name}_date`}
@@ -82,7 +82,7 @@ const DateTime = (props) => {
     </TimeDateComponent>
   ) : (
     <TimeDateComponent>
-      <label>Time</label>
+      <label>{props.label || 'Time'}</label>
       <img src={timeImg}/>
       <input
         name={`${props.name}_time`}

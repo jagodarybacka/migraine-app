@@ -4,6 +4,7 @@ import styled from 'styled-components'
   margin: 0 5%;
   background-color: #fff;
   padding: 1.5em 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -36,6 +37,11 @@ import styled from 'styled-components'
     align-items: baseline;
     margin-top: 1em;
   }
+  .summary__container--select {
+    display: relative;
+    width: 100%;
+    background: #eda;
+  }
   .summary__row {
     display: flex;
     margin-top: 1em;
@@ -51,4 +57,23 @@ import styled from 'styled-components'
   padding: 11px 27px;
   margin: auto;
   outline: none;
+`
+
+export const CustomIcon = styled.img`
+  width: 32px;
+  height: auto;
+  position: absolute;
+  top: 2em;
+  right: 1.5em;
+`
+export const CustomPeriodComponent = styled.div`
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 0;
+  h3 {
+    margin: 1em 0 0;
+  }
 `
