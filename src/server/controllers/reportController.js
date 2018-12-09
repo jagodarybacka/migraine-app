@@ -212,8 +212,14 @@ exports.report_stats_custom = function(req, res, next) {
             Report.find({user: found_user._id, start_date : { $gte: start}, end_date : { $lte: end } }).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
-                    const stats = tools.computeCustomStats(found_reports,start,end);
-                    res.json(stats);
+                    if(found_reports.length == 0){
+                        res.status(204);
+                        res.send("No content");
+                    }
+                    else {
+                        const stats = tools.computeCustomStats(found_reports,start,end);
+                        res.json(stats);
+                    }
                 });
         }
     });

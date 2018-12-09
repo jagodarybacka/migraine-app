@@ -19,7 +19,8 @@ class Summary extends Component {
       ],
       stats: {},
       customPeriodVisible: false,
-      customPeriodApplied: false
+      customPeriodApplied: false,
+      customPeriod: {}
     }
 
     this.handleSelectChange = this.handleSelectChange.bind(this);
@@ -27,7 +28,14 @@ class Summary extends Component {
   }
 
   getStats() {
-    const url = "reports/stats/" + this.state.selectedOption;
+    let url;
+    if(this.state.selectedOption == "custom"){
+      url = "reports/stats/custom/" + this.state.customPeriod.from + '-' + this.state.customPeriod.to;
+    }
+    else {
+      url = "reports/stats/" + this.state.selectedOption;
+    }
+    console.log(url);
       axios.get(url)
       .then((res) => {
         if(res.data) {
@@ -61,26 +69,17 @@ class Summary extends Component {
 
   handleCustomPeriod({from, to}) {
     console.log(from, to)
+    if(!this.state.options.includes((op) => op.value == "custom")){
+      this.state.options.unshift({value: 'custom', label: 'Custom period'})
+      }
     this.setState({
+      selectedOption: 'custom',
       customPeriodVisible: false,
-      customPeriodApplied: true
+      customPeriodApplied: true,
+      customPeriod: {from: from, to: to}
+    }, () => {
+      this.getStats();
     })
-    const url = "reports/stats/custom/" + from + '-' + to;
-      axios.get(url)
-      .then((res) => {
-        if(res.data) {
-          this.setState({
-            stats: res.data
-          })
-        }
-        else {
-          if(res.status == 204) {
-            return;
-          }
-          alert("Something went wrong");
-        }
-      })
-      .catch((err) => console.log(err));
   }
 
   render() {
@@ -90,11 +89,6 @@ class Summary extends Component {
     const noPainDays = stats.noPainDays || 0;
     const average = stats.average || 0;
     const total = stats.total || 0;
-
-    if (this.state.customPeriodApplied) {
-      selectedOption = 'custom'
-      options.unshift({value: 'custom', label: 'Custom period'})
-    }
 
     const customPeriod = this.state.customPeriodVisible ? (
       <CustomPeriod onConfirmFn={this.handleCustomPeriod.bind(this)}/>
