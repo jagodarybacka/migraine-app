@@ -47,6 +47,12 @@ import styled from 'styled-components'
     margin-top: 1em;
     justify-content: center;
   }
+  .summary__period {
+    text-align: center;
+    margin: 0.5em 0 0;
+    font-size: 1em;
+    opacity: 0.6;
+  }
 `
 
  export const Select = styled.select`
@@ -73,7 +79,12 @@ export const CustomPeriodComponent = styled.div`
   height: 100%;
   text-align: center;
   top: 0;
-  h3 {
+  .custom__cancel {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+  }
+  .custom__header {
     margin: 1em 0 0;
   }
 `
