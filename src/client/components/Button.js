@@ -13,12 +13,15 @@ const ButtonComp = styled.button`
   color: white;
   border: none;
   border-radius: 7px;
-  background-color: ${props => props.primary ?
-    '#006fd2' : '#67AEED'};
-
+  background-color: ${props => props.disabled ?
+    '#eee' : (
+      props.primary ?
+      '#006fd2' : '#67AEED'
+    )};
   font-family: 'Roboto', sans-serif;
   font-size: ${props => props.small ? '1em' : '1.2em'};
   font-weight: 700;
+  pointer-events: ${props => props.disabled ? 'none' : 'all'}
 
   &:hover {
     background: #276aa6;
