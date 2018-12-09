@@ -103,7 +103,7 @@ class RecordForm extends Component {
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
-    this.validate = this.validate.bind(this);
+    // this.validate = this.validate.bind(this);
     // this.handleChange = this.handleChange.bind(this);
   }
 
