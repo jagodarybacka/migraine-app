@@ -20,7 +20,10 @@ class Summary extends Component {
       stats: {},
       customPeriodVisible: false,
       customPeriodApplied: false,
-      customPeriod: {}
+      customPeriod: {
+        from: '',
+        to: ''
+      }
     }
 
     this.handleSelectChange = this.handleSelectChange.bind(this);
@@ -35,7 +38,6 @@ class Summary extends Component {
     else {
       url = "reports/stats/" + this.state.selectedOption;
     }
-    console.log(url);
       axios.get(url)
       .then((res) => {
         if(res.data) {
@@ -68,7 +70,6 @@ class Summary extends Component {
   }
 
   handleCustomPeriod({from, to}) {
-    console.log(from, to)
     if(!this.state.options.includes((op) => op.value == "custom")){
       this.state.options.unshift({value: 'custom', label: 'Custom period'})
       }
