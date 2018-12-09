@@ -7,11 +7,15 @@ import axios from'axios';
 import { validateEmail, validateLength } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
-
+import {languageText} from '../languages/MultiLanguage.js';
 
 class Login extends Component {
   constructor(props) {
     super(props);
+
+    if (window.localStorage.getItem('isLogged') === 'true') {
+      props.history.push('/home');
+    }
 
     this.state = {
       fields: {
@@ -54,14 +58,14 @@ class Login extends Component {
 
     if (!validateEmail(email.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+      fields = this.changeValidation(fields, 'email', false, languageText.login.invalidEmail);
     } else {
       fields = this.changeValidation(fields, 'email', true);
     }
 
     if (!validateLength(password.value, 8)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters');
+      fields = this.changeValidation(fields, 'password', false, languageText.login.error8chars);
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
@@ -110,7 +114,7 @@ class Login extends Component {
     const { email, password } = this.state.fields;
 
     return (
-      <FormSimple name="Welcome Back" submit="Log In" onSubmit={this.handleSubmit}>
+      <FormSimple name={languageText.login.welcome} submit={languageText.login.logIn} onSubmit={this.handleSubmit}>
         <TextInput
           type="email"
           id="email"
@@ -123,7 +127,7 @@ class Login extends Component {
         <TextInput
           type="password"
           id="password"
-          name="Password"
+          name={languageText.login.password}
           value={password.value}
           isValid={password.isValid}
           errorMsg={password.errorMsg}

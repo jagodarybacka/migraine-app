@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import home from '../assets/home.png'
 import settings from '../assets/settings.png'
 import stats from '../assets/stats.png'
+import {languageText} from '../languages/MultiLanguage.js';
 
 const Menu = styled.ul`
   position: fixed;
@@ -46,19 +47,19 @@ const Menubar = () => {
       <MenuButton>
         <Link to="/home">
         <img src={home} />
-        <h6>Home</h6>
+        <h6>{languageText.menuBar.home}</h6>
         </Link>
       </MenuButton>
       <MenuButton>
         <Link to="/history">
         <img src={stats} />
-        <h6>Raports</h6>
+        <h6>{languageText.menuBar.reports}</h6>
         </Link>
       </MenuButton>
       <MenuButton>
         <Link to="/settings">
           <img src={settings} />
-          <h6>Settings</h6>
+          <h6>{languageText.menuBar.settings}</h6>
         </Link>
       </MenuButton>
     </Menu>

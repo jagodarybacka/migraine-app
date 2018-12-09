@@ -9,9 +9,9 @@ const MultipleChoice = (props) => {
   const items = answers.map((answer, index) => {
     return (
       <Checkbox
-        text={answer}
+        text={answer.text}
         key={index}
-        value={answer}
+        value={answer.value}
         name={props.name}
         onChange={props.onChange}
         color={props.color}

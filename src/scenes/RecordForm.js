@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
+import {languageText} from '../languages/MultiLanguage.js';
 
 import Button from '../components/Button'
 import Header from '../components/Header';
@@ -70,7 +71,7 @@ const Buttons = styled.div `
   }
 `;
 
-const Hello = () => (<h1>Record new Migraine</h1>)
+const Hello = () => (<h1>{languageText.recordForm.title}</h1>)
 
 class RecordForm extends Component {
   constructor(props) {
@@ -191,7 +192,7 @@ class RecordForm extends Component {
         {this.isComplete() && (
           <div>
             <Link to={{ pathname: '/summary', state: { data }}}>
-              <Button text="Summary" />
+              <Button text={languageText.recordForm.summary} />
             </Link>
           </div>
         )}
@@ -202,7 +203,7 @@ class RecordForm extends Component {
             disabled={currentTab === this.firstTab}
             text="<"
           />
-          <p> Migraine Record</p>
+          <p> {languageText.recordForm.migraineRecord}</p>
           <Button
             onClick={() => this.changeTab('next')}
             disabled={currentTab === this.lastTab}

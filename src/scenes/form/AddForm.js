@@ -19,6 +19,7 @@ import questionmarkColor from '../../assets/questionmark-color.png'
 import Date from './Date';
 import SingleChoice from './SingleChoice';
 import MultipleChoice from './MultipleChoice';
+import {languageText} from '../../languages/MultiLanguage.js';
 
 const Start = props => {
   return (
@@ -42,10 +43,10 @@ const End = props => {
 }
 
 const Menstruation = props => {
-  const answers = ['Yes', 'Coming Soon', 'No']
+  const answers = languageText.addForm.menstruationAnswers;//['Yes', 'Coming Soon', 'No']
   return (
     <SingleChoice
-      title="Menstruation"
+      title={languageText.addForm.menstruation}
       name="menstruation"
       answers={answers}
       onChange={props.onChange}
@@ -55,10 +56,10 @@ const Menstruation = props => {
 }
 
 const Localization = props => {
-  const answers = ['Home', 'Outside', 'Transit', 'Work', 'Bed','School']
+  const answers = languageText.addForm.localizationAnswers;//['Home', 'Outside', 'Transit', 'Work', 'Bed','School']
   return (
     <SingleChoice
-      title="Localization"
+      title={languageText.addForm.localization}
       name="localization"
       answers={answers}
       onChange={props.onChange}
@@ -68,10 +69,10 @@ const Localization = props => {
 }
 
 const Mood = props => {
-  const answers = ['Very Good', 'Good', 'Ok', 'Bad', 'Very Bad']
+  const answers = languageText.addForm.moodAnswers;//['Very Good', 'Good', 'Ok', 'Bad', 'Very Bad']
   return (
     <SingleChoice
-      title="Mood"
+      title={languageText.addForm.mood}
       name="mood"
       answers={answers}
       onChange={props.onChange}
@@ -81,10 +82,10 @@ const Mood = props => {
 }
 
 const Pain = props => {
-  const answers = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum']
+  const answers =languageText.addForm.painAnswers;// ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum']
   return (
     <SingleChoice
-      title="Pain Intensity"
+      title={languageText.addForm.pain}
       name="pain"
       answers={answers}
       onChange={props.onChange}
@@ -94,10 +95,10 @@ const Pain = props => {
 }
 
 const Medicines = props => {
-  const answers = ['Ibuprofen', 'Paracetamol', 'Codeine', 'Triptans']
+  const answers = languageText.addForm.medicinesAnswers;//['Ibuprofen', 'Paracetamol', 'Codeine', 'Triptans']
   return (
     <MultipleChoice
-      title="Medicines"
+      title={languageText.addForm.medicines}
       name="medicines"
       answers={answers}
       onChange={props.onChange}
@@ -107,10 +108,10 @@ const Medicines = props => {
 }
 
 const Triggers = props => {
-  const answers = ['Alcohol', 'Stress', 'Tiredness', 'Dehydration', 'Hunger', 'Sport']
+  const answers = languageText.addForm.triggersAnswers;//['Alcohol', 'Stress', 'Tiredness', 'Dehydration', 'Hunger', 'Sport']
   return (
     <MultipleChoice
-      title="Possible Triggers"
+      title={languageText.addForm.triggers}
       name="triggers"
       answers={answers}
       onChange={props.onChange}

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import {languageText} from '../languages/MultiLanguage.js';
+import remove from '../assets/remove.png'
 
 const Card = styled.div`
   background-color: ${props => props.color};
@@ -22,18 +24,25 @@ const Card = styled.div`
   p {
     margin: 0.5rem;
   }
+  .removeCard{
+    position: absolute;
+    top: 1.5rem;
+    right: -2.5rem;
+    cursor: pointer;
+  }
 `
 
 const RecordCard = (props) => {
   const colorList = ['#AADD6D', '#A7C651', '#EAB933', '#ED8836', '#EF6F5A']
   const color = colorList[props.intensity-1] || colorList[0] ;
-  const strengthList = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum']
+  const strengthList = languageText.addForm.painAnswers.map(a => a.text)
   const strength = strengthList[props.intensity-1];
   return (
     <Card className="RecordCard" color={color}>
       <time>{props.date}</time>
-      <h4>{props.type ? props.type : "Migraine"}</h4>
+      <h4>{props.type ? props.type : languageText.recordCard.migraine}</h4>
       <p>{props.duration}  {strength}</p>
+      {!props.hideRemoveIcon && <img title="Delete card" className="removeCard" onClick={props.removeCard} src={remove}/>}
     </Card>
   );
 }

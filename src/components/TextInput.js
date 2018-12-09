@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
+import {languageText} from '../languages/MultiLanguage.js';
 const Input = styled.input`
   display: block;
 
@@ -57,7 +57,7 @@ const Field = styled.div`
 
 const TextInput = (props) => {
   const { id, type, name, value, isValid, errorMsg, onChange } = props;
-  const text = `Enter your ${name.toLowerCase()}`
+  const text = languageText.textInput.enterYour + ` ${name.toLowerCase()}`
   const hasError = !isValid && !!errorMsg;
 
   return (

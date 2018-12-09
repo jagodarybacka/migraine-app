@@ -55,7 +55,7 @@ router.post("/users",
 	user_controller.validateRegister,
 	user_controller.register,
 	//upload,
-	passport.authenticate("local", {session: true}),
+	//passport.authenticate("local", {session: true}),
 	(req,res)=>{
 		console.log(res);
 		res.json(

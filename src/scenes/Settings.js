@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button';
 import axios from 'axios';
+import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
 
 const SettingsComponent = styled.div`
   justify-content: center;
@@ -13,6 +14,10 @@ const SettingsComponent = styled.div`
   padding: 7rem 0;
   margin: 0;
   text-align: center;
+
+  .chosenLang{
+    color: red;
+  }
 `
 class Settings extends Component {
   constructor(props){
@@ -58,11 +63,28 @@ class Settings extends Component {
     console.log(this.state.isLogged)
   }
 
+  setNewLanguage(lang) {
+    setLanguage(lang);
+    window.location.reload();
+  }
+
   render() {
+    let currentLang = getLanguage();
     return (
       <SettingsComponent className="Settings">
+        <div>
+          <h2>{languageText.settings.chooseLanguage}</h2>
+          <div>
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang == "eng" ? true : false} />
+          </div>
+          <div>
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang == "pl" ? true : false} />
+          </div>
+        </div>
         <Header />
-          <Button type="submit" onClick={this.handleLogOut} text="Log out" primary />
+        <div style={{ marginTop: '60px'}}>
+          <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
+        </div>
         <Menubar />
       </SettingsComponent>
     );

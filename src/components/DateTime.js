@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import dateImg from '../assets/date.png'
 import timeImg from '../assets/time.png'
 
-
+import {languageText} from '../languages/MultiLanguage.js';
 
 const Input = styled.input`
   background-color: transparent;
@@ -61,9 +61,9 @@ const TimeDateComponent = styled.div`
 `
 
 const DateTime = (props) => {
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
+  const monthNames = languageText.dateTime.monthNames;//["January", "February", "March", "April", "May", "June",
+    //"July", "August", "September", "October", "November", "December"
+ // ];
   const time = `${new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()}
                 :
                 ${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
@@ -71,7 +71,7 @@ const DateTime = (props) => {
 
   const el = props.date ? (
     <TimeDateComponent>
-      <label>Date</label>
+      <label>{languageText.dateTime.date}</label>
       <img src={dateImg}/>
       <input
         name={`${props.name}_date`}
@@ -82,7 +82,7 @@ const DateTime = (props) => {
     </TimeDateComponent>
   ) : (
     <TimeDateComponent>
-      <label>Time</label>
+      <label>{languageText.dateTime.time}</label>
       <img src={timeImg}/>
       <input
         name={`${props.name}_time`}

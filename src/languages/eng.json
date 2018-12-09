@@ -1,0 +1,130 @@
+{
+	"settings":{
+	    "chooseLanguage": "Choose language", 
+		"eng": "English",
+		"pol": "Polish",
+		"logout": "Logout"
+	},
+	"home":{
+	    "add": "Add headache"
+	},
+	"join":{
+	    "migraine": "Migraine",
+		"logIn": "Log In",
+		"signIn": "Sign In",
+		"orJoinWith": "or join with"
+	},
+	"login":{
+		"invalidEmail": "Invalid email address.",
+		"error8chars": "This field must be greater than 8 characters",
+		"password": "Password",
+		"welcome": "Welcome again!",
+		"logIn": "Log In"
+	},
+	"recordForm":{
+		"title": "Record new Migraine",
+		"summary": "Summary",
+		"migraineRecord": "Migraine Record"
+	},
+	"welcome":{
+		"migraine": "Migraine",
+		"tapToStart": "Tap to start..."
+	},
+	"recordCard":{
+		"migraine": "Migraine"
+	},
+	"menuBar":{
+		"home": "Home",
+		"reports": "Raports",
+		"settings": "Settings"
+	},
+	"register":{
+		"invalidEmail": "Invalid email address.",
+		"error4chars": "This field must be greater than 4 characters",
+		"error8chars": "This field must be greater than 8 characters",
+		"password": "Password",
+		"logIn": "Log In",
+		"username": "Username",
+		"signUp": "Sign Up",
+		"getStarted": "Get Started"
+	},
+	"historyWidget":{
+		"title": "Recent migraine",
+		"seeAll": "See all...",
+		"duration": "3 hours"
+	},
+	"history":{
+		"noMore": "No more entries",
+		"title":"Recent migraines"
+	},
+	"date":{
+		"painStarted": "Pain started at",
+		"painEnded":"Pain ended at",
+		"now":"Now",
+		"notYet":"Not Yet"
+	},
+	"dateTime":{
+		"date": "Date",
+		"time":"Time",
+		"monthNames": ["January", "February", "March", "April", "May", "June",
+						"July", "August", "September", "October", "November", "December"]
+	},
+	"textInput":{
+		"enterYour": "Enter your"
+	},
+	"addForm":{
+		"acceptRaport": "Accept report?",
+		"start": "Start",
+		"notYet":"Not yet",
+		"end": "End",
+		"summary": "Summary",
+		"menstruation": "Menstruation",
+		"localization": "Localization",
+		"mood": "Mood",
+		"pain": "Pain Intensity",
+		"medicines": "Medicines",
+		"triggers": "Possible Triggers",
+		"menstruationAnswers": [
+			{"text": "Yes", "value": "Yes"},
+			{"text": "Coming Soon", "value": "Coming Soon"},
+			{"text": "No", "value": "No"}
+		],
+		"localizationAnswers": [
+			{"text": "Home", "value": "Home"},
+			{"text": "Outside", "value": "Outside"},
+			{"text": "Transit", "value": "Transit"},
+			{"text": "Work", "value": "Work"},
+			{"text": "Bed", "value": "Bed"},
+			{"text": "School", "value": "School"}
+		],
+		"moodAnswers": [
+			{"text": "Very Good", "value": "Very Good"},
+			{"text": "Good", "value": "Good"},
+			{"text": "Ok", "value": "Ok"},
+			{"text": "Bad", "value": "Bad"},
+			{"text": "Very Bad", "value": "Very Bad"}
+		],
+		"painAnswers": [
+			{"text": "No Pain", "value": "No Pain"},
+			{"text": "Mild", "value": "Mild"},
+			{"text": "Moderate", "value": "Moderate"},
+			{"text": "Intense", "value": "Intense"},
+			{"text": "Maximum", "value": "Maximum"}
+		],
+		"medicinesAnswers": [
+			{"text": "Ibuprofen", "value": "Ibuprofen"},
+			{"text": "Paracetamol", "value": "Paracetamol"},
+			{"text": "Codeine", "value": "Codeine"},
+			{"text": "Triptans", "value": "Triptans"}
+		],
+		"triggersAnswers": [
+			{"text": "Alcohol", "value": "Alcohol"},
+			{"text": "Stress", "value": "Stress"},
+			{"text": "Tiredness", "value": "Tiredness"},
+			{"text": "Dehydration", "value": "Dehydration"},
+			{"text": "Hunger", "value": "Hunger"},
+			{"text": "Sport", "value": "Sport"}
+		]
+	}
+	
+}

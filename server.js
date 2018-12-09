@@ -12,7 +12,7 @@ const expressValidator = require("express-validator");
 const errorHandlers = require("./handlers/errorHandlers");
 const cors = require("cors");
 require("./handlers/passport");
-// require("dotenv").config();
+require("dotenv").config();
 var api = require("./routes/api");
 
 var app = express();

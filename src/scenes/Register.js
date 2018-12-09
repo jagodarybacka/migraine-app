@@ -1,17 +1,22 @@
-// import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import React, { Component } from "react";
-import axios from "axios";
-import { Route, Redirect } from "react-router";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Route, Redirect } from 'react-router';
 
 import { validateEmail, validateLength } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
+import {languageText} from '../languages/MultiLanguage.js';
 
 class Register extends Component {
 	constructor(props) {
-		super(props);
+    super(props);
+    
+    if (window.localStorage.getItem('isLogged') === 'true') {
+      props.history.push('/home');
+    }
+
 		this.state = {
       fields: {
         username: {
@@ -58,21 +63,21 @@ class Register extends Component {
 
     if (!validateLength(username.value, 4)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'username', false, 'This field must be greater than 4 characters');
+      fields = this.changeValidation(fields, 'username', false, languageText.register.error4chars);
     } else {
       fields = this.changeValidation(fields, 'username', true);
     }
 
     if (!validateEmail(email.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+      fields = this.changeValidation(fields, 'email', false, languageText.register.invalidEmail);
     } else {
       fields = this.changeValidation(fields, 'email', true);
     }
 
     if (!validateLength(password.value, 8)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters');
+      fields = this.changeValidation(fields, 'password', false, languageText.register.error8chars);
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
@@ -119,11 +124,11 @@ class Register extends Component {
     const { username, email, password } = this.state.fields;
 
 		return (
-      <FormSimple name="Sign Up" submit="Get started" onSubmit={this.handleSubmit}>
+      <FormSimple name={languageText.register.signUp} submit={languageText.register.getStarted} onSubmit={this.handleSubmit}>
       <TextInput
         type="text"
         id="username"
-        name="Username"
+        name={languageText.register.username}
         value={username.value}
         isValid={username.isValid}
         errorMsg={username.errorMsg}
@@ -132,7 +137,7 @@ class Register extends Component {
       <TextInput
         type="email"
         id="email"
-        name="Email"
+        name='email'
         value={email.value}
         isValid={email.isValid}
         errorMsg={email.errorMsg}
@@ -141,7 +146,7 @@ class Register extends Component {
       <TextInput
         type="password"
         id="password"
-        name="Password"
+        name={languageText.register.password}
         value={password.value}
         isValid={password.isValid}
         errorMsg={password.errorMsg}
