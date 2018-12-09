@@ -36,6 +36,9 @@ class Summary extends Component {
           })
         }
         else {
+          if(res.status == 204) {
+            return;
+          }
           alert("Something went wrong");
         }
 
@@ -62,6 +65,22 @@ class Summary extends Component {
       customPeriodVisible: false,
       customPeriodApplied: true
     })
+    const url = "reports/stats/custom/" + from + '-' + to;
+      axios.get(url)
+      .then((res) => {
+        if(res.data) {
+          this.setState({
+            stats: res.data
+          })
+        }
+        else {
+          if(res.status == 204) {
+            return;
+          }
+          alert("Something went wrong");
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {

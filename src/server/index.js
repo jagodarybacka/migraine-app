@@ -41,7 +41,7 @@ app.use(expressValidator());
 app.use(session({
 	cookie: {maxAge: 10 * 60 * 60 * 1000}, // make it short for debugging reasons
 	secret: process.env.SECRET,
-	resave: true,
+	resave: false,
 	saveUninitialized: false,
 	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));

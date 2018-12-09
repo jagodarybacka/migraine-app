@@ -1,8 +1,11 @@
 
 
 exports.logout = (req, res) => {
-	req.logout();
-	res.json({message: "Logged out succesfully."});
+	req.session.destroy(function (err) {
+		req.logout();
+		res.clearCookie('connect.sid');
+		res.json({message: "Logged out succesfully."});
+	});
 };
 
 exports.isLoggedIn = (req, res, next) => {
@@ -11,7 +14,6 @@ exports.isLoggedIn = (req, res, next) => {
 		next(); 
 		return;
 	}
-	// console.log("\n Not logged. \n");
 	res.status(401);
 	res.send("Not logged in");
 };

@@ -173,17 +173,48 @@ exports.report_stats = function(req, res, next) {
                 Report.find({user: found_user._id, start_date : { $gte: endDate }}).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
-                    const stats = tools.computeStats(found_reports, days, now);
-                    res.json(stats);
+                    if(found_reports.length == 0){
+                        res.status(204);
+                        res.send("No content");
+                    }
+                    else {
+                        const stats = tools.computeStats(found_reports, days, now);
+                        res.json(stats);
+                    }
                 });
             } else {
                 Report.find({user: found_user._id}).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
-                    const stats = tools.computeStats(found_reports, days, now);
-                    res.json(stats);
+                    if(found_reports.length == 0){
+                        res.status(204);
+                        res.send("No content");
+                    }
+                    else {
+                        const stats = tools.computeStats(found_reports, days, now);
+                        res.json(stats);
+                    }
                 });
             }
+        }
+    });
+};
+
+exports.report_stats_custom = function(req, res, next) {
+    var start = new Date(req.params.start);
+    var end = new Date(req.params.end);
+    userId = req.session.userId;
+    User.findById(userId, 'username _id email')
+    .exec(function(err,found_user){
+        if(err) {return next(err);}
+        if(found_user)
+        {
+            Report.find({user: found_user._id, start_date : { $gte: start}, end_date : { $lte: end } }).sort({start_date: -1})
+                .exec(function(err,found_reports){
+                    if(err) {return next(err);}
+                    const stats = tools.computeCustomStats(found_reports,start,end);
+                    res.json(stats);
+                });
         }
     });
 };

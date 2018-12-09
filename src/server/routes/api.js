@@ -56,6 +56,8 @@ router.get("/recent",auth_controller.isLoggedIn,report_controller.report_recent)
 router.get("/reports/stats/:days",auth_controller.isLoggedIn, report_controller.report_stats);
 
 
+router.get("/reports/stats/custom/:start-:end",auth_controller.isLoggedIn, report_controller.report_stats_custom);
+
 
 /// USER ROUTES ///
 
