@@ -62,9 +62,9 @@ class Reports extends Component {
           MODE[this.state.mode].component
         }
         <Buttons>
-          <Button small img={summaryImg} onClick={() => this.toggleReport(1)}/>
-          <Button small img={pressureImg} onClick={() => this.toggleReport(2)}/>
-          <Button small img={oftenTogetherImg} onClick={() => this.toggleReport(3)}/>
+          <Button small img={summaryImg} primary={this.state.mode === 1} onClick={() => this.toggleReport(1)}/>
+          <Button small img={pressureImg} primary={this.state.mode === 2} onClick={() => this.toggleReport(2)}/>
+          <Button small img={oftenTogetherImg} primary={this.state.mode === 3} onClick={() => this.toggleReport(3)}/>
         </Buttons>
         <Menubar />
       </div>
