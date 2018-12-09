@@ -28,6 +28,7 @@ class Summary extends Component {
 
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.getStats = this.getStats.bind(this);
+    this.handleCustomPeriod = this.handleCustomPeriod.bind(this);
   }
 
   getStats() {
@@ -47,6 +48,9 @@ class Summary extends Component {
         }
         else {
           if(res.status == 204) {
+            this.setState({
+              stats: {}
+            })
             return;
           }
           alert("Something went wrong");

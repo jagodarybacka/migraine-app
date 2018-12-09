@@ -85,6 +85,10 @@ class RecordForm extends Component {
       data: {
         weather: JSON.parse(localStorage.getItem('weather')) || undefined
       },
+      dateValidation: {
+        valid: true,
+        err_msg: ""
+      }
       // addAnswer: false,
       // placeToAdd: "",
       // field: {
@@ -99,10 +103,12 @@ class RecordForm extends Component {
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
+    this.validate = this.validate.bind(this);
     // this.handleChange = this.handleChange.bind(this);
   }
 
   handleChangeTabValue(evt) {
+    console.log(evt);
     const { data } = this.state;
     const { name, value, type } = evt.target;
     let result;
@@ -155,8 +161,32 @@ class RecordForm extends Component {
   //   })
   // }
 
+  // validate() {
+  //   const data = this.state.data;
+  //   if (!data.start_date) {
+  //     this.setState({
+  //       dateValidation: {
+  //         valid: false,
+  //         err_msg: "No start date"
+  //       }
+  //     }, () => {
+  //       console.log(this.state);
+  //     });
+  //     return;
+  //   } else {
+  //     const d1 = new Date(data.start_date);
+  //     const d2 = new Date(data.end_date);
+  //     console.log(d1,d2);
+  //     this.setState({valid: true});
+  //     return;
+  //   }
+  // }
+
   changeTab(direction) {
     const { currentTab } = this.state;
+    // if(direction=="next" && currentTab==1){
+    //   this.validate();
+    // }
     let nextTab = currentTab;
 
     if (direction === 'next') {

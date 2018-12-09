@@ -47,6 +47,10 @@ class Reports extends Component {
     }
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0)
+  }
+
   toggleReport(mode) {
     this.setState({
       mode

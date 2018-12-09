@@ -47,6 +47,10 @@ class Settings extends Component {
 			this.setState({message: "Failed to log out!"});
 		});
   };
+  
+  componentDidMount() {
+    window.scrollTo(0, 0)
+  };
 
   componentWillMount(){
     const isLoggedIn = localStorage.getItem('isLogged');
