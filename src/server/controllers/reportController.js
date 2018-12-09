@@ -28,13 +28,13 @@ exports.reports_all = function(req,res,next) {
 		if(err) {return next(err);}
 		if(found_user)
 		{
-			console.log('user');
-			console.log(found_user);
+			// console.log('user');
+			// console.log(found_user);
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
 				if(err) {return next(err);}
-				console.log('reports');
-				console.log(found_reports);
+				// console.log('reports');
+				// console.log(found_reports);
 				res.json(found_reports);
 			});
 		}
@@ -48,13 +48,13 @@ exports.report_recent = function(req,res,next) {
 		if(err) {return next(err);}
 		if(found_user)
 		{
-			console.log('user');
-			console.log(found_user);
+			// console.log('user');
+			// console.log(found_user);
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
 				if(err) {return next(err);}
-				console.log('reports');
-				console.log(found_reports);
+				// console.log('reports');
+				// console.log(found_reports);
 				res.json(found_reports[0]);
 			});
 		}
@@ -85,7 +85,7 @@ exports.report_add = function(req, res,next) {
         });
     report.save(function (err,saved) {
         if (err) { return next(err); }
-        console.log(saved);
+        // console.log(saved);
         res.json(saved);
     });
    }
@@ -103,7 +103,7 @@ exports.report_add = function(req, res,next) {
          });
     report.save(function (err,saved) {
         if (err) { return next(err); }
-        console.log(saved);
+        // console.log(saved);
         res.json(saved);
     });
    }
