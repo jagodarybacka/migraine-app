@@ -68,13 +68,21 @@ class Summary extends Component {
     const option = event.target.value;
     this.setState({
       selectedOption: option,
+      customPeriodApplied: option === 'custom'
     }, () => {
       this.getStats();
     });
   }
 
-  handleCustomPeriod({from, to}) {
-    if(!this.state.options.includes((op) => op.value == "custom")){
+  handleCustomPeriod({from, to, cancel}) {
+    if (cancel) {
+      this.setState({
+        customPeriodVisible: false
+      })
+      return;
+    }
+
+    if (!this.state.options.includes((op) => op.value == "custom")){
       this.state.options.unshift({value: 'custom', label: 'Custom period'})
       }
     this.setState({
@@ -99,6 +107,9 @@ class Summary extends Component {
       <CustomPeriod onConfirmFn={this.handleCustomPeriod.bind(this)}/>
     ) : '';
 
+    const customPeriodRange = this.state.customPeriodApplied && (
+      <p className="summary__period">{this.state.customPeriod.from.toDateString()}<br />{this.state.customPeriod.to.toDateString()}</p>
+    )
 
     return (
       <SummaryComponent>
@@ -115,6 +126,7 @@ class Summary extends Component {
           })}
         </Select>
         <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/>
+        { customPeriodRange }
         <div className='summary__container summary__container--row'>
           <span className='summary__number summary__number--accent'>{attacks}</span>
           <p className='summary__text'>{attacks === 1 ? 'migraine' : 'migraines'}</p>

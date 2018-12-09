@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DateTime from '../../DateTime'
 import Button from '../../Button'
+import ExitIcon from '../../../assets/exit.png'
 import { CustomPeriodComponent } from './styles'
 
 class CustomPeriod extends Component {
@@ -19,9 +20,9 @@ class CustomPeriod extends Component {
 
   handleDateChange(ev, name) {
   const state = {
-    ...this.state,
-    [name]: new Date(ev.target.value)
-  }
+      ...this.state,
+      [name]: new Date(ev.target.value)
+    }
     this.setState(state)
     this.validate(state)
   }
@@ -45,7 +46,8 @@ class CustomPeriod extends Component {
     )
     return (
       <CustomPeriodComponent>
-        <h3>Choose custom period</h3>
+        <h3 className="custom__header">Choose custom period</h3>
+        <img className="custom__cancel" src={ExitIcon} onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
         <DateTime date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
         <DateTime date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
         { confirm }
