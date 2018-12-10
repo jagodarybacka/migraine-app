@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
+
 // Require controller modules
 const auth_controller = require("../controllers/authenticationController");
 var user_controller = require("../controllers/userController");
@@ -86,8 +87,19 @@ router.post("/login",function(req,res,next){
 	})(req, res, next);
 });
 
-
 /* Logout User */
 router.get("/logout", auth_controller.logout);
+
+/* Change password */
+router.put("/password", user_controller.change_password);
+
+/* Forgotten password, send email */
+router.post("/forgot", user_controller.forgotten_password);
+
+/* Reset password */
+router.post('/reset/:token', user_controller.reset_password);
+
+/* Change user data */
+router.put('/users/change', user_controller.change_user_data);
 
 module.exports = router;

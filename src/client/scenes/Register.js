@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Route, Redirect } from 'react-router';
 
-import { validateEmail, validateLength } from '../utils/Validators';
+import { validateEmail, validateLength, validatePassword } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
 
@@ -74,12 +74,13 @@ class Register extends Component {
       fields = this.changeValidation(fields, 'email', true);
     }
 
-    if (!validateLength(password.value, 8)) {
+    if (!validatePassword(password.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters');
+      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters and contains at least one uppercase letter, one lowercase letter, one digit and one special symbol');
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
+
 
     this.setState({ fields });
 

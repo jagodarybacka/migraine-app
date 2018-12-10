@@ -6,3 +6,8 @@ export function validateEmail(email) {
 export function validateLength(text, length) {
   return text.length >= length
 }
+
+export function validatePassword(password) {
+  var re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  return re.test(String(password));
+}

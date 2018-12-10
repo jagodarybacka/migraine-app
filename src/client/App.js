@@ -6,6 +6,8 @@ import axios from 'axios';
 import Welcome from './scenes/Welcome'
 import Join from './scenes/Join'
 import Login from './scenes/Login'
+import ForgottenPassword from './scenes/ForgottenPassword'
+import ResetPassword from './scenes/ResetPassword'
 import Home from './scenes/Home'
 import RecordForm from './scenes/RecordForm'
 import Register from './scenes/Register'
@@ -39,6 +41,8 @@ class App extends Component {
             <Route path="/join" component={Join}/>
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
+            <Route path="/forgot" component={ForgottenPassword}/>
+            <Route path="/reset/:token" component={ResetPassword}/>
             <PrivateRoute exact isLogged={isLogged} path="/home" component={Home} />
             <PrivateRoute exact isLogged={isLogged} path="/add" component={RecordForm} />
             <PrivateRoute exact isLogged={isLogged} path="/history" component={History} />

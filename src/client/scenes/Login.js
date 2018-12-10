@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
 import axios from'axios';
+import { Link } from 'react-router-dom'
 
 import { validateEmail, validateLength } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
@@ -112,6 +113,7 @@ class Login extends Component {
     const { email, password } = this.state.fields;
 
     return (
+      <div>
       <FormSimple name="Welcome Back" submit="Log In" onSubmit={this.handleSubmit}>
         <TextInput
           type="email"
@@ -132,6 +134,8 @@ class Login extends Component {
           onChange={this.handleChange}
         />
       </FormSimple>
+      <Link to="/forgot"><span>Forgotten password?</span></Link>
+      </div>
     )
   }
 }
