@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
-import { validatePassword } from '../utils/Validators';
+import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
 
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
@@ -54,6 +54,7 @@ class Settings extends Component {
     this.handleLogOut = this.handleLogOut.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleDataChange = this.handleDataChange.bind(this);
   }  
 
   logout(){
@@ -164,13 +165,58 @@ class Settings extends Component {
     })
   }
 
+  handleDataChange(e) {
+    e.preventDefault();
+    let isValid = true;
+    let fields = this.state.fields;
+    const { username, email, oldPassword, password} = fields;
+
+    if (username.value.length > 0 && !validateLength(username.value, 4)) {
+      isValid = false;
+      fields = this.changeValidation(fields, 'username', false, 'This field must be greater than 4 characters');
+    } else {
+      fields = this.changeValidation(fields, 'username', true);
+    }
+
+    if (email.value.length && !validateEmail(email.value)) {
+      isValid = false;
+      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+    } else {
+      fields = this.changeValidation(fields, 'email', true);
+    }
+
+    this.setState({ fields }, () => {
+      if(isValid) {
+        axios.put("/users", {
+          username: username.value,
+          email: email.value
+        })
+        .then(res => {
+          if(res.status == 404){
+            alert('Something went wrong');
+            return;
+          } else {
+            if(res.data.errors) {
+              alert(res.data.errors);
+              return;
+            }
+            alert('User data changed');
+            this.clearFields();
+          }
+        })
+        .catch((err) => console.log(err))
+      }
+    })
+  }
+
   render() {
     const { username, email, oldPassword, password } = this.state.fields;
 
     return (
       <SettingsComponent className="Settings">
         <Header />
-          {/* <TextInput
+          <Button type="submit" onClick={this.handleLogOut} text="Log out" primary />
+          <TextInput
             type="text"
             id="username"
             name="Username"
@@ -187,7 +233,8 @@ class Settings extends Component {
             isValid={email.isValid}
             errorMsg={email.errorMsg}
             onChange={this.handleChange}
-          /> */}
+          />
+          <Button type="submit" onClick={this.handleDataChange} small="true" text="Change" primary />
           <TextInput
             type="password"
             id="oldPassword"
@@ -206,8 +253,7 @@ class Settings extends Component {
             errorMsg={password.errorMsg}
             onChange={this.handleChange}
           />
-          <Button type="submit" onClick={this.handlePasswordChange} text="Change" primary />
-          <Button type="submit" onClick={this.handleLogOut} text="Log out" primary />
+          <Button type="submit" onClick={this.handlePasswordChange} small="true" text="Change" primary />
         <Menubar />
       </SettingsComponent>
     );

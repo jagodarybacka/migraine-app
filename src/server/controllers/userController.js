@@ -73,8 +73,7 @@ exports.change_password = (req, res, next) => {
 }
 
 exports.change_user_data = (req, res, next) => {
-	// const user = req.session.userId;
-	const user = req.body.userId;
+	const user = req.session.userId;
 	User.findById(user)
 	.exec(function(err, user){
 		if(err) {

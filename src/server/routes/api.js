@@ -100,6 +100,6 @@ router.post("/forgot", user_controller.forgotten_password);
 router.post('/reset/:token', user_controller.reset_password);
 
 /* Change user data */
-router.put('/users/change', user_controller.change_user_data);
+router.put('/users', user_controller.change_user_data);
 
 module.exports = router;
