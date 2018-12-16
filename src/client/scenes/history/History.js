@@ -66,8 +66,8 @@ class History extends Component {
     const options = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum'];
     return options.indexOf(key) + 1;
   }
-
   editReport(evt) {
+    evt.stopPropagation()
     const { history } = this.props
     const { id } = evt.target
     if (id) {
@@ -81,6 +81,7 @@ class History extends Component {
   }
 
   deleteReport(evt){
+    evt.stopPropagation()
     if(evt.target.id){
       const id = evt.target.id;
       const url = "/reports/" + id;
@@ -144,7 +145,7 @@ class History extends Component {
 
                       return (
                         <li key={item._id}>
-                          <RecordCard handleClick={()=>this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
+                          <RecordCard handleClick={() => this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
                             duration={formattedDuration + "h"}
                             intensity={this.getIntensity(item.pain)}
                             isRecent={false} 
