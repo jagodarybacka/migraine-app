@@ -41,12 +41,16 @@ const Date = (props) => {
       <h2>Pain {props.end ? 'Ended' : 'Started'} at</h2>
       <DateInputs>
         <DateTime
+          // valueDate={props.valueDate}
+          // valueTime={props.valueTime}
           onChange={props.onChange}
           name={props.name}
           id={'time' + props.id + props.end}
           time
         />
         <DateTime
+          // valueDate={props.valueDate}
+          // valueTime={props.valueTime}
           onChange={props.onChange}
           name={props.name}
           id={'date' + props.id + props.end}

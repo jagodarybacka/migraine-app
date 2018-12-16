@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
+import axios from 'axios';
 
 import Button from '../components/Button'
 import Header from '../components/Header'
@@ -79,11 +80,13 @@ const Hello = () => (<h1>Record new Migraine</h1>)
 class RecordForm extends Component {
   constructor(props) {
     super(props);
+    this.edit = false
 
     this.state = {
       currentTab: 0,
       data: {
         weather: JSON.parse(localStorage.getItem('weather')) || undefined
+        
       },
       dateValidation: {
         valid: true,
@@ -107,8 +110,19 @@ class RecordForm extends Component {
     // this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    const { match } = this.props
+    if (match.params.id) {
+      this.edit = true
+      axios.get(`reports/${match.params.id}/`).then(res => {
+        const { data } = res
+        this.setState({ data: data.report })
+      })
+    }
+  }
+
   handleChangeTabValue(evt) {
-    console.log(evt);
+    // console.log(evt);
     const { data } = this.state;
     const { name, value, type } = evt.target;
     let result;
@@ -216,6 +230,8 @@ class RecordForm extends Component {
 
   render() {
     const { currentTab, data } = this.state;
+    const { match } = this.props
+
     return (
       <Container className="Form">
         <Header />
@@ -225,35 +241,34 @@ class RecordForm extends Component {
               <Hello />
             </div>
             <div className="record-tab">
-              <Start onChange={this.handleChangeTabValue} />
+              <Start onChange={this.handleChangeTabValue} valueDate={data.start_date2} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End onChange={this.handleChangeTabValue} />
+              <End onChange={this.handleChangeTabValue} valueTime={data.end_time} valueData={data.end_date2}/>
             </div>
             <div className="record-tab">
-              <Menstruation onChange={this.handleChangeTabValue} />
+              <Menstruation valueData={data.menstruation} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
-              <Localization onChange={this.handleChangeTabValue} />
+              <Localization valueData={data.localization} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
-              <Mood onChange={this.handleChangeTabValue} />
+              <Mood valueData={data.mood} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
-              <Pain onChange={this.handleChangeTabValue} />
+              <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
-              <Medicines onChange={this.handleChangeTabValue} />
+              <Medicines values={data.medicines} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
-              <Triggers onChange={this.handleChangeTabValue} />
+              <Triggers values={data.triggers} onChange={this.handleChangeTabValue} />
             </div>
           </SwipeableViews>
         </form>
-
         {this.isComplete() && (
           <div>
-            <Link to={{ pathname: '/summary', state: { data }}}>
+            <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
               <Button text="Summary" />
             </Link>
           </div>
@@ -277,4 +292,4 @@ class RecordForm extends Component {
   }
 }
 
-export default RecordForm;
+export default withRouter(RecordForm);

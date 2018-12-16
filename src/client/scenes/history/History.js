@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -40,14 +40,14 @@ const Records = styled.ul`
 class History extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       history: {},
-      order: [],
+      order: []
     }
 
     this.getIntensity = this.getIntensity.bind(this);
     this.deleteReport = this.deleteReport.bind(this);
+    this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
   }
 
@@ -62,6 +62,14 @@ class History extends Component {
   getIntensity(key) {
     const options = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum'];
     return options.indexOf(key) + 1;
+  }
+
+  editReport(evt) {
+    const { history } = this.props
+    const { id } = evt.target
+    if (id) {
+    history.push(`edit/${id}/`)
+    }
   }
 
   deleteReport(evt){
@@ -104,7 +112,6 @@ class History extends Component {
 
   render() {
     const { history, order } = this.state;
-
     return (
       <HistoryComponent >
         <Header />
@@ -114,7 +121,7 @@ class History extends Component {
             {!!order.length && order.map((chunk) => {
               const month = chunk.substring(4);
               const monthName = moment(month, 'MM').format('MMMM');
-
+              
               return (
                 <li key={chunk}>
                   <Records>
@@ -125,6 +132,7 @@ class History extends Component {
                       const duration = moment.duration(endDate.diff(startDate));
                       const formattedDuration = duration.asHours().toFixed(1).replace(/\.0$/, '');
 
+
                       return (
                         <li key={item._id}>
                           <RecordCard date={startDate.format('DD.MM.YYYY')}
@@ -132,7 +140,9 @@ class History extends Component {
                             intensity={this.getIntensity(item.pain)}
                             isRecent={false} 
                             id={item._id}
-                            handleDelete={this.deleteReport}/>
+                            handleDelete={this.deleteReport}
+                            handleEdit={this.editReport}
+                            />
                         </li>
                       )
                     })}

@@ -6,6 +6,8 @@ import axios from 'axios';
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
 import Bubble from '../../components/Bubble';
+import RecordCard from '../../components/RecordCard'
+
 
 import date from '../../assets/date.png'
 import time from '../../assets/time.png'
@@ -103,10 +105,17 @@ class Summary extends Component {
   }
 
   submit() {
-    const { data } = this.props.location.state;
-    axios.post("/reports", data)
+    const { data, id } = this.props.location.state;
+    const { match } = this.props
+    let method = 'POST'
+    let url = "/reports/";
+    if (match.params.edit) {
+      method = 'PUT'
+      url += `${id}/`
+    }
+    return axios({ method, data, url })
       .then(() => this.props.history.push('/home'))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }
 
   render() {
