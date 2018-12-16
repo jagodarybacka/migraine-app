@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -9,6 +9,7 @@ import RecordCard from '../../components/RecordCard'
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
+import Select from '../../components/Select'
 
 const HistoryComponent = styled.section`
   display: block;
@@ -40,15 +41,17 @@ const Records = styled.ul`
 class History extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       history: {},
-      order: []
+      order: [],
     }
 
     this.getIntensity = this.getIntensity.bind(this);
     this.deleteReport = this.deleteReport.bind(this);
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
+
   }
 
   componentDidMount() {
@@ -70,6 +73,11 @@ class History extends Component {
     if (id) {
     history.push(`edit/${id}/`)
     }
+  }
+
+  summaryReport(item) {
+    const { history } = this.props
+    history.push(`summary/`, {data: item, preview: true})
   }
 
   deleteReport(evt){
@@ -112,6 +120,7 @@ class History extends Component {
 
   render() {
     const { history, order } = this.state;
+
     return (
       <HistoryComponent >
         <Header />
@@ -135,7 +144,7 @@ class History extends Component {
 
                       return (
                         <li key={item._id}>
-                          <RecordCard date={startDate.format('DD.MM.YYYY')}
+                          <RecordCard handleClick={()=>this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
                             duration={formattedDuration + "h"}
                             intensity={this.getIntensity(item.pain)}
                             isRecent={false} 
@@ -161,4 +170,4 @@ class History extends Component {
   }
 }
 
-export default History;
+export default withRouter(History);

@@ -101,6 +101,7 @@ class Summary extends Component {
 
     if (!state || !state.data || !Object.keys(state.data).length) {
       this.props.history.push('/add');
+
     }
   }
 
@@ -120,6 +121,11 @@ class Summary extends Component {
 
   render() {
     const { state } = this.props.location;
+    let preview = false;
+    if(state.preview){
+      preview = true;
+    }
+    
     let result = (
       <div>Loading...</div>
     );
@@ -163,9 +169,10 @@ class Summary extends Component {
           {data.triggers.map(name => (
             <Bubble key={name} text={name} img={questionmark} color='#607d8b' />
           ))}
-
-          <Divider text="Accept Raport?" />
-          <AcceptButton onClick={this.submit} />
+          { !preview && [
+          <Divider key="divider_key" text="Accept Raport?" />,
+          <AcceptButton key="accept_button" onClick={this.submit} />
+          ]}
         </SummaryComponent>
       );
     }

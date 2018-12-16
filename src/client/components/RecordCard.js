@@ -52,7 +52,7 @@ const RecordCard = (props) => {
   const Img2 = props.isRecent ? "" : <div className="img2"><img src={editIcon} id={props.id} onClick={props.handleEdit}></img></div>;
 
   return (
-    <Card className="RecordCard" color={color}>
+    <Card className="RecordCard" color={color} onClick={props.handleClick}>
       <time>{props.date}</time>
       <h4>{props.type ? props.type : "Migraine"}</h4>
       <p>{props.duration}  {strength}</p>
