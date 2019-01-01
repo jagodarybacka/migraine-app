@@ -70,9 +70,12 @@ const DateTime = (props) => {
   const date = `${new Date().getDate()} ${monthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
 
   let inputDate = ''
- // let inputTime = ''
+  let inputTime = ''
+  if (props.valueTime && typeof props.valueTime === 'string' ){
+    inputTime = props.valueTime;
+  }
   if (props.valueDate && typeof props.valueDate === 'string' ){
-    inputDate = props.valueDate.substr(0,10)
+    inputDate = props.valueDate.substr(0,10)  
   }
 
 
@@ -93,7 +96,7 @@ const DateTime = (props) => {
       <label>{props.label || 'Time'}</label>
       <img src={timeImg}/>
       <input
-        // value={inputTime}
+        value={inputTime}
         name={`${props.name}_time`}
         type="time"
         id={props.id}

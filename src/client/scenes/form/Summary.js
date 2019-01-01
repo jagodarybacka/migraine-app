@@ -133,11 +133,11 @@ class Summary extends Component {
           <h2>Summary</h2>
 
           <Divider text="Start" />
-          <TimeDate date={data.start_date} time={data.start_time} />
+          <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
 
           <Divider text="End" />
           {!!data.end_date && !!data.end_time ? (
-            <TimeDate date={data.end_date} time={data.end_time} />            
+            <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />            
           ) : (
             <TimeDateComponent>Not yet</TimeDateComponent>
           )}
