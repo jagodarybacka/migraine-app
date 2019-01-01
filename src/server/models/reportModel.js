@@ -9,12 +9,18 @@ user: {
 },
 start_date: {
     type: Date, 
-    default: Date.now()
+    //default: Date.now()
     // required: true
 },
 end_date: {
     type: Date, 
     // required: true
+},
+start_time: {
+    type: String,
+},
+end_time: {
+    type: String,
 },
 menstruation: {
     type: String, 

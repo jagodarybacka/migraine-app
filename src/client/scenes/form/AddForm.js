@@ -23,8 +23,8 @@ import MultipleChoice from './MultipleChoice';
 const Start = props => {
   return (
     <Date
-      // valueDate={props.valueDate}
-      // valueTime={props.valueTime}
+      valueDate={props.valueDate}
+      valueTime={props.valueTime}
       name="start"
       onChange={props.onChange}
       id='start'
@@ -35,8 +35,8 @@ const Start = props => {
 const End = props => {
   return (
     <Date
-      // valueDate={props.valueDate}
-      // valueTime={props.valueTime}
+      valueDate={props.valueDate}
+      valueTime={props.valueTime}
       name="end"
       onChange={props.onChange}
       id='end'
