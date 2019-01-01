@@ -241,10 +241,10 @@ class RecordForm extends Component {
               <Hello />
             </div>
             <div className="record-tab">
-              <Start onChange={this.handleChangeTabValue} valueDate={data.start_date2} valueTime={data.start_time}/>
+              <Start onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End onChange={this.handleChangeTabValue} valueTime={data.end_time} valueData={data.end_date2}/>
+              <End onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
               <Menstruation valueData={data.menstruation} onChange={this.handleChangeTabValue} />
