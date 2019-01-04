@@ -82,7 +82,10 @@ exports.report_add = function(req, res,next) {
         mood: req.body.mood,
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
-        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers
+        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
+        pressure: req.body.pressure,
+        sleep_duration: req.body.sleepDuration
          });
     report.save(function (err,saved) {
         if (err) { return next(err); }
@@ -100,7 +103,10 @@ exports.report_add = function(req, res,next) {
         mood: req.body.mood,
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
-        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers
+        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
+        pressure: req.body.pressure,
+        sleep_duration: req.body.sleepDuration
          });
     report.save(function (err,saved) {
         if (err) { return next(err); }
@@ -142,6 +148,9 @@ exports.report_update = function(req, res, next) {
                     pain: req.body.pain,
                     medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
                     triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+                    aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
+                    pressure: req.body.pressure,
+                    sleep_duration: req.body.sleepDuration,
                     _id: id
                      });
             Report.findByIdAndUpdate(id, report, {}, function (err,mod_report) {

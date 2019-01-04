@@ -9,18 +9,19 @@ import summaryImg from '../assets/reports/summary.png';
 import AtmosphericPressure from '../components/reports/atmosphericPressure'
 import Summary from '../components/reports/summary'
 import OftenTogether from '../components/reports/oftenTogether'
+import {languageText} from '../languages/MultiLanguage.js'
 
 const MODE = {
   1: {
-    header:'Summary',
+    header:languageText.reports.summary,
     component: <Summary />
   },
   2: {
-    header: 'Atmospheric pressure',
+    header: languageText.reports.pressure,
     component: <AtmosphericPressure />
   },
   3: {
-    header: 'Often together',
+    header: languageText.reports.oftenTogether,
     component: <OftenTogether />
   }
 }

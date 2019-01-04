@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
+import {languageText} from '../languages/MultiLanguage.js';
+
 
 import Button from '../components/Button'
 import Header from '../components/Header';
@@ -13,7 +15,10 @@ import {
   Mood,
   Pain,
   Medicines,
-  Triggers
+  Triggers,
+  Aura,
+  Pressure,
+  SleepDuration
 } from './form/AddForm';
 
 
@@ -71,7 +76,7 @@ const Buttons = styled.div `
   }
 `;
 
-const Hello = () => (<h1>Record new Migraine</h1>)
+const Hello = () => (<h1>{languageText.recordForm.title}</h1>)
 
 class RecordForm extends Component {
   constructor(props) {
@@ -83,7 +88,7 @@ class RecordForm extends Component {
     };
 
     this.firstTab = 0;
-    this.lastTab = 8;
+    this.lastTab = 11;
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
@@ -92,6 +97,7 @@ class RecordForm extends Component {
   handleChangeTabValue(evt) {
     const { data } = this.state;
     const { name, value, type } = evt.target;
+    console.log(name);console.log(value);console.log(type)
     let result;
 
     if (type === 'checkbox') {
@@ -142,10 +148,13 @@ class RecordForm extends Component {
     return (
       data.start_date &&
       data.start_time &&
+      data.sleepDuration &&
+      data.pressure &&
       data.pain &&
       data.menstruation &&
       data.mood &&
       data.localization &&
+      (data.aura && !!data.aura.length) &&
       (data.medicines && !!data.medicines.length) &&
       (data.triggers && !!data.triggers.length)      
     )
@@ -169,6 +178,12 @@ class RecordForm extends Component {
               <End onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
+              <Pressure onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <SleepDuration onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
               <Menstruation onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
@@ -184,6 +199,9 @@ class RecordForm extends Component {
               <Medicines onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
+              <Aura onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
               <Triggers onChange={this.handleChangeTabValue} />
             </div>
           </SwipeableViews>
@@ -192,7 +210,7 @@ class RecordForm extends Component {
         {this.isComplete() && (
           <div>
             <Link to={{ pathname: '/summary', state: { data }}}>
-              <Button text="Summary" />
+              <Button text={languageText.recordForm.summary} />
             </Link>
           </div>
         )}
@@ -203,7 +221,7 @@ class RecordForm extends Component {
             disabled={currentTab === this.firstTab}
             text="<"
           />
-          <p> Migraine Record</p>
+          <p> {languageText.recordForm.migraineRecord}</p>
           <Button
             onClick={() => this.changeTab('next')}
             disabled={currentTab === this.lastTab}

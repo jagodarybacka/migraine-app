@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash'
 import { SummaryComponent, Select } from './styles'
 import axios from 'axios';
+import {languageText} from '../../../languages/MultiLanguage.js'
 
 class Summary extends Component {
   constructor(props) {
@@ -9,10 +10,10 @@ class Summary extends Component {
     this.state = {
       selectedOption: "30",
       options: [
-        { value: '30', label: 'Last 30 days' },
-        { value: '60', label: 'Last 60 days' },
-        { value: '365', label: 'Last year' },
-        { value: 'all', label: 'All time'}
+        { value: '30', label: languageText.reportsSummary.last30Days },
+        { value: '60', label: languageText.reportsSummary.last60Days },
+        { value: '365', label: languageText.reportsSummary.lastYear },
+        { value: 'all', label: languageText.reportsSummary.allTime}
       ],
       stats: {}
     }
@@ -75,16 +76,16 @@ class Summary extends Component {
         </Select>
         <div className='summary__container summary__container--row'>
           <span className='summary__number summary__number--accent'>{attacks}</span>
-          <p className='summary__text'>{attacks === 1 ? 'migraine' : 'migraines'}</p>
+          <p className='summary__text'>{attacks === 1 ? languageText.reportsSummary.migraine : languageText.reportsSummary.migraines}</p>
         </div>
         <div className='summary__row'>
-          <div className='summary__container'><span className='summary__number'>{painDays}</span><p className='summary__text'>pain days</p></div>
+          <div className='summary__container'><span className='summary__number'>{painDays}</span><p className='summary__text'>{languageText.reportsSummary.painDays}</p></div>
           <span className='summary__char'>~</span>
-          <div className='summary__container'><span className='summary__number'>{noPainDays}</span><p className='summary__text'>no pain days</p></div>
+          <div className='summary__container'><span className='summary__number'>{noPainDays}</span><p className='summary__text'>{languageText.reportsSummary.noPainDays}</p></div>
         </div>
         <div className='summary__row'>
-          <div className='summary__container'><span className='summary__number'>{`${average}h`}</span><p className='summary__text'>average attack duration</p></div>
-          <div className='summary__container'><span className='summary__number'>{`${total}h`}</span><p className='summary__text'>total attacks duration</p></div>
+          <div className='summary__container'><span className='summary__number'>{`${average}h`}</span><p className='summary__text'>{languageText.reportsSummary.averge}</p></div>
+          <div className='summary__container'><span className='summary__number'>{`${total}h`}</span><p className='summary__text'>{languageText.reportsSummary.total}</p></div>
         </div>
       </SummaryComponent>
     )
