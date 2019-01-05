@@ -114,7 +114,7 @@ class RecordForm extends Component {
     const { match } = this.props
     if (match.params.id) {
       this.edit = true
-      axios.get(`reports/${match.params.id}/`).then(res => {
+      axios.get(`/api/reports/${match.params.id}/`).then(res => {
         const { data } = res
         this.setState({ data: data.report })
       })
@@ -230,7 +230,8 @@ class RecordForm extends Component {
 
   render() {
     const { currentTab, data } = this.state;
-    const { match } = this.props
+    const { match } = this.props;
+    console.log(data);
 
     return (
       <Container className="Form">

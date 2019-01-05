@@ -112,7 +112,7 @@ class Summary extends Component {
     let url = "/api/reports/";
     if (match.params.edit) {
       method = 'PUT'
-      url += `/api/${id}/`
+      url += `${id}/`
     }
     return axios({ method, data, url })
       .then(() => this.props.history.push('/home'))
