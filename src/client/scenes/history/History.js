@@ -8,8 +8,7 @@ import RecordCard from '../../components/RecordCard'
 
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
-import Divider from '../../components/Divider';
-import Select from '../../components/Select'
+import Divider from '../../components/Dinovider';
 
 const HistoryComponent = styled.section`
   display: block;
