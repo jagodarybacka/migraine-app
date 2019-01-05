@@ -15,6 +15,7 @@ const SettingsComponent = styled.div`
   padding: 7rem 0;
   margin: 0;
   text-align: center;
+  height: auto;
 `
 
 class Settings extends Component {
