@@ -69,11 +69,22 @@ const DateTime = (props) => {
                 ${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
   const date = `${new Date().getDate()} ${monthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
 
+  let inputDate = ''
+  let inputTime = ''
+  if (props.valueTime && typeof props.valueTime === 'string' ){
+    inputTime = props.valueTime;
+  }
+  if (props.valueDate && typeof props.valueDate === 'string' ){
+    inputDate = props.valueDate.substr(0,10)  
+  }
+
+
   const el = props.date ? (
     <TimeDateComponent>
       <label>{props.label || 'Date'}</label>
       <img src={dateImg}/>
       <input
+        value={inputDate}
         name={`${props.name}_date`}
         type='date'
         id={props.id}
@@ -85,6 +96,7 @@ const DateTime = (props) => {
       <label>{props.label || 'Time'}</label>
       <img src={timeImg}/>
       <input
+        value={inputTime}
         name={`${props.name}_time`}
         type="time"
         id={props.id}

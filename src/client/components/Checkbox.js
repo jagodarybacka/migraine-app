@@ -52,7 +52,7 @@ class Checkbox extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isActive: false
+      isActive: props.checked || false
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -67,6 +67,7 @@ class Checkbox extends React.Component {
     return (
       <Check class="Check" color={this.props.color}>
         <input
+          checked={this.props.checked}
           name={this.props.name}
           type="checkbox"
           value={this.props.value}
@@ -75,8 +76,8 @@ class Checkbox extends React.Component {
           />
         <FauxBg class="bg" color={this.props.color}/>
         <img src={
-            this.state.isActive ? this.props.img : this.props.imgColor
-          } />
+            this.props.checked ? this.props.img : this.props.imgColor
+          } alt=''/>
         <p>{this.props.text}</p>
       </Check>
     )

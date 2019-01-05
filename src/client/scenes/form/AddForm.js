@@ -23,6 +23,8 @@ import MultipleChoice from './MultipleChoice';
 const Start = props => {
   return (
     <Date
+      valueDate={props.valueDate}
+      valueTime={props.valueTime}
       name="start"
       onChange={props.onChange}
       id='start'
@@ -33,6 +35,8 @@ const Start = props => {
 const End = props => {
   return (
     <Date
+      valueDate={props.valueDate}
+      valueTime={props.valueTime}
       name="end"
       onChange={props.onChange}
       id='end'
@@ -50,6 +54,7 @@ const Menstruation = props => {
       answers={answers}
       onChange={props.onChange}
       img={drop} imgColor={dropColor} color='#E91E63'
+      valueData={props.valueData}
     />
   );
 }
@@ -63,6 +68,8 @@ const Localization = props => {
       answers={answers}
       onChange={props.onChange}
       img={localization} imgColor={localizationColor} color='#cddc39'
+      valueData={props.valueData}
+
     />
   );
 }
@@ -76,6 +83,7 @@ const Mood = props => {
       answers={answers}
       onChange={props.onChange}
       img={faceSmile} imgColor={faceSmileColor} color='#ffc107'
+      valueData={props.valueData}
     />
   );
 }
@@ -89,6 +97,7 @@ const Pain = props => {
       answers={answers}
       onChange={props.onChange}
       img={faceNeutral} imgColor={faceNeutralColor} color='#ED8836'
+      valueData={props.valueData}
     />
   );
 }
@@ -97,6 +106,7 @@ const Medicines = props => {
   const answers = ['Ibuprofen', 'Paracetamol', 'Codeine', 'Triptans','Other']
   return (
     <MultipleChoice
+      values={props.values}
       title="Medicines"
       name="medicines"
       answers={answers}
@@ -110,6 +120,7 @@ const Triggers = props => {
   const answers = ['Alcohol', 'Stress', 'Tiredness', 'Dehydration', 'Hunger', 'Sport','Other']
   return (
     <MultipleChoice
+      values={props.values}
       title="Possible Triggers"
       name="triggers"
       answers={answers}

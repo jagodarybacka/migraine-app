@@ -71,6 +71,8 @@ exports.report_add = function(req, res,next) {
         user: userId,
         start_date: start,
         end_date: end,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
         menstruation: req.body.menstruation,
         localization: req.body.localization,
         mood: req.body.mood,
@@ -118,16 +120,26 @@ exports.report_delete = function(req, res, next) {
 
 // Change Report
 exports.report_update = function(req, res, next) {
-    const id = mongoose.Types.ObjectId(req.params.id.trim());
+    var id = mongoose.Types.ObjectId(req.params.id.trim());
     const userId = req.session.userId;
+    const start_time = req.body.start_time.split(":");
+    const start_date = req.body.start_date.split("-");
+    const start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
+ //   if(req.body.end_date && req.body.end_time) {
+    const end_time = req.body.end_time.split(":");
+    const end_date = req.body.end_date.split("-"); 
+    const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
     Report.findById(id)
     .exec( function(err, found_report) {
             if (err) { return next(err); }
             if (found_report) {
                 var report = new Report({
                     user: userId,
-                    start: req.body.start,
-                    end: req.body.end,
+                    //user: req.body.userId,
+                    start_time: req.body.start_time,
+                    end_time: req.body.end_time,
+                    start_date: start,
+                    end_date: end,
                     menstruation: req.body.menstruation,
                     localization: req.body.localization,
                     mood: req.body.mood,
@@ -136,7 +148,7 @@ exports.report_update = function(req, res, next) {
                     triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
                     weather: req.body.weather,
                     _id: id
-                     });
+                    });
             Report.findByIdAndUpdate(id, report, {}, function (err,mod_report) {
                 if (err) { return next(err); }
                 res.json(report);
