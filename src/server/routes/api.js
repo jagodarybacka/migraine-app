@@ -7,20 +7,6 @@ const auth_controller = require("../controllers/authenticationController");
 var user_controller = require("../controllers/userController");
 var report_controller = require("../controllers/reportController");
 
-// var multer = require("multer");
-// var Storage = multer.diskStorage({
-// 	destination: function(req, file, callback) {
-// 		callback(null, "./src/assets/img/users");
-// 	},
-// 	filename: function(req, file, callback) {
-// 		callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-// 	}
-// });
-
-// var upload = multer({
-// 	storage: Storage
-// }).single("file");
-
 /// ROUTES ///
 
 router.get('/', function(req, res, next) {
@@ -75,7 +61,6 @@ router.post("/login",function(req,res,next){
 		}
 		req.logIn(user,function(err){
 			if(err) { return next(err);}
-			// console.log('session',req.session);
 			req.session.userId = req.user._id;
 			res.json(
 				{redirectURL:"/home",

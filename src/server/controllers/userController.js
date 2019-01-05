@@ -1,13 +1,8 @@
 
 const User = require("../models/userModel");
-const Report = require("../models/reportModel");
-const promisify = require('es6-promisify');
-const mongoose = require("mongoose");
 var passport = require("passport");
 var crypto = require('crypto');
 const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
 var async = require('async');
 
 
@@ -101,7 +96,6 @@ exports.change_user_data = (req, res, next) => {
 }
 
 exports.forgotten_password = (req, res, next) => {
-	console.log(req);
 	async.waterfall([
     function(done) {
       crypto.randomBytes(20, function(err, buf) {

@@ -6,7 +6,7 @@ var tools = require('../helpers/stats.js');
 
 // Display report detail
 exports.report_detail = function(req, res, next) {
-    var id = mongoose.Types.ObjectId(req.params.id.trim());
+    const id = mongoose.Types.ObjectId(req.params.id.trim());
 	async.parallel({
     report: function(callback) {
 
@@ -22,7 +22,7 @@ exports.report_detail = function(req, res, next) {
 
 //GET User reports
 exports.reports_all = function(req,res,next) {
-	userId = req.session.userId;
+	const userId = req.session.userId;
 	User.findById(userId, 'username _id email')
 	.exec(function(err,found_user){
 		if(err) {return next(err);}
@@ -42,19 +42,15 @@ exports.reports_all = function(req,res,next) {
 };
 
 exports.report_recent = function(req,res,next) {
-	userId = req.session.userId;
+	const userId = req.session.userId;
 	User.findById(userId, 'username _id email')
 	.exec(function(err,found_user){
 		if(err) {return next(err);}
 		if(found_user)
 		{
-			// console.log('user');
-			// console.log(found_user);
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
 				if(err) {return next(err);}
-				// console.log('reports');
-				// console.log(found_reports);
 				res.json(found_reports[0]);
 			});
 		}
@@ -63,14 +59,14 @@ exports.report_recent = function(req,res,next) {
 
 // Create Report
 exports.report_add = function(req, res,next) {
-   userId = req.session.userId;
-   start_time = req.body.start_time.split(":");
-   start_date = req.body.start_date.split("-");
-   start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
+   const userId = req.session.userId;
+   const start_time = req.body.start_time.split(":");
+   const start_date = req.body.start_date.split("-");
+   const start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
    if(req.body.end_date && req.body.end_time) {
-    end_time = req.body.end_time.split(":");
-    end_date = req.body.end_date.split("-"); 
-    end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
+    const end_time = req.body.end_time.split(":");
+    const end_date = req.body.end_date.split("-"); 
+    const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
     var report = new Report({
         user: userId,
         start_date: start,
@@ -85,7 +81,6 @@ exports.report_add = function(req, res,next) {
         });
     report.save(function (err,saved) {
         if (err) { return next(err); }
-        // console.log(saved);
         res.json(saved);
     });
    }
@@ -103,7 +98,6 @@ exports.report_add = function(req, res,next) {
          });
     report.save(function (err,saved) {
         if (err) { return next(err); }
-        // console.log(saved);
         res.json(saved);
     });
    }
@@ -111,7 +105,7 @@ exports.report_add = function(req, res,next) {
 
 // Delete Report
 exports.report_delete = function(req, res, next) {
-    var id = mongoose.Types.ObjectId(req.params.id.trim());
+    const id = mongoose.Types.ObjectId(req.params.id.trim());
     Report.findById(id)
     .exec( function(err, found_report) {
         if (err) { return next(err); }
@@ -124,15 +118,14 @@ exports.report_delete = function(req, res, next) {
 
 // Change Report
 exports.report_update = function(req, res, next) {
-    var id = mongoose.Types.ObjectId(req.params.id.trim());
-    userId = req.session.userId;
+    const id = mongoose.Types.ObjectId(req.params.id.trim());
+    const userId = req.session.userId;
     Report.findById(id)
     .exec( function(err, found_report) {
             if (err) { return next(err); }
             if (found_report) {
                 var report = new Report({
                     user: userId,
-                    //user: req.body.userId,
                     start: req.body.start,
                     end: req.body.end,
                     menstruation: req.body.menstruation,
@@ -153,7 +146,7 @@ exports.report_update = function(req, res, next) {
 };
 
 exports.report_stats = function(req, res, next) {
-    var days = req.params.days;
+    const days = req.params.days;
     const now = new Date();
     let endDate;
     if(days == 30){
@@ -163,7 +156,7 @@ exports.report_stats = function(req, res, next) {
     } else if(days ==365) {
         endDate = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
     }
-    userId = req.session.userId;
+    const userId = req.session.userId;
     User.findById(userId, 'username _id email')
     .exec(function(err,found_user){
         if(err) {return next(err);}
@@ -203,7 +196,7 @@ exports.report_stats = function(req, res, next) {
 exports.report_stats_custom = function(req, res, next) {
     var start = new Date(req.params.start);
     var end = new Date(req.params.end);
-    userId = req.session.userId;
+    const userId = req.session.userId;
     User.findById(userId, 'username _id email')
     .exec(function(err,found_user){
         if(err) {return next(err);}

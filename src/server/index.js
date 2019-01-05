@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const promisify = require("es6-promisify");
-const flash = require("connect-flash");
 const expressValidator = require("express-validator");
 const errorHandlers = require("./handlers/errorHandlers");
 const cors = require("cors");
@@ -25,10 +24,6 @@ mongoose.connection.on("error", (err) => {
 });
 
 app.use(express.static(path.join(__dirname, '../../build')));
-
-app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'../../../build/index.html'));
-});
 
 // cookie-parser
 app.use(cookieParser(process.env.SECRET || "sekretny_sekret_tworczosc_szalona_panda"));
@@ -72,6 +67,10 @@ app.use(cors({
 }));
 
 app.use("/api", api);
+
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'../../../build/index.html'));
+});
 
 app.use(errorHandlers.notFound);
 // app.use(errorHandlers.errorHandler);
