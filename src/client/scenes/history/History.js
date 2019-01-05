@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment';
 
@@ -48,7 +48,9 @@ class History extends Component {
 
     this.getIntensity = this.getIntensity.bind(this);
     this.deleteReport = this.deleteReport.bind(this);
+    this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
+
   }
 
   componentDidMount() {
@@ -64,7 +66,22 @@ class History extends Component {
     return options.indexOf(key) + 1;
   }
 
+  editReport(evt) {
+    evt.stopPropagation()
+    const { history } = this.props
+    const { id } = evt.target
+    if (id) {
+    history.push(`edit/${id}/`)
+    }
+  }
+
+  summaryReport(item) {
+    const { history } = this.props
+    history.push(`summary/`, {data: item, preview: true})
+  }
+
   deleteReport(evt){
+    evt.stopPropagation()
     if(evt.target.id){
       const id = evt.target.id;
       const url = "/api/reports/" + id;
@@ -114,7 +131,7 @@ class History extends Component {
             {!!order.length && order.map((chunk) => {
               const month = chunk.substring(4);
               const monthName = moment(month, 'MM').format('MMMM');
-
+              
               return (
                 <li key={chunk}>
                   <Records>
@@ -125,14 +142,17 @@ class History extends Component {
                       const duration = moment.duration(endDate.diff(startDate));
                       const formattedDuration = duration.asHours().toFixed(1).replace(/\.0$/, '');
 
+
                       return (
                         <li key={item._id}>
-                          <RecordCard date={startDate.format('DD.MM.YYYY')}
+                          <RecordCard handleClick={() => this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
                             duration={formattedDuration + "h"}
                             intensity={this.getIntensity(item.pain)}
                             isRecent={false} 
                             id={item._id}
-                            handleDelete={this.deleteReport}/>
+                            handleDelete={this.deleteReport}
+                            handleEdit={this.editReport}
+                            />
                         </li>
                       )
                     })}
@@ -151,4 +171,4 @@ class History extends Component {
   }
 }
 
-export default History;
+export default withRouter(History);

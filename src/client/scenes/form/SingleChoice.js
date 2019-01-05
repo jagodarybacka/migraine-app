@@ -6,6 +6,10 @@ import RadioButton from '../../components/RadioButton'
 
 const SingleChoice = (props) => {
   const answers = props.answers;
+  let valueData = "";
+  if (props.valueData) {
+    valueData = props.valueData;
+  }
   const items = answers.map((answer, index) => {
     return (
       <RadioButton
@@ -14,6 +18,7 @@ const SingleChoice = (props) => {
         name={props.name}
         id={`${props.name}_${index}`}
         value={answer}
+        checked={valueData === answer}
         onChange={props.onChange}
         color={props.color}
         img={props.img}

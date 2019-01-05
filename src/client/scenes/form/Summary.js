@@ -6,6 +6,8 @@ import axios from 'axios';
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
 import Bubble from '../../components/Bubble';
+import RecordCard from '../../components/RecordCard'
+
 
 import date from '../../assets/date.png'
 import time from '../../assets/time.png'
@@ -99,18 +101,31 @@ class Summary extends Component {
 
     if (!state || !state.data || !Object.keys(state.data).length) {
       this.props.history.push('/add');
+
     }
   }
 
   submit() {
-    const { data } = this.props.location.state;
-    axios.post("/api/reports", data)
+    const { data, id } = this.props.location.state;
+    const { match } = this.props
+    let method = 'POST'
+    let url = "/reports/";
+    if (match.params.edit) {
+      method = 'PUT'
+      url += `${id}/`
+    }
+    return axios({ method, data, url })
       .then(() => this.props.history.push('/home'))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }
 
   render() {
     const { state } = this.props.location;
+    let preview = false;
+    if(state.preview){
+      preview = true;
+    }
+    
     let result = (
       <div>Loading...</div>
     );
@@ -124,11 +139,11 @@ class Summary extends Component {
           <h2>Summary</h2>
 
           <Divider text="Start" />
-          <TimeDate date={data.start_date} time={data.start_time} />
+          <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
 
           <Divider text="End" />
           {!!data.end_date && !!data.end_time ? (
-            <TimeDate date={data.end_date} time={data.end_time} />            
+            <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />            
           ) : (
             <TimeDateComponent>Not yet</TimeDateComponent>
           )}
@@ -154,9 +169,10 @@ class Summary extends Component {
           {data.triggers.map(name => (
             <Bubble key={name} text={name} img={questionmark} color='#607d8b' />
           ))}
-
-          <Divider text="Accept Raport?" />
-          <AcceptButton onClick={this.submit} />
+          { !preview && [
+          <Divider key="divider_key" text="Accept Raport?" />,
+          <AcceptButton key="accept_button" onClick={this.submit} />
+          ]}
         </SummaryComponent>
       );
     }

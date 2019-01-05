@@ -63,11 +63,6 @@ const Radio = styled.input`
 `
 
 class RadioButton extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
   render() {
     return (
       <RadioComponent small={this.props.small} color={this.props.color}>
@@ -77,6 +72,7 @@ class RadioButton extends React.Component {
           id={this.props.id}
           name={this.props.name}
           value={this.props.value}
+          checked={this.props.checked}
           onChange={this.props.onChange}
           color={this.props.color}
           />
