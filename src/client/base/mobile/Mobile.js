@@ -46,7 +46,7 @@ const Mobile = () => {
           <PrivateRoute exact isLogged={isLogged} path="/edit/:id/" component={RecordForm} />
           <PrivateRoute exact isLogged={isLogged} path="/history" component={History} />
           <PrivateRoute exact isLogged={isLogged} path="/settings" component={Settings} />
-          <PrivateRoute exact isLogged={isLogged} path="/summary" component={Summary} />
+          <PrivateRoute exact isLogged={isLogged} path="/summary/:edit?" component={Summary} />
           <PrivateRoute exact isLogged={isLogged} path="/reports" component={Reports} />
         </Switch>
       </Router>
