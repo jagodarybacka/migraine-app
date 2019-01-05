@@ -71,6 +71,8 @@ exports.report_add = function(req, res,next) {
         user: userId,
         start_date: start,
         end_date: end,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
         menstruation: req.body.menstruation,
         localization: req.body.localization,
         mood: req.body.mood,
@@ -120,13 +122,13 @@ exports.report_delete = function(req, res, next) {
 exports.report_update = function(req, res, next) {
     var id = mongoose.Types.ObjectId(req.params.id.trim());
     const userId = req.session.userId;
-    start_time = req.body.start_time.split(":");
-    start_date = req.body.start_date.split("-");
-    start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
+    const start_time = req.body.start_time.split(":");
+    const start_date = req.body.start_date.split("-");
+    const start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
  //   if(req.body.end_date && req.body.end_time) {
-    end_time = req.body.end_time.split(":");
-    end_date = req.body.end_date.split("-"); 
-    end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
+    const end_time = req.body.end_time.split(":");
+    const end_date = req.body.end_date.split("-"); 
+    const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
     Report.findById(id)
     .exec( function(err, found_report) {
             if (err) { return next(err); }
@@ -134,8 +136,6 @@ exports.report_update = function(req, res, next) {
                 var report = new Report({
                     user: userId,
                     //user: req.body.userId,
-                    start,
-                    end,
                     start_time: req.body.start_time,
                     end_time: req.body.end_time,
                     start_date: start,

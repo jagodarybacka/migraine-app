@@ -109,10 +109,10 @@ class Summary extends Component {
     const { data, id } = this.props.location.state;
     const { match } = this.props
     let method = 'POST'
-    let url = "/reports/";
+    let url = "/api/reports/";
     if (match.params.edit) {
       method = 'PUT'
-      url += `${id}/`
+      url += `/api/${id}/`
     }
     return axios({ method, data, url })
       .then(() => this.props.history.push('/home'))
