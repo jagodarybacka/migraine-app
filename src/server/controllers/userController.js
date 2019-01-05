@@ -131,8 +131,8 @@ exports.forgotten_password = (req, res, next) => {
         auth: auth
       });
       var mailOptions = {
-				// to: user.email,
-				to: 'zuzanna.szymanda@gmail.com',
+				to: user.email,
+				// to: 'zuzanna.szymanda@gmail.com',
         from: 'passwordreset@migraine-app.com',
         subject: 'Migraine App Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
