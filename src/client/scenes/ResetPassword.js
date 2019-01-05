@@ -57,7 +57,7 @@ class ResetPassword extends Component {
       }
     this.setState({ fields }, () => {
         if(isValid){
-            const url = window.location.pathname;
+            const url = '/api/' + window.location.pathname;
             axios.post(url, {
                 password: password.value
             })

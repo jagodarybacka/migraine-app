@@ -86,7 +86,7 @@ class Register extends Component {
 
     if (isValid) {
       var _this = this;
-      axios.post("/users", {
+      axios.post("/api/users", {
         username: username.value,
         email: email.value,
         password: password.value,

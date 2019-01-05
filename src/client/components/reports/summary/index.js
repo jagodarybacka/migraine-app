@@ -34,10 +34,10 @@ class Summary extends Component {
   getStats() {
     let url;
     if(this.state.selectedOption == "custom"){
-      url = "reports/stats/custom/" + this.state.customPeriod.from + '-' + this.state.customPeriod.to;
+      url = "/api/reports/stats/custom/" + this.state.customPeriod.from + '-' + this.state.customPeriod.to;
     }
     else {
-      url = "reports/stats/" + this.state.selectedOption;
+      url = "/api/reports/stats/" + this.state.selectedOption;
     }
       axios.get(url)
       .then((res) => {

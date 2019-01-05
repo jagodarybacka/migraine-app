@@ -76,7 +76,7 @@ class Login extends Component {
     if (isValid) {
       // this.props.history.push('/home')
       var _this = this;
-		 axios.post("/login",
+		 axios.post("/api/login",
 			{	email: email.value,
 				password: password.value
 			}).then(response => {

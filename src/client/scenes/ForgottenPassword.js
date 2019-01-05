@@ -57,7 +57,7 @@ class ForgottenPassword extends Component {
     }
     this.setState({ fields }, () => {
         if(isValid){
-            axios.post('/forgot', {
+            axios.post('/api/forgot', {
                 email: email.value
             })
             .then(res => {

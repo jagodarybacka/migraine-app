@@ -52,7 +52,7 @@ class History extends Component {
   }
 
   componentDidMount() {
-    axios.get('/reports')
+    axios.get('/api/reports')
       .then(({ data }) => {
         this.parseHistory(data);
       })
@@ -67,7 +67,7 @@ class History extends Component {
   deleteReport(evt){
     if(evt.target.id){
       const id = evt.target.id;
-      const url = "/reports/" + id;
+      const url = "/api/reports/" + id;
       axios.delete(url)
       .then((res) => {
         this.componentDidMount();

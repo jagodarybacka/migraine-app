@@ -68,7 +68,7 @@ class Settings extends Component {
   }
 
   handleLogOut() {
-    axios.get('/logout').then(res => {
+    axios.get('/api/logout').then(res => {
       console.log(this.state.message); 
       this.setState({message: res.data.message});
       this.logout();
@@ -140,7 +140,7 @@ class Settings extends Component {
 
     this.setState({ fields }, () => {
       if(isValid) {
-        axios.put("/password", {
+        axios.put("/api/password", {
           oldPassword: oldPassword.value,
           password: password.value
         })
@@ -187,7 +187,7 @@ class Settings extends Component {
 
     this.setState({ fields }, () => {
       if(isValid) {
-        axios.put("/users", {
+        axios.put("/api/users", {
           username: username.value,
           email: email.value
         })
