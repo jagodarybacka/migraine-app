@@ -22,7 +22,8 @@ import windIcon from "../../assets/weather/wind.png"
 import lastDayIcon from "../../assets/weather/last-day.png"
 import { getGeolocation } from '../../utils/GetGeolocation'
 import { getWeather } from '../Weather'
-import {Widget, Header, Element, Footer} from './WeatherWidget.styles'
+import {Widget, Header, Element} from './WeatherWidget.styles'
+import {languageText} from '../../languages/MultiLanguage.js';
 
 class WeatherWidget extends Component {
   icons = {
@@ -78,7 +79,7 @@ class WeatherWidget extends Component {
       weather: weather,
       temperature: weather.main.temp,
       icon: String(weather.weather[0].icon),
-      description: weather.weather[0].description,
+      //description: weather.weather[0].description,
       humidity: weather.main.humidity,
       pressure: weather.main.pressure,
       rain: weather.rain ? weather.rain.rain : 0,
@@ -90,43 +91,42 @@ class WeatherWidget extends Component {
   
   render() {
     if(this.state) {
-      const {temperature,icon, description, humidity, pressure, rain, wind } = this.state
+      const {temperature,icon, humidity, pressure, rain, wind } = this.state
       return (
       <Widget >
         <Header>
-          <p>Weather Forecast</p>
+          <p>{languageText.weather.forecast}</p>
           <img src={this.icons[icon]} />
-          <h3>{temperature}{String.fromCharCode(176)}C {description}</h3>
+          <h3>{temperature}{String.fromCharCode(176)}C </h3>
         </Header>
         <Element>
           <img src={rainIcon}/>
           <p>
-            <span className="name">Rain</span>
+            <span className="name">{languageText.weather.rain}</span>
             <span className="value">{rain}</span>
           </p>
         </Element>
         <Element>
           <img src={humidityIcon}/>
           <p>
-            <span className="name">Humidity</span>
+            <span className="name">{languageText.weather.humidity}</span>
             <span className="value">{humidity}%</span>
           </p>
         </Element>
         <Element>
           <img src={pressureIcon}/>
           <p>
-            <span className="name">Pressure</span>
+            <span className="name">{languageText.weather.pressure}</span>
             <span className="value">{pressure} hPa</span>
           </p>
         </Element>
         <Element>
           <img src={windIcon}/>
           <p>
-            <span className="name">Wind speed</span>
+            <span className="name">{languageText.weather.windSpeed}</span>
             <span className="value">{wind}m/s</span>
           </p>
         </Element>
-        <Footer>More</Footer>
       </Widget>
       ) 
     } else return null

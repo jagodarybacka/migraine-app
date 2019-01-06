@@ -14,11 +14,12 @@ import time from '../../assets/time.png'
 import faceNeutral from '../../assets/face-neutral.png'
 import faceSmile from '../../assets/face-smile.png'
 import drop from '../../assets/drop.png'
+import eye from '../../assets/eye.png'
 import localization from '../../assets/localization.png'
 import medicine from '../../assets/medicine.png'
 import questionmark from '../../assets/questionmark.png'
 import accept from '../../assets/accept.png'
-
+import {languageText} from '../../languages/MultiLanguage.js';
 
 const SummaryComponent = styled.section`
   display: block;
@@ -119,6 +120,17 @@ class Summary extends Component {
       .catch((err) => console.log(err))
   }
 
+  getTranslatedValue(toTranslate, type){
+    if(toTranslate == '')
+      return '';
+    let translationDict = languageText.addForm[type+"Answers"];
+    let foundPair = translationDict.find(f => f.value == toTranslate);
+    if(foundPair != undefined)
+      return foundPair.text;
+    else
+      return "";
+  }
+
   render() {
     const { state } = this.props.location;
     let preview = false;
@@ -136,41 +148,41 @@ class Summary extends Component {
       result = (
         <SummaryComponent>
           <Header />
-          <h2>Summary</h2>
+          <h2>{languageText.addForm.summary}</h2>
 
-          <Divider text="Start" />
+          <Divider text={languageText.addForm.start} />
           <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
 
-          <Divider text="End" />
+          <Divider text={languageText.addForm.end} />
           {!!data.end_date && !!data.end_time ? (
             <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />            
           ) : (
-            <TimeDateComponent>Not yet</TimeDateComponent>
+            <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
           )}
 
-          <Divider text="Pain Intensity" />
-          <Bubble text={data.pain} img={faceNeutral} color='#ED8836' />
+          <Divider text={languageText.addForm.pain} />
+          <Bubble text={this.getTranslatedValue(data.pain,"pain")} img={faceNeutral} color='#ED8836' />
 
-          <Divider text="Menstruation" />
-          <Bubble text={data.menstruation} img={drop} color='#E91E63' />
+          <Divider text={languageText.addForm.menstruation} />
+          <Bubble text={this.getTranslatedValue(data.menstruation,"menstruation")} img={drop} color='#E91E63' />
 
-          <Divider text="Mood" />
-          <Bubble text={data.mood} img={faceSmile} color='#ffc107' />
+          <Divider text={languageText.addForm.mood} />
+          <Bubble text={this.getTranslatedValue(data.mood,"mood")} img={faceSmile} color='#ffc107' />
 
-          <Divider text="Localization" />
-          <Bubble text={data.localization} img={localization} color='#cddc39' />
+          <Divider text={languageText.addForm.localization} />
+          <Bubble text={this.getTranslatedValue(data.localization,"localization")} img={localization} color='#cddc39' />
 
-          <Divider text="Medicines" />
+          <Divider text={languageText.addForm.medicines} />
           {data.medicines.map(name => (
-            <Bubble key={name} text={name} img={medicine} color='#00bcd4' />
+            <Bubble key={name} text={this.getTranslatedValue(name,"medicines")} img={medicine} color='#00bcd4' />
           ))}
 
-          <Divider text="Triggers" />
+          <Divider text={languageText.addForm.triggers} />
           {data.triggers.map(name => (
-            <Bubble key={name} text={name} img={questionmark} color='#607d8b' />
+            <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
           ))}
           { !preview && [
-          <Divider key="divider_key" text="Accept Raport?" />,
+          <Divider text={languageText.addForm.acceptRaport} />,
           <AcceptButton key="accept_button" onClick={this.submit} />
           ]}
         </SummaryComponent>

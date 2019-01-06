@@ -7,6 +7,7 @@ import { Route, Redirect } from 'react-router';
 import { validateEmail, validateLength, validatePassword } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
+import {languageText} from '../languages/MultiLanguage.js';
 
 class Register extends Component {
 	constructor(props) {
@@ -62,21 +63,21 @@ class Register extends Component {
 
     if (!validateLength(username.value, 4)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'username', false, 'This field must be greater than 4 characters');
+      fields = this.changeValidation(fields, 'username', false, languageText.register.error4chars);
     } else {
       fields = this.changeValidation(fields, 'username', true);
     }
 
     if (!validateEmail(email.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+      fields = this.changeValidation(fields, 'email', false, languageText.register.invalidEmail);
     } else {
       fields = this.changeValidation(fields, 'email', true);
     }
 
     if (!validatePassword(password.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters and contains at least one uppercase letter, one lowercase letter, one digit and one special symbol');
+      fields = this.changeValidation(fields, 'password', false, languageText.register.error8chars);
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
@@ -123,11 +124,12 @@ class Register extends Component {
     const { username, email, password } = this.state.fields;
 
 		return (
-      <FormSimple name="Sign Up" submit="Get started" onSubmit={this.handleSubmit}>
+      <FormSimple name={languageText.register.signUp} submit={languageText.register.getStarted} onSubmit={this.handleSubmit}>
       <TextInput
         type="text"
         id="username"
-        name="Username"
+        placeholder={languageText.register.usernamePlaceholder}
+        name={languageText.register.username}
         value={username.value}
         isValid={username.isValid}
         errorMsg={username.errorMsg}
@@ -136,6 +138,7 @@ class Register extends Component {
       <TextInput
         type="email"
         id="email"
+        placeholder="Email"
         name="Email"
         value={email.value}
         isValid={email.isValid}
@@ -145,7 +148,8 @@ class Register extends Component {
       <TextInput
         type="password"
         id="password"
-        name="Password"
+        placeholder={languageText.register.password}
+        name={languageText.register.password}
         value={password.value}
         isValid={password.isValid}
         errorMsg={password.errorMsg}

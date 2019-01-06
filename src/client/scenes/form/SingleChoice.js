@@ -13,12 +13,12 @@ const SingleChoice = (props) => {
   const items = answers.map((answer, index) => {
     return (
       <RadioButton
-        text={answer}
+        text={answer.text}
         key={index}
         name={props.name}
         id={`${props.name}_${index}`}
-        value={answer}
-        checked={valueData === answer}
+        value={answer.value}
+        checked={valueData === answer.value}
         onChange={props.onChange}
         color={props.color}
         img={props.img}

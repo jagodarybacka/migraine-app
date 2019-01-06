@@ -60,10 +60,4 @@ img {
   height: 24px;
 }
 `
-export const Footer = styled.div`
-padding: 1rem 0;
-margin: 1rem 0 0 0;
-text-transform: uppercase;
-color: #9a9a9a;
-border-top: solid 1px #eee;
-`
+

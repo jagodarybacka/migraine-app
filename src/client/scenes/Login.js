@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { validateEmail, validateLength } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
-
+import {languageText} from '../languages/MultiLanguage.js';
 
 class Login extends Component {
   constructor(props) {
@@ -59,14 +59,14 @@ class Login extends Component {
 
     if (!validateEmail(email.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+      fields = this.changeValidation(fields, 'email', false, languageText.login.invalidEmail);
     } else {
       fields = this.changeValidation(fields, 'email', true);
     }
 
     if (!validateLength(password.value, 8)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters');
+      fields = this.changeValidation(fields, 'password', false, languageText.login.error8chars);
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
@@ -114,10 +114,11 @@ class Login extends Component {
 
     return (
       <div>
-      <FormSimple name="Welcome Back" submit="Log In" onSubmit={this.handleSubmit}>
+      <FormSimple name={languageText.login.welcome} submit={languageText.login.logIn} onSubmit={this.handleSubmit}>
         <TextInput
           type="email"
           id="email"
+          placeholder="Email"
           name="Email"
           value={email.value}
           isValid={email.isValid}
@@ -127,14 +128,15 @@ class Login extends Component {
         <TextInput
           type="password"
           id="password"
-          name="Password"
+          placeholder={languageText.login.password}
+          name={languageText.login.password}
           value={password.value}
           isValid={password.isValid}
           errorMsg={password.errorMsg}
           onChange={this.handleChange}
         />
       </FormSimple>
-      <Link to="/forgot"><span>Forgotten password?</span></Link>
+      <Link to="/forgot"><span>{languageText.login.forgottenPassword}</span></Link>
       </div>
     )
   }

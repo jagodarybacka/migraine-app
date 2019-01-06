@@ -1,0 +1,190 @@
+{
+	"settings":{
+		"chooseLanguage": "Wybierz język", 
+		"changeData": "Zmień dane",
+		"changePassword": "Zmień hasło",
+		"oldPassword": "Stare hasło",
+		"newPassword": "Nowe hasło",
+		"password": "Hasło",
+		"buttonText": "Zmień",
+		"username": "Nazwa użytkownika",
+		"usernamePlaceholder": "Nazwę użytkownika",
+		"eng": "Angielski",
+		"pol": "Polski",
+		"logout": "Wyloguj"
+	},
+	"home":{
+	    "add": "Dodaj ból głowy"
+	},
+	"join":{
+	    "migraine": "Migrena",
+		"logIn": "Zaloguj",
+		"signIn": "Rejestracja",
+		"orJoinWith": "lub dołącz przez"
+	},
+	"login":{
+		"invalidEmail": "Nieprawidłowy adres email",
+		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami.",
+		"password": "Hasło",
+		"welcome": "Witaj ponownie",
+		"logIn": "Zaloguj",
+		"forgottenPassword": "Zapomniałeś hasła?"
+	},
+	"recordForm":{
+		"title": "Dodaj nową migrenę",
+		"summary": "Podsumowanie",
+		"migraineRecord": "Zapis migreny"
+	},
+	"welcome":{
+		"migraine": "Migrena",
+		"tapToStart": "Kliknij, aby rozpocząć..."
+	},
+	"recordCard":{
+		"migraine": "Migrena"
+	},
+	"menuBar":{
+		"home": "Strona główna",
+		"reports": "Raporty",
+		"settings": "Ustawienia"
+	},
+	"weather":{
+		"forecast": "Prognoza pogody",
+		"rain": "Deszcz",
+		"humidity": "Wilgotność",
+		"pressure": "Ciśnienie atmosferyczne",
+		"windSpeed": "Prędkość wiatru"
+	},
+	"register":{
+		"invalidEmail": "Nieprawidłowy adres email",
+		"error4chars": "Pole musi być wypełnione conajmniej 4 znakami.",
+		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami.",
+		"password": "Hasło",
+		"logIn": "Log In",
+		"username": "Nazwa użytkownika",
+		"usernamePlaceholder": "Nazwę użytkownika",
+		"signUp": "Zarejestruj",
+		"getStarted": "Rozpocznij"
+	},
+	"historyWidget":{
+		"title": "Ostatnie migreny",
+		"seeAll": "Zobacz wszystkie...",
+		"duration": "3 godziny"
+	},
+	"history":{
+		"noMore": "Koniec wpisów",
+		"title": "Ostatnie migreny"
+	},
+	"date":{
+		"painStarted": "Ból zaczął się",
+		"painEnded":"Ból skończył się",
+		"now":"Teraz",
+		"notYet":"Jeszcze nie"
+	},
+	"dateTime":{
+		"date": "Data",
+		"time":"Godzina",
+		"monthNames": ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
+						"Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"]
+	},
+	"textInput":{
+		"enterYour": "Wprowadź"
+	},
+	"addForm":{
+		"acceptRaport": "Zaakceptować raport?",
+		"start": "Początek",
+		"notYet":"Jeszcze nie",
+		"end": "Koniec",
+		"summary": "Podumowanie",
+		"menstruation": "Menstruacja",
+		"localization": "Lokalizacja",
+		"mood": "Nastrój",
+		"pain": "Intensywność bólu",
+		"medicines": "Leki",
+		"triggers": "Możliwe przyczyny",
+		"menstruationAnswers": [
+			{"text": "Tak", "value": "Yes"},
+			{"text": "Niedługo", "value": "Coming Soon"},
+			{"text": "Nie", "value": "No"}
+		],
+		"localizationAnswers": [
+			{"text": "Dom", "value": "Home"},
+			{"text": "Na zewnątrz", "value": "Outside"},
+			{"text": "W drodze", "value": "Transit"},
+			{"text": "Praca", "value": "Work"},
+			{"text": "Łóżko", "value": "Bed"},
+			{"text": "Szkoła", "value": "School"}
+		],
+		"moodAnswers": [
+			{"text": "Bardzo dobry", "value": "Very Good"},
+			{"text": "Dobry", "value": "Good"},
+			{"text": "Umiarkowany", "value": "Ok"},
+			{"text": "Zły", "value": "Bad"},
+			{"text": "Bardzo zły", "value": "Very Bad"}
+		],
+		"painAnswers": [
+			{"text": "Brak bólu", "value": "No Pain"},
+			{"text": "Słaby", "value": "Mild"},
+			{"text": "Średni", "value": "Moderate"},
+			{"text": "Intensywny", "value": "Intense"},
+			{"text": "Maksymalny", "value": "Maximum"}
+		],
+		"medicinesAnswers": [
+			{"text": "Ibuprofen", "value": "Ibuprofen"},
+			{"text": "Paracetamol", "value": "Paracetamol"},
+			{"text": "Kodeina", "value": "Codeine"},
+			{"text": "Triptan", "value": "Triptans"}
+		],
+		"triggersAnswers": [
+			{"text": "Alkohol", "value": "Alcohol"},
+			{"text": "Stres", "value": "Stress"},
+			{"text": "Zmęcznie", "value": "Tiredness"},
+			{"text": "Odwodnienie", "value": "Dehydration"},
+			{"text": "Głód", "value": "Hunger"},
+			{"text": "Sport", "value": "Sport"}
+		]
+	},
+	"reports":{
+		"summary": "Podsumowanie",
+		"pressure":"Ciśnienie atmosferyczne",
+		"oftenTogether": "Często występujace razem"
+	},
+	"reportsSummary":{
+		"last30Days": "Ostatnie 30 dni",
+		"last60Days":"Ostatnie 60 dni",
+		"lastYear": "Ostatni rok",
+		"allTime": "Od początku",
+		"customPeriod": "Niestandardowy okres",
+		"painDays": "dni z bólem",
+		"noPainDays": "dni bez bólu",
+		"averge": "średni czas trwania ataku",
+		"total": "całkowity czas trwania ataków",
+		"migraine": "migrena",
+		"migraines": "migreny",
+		"confirm": "Potwierdź"
+	},
+	"oftenTogether":{
+		"painOptions": [
+			{"text": "Brak bólu", "value": "No Pain"},
+			{"text": "Słaby", "value": "Mild"},
+			{"text": "Średni", "value": "Moderate"},
+			{"text": "Intensywny", "value": "Intense"},
+			{"text": "Maksymalny", "value": "Maximum"}
+		],
+		"weather":"Pogoda",
+		"triggers": "Przyczyny",
+		"weatherOptions":[
+			{"text": "Burza", "value": "Storm"},
+			{"text": "1018 hPa", "value": "1018 hPa"},
+			{"text": "Deszcz", "value": "Rain"}
+		],
+		"triggersOptions":[
+			{"text": "Odwodnienie", "value": "Dehydration"},
+			{"text": "Stres", "value": "Stress"},
+			{"text": "Silny zapach", "value": "Strong smell"},
+			{"text": "Depresja", "value": "Depression"}
+		]
+	},
+	"text":{
+		"enter": "Wprowadź"
+	}
+}

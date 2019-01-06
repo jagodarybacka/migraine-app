@@ -6,8 +6,10 @@ import { validatePassword, validateLength, validateEmail } from '../utils/Valida
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button';
+import Divider from '../components/Divider';
 import axios from 'axios';
 import TextInput from '../components/TextInput';
+import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
 
 const SettingsComponent = styled.div`
   display: flex;
@@ -16,6 +18,10 @@ const SettingsComponent = styled.div`
   margin: 0;
   text-align: center;
   height: auto;
+
+  .chosenLang{
+    color: red;
+  }
 `
 
 class Settings extends Component {
@@ -210,17 +216,24 @@ class Settings extends Component {
     })
   }
 
+  setNewLanguage(lang) {
+    setLanguage(lang);
+    window.location.reload();
+  }
+
   render() {
     const { username, email, oldPassword, password } = this.state.fields;
-
+    let currentLang = getLanguage();
     return (
       <SettingsComponent className="Settings">
         <Header />
-          <Button type="submit" onClick={this.handleLogOut} text="Log out" primary />
+          <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
+          <Divider text={languageText.settings.changeData}/>
           <TextInput
             type="text"
             id="username"
-            name="Username"
+            placeholder={languageText.settings.usernamePlaceholder}
+            name={languageText.settings.username}
             value={username.value}
             isValid={username.isValid}
             errorMsg={username.errorMsg}
@@ -229,17 +242,20 @@ class Settings extends Component {
           <TextInput
             type="email"
             id="email"
+            placeholder="Email"
             name="Email"
             value={email.value}
             isValid={email.isValid}
             errorMsg={email.errorMsg}
             onChange={this.handleChange}
           />
-          <Button type="submit" onClick={this.handleDataChange} small="true" text="Change" primary />
+          <Button type="submit" onClick={this.handleDataChange} small="true" text={languageText.settings.buttonText} primary />
+          <Divider text={languageText.settings.changePassword}/>
           <TextInput
             type="password"
             id="oldPassword"
-            name="Old Password"
+            placeholder={languageText.settings.oldPassword}
+            name={languageText.settings.oldPassword}
             value={oldPassword.value}
             isValid={oldPassword.isValid}
             errorMsg={oldPassword.errorMsg}
@@ -248,13 +264,17 @@ class Settings extends Component {
           <TextInput
             type="password"
             id="password"
-            name="New Password"
+            placeholder={languageText.settings.newPassword}
+            name={languageText.settings.newPassword}
             value={password.value}
             isValid={password.isValid}
             errorMsg={password.errorMsg}
             onChange={this.handleChange}
           />
-          <Button type="submit" onClick={this.handlePasswordChange} small="true" text="Change" primary />
+          <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
+          <Divider text={languageText.settings.chooseLanguage}/>
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang == "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang == "pl" ? true : false} />
         <Menubar />
       </SettingsComponent>
     );

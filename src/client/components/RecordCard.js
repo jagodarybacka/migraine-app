@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Link} from "react-router-dom";
 import deleteIcon from '../assets/trash.png';
 import editIcon from '../assets/edit.png';
+import {languageText} from '../languages/MultiLanguage.js';
 
 const Card = styled.div`
   background-color: ${props => props.color};
@@ -46,7 +47,7 @@ const Card = styled.div`
 const RecordCard = (props) => {
   const colorList = ['#AADD6D', '#A7C651', '#EAB933', '#ED8836', '#EF6F5A']
   const color = colorList[props.intensity-1] || colorList[0] ;
-  const strengthList = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum']
+  const strengthList = languageText.addForm.painAnswers.map(a => a.text);
   const strength = strengthList[props.intensity-1];
   const Img = props.isRecent ? "" : <div className="img"><img src={deleteIcon} id={props.id} onClick={props.handleDelete}></img></div> ;
   const Img2 = props.isRecent ? "" : <div className="img2"><img src={editIcon} id={props.id} onClick={props.handleEdit}></img></div>;
@@ -54,7 +55,7 @@ const RecordCard = (props) => {
   return (
     <Card className="RecordCard" color={color} onClick={props.handleClick}>
       <time>{props.date}</time>
-      <h4>{props.type ? props.type : "Migraine"}</h4>
+      <h4>{props.type ? props.type : languageText.recordCard.migraine}</h4>
       <p>{props.duration}  {strength}</p>
       {Img}
       {Img2}
