@@ -81,6 +81,7 @@ exports.report_add = function(req, res,next) {
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        notes: req.body.notes,
         weather: req.body.weather
         });
     report.save(function (err,saved) {
@@ -100,6 +101,7 @@ exports.report_add = function(req, res,next) {
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        notes: req.body.notes,
         weather: req.body.weather
          });
     report.save(function (err,saved) {
@@ -142,6 +144,7 @@ exports.report_update = function(req, res, next) {
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        notes: req.body.notes,
         weather: req.body.weather,
         _id: id
     }

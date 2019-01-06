@@ -50,6 +50,10 @@ triggers: [{
     type: String,
     // required: true
 }],
+notes: {
+    type: String,
+    // required: true
+},
 weather: {
     type: Object
 }
