@@ -13,7 +13,7 @@ export const Language = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin: 2em 2em 0 2em;
+  margin: 0 2vw 0 2vw;
 
   .language__button {
     margin: 0 0.5em;
@@ -25,7 +25,7 @@ export const Language = styled.div`
 
 export const Header = styled.header`
   height: 100%;
-  padding: 3em 0;
+  padding: 0;
 
   .header__title {
     font-size: 4em;
@@ -46,7 +46,7 @@ export const Header = styled.header`
   }
 
   .header__qr {
-    width: 40%;
+    height: 30vh;
     margin: 2em;
   }
 
