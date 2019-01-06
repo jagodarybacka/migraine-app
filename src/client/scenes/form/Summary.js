@@ -100,7 +100,7 @@ class Summary extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {notes: props.location.state.data.notes || undefined};
+    this.state = {notes: props.location.state.data.notes || ''};
     this.submit = this.submit.bind(this);
     this.handleChangeNotes = this.handleChangeNotes.bind(this);
   }
@@ -197,7 +197,7 @@ class Summary extends Component {
           ))}
 
           <Divider text="Notes" />
-          <textarea value={this.state.notes || ''} onChange={this.handleChangeNotes} type="text" name="notes" placeholder="Write something.." />
+          <textarea key={"name"} value={this.state.notes} onChange={this.handleChangeNotes} type="text" name="notes" placeholder="Write something.." />
 
           { !preview && [
           <Divider text={languageText.addForm.acceptRaport} />,
