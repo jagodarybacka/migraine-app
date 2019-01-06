@@ -116,6 +116,12 @@ class RecordForm extends Component {
       this.edit = true
       axios.get(`/api/reports/${match.params.id}/`).then(res => {
         const { data } = res
+        if(data.report.start_date){
+          data.report.start_date = data.report.start_date.substr(0,10)
+        }
+        if(data.report.end_date){
+          data.report.end_date = data.report.end_date.substr(0,10)
+        }
         this.setState({ data: data.report })
       })
     }

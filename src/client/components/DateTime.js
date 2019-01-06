@@ -84,7 +84,7 @@ const DateTime = (props) => {
       <label>{props.label || 'Date'}</label>
       <img src={dateImg}/>
       <input
-        value={inputDate}
+        value={inputDate ? inputDate : undefined}
         name={`${props.name}_date`}
         type='date'
         id={props.id}

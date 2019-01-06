@@ -90,6 +90,7 @@ exports.report_add = function(req, res,next) {
     var report = new Report({
         user: userId,
         start_date: start,
+        start_time: req.body.start_time,
         menstruation: req.body.menstruation,
         localization: req.body.localization,
         mood: req.body.mood,
@@ -125,30 +126,35 @@ exports.report_update = function(req, res, next) {
     const start_time = req.body.start_time.split(":");
     const start_date = req.body.start_date.split("-");
     const start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
- //   if(req.body.end_date && req.body.end_time) {
-    const end_time = req.body.end_time.split(":");
-    const end_date = req.body.end_date.split("-"); 
-    const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
+   
+    let data ={
+        user: userId,
+        //user: req.body.userId,
+        start,
+        start_time: req.body.start_time,
+        start_date: start,
+        menstruation: req.body.menstruation,
+        localization: req.body.localization,
+        mood: req.body.mood,
+        pain: req.body.pain,
+        medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
+        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        weather: req.body.weather,
+        _id: id
+    }
+
+    if(req.body.end_date && req.body.end_time) {
+        const end_time = req.body.end_time.split(":");
+        const end_date = req.body.end_date.split("-"); 
+        const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
+        data = {...data, end, end_time: req.body.end_time, end_date: end}
+    }
+      
     Report.findById(id)
     .exec( function(err, found_report) {
             if (err) { return next(err); }
             if (found_report) {
-                var report = new Report({
-                    user: userId,
-                    //user: req.body.userId,
-                    start_time: req.body.start_time,
-                    end_time: req.body.end_time,
-                    start_date: start,
-                    end_date: end,
-                    menstruation: req.body.menstruation,
-                    localization: req.body.localization,
-                    mood: req.body.mood,
-                    pain: req.body.pain,
-                    medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
-                    triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
-                    weather: req.body.weather,
-                    _id: id
-                    });
+                var report = new Report(data);
             Report.findByIdAndUpdate(id, report, {}, function (err,mod_report) {
                 if (err) { return next(err); }
                 res.json(report);
