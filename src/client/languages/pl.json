@@ -186,5 +186,13 @@
 	},
 	"text":{
 		"enter": "Wprowadź"
-	}
+	},
+	"web":{
+		"plAlt": "polski",
+		"engAlt": "angielski",
+		"title": "MIGRENA",
+		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
+		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
+		"headerButton": "Dowiedz się więcej"
+	}	
 }

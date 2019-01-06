@@ -4,8 +4,23 @@ import bg from '../../svg/bg.svg'
 export const Page = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   height: 100%;
   background-image: url(${bg});
+`
+
+export const Language = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 2em 2em 0 2em;
+
+  .language__button {
+    margin: 0 0.5em;
+    outline: none; 
+    border: none;
+    padding: 0;
+  }
 `
 
 export const Header = styled.header`
@@ -20,6 +35,7 @@ export const Header = styled.header`
 
   .header__subtitle {
     opacity: 0.5;
+    text-align: center;
     font-weight: 400;
   }
 
@@ -49,6 +65,7 @@ export const Header = styled.header`
 
   .header__box {
     display: flex;
+    text-align: center;
     align-items: center;
     flex-direction: column;
     width: 100%;
