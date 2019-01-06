@@ -68,7 +68,7 @@ app.use(cors({
 app.use("/api", api);
 
 app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'../../../build/index.html'));
+    res.sendFile(path.join(__dirname+'../../build/index.html'));
 });
 
 app.use(errorHandlers.notFound);
