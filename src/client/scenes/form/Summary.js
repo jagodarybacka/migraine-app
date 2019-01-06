@@ -98,6 +98,7 @@ class Summary extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0)
     const { state } = this.props.location;
 
     if (!state || !state.data || !Object.keys(state.data).length) {
