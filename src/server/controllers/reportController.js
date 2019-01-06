@@ -69,6 +69,8 @@ exports.report_add = function(req, res,next) {
     const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
     var report = new Report({
         user: userId,
+        start: start,
+        end: end,
         start_date: start,
         end_date: end,
         start_time: req.body.start_time,
@@ -89,6 +91,7 @@ exports.report_add = function(req, res,next) {
    else {
     var report = new Report({
         user: userId,
+        start: start,
         start_date: start,
         start_time: req.body.start_time,
         menstruation: req.body.menstruation,
@@ -130,7 +133,7 @@ exports.report_update = function(req, res, next) {
     let data ={
         user: userId,
         //user: req.body.userId,
-        start,
+        start: start,
         start_time: req.body.start_time,
         start_date: start,
         menstruation: req.body.menstruation,
@@ -147,7 +150,7 @@ exports.report_update = function(req, res, next) {
         const end_time = req.body.end_time.split(":");
         const end_date = req.body.end_date.split("-"); 
         const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
-        data = {...data, end, end_time: req.body.end_time, end_date: end}
+        data = {...data, end: end, end_time: req.body.end_time, end_date: end}
     }
       
     Report.findById(id)
