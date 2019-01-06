@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import {languageText} from '../languages/MultiLanguage.js';
 
 import Logo from '../components/Logo';
 
@@ -27,8 +28,8 @@ const Welcome = props => {
     <Link to="/join">
       <div className="Welcome">
         <Logo notlink></Logo>
-        <Text>Migraine</Text>
-        <MiniText>Tap to start...</MiniText>
+        <Text>{languageText.welcome.migraine}</Text>
+        <MiniText>{languageText.welcome.tapToStart}</MiniText>
       </div>
     </Link>
   );

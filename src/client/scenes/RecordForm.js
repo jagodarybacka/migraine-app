@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
+import {languageText} from '../languages/MultiLanguage.js';
+
 
 import Button from '../components/Button'
 import Header from '../components/Header'
@@ -17,7 +19,7 @@ import {
   Mood,
   Pain,
   Medicines,
-  Triggers
+  Triggers,
 } from './form/AddForm';
 
 
@@ -75,7 +77,7 @@ const Buttons = styled.div `
   }
 `;
 
-const Hello = () => (<h1>Record new Migraine</h1>)
+const Hello = () => (<h1>{languageText.recordForm.title}</h1>)
 
 class RecordForm extends Component {
   constructor(props) {
@@ -131,6 +133,7 @@ class RecordForm extends Component {
     // console.log(evt);
     const { data } = this.state;
     const { name, value, type } = evt.target;
+    console.log(name);console.log(value);console.log(type)
     let result;
     // if(value == "Other"){
     //   this.setState(prevState => ({
@@ -276,7 +279,7 @@ class RecordForm extends Component {
         {this.isComplete() && (
           <div>
             <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
-              <Button text="Summary" />
+              <Button text={languageText.recordForm.summary} />
             </Link>
           </div>
         )}
@@ -287,7 +290,7 @@ class RecordForm extends Component {
             disabled={currentTab === this.firstTab}
             text="<"
           />
-          <p> Migraine Record</p>
+          <p> {languageText.recordForm.migraineRecord}</p>
           <Button
             onClick={() => this.changeTab('next')}
             disabled={currentTab === this.lastTab}

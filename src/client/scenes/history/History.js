@@ -10,6 +10,8 @@ import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
 
+import {languageText} from '../../languages/MultiLanguage.js';
+
 const HistoryComponent = styled.section`
   display: block;
   padding: 7rem 0;
@@ -128,13 +130,14 @@ class History extends Component {
     return (
       <HistoryComponent >
         <Header />
-        <h2>Recent migraines</h2>
+        <h2>{languageText.history.title}</h2>
         <div style={{ width: '100%' }}>
           <Records>
             {!!order.length && order.map((chunk) => {
               const month = chunk.substring(4);
-              const monthName = moment(month, 'MM').format('MMMM');
-              
+              const monthName = languageText.dateTime.monthNames[moment(month, 'MM').format('M') -1]
+              //const monthName = moment(month, 'MM').format('MMMM');
+
               return (
                 <li key={chunk}>
                   <Records>
@@ -165,7 +168,7 @@ class History extends Component {
             })}
             <li key="9999">
               <NoMoreStyle>
-                <Divider text="No more entries" />
+                <Divider text={languageText.history.noMore} />
               </NoMoreStyle>
             </li>
           </Records>

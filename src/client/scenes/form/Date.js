@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button'
 import DateTime from '../../components/DateTime'
+import {languageText} from '../../languages/MultiLanguage.js';
 
 const Time = styled.section`
   display: flex;
@@ -38,7 +39,7 @@ const DateInputs = styled.div `
 const Date = (props) => {
   return (
     <Time className="Date">
-      <h2>Pain {props.end ? 'Ended' : 'Started'} at</h2>
+      <h2>{props.end ? languageText.date.painEnded : languageText.date.painStarted}</h2>
       <DateInputs>
         <DateTime
           valueDate={props.valueDate}
@@ -58,11 +59,11 @@ const Date = (props) => {
         />
       </DateInputs>
       <Buttons>
-        <Button text="Now"/>
+        <Button text={languageText.date.now}/>
         <Button text="-1h" primary/>
       </Buttons>
       {
-        props.end ? <Button text="Not Yet" primary/> : ""
+        props.end ? <Button text={languageText.date.notYet} primary/> : ""
       }
 
     </Time>
