@@ -91,9 +91,6 @@
 		"pain": "Pain Intensity",
 		"medicines": "Medicines",
 		"triggers": "Possible Triggers",
-		"sleepDuration": "Sleep duration [h]",
-		"pressure": "Blood pressure [mmHG] (example: 120/80)",
-		"aura": "aura",
 		"menstruationAnswers": [
 			{"text": "Yes", "value": "Yes"},
 			{"text": "Coming Soon", "value": "Coming Soon"},
@@ -125,8 +122,7 @@
 			{"text": "Ibuprofen", "value": "Ibuprofen"},
 			{"text": "Paracetamol", "value": "Paracetamol"},
 			{"text": "Codeine", "value": "Codeine"},
-			{"text": "Triptans", "value": "Triptans"},
-			{"text": "No medication", "value": "No"}
+			{"text": "Triptans", "value": "Triptans"}
 		],
 		"triggersAnswers": [
 			{"text": "Alcohol", "value": "Alcohol"},
@@ -134,16 +130,7 @@
 			{"text": "Tiredness", "value": "Tiredness"},
 			{"text": "Dehydration", "value": "Dehydration"},
 			{"text": "Hunger", "value": "Hunger"},
-			{"text": "Sport", "value": "Sport"},
-			{"text": "No idea", "value": "No idea"}
-		],
-		"auraAnswers": [
-			{"text": "Nausea", "value": "Nausea"},
-			{"text": "Visual Disturbances", "value": "Visual Disturbances"},
-			{"text": "Hypersensitive To Light", "value": "Hypersensitive To Light"},
-			{"text": "Hypersensitive To Sound", "value": "Hypersensitive To Sound"},
-			{"text": "Hypersensitive To Smell", "value": "Hypersensitive To Smell"},
-			{"text": "No", "value": "No"}
+			{"text": "Sport", "value": "Sport"}
 		]
 	},
 	"reports":{
@@ -156,12 +143,14 @@
 		"last60Days":"Last 60 days",
 		"lastYear": "Last year",
 		"allTime": "All time",
+		"customPeriod": "Custom period",
 		"painDays": "pain days",
 		"noPainDays": "no pain days",
 		"averge": "average attack duration",
 		"total": "total attacks duration",
 		"migraine": "migraine",
-		"migraines": "migraines"
+		"migraines": "migraines",
+		"confirm": "Confirm"
 	},
 	"oftenTogether":{
 		"painOptions": [

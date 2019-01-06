@@ -91,9 +91,6 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
-		"sleepDuration": "Długość snu [godz.]",
-		"pressure": "Ciśnienie krwi [mmHG] (przykład: 120/80)",
-		"aura": "aura",
 		"menstruationAnswers": [
 			{"text": "Tak", "value": "Yes"},
 			{"text": "Niedługo", "value": "Coming Soon"},
@@ -125,8 +122,7 @@
 			{"text": "Ibuprofen", "value": "Ibuprofen"},
 			{"text": "Paracetamol", "value": "Paracetamol"},
 			{"text": "Kodeina", "value": "Codeine"},
-			{"text": "Triptan", "value": "Triptans"},
-			{"text": "Bez leków", "value": "No"}
+			{"text": "Triptan", "value": "Triptans"}
 		],
 		"triggersAnswers": [
 			{"text": "Alkohol", "value": "Alcohol"},
@@ -134,16 +130,7 @@
 			{"text": "Zmęcznie", "value": "Tiredness"},
 			{"text": "Odwodnienie", "value": "Dehydration"},
 			{"text": "Głód", "value": "Hunger"},
-			{"text": "Sport", "value": "Sport"},
-			{"text": "Brak pomysłu", "value": "No idea"}
-		],
-		"auraAnswers": [
-			{"text": "Nudności", "value": "Nausea"},
-			{"text": "Zaburzenia widzenia", "value": "Visual Disturbances"},
-			{"text": "Nadwrażliwość na światło", "value": "Hypersensitive To Light"},
-			{"text": "Nadwrażliwość na dźwięk", "value": "Hypersensitive To Sound"},
-			{"text": "Nadwrażliwość na zapach", "value": "Hypersensitive To Smell"},
-			{"text": "Brak aury", "value": "No"}
+			{"text": "Sport", "value": "Sport"}
 		]
 	},
 	"reports":{
@@ -156,12 +143,14 @@
 		"last60Days":"Ostatnie 60 dni",
 		"lastYear": "Ostatni rok",
 		"allTime": "Od początku",
+		"customPeriod": "Niestandardowy okres",
 		"painDays": "dni z bólem",
 		"noPainDays": "dni bez bólu",
 		"averge": "średni czas trwania ataku",
 		"total": "całkowity czas trwania ataków",
 		"migraine": "migrena",
-		"migraines": "migreny"
+		"migraines": "migreny",
+		"confirm": "Potwierdź"
 	},
 	"oftenTogether":{
 		"painOptions": [

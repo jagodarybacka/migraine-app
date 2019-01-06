@@ -16,9 +16,6 @@ import {
   Pain,
   Medicines,
   Triggers,
-  Aura,
-  Pressure,
-  SleepDuration
 } from './form/AddForm';
 
 
@@ -148,13 +145,10 @@ class RecordForm extends Component {
     return (
       data.start_date &&
       data.start_time &&
-      data.sleepDuration &&
-      data.pressure &&
       data.pain &&
       data.menstruation &&
       data.mood &&
       data.localization &&
-      (data.aura && !!data.aura.length) &&
       (data.medicines && !!data.medicines.length) &&
       (data.triggers && !!data.triggers.length)      
     )
@@ -178,12 +172,6 @@ class RecordForm extends Component {
               <End onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
-              <Pressure onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <SleepDuration onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
               <Menstruation onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
@@ -197,9 +185,6 @@ class RecordForm extends Component {
             </div>
             <div className="record-tab">
               <Medicines onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Aura onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
               <Triggers onChange={this.handleChangeTabValue} />

@@ -144,12 +144,6 @@ class Summary extends Component {
             <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
           )}
 
-          <Divider text={languageText.addForm.pressure} />
-          <Bubble text={data.pressure +" mmHG"} color='#cddc39' />
-
-          <Divider text={languageText.addForm.sleepDuration} />
-          <Bubble text={data.sleepDuration +"h"} color='#cddc39' />
-
           <Divider text={languageText.addForm.pain} />
           <Bubble text={this.getTranslatedValue(data.pain,"pain")} img={faceNeutral} color='#ED8836' />
 
@@ -172,10 +166,6 @@ class Summary extends Component {
             <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
           ))}
 
-          <Divider text={languageText.addForm.aura} />
-          {data.aura.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
-          ))}
 
           <Divider text={languageText.addForm.acceptRaport} />
           <AcceptButton onClick={this.submit} />
