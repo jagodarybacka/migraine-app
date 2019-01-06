@@ -27,7 +27,6 @@ const Records = styled.ul`
     display:flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 7rem;
     padding: 0;
     list-style-type: none;
 
@@ -36,6 +35,10 @@ const Records = styled.ul`
       width: 100%;
     }
 `
+const NoMoreStyle = styled.ul`
+    margin-bottom: 5rem;
+`
+
 
 class History extends Component {
   constructor(props) {
@@ -161,7 +164,9 @@ class History extends Component {
               );
             })}
             <li key="9999">
-              <Divider text="No more entries" />
+              <NoMoreStyle>
+                <Divider text="No more entries" />
+              </NoMoreStyle>
             </li>
           </Records>
         </div>
