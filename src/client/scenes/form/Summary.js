@@ -207,7 +207,12 @@ class Summary extends Component {
           {data.aura.map(name => (
             <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
           ))}
-          
+         
+          <Divider text={languageText.addForm.reliefs} />
+          {data.reliefs.map(name => (
+            <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
+          ))}
+
           <Divider text={languageText.addForm.notes} />
           <textarea key={"notes"} readOnly={preview} value={this.state.notes} onChange={this.handleChangeNotes} type="text"  placeholder={languageText.addForm.notesPlaceholder} />
 

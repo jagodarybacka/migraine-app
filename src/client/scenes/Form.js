@@ -15,7 +15,8 @@ import {
   Triggers,
   Aura,
   Pressure,
-  SleepDuration
+  SleepDuration,
+  Reliefs
 } from './form/AddForm';
 
 

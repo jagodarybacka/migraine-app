@@ -107,6 +107,7 @@
 		"aura": "aura",
 		"notes": "Notatki",
 		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",
+		"reliefs": "Pomoce",
 		"menstruationAnswers": [
 			{"text": "Tak", "value": "Yes"},
 			{"text": "Niedługo", "value": "Coming Soon"},
@@ -155,6 +156,16 @@
 			{"text": "Nadwrażliwość na dźwięk", "value": "Hypersensitive To Sound"},
 			{"text": "Nadwrażliwość na zapach", "value": "Hypersensitive To Smell"},
 			{"text": "Brak aury", "value": "No"}
+		],
+		"reliefsAnswers": [
+			{"text": "Zaciemniony pokój", "value": "Dark room"},
+			{"text": "Joga/medytacja", "value": "Yoga/meditate"},
+			{"text": "Sen", "value": "Sleep"},
+			{"text": "Ciepły prysznic", "value": "Hot shower"},
+			{"text": "Zimny prysznic", "value": "Cold shower"},
+			{"text": "Kostki lodu", "value": "Ice packs"},
+			{"text": "Termofor", "value": "Heat pad"},
+			{"text": "Żadne/Inne", "value": "None/Others"}
 		]
 	},
 	"reports":{
