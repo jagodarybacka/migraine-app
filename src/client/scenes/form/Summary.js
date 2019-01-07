@@ -182,6 +182,12 @@ class Summary extends Component {
           {data.triggers.map(name => (
             <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
           ))}
+
+          <Divider text={languageText.addForm.reliefs} />
+          {data.reliefs.map(name => (
+            <Bubble key={name} text={this.UNSAFE_componentWillMount.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
+          ))}
+
           { !preview && [
           <Divider text={languageText.addForm.acceptRaport} />,
           <AcceptButton key="accept_button" onClick={this.submit} />

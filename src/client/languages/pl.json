@@ -31,7 +31,7 @@
 		"forgottenPassword": "Zapomniałeś hasła?"
 	},
 	"recordForm":{
-		"title": "Dodaj nową migrenę",
+		"title": "Dodaj migrenę",
 		"summary": "Podsumowanie",
 		"migraineRecord": "Zapis migreny"
 	},
@@ -101,6 +101,7 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
+		"reliefs": "Pomoce",
 		"menstruationAnswers": [
 			{"text": "Tak", "value": "Yes"},
 			{"text": "Niedługo", "value": "Coming Soon"},
@@ -141,6 +142,16 @@
 			{"text": "Odwodnienie", "value": "Dehydration"},
 			{"text": "Głód", "value": "Hunger"},
 			{"text": "Sport", "value": "Sport"}
+		],
+		"reliefsAnswers": [
+			{"text": "Zaciemniony pokój", "value": "Dark room"},
+			{"text": "Joga/medytacja", "value": "Yoga/meditate"},
+			{"text": "Sen", "value": "Sleep"},
+			{"text": "Ciepły prysznic", "value": "Hot shower"},
+			{"text": "Zimny prysznic", "value": "Cold shower"},
+			{"text": "Kostki lodu", "value": "Ice packs"},
+			{"text": "Termofor", "value": "Heat pad"},
+			{"text": "Żadne/Inne", "value": "None/Others"}
 		]
 	},
 	"reports":{

@@ -31,7 +31,7 @@
 		"forgottenPassword": "Forgotten password?"
 	},
 	"recordForm":{
-		"title": "Record new Migraine",
+		"title": "Record Migraine",
 		"summary": "Summary",
 		"migraineRecord": "Migraine Record"
 	},
@@ -101,6 +101,7 @@
 		"pain": "Pain Intensity",
 		"medicines": "Medicines",
 		"triggers": "Possible Triggers",
+		"reliefs": "Reliefs",
 		"menstruationAnswers": [
 			{"text": "Yes", "value": "Yes"},
 			{"text": "Coming Soon", "value": "Coming Soon"},
@@ -141,6 +142,16 @@
 			{"text": "Dehydration", "value": "Dehydration"},
 			{"text": "Hunger", "value": "Hunger"},
 			{"text": "Sport", "value": "Sport"}
+		],
+		"reliefsAnswers": [
+			{"text": "Dark room", "value": "Dark room"},
+			{"text": "Yoga/meditate", "value": "Yoga/meditate"},
+			{"text": "Sleep", "value": "Sleep"},
+			{"text": "Hot shower", "value": "Hot shower"},
+			{"text": "Clod shower", "value": "Cold shower"},
+			{"text": "Ice packs", "value": "Ice packs"},
+			{"text": "Heat pad", "value": "Heat pad"},
+			{"text": "None of these/others", "value": "None/Others"}
 		]
 	},
 	"reports":{

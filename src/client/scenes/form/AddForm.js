@@ -15,6 +15,7 @@ import dropColor from '../../assets/drop-color.png'
 import localizationColor from '../../assets/localization-color.png'
 import medicineColor from '../../assets/medicine-color.png'
 import questionmarkColor from '../../assets/questionmark-color.png'
+import questionmarkColor2 from '../../assets/questionmark-color2.png'
 import eye from '../../assets/eye.png'
 import eyeColor from '../../assets/eye-color.png'
 
@@ -134,6 +135,20 @@ const Triggers = props => {
   );
 }
 
+const Reliefs = props => {
+  const answers = languageText.addForm.reliefsAnswers;
+  return (
+    <MultipleChoice
+      values={props.values}
+      title={languageText.addForm.reliefs}
+      name="reliefs"
+      answers={answers}
+      onChange={props.onChange}
+      img={questionmark} imgColor={questionmarkColor2} color='#4169E1'
+    />
+  )
+}
+
 
 export {
   Start,
@@ -144,4 +159,5 @@ export {
   Pain,
   Medicines,
   Triggers,
+  Reliefs
 }

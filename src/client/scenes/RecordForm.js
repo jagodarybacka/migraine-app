@@ -20,6 +20,7 @@ import {
   Pain,
   Medicines,
   Triggers,
+  Reliefs
 } from './form/AddForm';
 
 
@@ -104,7 +105,7 @@ class RecordForm extends Component {
     };
 
     this.firstTab = 0;
-    this.lastTab = 8;
+    this.lastTab = 9;
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
@@ -233,7 +234,8 @@ class RecordForm extends Component {
       data.mood &&
       data.localization &&
       (data.medicines && !!data.medicines.length) &&
-      (data.triggers && !!data.triggers.length)      
+      (data.triggers && !!data.triggers.length) &&
+      data.reliefs    
     )
   }
 
@@ -273,6 +275,9 @@ class RecordForm extends Component {
             </div>
             <div className="record-tab">
               <Triggers values={data.triggers} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <Reliefs values={data.reliefs} onChange={this.handleChangeTabValue} />
             </div>
           </SwipeableViews>
         </form>

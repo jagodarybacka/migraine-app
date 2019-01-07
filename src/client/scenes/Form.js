@@ -12,7 +12,8 @@ import {
   Mood,
   Pain,
   Medicines,
-  Triggers
+  Triggers,
+  Reliefs
 } from './form/AddForm';
 
 
