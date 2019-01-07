@@ -50,6 +50,9 @@ triggers: [{
     type: String,
     // required: true
 }],
+reliefs: [{
+    type: String,
+}],
 weather: {
     type: Object
 }
