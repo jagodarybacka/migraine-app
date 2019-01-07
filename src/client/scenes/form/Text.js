@@ -5,15 +5,11 @@ import { languageText } from '../../languages/MultiLanguage';
 
 const Input = styled.input`
   display: block;
-
   width: 90%;
-
   padding: 10px 5%;
   background: transparent;
-
   border: none;
   border-bottom: solid 1px #4c5062;
-
   font-weight: 300;
 `;
 
@@ -23,17 +19,16 @@ const Field = styled.div`
 `;
 
 const Text = (props) => {
-    const { name, value, onChange, title, type } = props;
-    const text = languageText.text.enter + ` ${title.toLowerCase()}`
+    const text = languageText.text.enter + ` ${props.title.toLowerCase()}`
     return (
         <div>
-            <h2>{title}</h2>
+            <h2>{props.title}</h2>
             <Input
-                type={type}
-                name={name}
+                type={props.type}
+                name={props.name}
                 placeholder={text}
-                value={value}
-                onChange={onChange}
+                value={props.valueData}
+                onChange={props.onChange}
             />
         </div>
     )

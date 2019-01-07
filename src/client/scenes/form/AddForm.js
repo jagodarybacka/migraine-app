@@ -134,6 +134,44 @@ const Triggers = props => {
   );
 }
 
+const Aura = props => {
+  const answers = languageText.addForm.auraAnswers;//['Nausea', 'Visual Disturbances', 'Hypersensitive To Light', 'Hypersensitive To Sound', 'Hypersensitive To Smell']
+  return (
+    <MultipleChoice
+      values={props.values}
+      title="Aura"
+      name="aura"
+      answers={answers}
+      onChange={props.onChange}
+      img={eye} imgColor={eyeColor} color='#67252e'
+    />
+  );
+}
+
+const Pressure = props => {
+  return (
+    <Text
+    valueData={props.valueData}
+    title = {languageText.addForm.pressure}
+    name="pressure"
+    type= "text"
+    onChange={props.onChange}
+  />
+  )
+}
+
+const SleepDuration = props => {
+  return (
+    <Text
+    valueData={props.valueData}
+    title = {languageText.addForm.sleepDuration}
+    name="sleepDuration"
+    type= "number"
+    onChange={props.onChange}
+  />
+  )
+}
+
 
 export {
   Start,
@@ -144,4 +182,7 @@ export {
   Pain,
   Medicines,
   Triggers,
+  Aura,
+  Pressure,
+  SleepDuration
 }

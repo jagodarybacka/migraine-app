@@ -101,6 +101,9 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
+		"sleepDuration": "Długość snu [godz.]",
+		"pressure": "Ciśnienie krwi [mmHG] (przykład: 120/80)",
+		"aura": "aura",
 		"menstruationAnswers": [
 			{"text": "Tak", "value": "Yes"},
 			{"text": "Niedługo", "value": "Coming Soon"},
@@ -141,6 +144,14 @@
 			{"text": "Odwodnienie", "value": "Dehydration"},
 			{"text": "Głód", "value": "Hunger"},
 			{"text": "Sport", "value": "Sport"}
+		],
+		"auraAnswers": [
+			{"text": "Nudności", "value": "Nausea"},
+			{"text": "Zaburzenia widzenia", "value": "Visual Disturbances"},
+			{"text": "Nadwrażliwość na światło", "value": "Hypersensitive To Light"},
+			{"text": "Nadwrażliwość na dźwięk", "value": "Hypersensitive To Sound"},
+			{"text": "Nadwrażliwość na zapach", "value": "Hypersensitive To Smell"},
+			{"text": "Brak aury", "value": "No"}
 		]
 	},
 	"reports":{

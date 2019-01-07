@@ -12,7 +12,10 @@ import {
   Mood,
   Pain,
   Medicines,
-  Triggers
+  Triggers,
+  Aura,
+  Pressure,
+  SleepDuration
 } from './form/AddForm';
 
 

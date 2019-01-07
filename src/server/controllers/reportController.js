@@ -28,13 +28,9 @@ exports.reports_all = function(req,res,next) {
 		if(err) {return next(err);}
 		if(found_user)
 		{
-			// console.log('user');
-			// console.log(found_user);
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
 				if(err) {return next(err);}
-				// console.log('reports');
-				// console.log(found_reports);
 				res.json(found_reports);
 			});
 		}
@@ -79,6 +75,9 @@ exports.report_add = function(req, res,next) {
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
+        pressure: req.body.pressure,
+        sleep_duration: req.body.sleepDuration,
         weather: req.body.weather
         });
     report.save(function (err,saved) {
@@ -97,6 +96,9 @@ exports.report_add = function(req, res,next) {
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
+        pressure: req.body.pressure,
+        sleep_duration: req.body.sleepDuration,
         weather: req.body.weather
          });
     report.save(function (err,saved) {
@@ -138,6 +140,9 @@ exports.report_update = function(req, res, next) {
         pain: req.body.pain,
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+        aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
+        pressure: req.body.pressure,
+        sleep_duration: req.body.sleepDuration,
         weather: req.body.weather,
         _id: id
     }

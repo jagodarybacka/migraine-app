@@ -101,6 +101,9 @@
 		"pain": "Pain Intensity",
 		"medicines": "Medicines",
 		"triggers": "Possible Triggers",
+		"sleepDuration": "Sleep duration [h]",
+		"pressure": "Blood pressure [mmHG] (example: 120/80)",
+		"aura": "aura",
 		"menstruationAnswers": [
 			{"text": "Yes", "value": "Yes"},
 			{"text": "Coming Soon", "value": "Coming Soon"},
@@ -141,6 +144,14 @@
 			{"text": "Dehydration", "value": "Dehydration"},
 			{"text": "Hunger", "value": "Hunger"},
 			{"text": "Sport", "value": "Sport"}
+		],
+		"auraAnswers": [
+			{"text": "Nausea", "value": "Nausea"},
+			{"text": "Visual Disturbances", "value": "Visual Disturbances"},
+			{"text": "Hypersensitive To Light", "value": "Hypersensitive To Light"},
+			{"text": "Hypersensitive To Sound", "value": "Hypersensitive To Sound"},
+			{"text": "Hypersensitive To Smell", "value": "Hypersensitive To Smell"},
+			{"text": "No", "value": "No"}
 		]
 	},
 	"reports":{
