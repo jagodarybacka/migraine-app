@@ -3,6 +3,7 @@ import DateTime from '../../DateTime'
 import Button from '../../Button'
 import ExitIcon from '../../../assets/exit.png'
 import { CustomPeriodComponent } from './styles'
+import {languageText} from '../../../languages/MultiLanguage.js';
 
 class CustomPeriod extends Component {
   constructor(props) {
@@ -40,13 +41,13 @@ class CustomPeriod extends Component {
 
   render() {
     const confirm = this.state.valid ? (
-      <Button small text="Confirm" onClick={() => this.props.onConfirmFn(this.state)}/>
+      <Button small text={languageText.reportsSummary.confirm} onClick={() => this.props.onConfirmFn(this.state)}/>
     ) : (
-      <Button small text="Confirm" disabled/>
+      <Button small text={languageText.reportsSummary.confirm} disabled/>
     )
     return (
       <CustomPeriodComponent>
-        <h3 className="custom__header">Choose custom period</h3>
+        <h3 className="custom__header">{languageText.reportsSummary.customPeriod}</h3>
         <img className="custom__cancel" src={ExitIcon} onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
         <DateTime date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
         <DateTime date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
