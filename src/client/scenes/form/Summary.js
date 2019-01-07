@@ -185,7 +185,7 @@ class Summary extends Component {
 
           <Divider text={languageText.addForm.reliefs} />
           {data.reliefs.map(name => (
-            <Bubble key={name} text={this.UNSAFE_componentWillMount.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
+            <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
           ))}
 
           { !preview && [
