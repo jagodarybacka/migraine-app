@@ -101,6 +101,8 @@
 		"pain": "Pain Intensity",
 		"medicines": "Medicines",
 		"triggers": "Possible Triggers",
+		"notes": "Notes",
+		"notesPlaceholder": "Write something...",
 		"menstruationAnswers": [
 			{"text": "Yes", "value": "Yes"},
 			{"text": "Coming Soon", "value": "Coming Soon"},

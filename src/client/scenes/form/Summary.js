@@ -196,8 +196,8 @@ class Summary extends Component {
             <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
           ))}
 
-          <Divider text="Notes" />
-          <textarea key={"name"} value={this.state.notes} onChange={this.handleChangeNotes} type="text" name="notes" placeholder="Write something.." />
+          <Divider text={languageText.addForm.notes} />
+          <textarea key={"notes"} value={this.state.notes} onChange={this.handleChangeNotes} type="text"  placeholder={languageText.addForm.notesPlaceholder} />
 
           { !preview && [
           <Divider text={languageText.addForm.acceptRaport} />,

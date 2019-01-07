@@ -101,6 +101,8 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
+		"notes": "Notatki",
+		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",
 		"menstruationAnswers": [
 			{"text": "Tak", "value": "Yes"},
 			{"text": "Niedługo", "value": "Coming Soon"},
