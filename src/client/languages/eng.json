@@ -32,6 +32,7 @@
 	},
 	"recordForm":{
 		"title": "Record new Migraine",
+		"titleEdit": "Edit Migraine",
 		"summary": "Summary",
 		"migraineRecord": "Migraine Record"
 	},
@@ -104,6 +105,8 @@
 		"sleepDuration": "Sleep duration [h]",
 		"pressure": "Blood pressure [mmHG] (example: 120/80)",
 		"aura": "aura",
+		"notes": "Notes",
+		"notesPlaceholder": "Write something...",
 		"menstruationAnswers": [
 			{"text": "Yes", "value": "Yes"},
 			{"text": "Coming Soon", "value": "Coming Soon"},

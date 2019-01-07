@@ -32,6 +32,7 @@
 	},
 	"recordForm":{
 		"title": "Dodaj nową migrenę",
+		"titleEdit": "Edytuj migrenę",
 		"summary": "Podsumowanie",
 		"migraineRecord": "Zapis migreny"
 	},
@@ -104,6 +105,8 @@
 		"sleepDuration": "Długość snu [godz.]",
 		"pressure": "Ciśnienie krwi [mmHG] (przykład: 120/80)",
 		"aura": "aura",
+		"notes": "Notatki",
+		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",
 		"menstruationAnswers": [
 			{"text": "Tak", "value": "Yes"},
 			{"text": "Niedługo", "value": "Coming Soon"},

@@ -165,7 +165,7 @@ const SleepDuration = props => {
     <Text
     valueData={props.valueData}
     title = {languageText.addForm.sleepDuration}
-    name="sleepDuration"
+    name="sleep_duration"
     type= "number"
     onChange={props.onChange}
   />

@@ -32,6 +32,13 @@ const SummaryComponent = styled.section`
     margin: 0 0 2rem 0;
     text-align: center;
   }
+  textarea{
+    width: 250px;
+    height: 150px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: none;
+  }
 `
 const TimeDateComponent = styled.div`
   display: flex;
@@ -94,7 +101,9 @@ class Summary extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {notes: props.location.state.data.notes || ''};
     this.submit = this.submit.bind(this);
+    this.handleChangeNotes = this.handleChangeNotes.bind(this);
   }
 
   componentDidMount() {
@@ -107,8 +116,14 @@ class Summary extends Component {
     }
   }
 
+  handleChangeNotes(event){
+    this.setState({notes: event.target.value});
+  }
+
   submit() {
-    const { data, id } = this.props.location.state;
+    let { data, id } = this.props.location.state;
+    data = { ...data, notes: this.state.notes } 
+
     const { match } = this.props
     let method = 'POST'
     let url = "/api/reports/";
@@ -193,6 +208,9 @@ class Summary extends Component {
             <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
           ))}
           
+          <Divider text={languageText.addForm.notes} />
+          <textarea key={"notes"} readOnly={preview} value={this.state.notes} onChange={this.handleChangeNotes} type="text"  placeholder={languageText.addForm.notesPlaceholder} />
+
           { !preview && [
           <Divider text={languageText.addForm.acceptRaport} />,
           <AcceptButton key="accept_button" onClick={this.submit} />

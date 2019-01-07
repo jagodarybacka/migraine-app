@@ -80,7 +80,9 @@ const Buttons = styled.div `
   }
 `;
 
-const Hello = () => (<h1>{languageText.recordForm.title}</h1>)
+const Hello = (props) => (props.edit 
+  ? <h1>{languageText.recordForm.titleEdit}</h1> 
+  : <h1>{languageText.recordForm.title}</h1> )
 
 class RecordForm extends Component {
   constructor(props) {
@@ -126,7 +128,6 @@ class RecordForm extends Component {
   handleChangeTabValue(evt) {
     const { data } = this.state;
     const { name, value, type } = evt.target;
-    console.log(name);console.log(value);console.log(type)
     let result;
       if (type === 'checkbox') {
         result = data[name] || [];
@@ -191,7 +192,6 @@ class RecordForm extends Component {
   render() {
     const { currentTab, data } = this.state;
     const { match } = this.props;
-    console.log(data);
 
     return (
       <Container className="Form">
@@ -199,7 +199,7 @@ class RecordForm extends Component {
         <form>
           <SwipeableViews index={currentTab}>
             <div className="record-tab">
-              <Hello />
+              <Hello edit={this.edit} />
             </div>
             <div className="record-tab">
               <Start onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>

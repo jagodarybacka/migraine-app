@@ -77,7 +77,8 @@ exports.report_add = function(req, res,next) {
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
         aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
         pressure: req.body.pressure,
-        sleep_duration: req.body.sleepDuration,
+        sleep_duration: req.body.sleep_duration,
+        notes: req.body.notes,
         weather: req.body.weather
         });
     report.save(function (err,saved) {
@@ -98,7 +99,8 @@ exports.report_add = function(req, res,next) {
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
         aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
         pressure: req.body.pressure,
-        sleep_duration: req.body.sleepDuration,
+        sleep_duration: req.body.sleep_duration,
+        notes: req.body.notes,
         weather: req.body.weather
          });
     report.save(function (err,saved) {
@@ -142,7 +144,8 @@ exports.report_update = function(req, res, next) {
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
         aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
         pressure: req.body.pressure,
-        sleep_duration: req.body.sleepDuration,
+        sleep_duration: req.body.sleep_duration,
+        notes: req.body.notes,
         weather: req.body.weather,
         _id: id
     }
