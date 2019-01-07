@@ -84,7 +84,7 @@ class Summary extends Component {
     }
 
     if (!this.state.options.includes((op) => op.value == "custom")){
-      this.state.options.unshift({value: 'custom', label: 'Custom period'})
+      this.state.options.unshift({value: 'custom', label: languageText.reportsSummary.customPeriod})
       }
     this.setState({
       selectedOption: 'custom',

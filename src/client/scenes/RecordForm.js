@@ -20,6 +20,10 @@ import {
   Pain,
   Medicines,
   Triggers,
+  Aura,
+  Pressure,
+  SleepDuration,
+  Reliefs
 } from './form/AddForm';
 
 
@@ -77,7 +81,9 @@ const Buttons = styled.div `
   }
 `;
 
-const Hello = () => (<h1>{languageText.recordForm.title}</h1>)
+const Hello = (props) => (props.edit 
+  ? <h1>{languageText.recordForm.titleEdit}</h1> 
+  : <h1>{languageText.recordForm.title}</h1> )
 
 class RecordForm extends Component {
   constructor(props) {
@@ -94,22 +100,13 @@ class RecordForm extends Component {
         valid: true,
         err_msg: ""
       }
-      // addAnswer: false,
-      // placeToAdd: "",
-      // field: {
-      //   value: '',
-      //   isValid: true,
-      //   errorMsg: ''
-      // }
     };
 
     this.firstTab = 0;
-    this.lastTab = 8;
+    this.lastTab = 12;
 
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
-    // this.validate = this.validate.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -130,18 +127,9 @@ class RecordForm extends Component {
   }
 
   handleChangeTabValue(evt) {
-    // console.log(evt);
     const { data } = this.state;
     const { name, value, type } = evt.target;
-    console.log(name);console.log(value);console.log(type)
     let result;
-    // if(value == "Other"){
-    //   this.setState(prevState => ({
-    //     addAnswer: !prevState.addAnswer,
-    //     placeToAdd: name
-    //   }))
-    // }
-    // else {
       if (type === 'checkbox') {
         result = data[name] || [];
         const shouldUncheck = result.indexOf(value);
@@ -167,49 +155,11 @@ class RecordForm extends Component {
           }
         }
       })
-    // }
   }
 
-  // handleChange(event) {
-  //   const { value } = event.target;
-  //   console.log(value);
-  //   this.setState((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       field: {
-  //         ...prevState.field,
-  //         value : value,
-  //       }
-  //     }
-  //   })
-  // }
-
-  // validate() {
-  //   const data = this.state.data;
-  //   if (!data.start_date) {
-  //     this.setState({
-  //       dateValidation: {
-  //         valid: false,
-  //         err_msg: "No start date"
-  //       }
-  //     }, () => {
-  //       console.log(this.state);
-  //     });
-  //     return;
-  //   } else {
-  //     const d1 = new Date(data.start_date);
-  //     const d2 = new Date(data.end_date);
-  //     console.log(d1,d2);
-  //     this.setState({valid: true});
-  //     return;
-  //   }
-  // }
 
   changeTab(direction) {
     const { currentTab } = this.state;
-    // if(direction=="next" && currentTab==1){
-    //   this.validate();
-    // }
     let nextTab = currentTab;
 
     if (direction === 'next') {
@@ -228,19 +178,22 @@ class RecordForm extends Component {
     return (
       data.start_date &&
       data.start_time &&
+      data.sleep_duration &&
+      data.pressure &&
       data.pain &&
       data.menstruation &&
       data.mood &&
       data.localization &&
+      (data.aura && !!data.aura.length) &&
       (data.medicines && !!data.medicines.length) &&
-      (data.triggers && !!data.triggers.length)      
+      (data.triggers && !!data.triggers.length) &&
+      data.reliefs    
     )
   }
 
   render() {
     const { currentTab, data } = this.state;
     const { match } = this.props;
-    console.log(data);
 
     return (
       <Container className="Form">
@@ -248,13 +201,19 @@ class RecordForm extends Component {
         <form>
           <SwipeableViews index={currentTab}>
             <div className="record-tab">
-              <Hello />
+              <Hello edit={this.edit} />
             </div>
             <div className="record-tab">
               <Start onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
               <End onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
+            </div>
+            <div className="record-tab">
+              <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <SleepDuration valueData={data.sleep_duration} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
               <Menstruation valueData={data.menstruation} onChange={this.handleChangeTabValue} />
@@ -272,7 +231,13 @@ class RecordForm extends Component {
               <Medicines values={data.medicines} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
+              <Aura values={data.aura} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
               <Triggers values={data.triggers} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <Reliefs values={data.reliefs} onChange={this.handleChangeTabValue} />
             </div>
           </SwipeableViews>
         </form>

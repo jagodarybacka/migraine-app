@@ -15,6 +15,7 @@ import dropColor from '../../assets/drop-color.png'
 import localizationColor from '../../assets/localization-color.png'
 import medicineColor from '../../assets/medicine-color.png'
 import questionmarkColor from '../../assets/questionmark-color.png'
+import questionmarkColor2 from '../../assets/questionmark-color2.png'
 import eye from '../../assets/eye.png'
 import eyeColor from '../../assets/eye-color.png'
 
@@ -134,6 +135,58 @@ const Triggers = props => {
   );
 }
 
+const Aura = props => {
+  const answers = languageText.addForm.auraAnswers;//['Nausea', 'Visual Disturbances', 'Hypersensitive To Light', 'Hypersensitive To Sound', 'Hypersensitive To Smell']
+  return (
+    <MultipleChoice
+      values={props.values}
+      title="Aura"
+      name="aura"
+      answers={answers}
+      onChange={props.onChange}
+      img={eye} imgColor={eyeColor} color='#67252e'
+    />
+  );
+}
+
+const Pressure = props => {
+  return (
+    <Text
+    valueData={props.valueData}
+    title = {languageText.addForm.pressure}
+    name="pressure"
+    type= "text"
+    onChange={props.onChange}
+  />
+  )
+}
+
+const SleepDuration = props => {
+  return (
+    <Text
+    valueData={props.valueData}
+    title = {languageText.addForm.sleepDuration}
+    name="sleep_duration"
+    type= "number"
+    onChange={props.onChange}
+  />
+  )
+}
+
+const Reliefs = props => {
+  const answers = languageText.addForm.reliefsAnswers;
+  return (
+    <MultipleChoice
+      values={props.values}
+      title={languageText.addForm.reliefs}
+      name="reliefs"
+      answers={answers}
+      onChange={props.onChange}
+      img={questionmark} imgColor={questionmarkColor2} color='#4169E1'
+    />
+  )
+}
+
 
 export {
   Start,
@@ -144,4 +197,8 @@ export {
   Pain,
   Medicines,
   Triggers,
+  Aura,
+  Pressure,
+  SleepDuration,
+  Reliefs
 }

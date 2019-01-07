@@ -32,6 +32,7 @@
 	},
 	"recordForm":{
 		"title": "Record new Migraine",
+		"titleEdit": "Edit Migraine",
 		"summary": "Summary",
 		"migraineRecord": "Migraine Record"
 	},
@@ -101,6 +102,12 @@
 		"pain": "Pain Intensity",
 		"medicines": "Medicines",
 		"triggers": "Possible Triggers",
+		"sleepDuration": "Sleep duration [h]",
+		"pressure": "Blood pressure [mmHG] (example: 120/80)",
+		"aura": "aura",
+		"notes": "Notes",
+		"notesPlaceholder": "Write something...",
+		"reliefs": "Reliefs",
 		"menstruationAnswers": [
 			{"text": "Yes", "value": "Yes"},
 			{"text": "Coming Soon", "value": "Coming Soon"},
@@ -141,6 +148,24 @@
 			{"text": "Dehydration", "value": "Dehydration"},
 			{"text": "Hunger", "value": "Hunger"},
 			{"text": "Sport", "value": "Sport"}
+		],
+		"auraAnswers": [
+			{"text": "Nausea", "value": "Nausea"},
+			{"text": "Visual Disturbances", "value": "Visual Disturbances"},
+			{"text": "Hypersensitive To Light", "value": "Hypersensitive To Light"},
+			{"text": "Hypersensitive To Sound", "value": "Hypersensitive To Sound"},
+			{"text": "Hypersensitive To Smell", "value": "Hypersensitive To Smell"},
+			{"text": "No", "value": "No"}
+		],
+		"reliefsAnswers": [
+			{"text": "Dark room", "value": "Dark room"},
+			{"text": "Yoga/meditate", "value": "Yoga/meditate"},
+			{"text": "Sleep", "value": "Sleep"},
+			{"text": "Hot shower", "value": "Hot shower"},
+			{"text": "Clod shower", "value": "Cold shower"},
+			{"text": "Ice packs", "value": "Ice packs"},
+			{"text": "Heat pad", "value": "Heat pad"},
+			{"text": "None of these/others", "value": "None/Others"}
 		]
 	},
 	"reports":{

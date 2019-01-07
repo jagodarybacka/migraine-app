@@ -32,6 +32,7 @@
 	},
 	"recordForm":{
 		"title": "Dodaj nową migrenę",
+		"titleEdit": "Edytuj migrenę",
 		"summary": "Podsumowanie",
 		"migraineRecord": "Zapis migreny"
 	},
@@ -101,6 +102,12 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
+		"sleepDuration": "Długość snu [godz.]",
+		"pressure": "Ciśnienie krwi [mmHG] (przykład: 120/80)",
+		"aura": "aura",
+		"notes": "Notatki",
+		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",
+		"reliefs": "Pomoce",
 		"menstruationAnswers": [
 			{"text": "Tak", "value": "Yes"},
 			{"text": "Niedługo", "value": "Coming Soon"},
@@ -141,6 +148,24 @@
 			{"text": "Odwodnienie", "value": "Dehydration"},
 			{"text": "Głód", "value": "Hunger"},
 			{"text": "Sport", "value": "Sport"}
+		],
+		"auraAnswers": [
+			{"text": "Nudności", "value": "Nausea"},
+			{"text": "Zaburzenia widzenia", "value": "Visual Disturbances"},
+			{"text": "Nadwrażliwość na światło", "value": "Hypersensitive To Light"},
+			{"text": "Nadwrażliwość na dźwięk", "value": "Hypersensitive To Sound"},
+			{"text": "Nadwrażliwość na zapach", "value": "Hypersensitive To Smell"},
+			{"text": "Brak aury", "value": "No"}
+		],
+		"reliefsAnswers": [
+			{"text": "Zaciemniony pokój", "value": "Dark room"},
+			{"text": "Joga/medytacja", "value": "Yoga/meditate"},
+			{"text": "Sen", "value": "Sleep"},
+			{"text": "Ciepły prysznic", "value": "Hot shower"},
+			{"text": "Zimny prysznic", "value": "Cold shower"},
+			{"text": "Kostki lodu", "value": "Ice packs"},
+			{"text": "Termofor", "value": "Heat pad"},
+			{"text": "Żadne/Inne", "value": "None/Others"}
 		]
 	},
 	"reports":{
