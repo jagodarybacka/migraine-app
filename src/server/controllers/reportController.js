@@ -79,7 +79,7 @@ exports.report_add = function(req, res,next) {
         pressure: req.body.pressure,
         sleep_duration: req.body.sleep_duration,
         notes: req.body.notes,
-        reliefs: (typeof req.body.reliefs==='undefind') ? [] : req.body.reliefs,
+        reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
         weather: req.body.weather
         });
     report.save(function (err,saved) {
@@ -102,7 +102,7 @@ exports.report_add = function(req, res,next) {
         pressure: req.body.pressure,
         sleep_duration: req.body.sleep_duration,
         notes: req.body.notes,
-        reliefs: (typeof req.body.reliefs==='undefind') ? [] : req.body.reliefs,
+        reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
         weather: req.body.weather
          });
     report.save(function (err,saved) {
@@ -148,7 +148,7 @@ exports.report_update = function(req, res, next) {
         pressure: req.body.pressure,
         sleep_duration: req.body.sleep_duration,
         notes: req.body.notes,
-        reliefs: (typeof req.body.reliefs==='undefind') ? [] : req.body.reliefs,
+        reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
         weather: req.body.weather,
         _id: id
     }
