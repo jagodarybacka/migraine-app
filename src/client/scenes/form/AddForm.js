@@ -31,6 +31,7 @@ const Start = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="start"
+      onClick={props.onClick}
       onChange={props.onChange}
       id='start'
     />
@@ -43,6 +44,7 @@ const End = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="end"
+      onClick={props.onClick}
       onChange={props.onChange}
       id='end'
       end

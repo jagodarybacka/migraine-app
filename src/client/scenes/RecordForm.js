@@ -105,6 +105,7 @@ class RecordForm extends Component {
     this.firstTab = 0;
     this.lastTab = 12;
 
+    this.currentDate = this.currentDate.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
   }
@@ -173,6 +174,21 @@ class RecordForm extends Component {
     this.setState({ currentTab: nextTab });
   }
 
+  currentDate(name){
+    const { data } = this.state;
+    const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    const time = `${new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()}:${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
+    const date = `${new Date().getFullYear()}-${month[new Date().getMonth()]}-${new Date().getDate()}`;
+    console.log(data.start_date,data.start_time)
+    this.setState({
+      data:{
+        ...data,
+        [`${name}_time`]: time,
+        [`${name}_date`]: date   
+      }
+    });
+  }
+
   isComplete() {
     const { data } = this.state;
     return (
@@ -204,10 +220,10 @@ class RecordForm extends Component {
               <Hello edit={this.edit} />
             </div>
             <div className="record-tab">
-              <Start onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
+              <Start name="start" onClick={this.currentDate} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
+              <End name="end" onClick={this.currentDate} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
               <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
