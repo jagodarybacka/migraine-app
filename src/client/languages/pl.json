@@ -11,7 +11,13 @@
 		"usernamePlaceholder": "Nazwę użytkownika",
 		"eng": "Angielski",
 		"pol": "Polski",
-		"logout": "Wyloguj"
+		"logout": "Wyloguj",
+		"failed":"Wylogowywanie nie powiodło się",
+		"sthWentWrong": "Coś poszło nie tak",
+		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
+		"dataChanged": "Dane zostały zmienione",
+		"passwordChanged": "Hasło zostało zmienione"
+
 	},
 	"home":{
 	    "add": "Dodaj ból głowy"
