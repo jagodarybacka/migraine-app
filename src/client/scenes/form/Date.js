@@ -62,11 +62,13 @@ const Date = (props) => {
         <Button text={languageText.date.now} onClick={e=>{e.preventDefault(); props.onNowButtonClick(props.name);}}  />
         <Button text="-1h" primary onClick={e=>{e.preventDefault(); props.onSubtractHourClick(props.name);  }}  />
       </Buttons>
+      {
+        props.end ? <Button text={languageText.date.notYet} primary  onClick={e=>{e.preventDefault(); props.onNotYetClick(props.name);  }}/> : ""
+      }
 
     </Time>
   );
 }
 
-//{        props.end ? <Button text={languageText.date.notYet} primary  onClick={e=>{e.preventDefault(); props.onNotYetClick(props.name);  }}/> : ""}
 
 export default Date;

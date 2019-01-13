@@ -33,7 +33,7 @@ const Start = props => {
       name="start"
       onNowButtonClick={props.onNowButtonClick}
       onSubtractHourClick={props.onSubtractHourClick}
-     // onNotYetClick = {props.onNotYetClick}
+      onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='start'
     />
@@ -48,7 +48,7 @@ const End = props => {
       name="end"
       onNowButtonClick={props.onNowButtonClick}
       onSubtractHourClick={props.onSubtractHourClick}
-    //  onNotYetClick = {props.onNotYetClick}
+      onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='end'
       end
