@@ -140,7 +140,7 @@ class Settings extends Component {
 
     if (!validatePassword(password.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters and contains at least one uppercase letter, one lowercase letter, one digit and one special symbol');
+      fields = this.changeValidation(fields, 'password', false, languageText.register.error8chars);
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
@@ -180,14 +180,14 @@ class Settings extends Component {
 
     if (username.value.length > 0 && !validateLength(username.value, 4)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'username', false, 'This field must be greater than 4 characters');
+      fields = this.changeValidation(fields, 'username', false, languageText.register.error4chars);
     } else {
       fields = this.changeValidation(fields, 'username', true);
     }
 
     if (email.value.length && !validateEmail(email.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+      fields = this.changeValidation(fields, 'email', false, languageText.register.invalidEmail);
     } else {
       fields = this.changeValidation(fields, 'email', true);
     }

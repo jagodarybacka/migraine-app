@@ -18,6 +18,7 @@ exports.validateRegister = (req, res, next) => {
 	req.checkBody('password', 'Password Cannot be Blank!').notEmpty();
 
 	const errors = req.validationErrors();
+	console.log(errors);
 	if (errors) {
 	  res.json({body: req.body, errors: errors });
 	  return;
@@ -27,6 +28,7 @@ exports.validateRegister = (req, res, next) => {
 
 exports.register = async (req, res, next) => {
 	const user = new User({username: req.body.username, email: req.body.email });
+	console.log(user);
 	await User.register(user, req.body.password, function(err, user) {
 		if (err) {
 			return res.json({errors : [err.message]});

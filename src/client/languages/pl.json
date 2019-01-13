@@ -58,7 +58,7 @@
 	"register":{
 		"invalidEmail": "Nieprawidłowy adres email",
 		"error4chars": "Pole musi być wypełnione conajmniej 4 znakami.",
-		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami.",
+		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę.",
 		"password": "Hasło",
 		"logIn": "Log In",
 		"username": "Nazwa użytkownika",

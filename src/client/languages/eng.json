@@ -58,7 +58,7 @@
 	"register":{
 		"invalidEmail": "Invalid email address.",
 		"error4chars": "This field must be greater than 4 characters",
-		"error8chars": "This field must be greater than 8 characters",
+		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number",
 		"password": "Password",
 		"logIn": "Log In",
 		"username": "Username",
