@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
+import moment from 'moment';
 
 
 import Button from '../components/Button'
@@ -104,8 +105,9 @@ class RecordForm extends Component {
 
     this.firstTab = 0;
     this.lastTab = 12;
-
+    
     this.currentDate = this.currentDate.bind(this);
+    this.subtractsOneHour = this.subtractsOneHour.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
   }
@@ -189,6 +191,19 @@ class RecordForm extends Component {
     });
   }
 
+  subtractsOneHour(name){
+    const { data } = this.state;
+    const currentTime = data[`${name}_time`]
+    const newTime = moment(currentTime,'HH:mm').subtract(1, 'hour').format('HH:mm');
+    console.log(currentTime, newTime)
+    this.setState({
+        data:{
+          ...data,
+          [`${name}_time`]: newTime 
+    }
+  })
+}
+
   isComplete() {
     const { data } = this.state;
     return (
@@ -220,10 +235,10 @@ class RecordForm extends Component {
               <Hello edit={this.edit} />
             </div>
             <div className="record-tab">
-              <Start name="start" onClick={this.currentDate} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
+              <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End name="end" onClick={this.currentDate} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
+              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
               <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
