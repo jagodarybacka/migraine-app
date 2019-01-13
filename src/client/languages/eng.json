@@ -190,7 +190,8 @@
 		"total": "total attacks duration",
 		"migraine": "migraine",
 		"migraines": "migraines",
-		"confirm": "Confirm"
+		"confirm": "Confirm",
+		"sthWentWrong": "Something went wrong"
 	},
 	"oftenTogether":{
 		"painOptions": [
