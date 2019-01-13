@@ -7,7 +7,7 @@ const _ = require('lodash')
  * @return {array}
  */
 const parseForecast = (forecast) => {
-  return forecast[0].list.map((el) => {
+  return forecast.map((el) => {
     return {
       pressure: el.main.pressure,
       date: el.dt_txt

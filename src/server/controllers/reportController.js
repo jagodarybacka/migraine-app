@@ -37,6 +37,25 @@ exports.reports_all = function(req,res,next) {
 	});
 };
 
+exports.reports_period = function(req,res,next) {
+    const userId = req.session.userId;
+	const start = new Date(req.params.start);
+    const end = new Date(req.params.end);
+    Report.find({user: userId, start_date : { $gte: start}, end_date : { $lte: end } }, '_id start_date end_date pain')
+    .exec(function(err,found_reports){
+        if(err) {return next(err);}
+        if(found_reports.length == 0){
+            res.status(204);
+            res.send("No content");
+        }
+        else {
+            console.log(found_reports);
+            res.json(found_reports);
+        }
+    });
+    // res.json("not implemented yet");
+}
+
 exports.report_recent = function(req,res,next) {
 	const userId = req.session.userId;
 	User.findById(userId, 'username _id email')

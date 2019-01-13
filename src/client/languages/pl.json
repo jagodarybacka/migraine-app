@@ -179,6 +179,9 @@
 		"pressure":"Ciśnienie atmosferyczne",
 		"oftenTogether": "Często występujace razem"
 	},
+	"atmosphericPressure": {
+		"noData": "Brak danych"
+	},
 	"reportsSummary":{
 		"last30Days": "Ostatnie 30 dni",
 		"last60Days":"Ostatnie 60 dni",

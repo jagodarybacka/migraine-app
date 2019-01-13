@@ -51,8 +51,8 @@ class Home extends Component {
     } else {
       const now = new Date()
       const then = new Date(localStorage.getItem('forecast_time'))
-      const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60 * 24))
-      if(diff > 1) {
+      const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
+      if(diff > 12) {
         this.getForecast()
       }
     }
@@ -61,7 +61,6 @@ class Home extends Component {
   async getForecast() {
     const geolocation = await getGeolocation()
     const forecast = await getForecast(geolocation)
-    console.log(forecast.list.length)
     const url = 'api/forecast';
     axios.post(url, {
       weather_forecast: forecast

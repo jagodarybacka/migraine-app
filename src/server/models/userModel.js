@@ -25,9 +25,6 @@ var UserSchema = new Schema({
 	resetPasswordExpires: Date,
 	weather_forecasts: {
 		type: Object
-	},
-	weather_time: {
-		type: Date
 	}
 });
 UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' });

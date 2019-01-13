@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports = {
     computeStats: function(reports, days, now) {  
         const attacks = reports.length;
@@ -50,16 +52,27 @@ module.exports = {
     },
 
     modifyForecasts(oldForecasts, forecast){
-        if(oldForecasts){
-            if(oldForecasts.length + 40 > 80) {
-                oldForecasts.splice(0,Number(oldForecasts.length-40));
-            }
+        let latest;
+        if(oldForecasts && oldForecasts.length > 0){
+            latest = moment(oldForecasts[oldForecasts.length-1].dt_txt,'YYYY-MM-DD HH:mm:ss');
+            console.log(latest);
         }
         const city = forecast.city;
         const forecasts = forecast.list.map((forecast) => ({
                 ...forecast,
                 city: city
         }))
-        return oldForecasts ? oldForecasts.concat(forecasts) : forecasts;
+        let newForecasts;
+        if(oldForecasts && oldForecasts.length > 0) {
+            newForecasts = forecasts.filter(f => moment(f.dt_txt,'YYYY-MM-DD HH:mm:ss') > latest )
+        }    
+        return oldForecasts && oldForecasts.length > 0 ? oldForecasts.concat(newForecasts) : forecasts;
+    },
+
+    getForecasts(forecasts, start, end) {
+        return forecasts.filter((f) => {
+            const fDate = moment(f.dt_txt, 'YYYY-MM-DD HH:mm:ss');
+            return fDate.isAfter(start) && fDate.isBefore(end);
+        })
     }
 }
