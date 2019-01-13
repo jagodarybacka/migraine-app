@@ -219,5 +219,18 @@
 		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
 		"headerButton": "Dowiedz się więcej"
-	}	
+	},
+	"forgottenPassword": {
+		"resetPassword": "Zresetuj hasło",
+		"sendEmail": "Wyślij email",
+		"invalidEmail": "Niepoprawny adres email",
+		"emailNotFound": "Nie znaleziono adresu email"
+	},
+	"resetPassword": {
+		"resetPassword": "Zresetuj hasło",
+		"reset": "Resetuj",
+		"password": "Hasło",
+		"emailNotFound": "Nie znaleziono adresu email",
+		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę."
+	}
 }

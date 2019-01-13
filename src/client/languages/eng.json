@@ -219,5 +219,18 @@
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
 		"headerButton": "Find out more"
-	}	
+	},
+	"forgottenPassword": {
+		"resetPassword": "Reset Password",
+		"sendEmail": "Send email",
+		"invalidEmail": "Invalid email address",
+		"emailNotFound": "Email not found"
+	},
+	"resetPassword": {
+		"resetPassword": "Reset Password",
+		"reset": "Reset",
+		"password": "Password",
+		"emailNotFound": "Email not found",
+		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number"
+	}
 }
