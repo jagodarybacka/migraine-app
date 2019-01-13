@@ -39,6 +39,7 @@ router.get("/reports/stats/:days",auth_controller.isLoggedIn, report_controller.
 
 router.get("/reports/stats/custom/:start-:end",auth_controller.isLoggedIn, report_controller.report_stats_custom);
 
+router.post("/forecast", auth_controller.isLoggedIn, user_controller.save_forecast);
 
 /// USER ROUTES ///
 

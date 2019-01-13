@@ -4,6 +4,7 @@ var passport = require("passport");
 var crypto = require('crypto');
 const nodemailer = require("nodemailer");
 var async = require('async');
+var tools = require('../helpers/stats.js');
 
 
 exports.validateRegister = (req, res, next) => {
@@ -168,4 +169,28 @@ exports.reset_password = (req, res, next) => {
         });
 		});
 		});
+}
+
+exports.save_forecast = (req, res, next) => {
+	const userId = req.session.userId;
+	const forecast = req.body.weather_forecast;
+	const now = new Date();
+	User.findById(userId)
+	.exec( function(err, found_user) {
+		if (err) { return next(err); }
+		if (found_user) {
+			if(found_user.weather_time) {
+				if((now.getTime() - found_user.weather_time.getTime()) / (1000*60*60*24) < 1){
+					console.log('Up to date');
+					return res.json('Forecast up to date');
+				}
+			}
+			const forecasts = tools.modifyForecasts(found_user.weather_forecasts, forecast);
+			User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: forecasts, weather_time : new Date() }}, {}, function (err,mod_user) {
+				if (err) { return next(err); }
+				console.log('Forecast saved');
+				return res.json("Forecast saved");
+			});
+		}
+	});
 }

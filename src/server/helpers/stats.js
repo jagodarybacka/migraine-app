@@ -47,5 +47,19 @@ module.exports = {
         const noPainDays = period - painDays;
         const average = Math.round((pain / 60)/attacks);
         return {attacks: attacks, painDays: painDays, noPainDays: noPainDays, average: average, total: total}
+    },
+
+    modifyForecasts(oldForecasts, forecast){
+        if(oldForecasts){
+            if(oldForecasts.length + 40 > 80) {
+                oldForecasts.splice(0,Number(oldForecasts.length-40));
+            }
+        }
+        const city = forecast.city;
+        const forecasts = forecast.list.map((forecast) => ({
+                ...forecast,
+                city: city
+        }))
+        return oldForecasts ? oldForecasts.concat(forecasts) : forecasts;
     }
 }

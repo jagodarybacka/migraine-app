@@ -57,17 +57,22 @@ class WeatherWidget extends Component {
       if(diff > 30) {
         this.saveWeather();
       } else {
-        const weather = JSON.parse(localStorage.getItem('weather')).weather
-        this.setState({
-          weather: weather,
-          temperature: weather.main.temp,
-          icon: String(weather.weather[0].icon),
-          description: weather.weather[0].description,
-          humidity: weather.main.humidity,
-          pressure: weather.main.pressure,
-          rain: weather.rain ? weather.rain.rain : 0,
-          wind: weather.wind.speed
-        })
+        if(JSON.parse(localStorage.getItem('weather')) != null){
+          const weather = JSON.parse(localStorage.getItem('weather')).weather
+          this.setState({
+            weather: weather,
+            temperature: weather.main.temp,
+            icon: String(weather.weather[0].icon),
+            description: weather.weather[0].description,
+            humidity: weather.main.humidity,
+            pressure: weather.main.pressure,
+            rain: weather.rain ? weather.rain.rain : 0,
+            wind: weather.wind.speed
+          })
+        }
+        else {
+          this.saveWeather();
+        }
       }
     }
   }
