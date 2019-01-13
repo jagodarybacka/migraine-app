@@ -191,7 +191,8 @@
 		"total": "całkowity czas trwania ataków",
 		"migraine": "migrena",
 		"migraines": "migreny",
-		"confirm": "Potwierdź"
+		"confirm": "Potwierdź",
+		"sthWentWrong": "Coś poszło nie tak"
 	},
 	"oftenTogether":{
 		"painOptions": [
