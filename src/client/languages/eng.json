@@ -11,7 +11,12 @@
 		"usernamePlaceholder": "Username",
 		"eng": "English",
 		"pol": "Polish",
-		"logout": "Logout"
+		"logout": "Logout",
+		"failed":"Log out failed",
+		"sthWentWrong": "Something went wrong",
+		"oldPasswordIncorrect": "Old password incorrect",
+		"dataChanged": "User data changed",
+		"passwordChanged": "Password changed"
 	},
 	"home":{
 	    "add": "Add headache"
@@ -58,7 +63,7 @@
 	"register":{
 		"invalidEmail": "Invalid email address.",
 		"error4chars": "This field must be greater than 4 characters",
-		"error8chars": "This field must be greater than 8 characters",
+		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number",
 		"password": "Password",
 		"logIn": "Log In",
 		"username": "Username",
@@ -185,7 +190,8 @@
 		"total": "total attacks duration",
 		"migraine": "migraine",
 		"migraines": "migraines",
-		"confirm": "Confirm"
+		"confirm": "Confirm",
+		"sthWentWrong": "Something went wrong"
 	},
 	"oftenTogether":{
 		"painOptions": [
@@ -219,5 +225,18 @@
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
 		"headerButton": "Find out more"
-	}	
+	},
+	"forgottenPassword": {
+		"resetPassword": "Reset Password",
+		"sendEmail": "Send email",
+		"invalidEmail": "Invalid email address",
+		"emailNotFound": "Email not found"
+	},
+	"resetPassword": {
+		"resetPassword": "Reset Password",
+		"reset": "Reset",
+		"password": "Password",
+		"emailNotFound": "Email not found",
+		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number"
+	}
 }

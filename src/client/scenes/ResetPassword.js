@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { validatePassword } from '../utils/Validators';
 import TextInput from '../components/TextInput'
 import Button from '../components/Button'
+import languageText from '../languages/MultiLanguage';
 
 const FormComp = styled.form`
   text-align: center;
@@ -18,7 +19,7 @@ class ResetPassword extends Component {
     super(props);
     this.state = {
       fields: {
-        password: {
+        passwordReset: {
           value: '',
           isValid: false,
           errorMsg: '',
@@ -47,24 +48,24 @@ class ResetPassword extends Component {
     evt.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { password } = fields;
+    const { passwordReset } = fields;
 
-    if (!validatePassword(password.value)) {
+    if (!validatePassword(passwordReset.value)) {
         isValid = false;
-        fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters and contains at least one uppercase letter, one lowercase letter, one digit and one special symbol');
+        fields = this.changeValidation(fields, 'passwordReset', false, languageText.resetPassword.error8chars);
       } else {
-        fields = this.changeValidation(fields, 'password', true);
+        fields = this.changeValidation(fields, 'passwordReset', true);
       }
     this.setState({ fields }, () => {
         if(isValid){
             const url = '/api/' + window.location.pathname;
             axios.post(url, {
-                password: password.value
+                password: passwordReset.value
             })
             .then(res => {
                 if(res.status == 404){
                     console.log("404");
-                    alert('Email not found');
+                    alert(languageText.resetPassword.emailNotFound);
                     return;
                 }
                 else {
@@ -93,21 +94,22 @@ class ResetPassword extends Component {
   }
 
   render() {
-    const { password } = this.state.fields;
+    const { passwordReset } = this.state.fields;
 
     return (
       <FormComp name="Reset password" submit="Reset" onSubmit={this.handleSubmit}>
-        <h1>Reset password</h1>
+        <h1>{languageText.resetPassword.resetPassword}</h1>
         <TextInput
           type="password"
           id="password"
-          name="Password"
-          value={password.value}
-          isValid={password.isValid}
-          errorMsg={password.errorMsg}
+          placeholder={languageText.resetPassword.password}
+          name={languageText.resetPassword.password}
+          value={passwordReset.value}
+          isValid={passwordReset.isValid}
+          errorMsg={passwordReset.errorMsg}
           onChange={this.handleChange}
         />
-        <Button type="submit" text="Reset" />
+        <Button type="submit" text={languageText.resetPassword.reset} />
       </FormComp>
     )
   }

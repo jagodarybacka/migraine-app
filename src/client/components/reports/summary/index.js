@@ -48,13 +48,13 @@ class Summary extends Component {
           })
         }
         else {
-          if(res.status == 204) {
+          if(res.status === 204) {
             this.setState({
               stats: {}
             })
             return;
           }
-          alert("Something went wrong");
+          alert(languageText.reportsSummary.sthWentWrong);
         }
 
       })
@@ -109,7 +109,15 @@ class Summary extends Component {
     ) : '';
 
     const customPeriodRange = this.state.customPeriodApplied && (
-      <p className="summary__period">{this.state.customPeriod.from.toDateString()}<br />{this.state.customPeriod.to.toDateString()}</p>
+      <p className="summary__period">
+        {localStorage.getItem('lang') === 'eng' 
+          ? this.state.customPeriod.from.toDateString() 
+          : this.state.customPeriod.from.toLocaleDateString() }
+        <br />
+        {localStorage.getItem('lang') === 'eng' 
+          ? this.state.customPeriod.to.toDateString()
+          : this.state.customPeriod.to.toLocaleDateString() }
+      </p>
     )
 
     return (
