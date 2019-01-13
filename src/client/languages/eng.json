@@ -11,7 +11,12 @@
 		"usernamePlaceholder": "Username",
 		"eng": "English",
 		"pol": "Polish",
-		"logout": "Logout"
+		"logout": "Logout",
+		"failed":"Log out failed",
+		"sthWentWrong": "Something went wrong",
+		"oldPasswordIncorrect": "Old password incorrect",
+		"dataChanged": "User data changed",
+		"passwordChanged": "Password changed"
 	},
 	"home":{
 	    "add": "Add headache"

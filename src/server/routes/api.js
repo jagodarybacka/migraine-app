@@ -17,27 +17,21 @@ router.get('/', function(req, res, next) {
 
 /* ADD REPORT */
 router.post('/reports', auth_controller.isLoggedIn, report_controller.report_add);
-// router.post('/reports', report_controller.report_add);
 
 /* Report Details */
 router.get("/reports/:id", auth_controller.isLoggedIn, report_controller.report_detail);
-// router.get("/reports/:id", report_controller.report_detail);
 
 /* Delete Report */
 router.delete("/reports/:id", auth_controller.isLoggedIn, report_controller.report_delete);
-// router.delete("/reports/:id", report_controller.report_delete);
 
 /* Change Report */
 router.put("/reports/:id", auth_controller.isLoggedIn, report_controller.report_update);
-// router.put("/reports/:id", report_controller.report_update);
 
 /*  GET Reports */
 router.get("/reports",auth_controller.isLoggedIn,report_controller.reports_all);
-// router.get("/reports", report_controller.reports_all);
 
 /*  GET most recent report */
 router.get("/recent",auth_controller.isLoggedIn,report_controller.report_recent);
-// router.get("/recent", report_controller.report_recent);
 
 /*  GET most recent report */
 router.get("/reports/stats/:days",auth_controller.isLoggedIn, report_controller.report_stats);

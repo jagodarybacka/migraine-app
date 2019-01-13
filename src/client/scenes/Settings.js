@@ -71,18 +71,16 @@ class Settings extends Component {
         isLogged: false
       }
     ))
-    console.log(this.state)
   }
 
   handleLogOut() {
     axios.get('/api/logout').then(res => {
-      console.log(this.state.message); 
       this.setState({message: res.data.message});
       this.logout();
       window.location = '/';
 		}).catch(err =>{
 			console.log(err);
-			this.setState({message: "Failed to log out!"});
+			this.setState({message: languageText.settings.failed});
 		});
   };
   
@@ -97,7 +95,6 @@ class Settings extends Component {
         isLogged: isLoggedIn === 'true'
       }
     ))
-    console.log(this.state.isLogged)
   }
 
   handleChange(evt) {
@@ -152,18 +149,18 @@ class Settings extends Component {
           password: password.value
         })
         .then(res => {
-          if(res.status == 404){
-            alert('Something went wrong');
+          if(res.status === 404){
+            alert(languageText.settings.sthWentWrong);
             return;
-          } else if(res.status == 204){
-            alert("Old password incorrect");
+          } else if(res.status === 204){
+            alert(languageText.settings.oldPasswordIncorrect);
             return;
           } else {
             if(res.data.errors) {
               alert(res.data.errors);
               return;
             }
-            alert('Password changed');
+            alert(languageText.settings.passwordChanged);
             this.clearFields();
           }
         })
@@ -200,14 +197,14 @@ class Settings extends Component {
         })
         .then(res => {
           if(res.status == 404){
-            alert('Something went wrong');
+            alert(languageText.settings.sthWentWrong);
             return;
           } else {
             if(res.data.errors) {
               alert(res.data.errors);
               return;
             }
-            alert('User data changed');
+            alert(languageText.settings.dataChanged);
             this.clearFields();
           }
         })
