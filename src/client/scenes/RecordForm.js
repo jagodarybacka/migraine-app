@@ -60,11 +60,14 @@ const Container = styled.article`
     margin: 1em;
     opacity: 0.8;
   }
+
+  .form-container {
+    overflow-y: scroll;
+    max-height: 100%;
+  }
 `;
 
 const Buttons = styled.div `
-  /* position: absolute; */
-  /* bottom: 0; */
   display: flex;
   width: 90%;
   max-width: 860px;
@@ -221,7 +224,7 @@ class RecordForm extends Component {
       <Container className="Form">
         <Header isForm />
         <form>
-          <SwipeableViews index={currentTab}>
+          <SwipeableViews className="form-container" index={currentTab}>
             <div className="record-tab">
               <Hello edit={this.edit} />
             </div>
