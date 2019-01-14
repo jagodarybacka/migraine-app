@@ -59,7 +59,11 @@
 		"rain": "Deszcz",
 		"humidity": "Wilgotność",
 		"pressure": "Ciśnienie atmosferyczne",
-		"windSpeed": "Prędkość wiatru"
+		"windSpeed": "Prędkość wiatru",
+		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
+		"placeholder": "Wprowadź ",
+		"city": "miasto",
+		"setLocation": "Ustaw lokalizację"
 	},
 	"register":{
 		"invalidEmail": "Nieprawidłowy adres email",

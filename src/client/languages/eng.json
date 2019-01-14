@@ -58,7 +58,11 @@
 		"rain": "Rain",
 		"humidity": "Humidity",
 		"pressure": "Atmospheric pressure",
-		"windSpeed": "Wind speed"
+		"windSpeed": "Wind speed",
+		"geolocationDisabled": "Your geolocation is disabled. You can set your city manually:",
+		"placeholder": "Enter ",
+		"city": "city",
+		"setLocation": "Set localization"
 	},
 	"register":{
 		"invalidEmail": "Invalid email address.",
