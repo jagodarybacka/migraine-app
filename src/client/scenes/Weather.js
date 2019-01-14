@@ -6,3 +6,9 @@ export const getWeather = ({ lat, lon }) =>
     .then(data =>
       data.json()
     );
+
+export const getWeatherForCity = (city) =>
+fetch(`${API}q=${city}&units=metric&APPID=${KEY}`)
+  .then(data =>
+    data.json()
+  );
