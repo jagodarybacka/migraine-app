@@ -47,7 +47,7 @@ const Container = styled.article`
   form {
     width: 100%;
     margin-top: 75px;
-    height: calc(100% - 130px);
+    height: calc(100% - 142px);
   }
 
   .record-tab {
@@ -74,7 +74,7 @@ const Buttons = styled.div `
   justify-content: space-between;
   align-items: center;
   outline: none;
-
+  margin: 15px 0;
 
 
   > button {
