@@ -8,8 +8,20 @@ export const getWeather = ({ lat, lon }) =>
       data.json()
     );
 
+export const getWeatherForCity = (city) =>
+  fetch(`${API_WEATHER}q=${city}&units=metric&APPID=${KEY}`)
+    .then(data =>
+      data.json()
+    );
+
 export const getForecast = ({ lat, lon }) =>
   fetch(`${API_FORECAST}lat=${lat}&lon=${lon}&APPID=${KEY}`)
+    .then(data =>
+      data.json()
+    );
+
+export const getForecastForCity = (city) =>
+  fetch(`${API_FORECAST}q=${city}&APPID=${KEY}`)
     .then(data =>
       data.json()
     );
