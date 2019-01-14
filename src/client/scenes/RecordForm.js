@@ -54,6 +54,12 @@ const Container = styled.article`
     margin: 0 auto;
     max-width: 400px;
   }
+
+  .start-paragraph {
+    text-transform: initial;
+    margin: 1em;
+    opacity: 0.8;
+  }
 `;
 
 const Buttons = styled.div `
@@ -95,6 +101,8 @@ const Hello = (props) => {
     <div>
       {title}
       <img src={MonitorImg} />
+      <p className="start-paragraph">In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.</p>
+      <p className="start-paragraph">Feel better soon!</p>
     </div>
   )
 }
@@ -211,7 +219,7 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header />
+        <Header isForm />
         <form>
           <SwipeableViews index={currentTab}>
             <div className="record-tab">
