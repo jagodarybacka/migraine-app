@@ -4,12 +4,15 @@ import { Link, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
+import moment from 'moment';
 
 
 import Button from '../components/Button'
 import Header from '../components/Header'
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
+
+import MonitorImg from '../assets/monitor.png'
 
 import {
   Start,
@@ -44,23 +47,36 @@ const Container = styled.article`
 
   form {
     width: 100%;
+    margin-top: 75px;
+    height: calc(100% - 142px);
   }
 
   .record-tab {
     margin: 0 auto;
     max-width: 400px;
   }
+
+  .start-paragraph {
+    text-transform: initial;
+    margin: 1em;
+    opacity: 0.8;
+  }
+
+  .form-container {
+    overflow-y: scroll;
+    max-height: 100%;
+  }
 `;
 
 const Buttons = styled.div `
-  position: absolute;
-  bottom: 0;
   display: flex;
   width: 90%;
   max-width: 860px;
   justify-content: space-between;
   align-items: center;
   outline: none;
+  margin: 15px 0;
+
 
   > button {
     min-width: auto;
@@ -81,9 +97,19 @@ const Buttons = styled.div `
   }
 `;
 
-const Hello = (props) => (props.edit 
-  ? <h1>{languageText.recordForm.titleEdit}</h1> 
-  : <h1>{languageText.recordForm.title}</h1> )
+const Hello = (props) => {
+  const title = props.edit
+    ? <h1>{languageText.recordForm.titleEdit}</h1>
+    : <h1>{languageText.recordForm.title}</h1>
+  return (
+    <div>
+      {title}
+      <img src={MonitorImg} />
+      <p className="start-paragraph">In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.</p>
+      <p className="start-paragraph">Feel better soon!</p>
+    </div>
+  )
+}
 
 class RecordForm extends Component {
   constructor(props) {
@@ -94,7 +120,7 @@ class RecordForm extends Component {
       currentTab: 0,
       data: {
         weather: JSON.parse(localStorage.getItem('weather')) || undefined
-        
+
       },
       dateValidation: {
         valid: true,
@@ -104,7 +130,10 @@ class RecordForm extends Component {
 
     this.firstTab = 0;
     this.lastTab = 12;
-
+    
+    this.currentDate = this.currentDate.bind(this);
+    this.subtractsOneHour = this.subtractsOneHour.bind(this);
+ //   this.notYetEnd = this.notYetEnd.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
   }
@@ -133,7 +162,7 @@ class RecordForm extends Component {
       if (type === 'checkbox') {
         result = data[name] || [];
         const shouldUncheck = result.indexOf(value);
-  
+
         if (shouldUncheck >= 0) {
           result.splice(shouldUncheck, 1);
         } else {
@@ -145,7 +174,7 @@ class RecordForm extends Component {
       } else {
         result = value;
       }
-  
+
       this.setState((prevState) => {
         return {
           ...prevState,
@@ -173,6 +202,48 @@ class RecordForm extends Component {
     this.setState({ currentTab: nextTab });
   }
 
+  // const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  // const time = `${new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()}:${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
+  // const date = `${new Date().getFullYear()}-${month[new Date().getMonth()]}-${new Date().getDate()}`;
+
+  currentDate(name){
+    const { data } = this.state;
+    const time = moment().format('HH:mm');
+    const date = moment().format('YYYY-MM-DD');
+    this.setState({
+      data:{
+        ...data,
+        [`${name}_time`]: time,
+        [`${name}_date`]: date   
+      }
+    });
+  }
+
+  subtractsOneHour(name){
+    const { data } = this.state;
+    const currentTime = data[`${name}_time`]
+    const newTime = moment(currentTime,'HH:mm').subtract(1, 'hour').format('HH:mm');
+    this.setState({
+      data:{
+        ...data,
+        [`${name}_time`]: newTime 
+      }
+    })
+  }
+
+  // notYetEnd(){
+  //   const { data } = this.state;
+  //   const {end_time, end_date, ...rest} = data
+
+  //   console.log(data.end_date)
+  //   this.setState({
+  //     data: rest
+ 
+  //   });
+  // }
+
+
+
   isComplete() {
     const { data } = this.state;
     return (
@@ -187,7 +258,7 @@ class RecordForm extends Component {
       (data.aura && !!data.aura.length) &&
       (data.medicines && !!data.medicines.length) &&
       (data.triggers && !!data.triggers.length) &&
-      data.reliefs    
+      data.reliefs
     )
   }
 
@@ -197,17 +268,17 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header />
+        <Header isForm />
         <form>
-          <SwipeableViews index={currentTab}>
+          <SwipeableViews className="form-container" index={currentTab}>
             <div className="record-tab">
               <Hello edit={this.edit} />
             </div>
             <div className="record-tab">
-              <Start onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
+              <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
+              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
               <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />

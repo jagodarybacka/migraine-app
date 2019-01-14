@@ -31,6 +31,9 @@ const Start = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="start"
+      onNowButtonClick={props.onNowButtonClick}
+      onSubtractHourClick={props.onSubtractHourClick}
+     // onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='start'
     />
@@ -43,6 +46,9 @@ const End = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="end"
+      onNowButtonClick={props.onNowButtonClick}
+      onSubtractHourClick={props.onSubtractHourClick}
+    //  onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='end'
       end
@@ -153,7 +159,8 @@ const Pressure = props => {
   return (
     <Text
     valueData={props.valueData}
-    title = {languageText.addForm.pressure}
+    title = {languageText.addForm.pressure.title}
+    subtitle = {languageText.addForm.pressure.subtitle}
     name="pressure"
     type= "text"
     onChange={props.onChange}
@@ -165,7 +172,8 @@ const SleepDuration = props => {
   return (
     <Text
     valueData={props.valueData}
-    title = {languageText.addForm.sleepDuration}
+    title = {languageText.addForm.sleepDuration.title}
+    subtitle = {languageText.addForm.sleepDuration.subtitle}
     name="sleep_duration"
     type= "number"
     onChange={props.onChange}

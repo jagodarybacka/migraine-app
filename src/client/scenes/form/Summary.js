@@ -77,8 +77,8 @@ const AcceptComponent = styled.button`
   border-radius: 32px;
   margin: 0 0 3rem 0;
   box-shadow: 0px 1px 12px 0px rgba(0,0,0,0.5);
-  outline: none; 
-  
+  outline: none;
+
   img {
     width: 28px;
     height: 28px;
@@ -122,7 +122,7 @@ class Summary extends Component {
 
   submit() {
     let { data, id } = this.props.location.state;
-    data = { ...data, notes: this.state.notes } 
+    data = { ...data, notes: this.state.notes }
 
     const { match } = this.props
     let method = 'POST'
@@ -153,7 +153,7 @@ class Summary extends Component {
     if(state.preview){
       preview = true;
     }
-    
+
     let result = (
       <div>Loading...</div>
     );
@@ -171,19 +171,19 @@ class Summary extends Component {
 
           <Divider text={languageText.addForm.end} />
           {!!data.end_date && !!data.end_time ? (
-            <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />            
+            <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />
           ) : (
             <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
           )}
-          <Divider text={languageText.addForm.pressure} />
+          <Divider text={languageText.addForm.pressure.title} />
           <Bubble text={data.pressure +" mmHG"} color='#cddc39' />
 
-          <Divider text={languageText.addForm.sleepDuration} />
+          <Divider text={languageText.addForm.sleepDuration.title} />
           <Bubble text={data.sleep_duration +"h"} color='#cddc39' />
 
           <Divider text={languageText.addForm.pain} />
           <Bubble text={this.getTranslatedValue(data.pain,"pain")} img={faceNeutral} color='#ED8836' />
-          
+
           <Divider text={languageText.addForm.menstruation} />
           <Bubble text={this.getTranslatedValue(data.menstruation,"menstruation")} img={drop} color='#E91E63' />
 
@@ -207,7 +207,7 @@ class Summary extends Component {
           {data.aura.map(name => (
             <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
           ))}
-         
+
           <Divider text={languageText.addForm.reliefs} />
           {data.reliefs.map(name => (
             <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
