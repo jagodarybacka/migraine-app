@@ -52,6 +52,13 @@ const RecordCard = (props) => {
   const Img = props.isRecent ? "" : <div className="img"><img src={deleteIcon} id={props.id} onClick={props.handleDelete}></img></div> ;
   const Img2 = props.isRecent ? "" : <div className="img2"><img src={editIcon} id={props.id} onClick={props.handleEdit}></img></div>;
 
+  if (props.isMock) {
+    return (
+      <Card className="RecordCard" color={colorList[3]} onClick={props.handleClick}>
+        <h4>No migraines yet</h4>
+      </Card>
+    )
+  }
   return (
     <Card className="RecordCard" color={color} onClick={props.handleClick}>
       <time>{props.date}</time>

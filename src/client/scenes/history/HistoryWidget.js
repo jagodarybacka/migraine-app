@@ -52,12 +52,12 @@ class HistoryWidget extends Component {
         <Widget >
           <h3>{languageText.historyWidget.title}</h3>
           {item && (
-            <RecordCard 
-              date={`${moment(item.start_date).format('DD.MM.YYYY')}`} 
+            <RecordCard
+              date={`${moment(item.start_date).format('DD.MM.YYYY')}`}
               duration={formattedDuration + "h"}
-              intensity={this.getIntensity(item.pain)} 
+              intensity={this.getIntensity(item.pain)}
               isRecent={true}
-            />        
+            />
           )}
           <Link to="/history">{languageText.historyWidget.seeAll}</Link>
         </Widget>
@@ -67,10 +67,14 @@ class HistoryWidget extends Component {
       return (
         <Widget >
           <h3>{languageText.historyWidget.title}</h3>
+          <RecordCard
+            isMock
+            isRecent={true}
+          />
           <Link to="/history">{languageText.historyWidget.seeAll}</Link>
         </Widget>
       )
-    }  
+    }
   }
 }
 
