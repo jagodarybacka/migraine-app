@@ -69,7 +69,7 @@ class WeatherWidget extends Component {
       const then = new Date(localStorage.getItem('weather_time'))
       const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
       if(diff > 30) {
-        this.getWeatherForLocation();
+        this.checkIfGeolocation();
       } else {
         const weather = JSON.parse(localStorage.getItem('weather')).weather
         this.setState((prevState) => ({
