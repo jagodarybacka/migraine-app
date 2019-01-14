@@ -1,6 +1,6 @@
 {
 	"settings":{
-		"chooseLanguage": "Choose language", 
+		"chooseLanguage": "Choose language",
 		"changeData": "Change data",
 		"changePassword": "Change password",
 		"oldPassword": "Old password",
@@ -107,8 +107,14 @@
 		"pain": "Pain Intensity",
 		"medicines": "Medicines",
 		"triggers": "Possible Triggers",
-		"sleepDuration": "Sleep duration [h]",
-		"pressure": "Blood pressure [mmHG] (example: 120/80)",
+		"sleepDuration": {
+			"title": "Sleep duration",
+			"subtitle": "Unit - [h]"
+		},
+		"pressure": {
+			"title": "Blood pressure",
+			"subtitle": "Unit - [mmHG], example: 120/80"
+		},
 		"aura": "aura",
 		"notes": "Notes",
 		"notesPlaceholder": "Write something...",

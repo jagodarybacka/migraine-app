@@ -1,6 +1,6 @@
 {
 	"settings":{
-		"chooseLanguage": "Wybierz język", 
+		"chooseLanguage": "Wybierz język",
 		"changeData": "Zmień dane",
 		"changePassword": "Zmień hasło",
 		"oldPassword": "Stare hasło",
@@ -108,8 +108,14 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
-		"sleepDuration": "Długość snu [godz.]",
-		"pressure": "Ciśnienie krwi [mmHG] (przykład: 120/80)",
+		"sleepDuration": {
+			"title": "Długość snu",
+			"subtitle": "Jednostka - godzina"
+		},
+		"pressure": {
+			"title": "Ciśnienie krwi",
+			"subtitle": "Jednostka - [mmHG], przykład: 120/80"
+		},
 		"aura": "aura",
 		"notes": "Notatki",
 		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",

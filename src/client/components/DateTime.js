@@ -36,6 +36,7 @@ const TimeDateComponent = styled.div`
   padding: 2.5rem 1rem 1.5rem 1rem;
   background-color: #fff;
   border-radius: 20px;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 
 
   img {
@@ -75,7 +76,7 @@ const DateTime = (props) => {
     inputTime = props.valueTime;
   }
   if (props.valueDate && typeof props.valueDate === 'string' ){
-    inputDate = props.valueDate.substr(0,10)  
+    inputDate = props.valueDate.substr(0,10)
   }
 
 
