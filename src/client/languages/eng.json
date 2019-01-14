@@ -188,6 +188,9 @@
 		"pressure":"Atmospheric pressure",
 		"oftenTogether": "Often together"
 	},
+	"atmosphericPressure": {
+		"noData": "No data"
+	},
 	"reportsSummary":{
 		"last30Days": "Last 30 days",
 		"last60Days":"Last 60 days",

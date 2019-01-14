@@ -8,7 +8,6 @@ import Menubar from '../components/Menubar';
 import Button from '../components/Button'
 import HistoryWidget from './history/HistoryWidget'
 import WeatherWidget from './weather/WeatherWidget'
-import Join from './Join'
 import {languageText} from '../languages/MultiLanguage.js';
 
 const HomeComponent = styled.div`
