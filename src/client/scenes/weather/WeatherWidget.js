@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import axios from 'axios';
 
-import allergyIcon from "../../assets/weather/allergy.png"
 import cloudyIcon from "../../assets/weather/cloudy.png"
-import hailIcon from "../../assets/weather/hail.png"
 import humidityIcon from "../../assets/weather/humidity.png"
 import partlyCloudyIcon from "../../assets/weather/partly-cloudy.png"
 import pressureIcon from "../../assets/weather/pressure.png"
@@ -17,15 +16,20 @@ import nightIcon from "../../assets/weather/clear-night.png"
 import cloudyNightIcon from "../../assets/weather/cloudy-night.png"
 import veryCloudyIcon from "../../assets/weather/very-cloudy.png"
 import foggyIcon from "../../assets/weather/foggy.png"
-import temperatureIcon from "../../assets/weather/temperature.png"
 import windIcon from "../../assets/weather/wind.png"
-import lastDayIcon from "../../assets/weather/last-day.png"
 import { getGeolocation } from '../../utils/GetGeolocation'
-import { getWeather } from '../Weather'
+import { getWeather, getForecast } from '../Weather'
 import {Widget, Header, Element} from './WeatherWidget.styles'
 import {languageText} from '../../languages/MultiLanguage.js';
 
 class WeatherWidget extends Component {
+  constructor(props) {
+    super(props);
+
+    this.getWeatherForecast = this.getWeatherForecast.bind(this);
+    this.getForecast = this.getForecast.bind(this);
+  }
+
   icons = {
     '01d' : sunnyIcon,        //clear
     '02d' : partlyCloudyIcon, //few clouds
@@ -48,6 +52,7 @@ class WeatherWidget extends Component {
   }
 
   componentDidMount() {
+    this.getWeatherForecast();
     if(!localStorage.getItem('weather')  || !localStorage.getItem('weather_time')) {
       this.saveWeather()
     } else {
@@ -84,7 +89,6 @@ class WeatherWidget extends Component {
       weather: weather,
       temperature: weather.main.temp,
       icon: String(weather.weather[0].icon),
-      //description: weather.weather[0].description,
       humidity: weather.main.humidity,
       pressure: weather.main.pressure,
       rain: weather.rain ? weather.rain.rain : 0,
@@ -92,6 +96,33 @@ class WeatherWidget extends Component {
     })
     localStorage.setItem('weather', JSON.stringify(this.state));
     localStorage.setItem('weather_time', new Date());
+  }
+
+  getWeatherForecast() {
+    if(!localStorage.getItem('forecast_time')){
+      this.getForecast()
+    } else {
+      const now = new Date()
+      const then = new Date(localStorage.getItem('forecast_time'))
+      const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
+      if(diff > 6) {
+        this.getForecast()
+      }
+    }
+  }
+
+  async getForecast() {
+    const geolocation = await getGeolocation()
+    const forecast = await getForecast(geolocation)
+    const url = 'api/forecast';
+    axios.post(url, {
+      weather_forecast: forecast
+    })
+    .then((res) => {
+      // console.log(res);
+    })
+    .catch((err) => console.log(err));
+    localStorage.setItem('forecast_time', new Date())
   }
   
   render() {
