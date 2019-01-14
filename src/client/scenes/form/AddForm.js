@@ -153,7 +153,8 @@ const Pressure = props => {
   return (
     <Text
     valueData={props.valueData}
-    title = {languageText.addForm.pressure}
+    title = {languageText.addForm.pressure.title}
+    subtitle = {languageText.addForm.pressure.subtitle}
     name="pressure"
     type= "text"
     onChange={props.onChange}
@@ -165,7 +166,8 @@ const SleepDuration = props => {
   return (
     <Text
     valueData={props.valueData}
-    title = {languageText.addForm.sleepDuration}
+    title = {languageText.addForm.sleepDuration.title}
+    subtitle = {languageText.addForm.sleepDuration.subtitle}
     name="sleep_duration"
     type= "number"
     onChange={props.onChange}
