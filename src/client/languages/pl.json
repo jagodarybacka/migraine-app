@@ -11,7 +11,13 @@
 		"usernamePlaceholder": "Nazwę użytkownika",
 		"eng": "Angielski",
 		"pol": "Polski",
-		"logout": "Wyloguj"
+		"logout": "Wyloguj",
+		"failed":"Wylogowywanie nie powiodło się",
+		"sthWentWrong": "Coś poszło nie tak",
+		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
+		"dataChanged": "Dane zostały zmienione",
+		"passwordChanged": "Hasło zostało zmienione"
+
 	},
 	"home":{
 	    "add": "Dodaj ból głowy"
@@ -56,7 +62,11 @@
 		"rain": "Deszcz",
 		"humidity": "Wilgotność",
 		"pressure": "Ciśnienie atmosferyczne",
-		"windSpeed": "Prędkość wiatru"
+		"windSpeed": "Prędkość wiatru",
+		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
+		"placeholder": "Wprowadź ",
+		"city": "miasto",
+		"setLocation": "Ustaw lokalizację"
 	},
 	"register":{
 		"invalidEmail": "Nieprawidłowy adres email",
@@ -182,6 +192,9 @@
 		"pressure":"Ciśnienie atmosferyczne",
 		"oftenTogether": "Często występujace razem"
 	},
+	"atmosphericPressure": {
+		"noData": "Brak danych"
+	},
 	"reportsSummary":{
 		"last30Days": "Ostatnie 30 dni",
 		"last60Days":"Ostatnie 60 dni",
@@ -194,7 +207,8 @@
 		"total": "całkowity czas trwania ataków",
 		"migraine": "migrena",
 		"migraines": "migreny",
-		"confirm": "Potwierdź"
+		"confirm": "Potwierdź",
+		"sthWentWrong": "Coś poszło nie tak"
 	},
 	"oftenTogether":{
 		"painOptions": [

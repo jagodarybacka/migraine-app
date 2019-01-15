@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
-import date from '../../assets/date.png'
-import time from '../../assets/time.png'
 import faceNeutral from '../../assets/face-neutral.png'
 import faceSmile from '../../assets/face-smile.png'
 import drop from '../../assets/drop.png'
@@ -31,6 +28,9 @@ const Start = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="start"
+      onNowButtonClick={props.onNowButtonClick}
+      onSubtractHourClick={props.onSubtractHourClick}
+     // onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='start'
     />
@@ -43,6 +43,9 @@ const End = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="end"
+      onNowButtonClick={props.onNowButtonClick}
+      onSubtractHourClick={props.onSubtractHourClick}
+    //  onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='end'
       end

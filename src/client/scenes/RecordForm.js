@@ -4,12 +4,11 @@ import { Link, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
+import moment from 'moment';
 
 
 import Button from '../components/Button'
 import Header from '../components/Header'
-import FormSimple from '../components/FormSimple'
-import TextInput from '../components/TextInput'
 
 import MonitorImg from '../assets/monitor.png'
 
@@ -103,7 +102,7 @@ const Hello = (props) => {
   return (
     <div>
       {title}
-      <img src={MonitorImg} />
+      <img src={MonitorImg} alt='monitor'/>
       <p className="start-paragraph">{languageText.recordForm.paragraph}</p>
       <p className="start-paragraph">{languageText.recordForm.feelBetter}</p>
     </div>
@@ -129,7 +128,10 @@ class RecordForm extends Component {
 
     this.firstTab = 0;
     this.lastTab = 12;
-
+    
+    this.currentDate = this.currentDate.bind(this);
+    this.subtractsOneHour = this.subtractsOneHour.bind(this);
+ //   this.notYetEnd = this.notYetEnd.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
   }
@@ -198,6 +200,48 @@ class RecordForm extends Component {
     this.setState({ currentTab: nextTab });
   }
 
+  // const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  // const time = `${new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()}:${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
+  // const date = `${new Date().getFullYear()}-${month[new Date().getMonth()]}-${new Date().getDate()}`;
+
+  currentDate(name){
+    const { data } = this.state;
+    const time = moment().format('HH:mm');
+    const date = moment().format('YYYY-MM-DD');
+    this.setState({
+      data:{
+        ...data,
+        [`${name}_time`]: time,
+        [`${name}_date`]: date   
+      }
+    });
+  }
+
+  subtractsOneHour(name){
+    const { data } = this.state;
+    const currentTime = data[`${name}_time`]
+    const newTime = moment(currentTime,'HH:mm').subtract(1, 'hour').format('HH:mm');
+    this.setState({
+      data:{
+        ...data,
+        [`${name}_time`]: newTime 
+      }
+    })
+  }
+
+  // notYetEnd(){
+  //   const { data } = this.state;
+  //   const {end_time, end_date, ...rest} = data
+
+  //   console.log(data.end_date)
+  //   this.setState({
+  //     data: rest
+ 
+  //   });
+  // }
+
+
+
   isComplete() {
     const { data } = this.state;
     return (
@@ -222,17 +266,17 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header isForm />
+        <Header isForm saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
           <SwipeableViews className="form-container" index={currentTab}>
             <div className="record-tab">
               <Hello edit={this.edit} />
             </div>
             <div className="record-tab">
-              <Start onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
+              <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
+              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
               <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
@@ -266,21 +310,21 @@ class RecordForm extends Component {
             </div>
           </SwipeableViews>
         </form>
-        {this.isComplete() && (
-          <div>
-            <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
-              <Button text={languageText.recordForm.summary} />
-            </Link>
-          </div>
-        )}
-
         <Buttons>
           <Button
             onClick={() => this.changeTab('prev')}
             disabled={currentTab === this.firstTab}
             text="<"
           />
-          <p> {languageText.recordForm.migraineRecord}</p>
+          {
+            this.isComplete() ? (
+              <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
+                <Button small text={languageText.recordForm.summary} />
+              </Link>
+            ) : (
+              <p> {languageText.recordForm.migraineRecord}</p>
+            )
+          }
           <Button
             onClick={() => this.changeTab('next')}
             disabled={currentTab === this.lastTab}

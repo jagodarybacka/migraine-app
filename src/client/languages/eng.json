@@ -11,7 +11,12 @@
 		"usernamePlaceholder": "Username",
 		"eng": "English",
 		"pol": "Polish",
-		"logout": "Logout"
+		"logout": "Logout",
+		"failed":"Log out failed",
+		"sthWentWrong": "Something went wrong",
+		"oldPasswordIncorrect": "Old password incorrect",
+		"dataChanged": "User data changed",
+		"passwordChanged": "Password changed"
 	},
 	"home":{
 	    "add": "Add headache"
@@ -35,7 +40,7 @@
 		"titleEdit": "Edit Migraine",
 		"paragraph": "In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.",
 		"feelBetter": "Feel better soon!",
-		"summary": "Summary",
+		"summary": "Save migraine",
 		"migraineRecord": "Migraine Record"
 	},
 	"welcome":{
@@ -56,7 +61,11 @@
 		"rain": "Rain",
 		"humidity": "Humidity",
 		"pressure": "Atmospheric pressure",
-		"windSpeed": "Wind speed"
+		"windSpeed": "Wind speed",
+		"geolocationDisabled": "Your geolocation is disabled. You can set your city manually:",
+		"placeholder": "Enter ",
+		"city": "city",
+		"setLocation": "Set localization"
 	},
 	"register":{
 		"invalidEmail": "Invalid email address.",
@@ -98,7 +107,7 @@
 		"start": "Start",
 		"notYet":"Not yet",
 		"end": "End",
-		"summary": "Summary",
+		"summary": "Save migraine",
 		"menstruation": "Menstruation",
 		"localization": "Localization",
 		"mood": "Mood",
@@ -182,6 +191,9 @@
 		"pressure":"Atmospheric pressure",
 		"oftenTogether": "Often together"
 	},
+	"atmosphericPressure": {
+		"noData": "No data"
+	},
 	"reportsSummary":{
 		"last30Days": "Last 30 days",
 		"last60Days":"Last 60 days",
@@ -194,7 +206,8 @@
 		"total": "total attacks duration",
 		"migraine": "migraine",
 		"migraines": "migraines",
-		"confirm": "Confirm"
+		"confirm": "Confirm",
+		"sthWentWrong": "Something went wrong"
 	},
 	"oftenTogether":{
 		"painOptions": [

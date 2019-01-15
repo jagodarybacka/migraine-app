@@ -10,7 +10,7 @@ user: {
 start_date: {
     type: Date, 
     //default: Date.now()
-    // required: true
+    required: true
 },
 end_date: {
     type: Date, 

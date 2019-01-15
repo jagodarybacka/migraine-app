@@ -34,7 +34,7 @@ const DateInputs = styled.div `
   height: 150px;
 `
 
-const Date = (props) => {
+const Date = (props) => { 
   return (
     <Time className="Date">
       <h2>{props.end ? languageText.date.painEnded : languageText.date.painStarted}</h2>
@@ -57,16 +57,14 @@ const Date = (props) => {
         />
       </DateInputs>
       <Buttons>
-        <Button text={languageText.date.now}/>
-        <Button text="-1h" primary/>
+        <Button text={languageText.date.now} onClick={e=>{e.preventDefault(); props.onNowButtonClick(props.name);}}  />
+        <Button text="-1h" primary onClick={e=>{e.preventDefault(); props.onSubtractHourClick(props.name);  }}  />
       </Buttons>
-      {
-        props.end ? <Button text={languageText.date.notYet} primary/> : ""
-      }
 
     </Time>
   );
 }
 
+//{        props.end ? <Button text={languageText.date.notYet} primary  onClick={e=>{e.preventDefault(); props.onNotYetClick(props.name);  }}/> : ""}
 
 export default Date;
