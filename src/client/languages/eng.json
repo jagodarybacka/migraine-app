@@ -38,6 +38,8 @@
 	"recordForm":{
 		"title": "Record new Migraine",
 		"titleEdit": "Edit Migraine",
+		"paragraph": "In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.",
+		"feelBetter": "Feel better soon!",
 		"summary": "Save migraine",
 		"migraineRecord": "Migraine Record"
 	},
@@ -46,7 +48,8 @@
 		"tapToStart": "Tap to start..."
 	},
 	"recordCard":{
-		"migraine": "Migraine"
+		"migraine": "Migraine",
+		"noMigraines": "No migraines yet"
 	},
 	"menuBar":{
 		"home": "Home",

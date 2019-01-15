@@ -39,6 +39,8 @@
 	"recordForm":{
 		"title": "Dodaj nową migrenę",
 		"titleEdit": "Edytuj migrenę",
+		"paragraph": "W tym formularzu możesz zanotować różne aspekty swojego stanu. Śledzenie wyzwalaczy migreny pomoże Ci uniknąć ich później.",
+		"feelBetter": "Mamy nadzieję, że wkrótce poczujesz się lepiej!",
 		"summary": "Podsumowanie",
 		"migraineRecord": "Zapis migreny"
 	},
@@ -47,7 +49,8 @@
 		"tapToStart": "Kliknij, aby rozpocząć..."
 	},
 	"recordCard":{
-		"migraine": "Migrena"
+		"migraine": "Migrena",
+		"noMigraines": "Brak migren"
 	},
 	"menuBar":{
 		"home": "Strona główna",
