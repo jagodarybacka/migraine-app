@@ -231,34 +231,7 @@ class Settings extends Component {
 
   render() {
     const { username, email, oldPassword, password } = this.state.fields;
-    const fields = [{
-      text: 'Medicines',
-      field: 'medicines'
-    }, {
-      text: 'Aura',
-      field: 'aura'
-    }, {
-      text: 'Triggers',
-      field: 'triggers'
-    }, {
-      text: 'Reliefs',
-      field: 'reliefs'
-    }, {
-      text: 'Mood',
-      field: 'mood'
-    }, {
-      text: 'Blood pressure',
-      field: 'pressure'
-    }, {
-      text: 'Sleep duration',
-      field: 'sleep_duration'
-    }, {
-      text: 'Menstruation',
-      field: 'menstruation'
-    }, {
-      text: 'Localization',
-      field: 'localization'
-    }]
+    const fields = languageText.settings.formFieldsOptions;
     let currentLang = getLanguage();
     return (
       <SettingsComponent className="Settings">
@@ -312,7 +285,7 @@ class Settings extends Component {
           <Divider text={languageText.settings.chooseLanguage}/>
             <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
             <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
-          <Divider text='Form fields to include'/>
+          <Divider text={languageText.settings.formFields}/>
           <div>
           {
             fields.map((field, index) => (

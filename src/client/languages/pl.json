@@ -16,7 +16,19 @@
 		"sthWentWrong": "Coś poszło nie tak",
 		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
 		"dataChanged": "Dane zostały zmienione",
-		"passwordChanged": "Hasło zostało zmienione"
+		"passwordChanged": "Hasło zostało zmienione",
+		"formFieldsOptions": [
+			{"text":"Leki", "field":"medicines"},
+			{"text":"Aura", "field":"aura"},
+			{"text":"Przyczyny", "field":"triggers"},
+			{"text":"Pomoce", "field":"reliefs"},
+			{"text":"Nastrój", "field":"mood"},
+			{"text":"Ciśnienie", "field":"pressure"},
+			{"text":"Długość snu", "field":"sleep_duration"},
+			{"text":"Menstruacja", "field":"menstruation"},
+			{"text":"Lokalizacja", "field":"localization"}
+		],
+		"formFields": "Elementy wyświetlane w formularzu"
 
 	},
 	"home":{

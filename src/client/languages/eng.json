@@ -16,7 +16,20 @@
 		"sthWentWrong": "Something went wrong",
 		"oldPasswordIncorrect": "Old password incorrect",
 		"dataChanged": "User data changed",
-		"passwordChanged": "Password changed"
+		"passwordChanged": "Password changed",
+		"formFieldsOptions": [
+			{"text":"Medicines", "field":"medicines"},
+			{"text":"Aura", "field":"aura"},
+			{"text":"Triggers", "field":"triggers"},
+			{"text":"Reliefs", "field":"reliefs"},
+			{"text":"Mood", "field":"mood"},
+			{"text":"Blood pressure", "field":"pressure"},
+			{"text":"Sleep duration", "field":"sleep_duration"},
+			{"text":"Menstruation", "field":"menstruation"},
+			{"text":"Localization", "field":"localization"}
+		],
+		"formFields": "Form fields to include"
+
 	},
 	"home":{
 	    "add": "Add headache"
