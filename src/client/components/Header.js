@@ -22,7 +22,12 @@ const TopHeader = styled.header`
     width: 33px;
     height: 33px;
     margin: 0 1em;
-    opacity: 0.5;
+    opacity: 0.6;
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.2;
   }
 
   .hidden {
@@ -32,7 +37,7 @@ const TopHeader = styled.header`
 
 
 const Header = (props) => {
-  const classes = props.isForm ? 'header-img' : 'header-img hidden'
+  let classes = props.isForm ? 'header-img' : 'header-img hidden'
   return (
     <TopHeader className="Header">
       <Link to="/home" className={!props.isForm ? "hidden" : ''}>
@@ -43,7 +48,7 @@ const Header = (props) => {
         />
       </Link>
       <Logo size="50px"></Logo>
-      <Link to={props.saveLink || '/home'} className={!props.isForm ? "hidden" : ''}>
+      <Link to={props.saveLink || '/home'} className={(!props.isForm ? "hidden" : '') + (!props.isValid ? ' disabled' : '')}>
         <img
           className={classes}
           src={SaveImg}

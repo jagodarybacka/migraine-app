@@ -156,7 +156,6 @@ class RecordForm extends Component {
   handleChangeTabValue(evt) {
     const { data } = this.state;
     const { name, value, type } = evt.target;
-    console.log(data)
     let result;
       if (type === 'checkbox') {
         result = data[name] || [];
@@ -310,7 +309,7 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header isForm saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
+        <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
           <SwipeableViews className="form-container" index={currentTab}>
             <div className="record-tab">
