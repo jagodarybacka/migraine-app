@@ -88,18 +88,18 @@ exports.report_add = function(req, res,next) {
         end_date: end,
         start_time: req.body.start_time,
         end_time: req.body.end_time,
-        menstruation: req.body.menstruation,
-        localization: req.body.localization,
-        mood: req.body.mood,
-        pain: req.body.pain,
+        menstruation: req.body.menstruation || "",
+        localization: req.body.localization || "",
+        mood: req.body.mood || "",
+        pain: req.body.pain || "",
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
         aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
-        pressure: req.body.pressure,
-        sleep_duration: req.body.sleep_duration,
-        notes: req.body.notes,
+        pressure: req.body.pressure || "",
+        sleep_duration: req.body.sleep_duration || "",
+        notes: req.body.notes || "",
         reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
-        weather: req.body.weather
+        weather: req.body.weather || {}
         });
     report.save(function (err,saved) {
         if (err) { return next(err); }
@@ -111,18 +111,18 @@ exports.report_add = function(req, res,next) {
         user: userId,
         start_date: start,
         start_time: req.body.start_time,
-        menstruation: req.body.menstruation,
-        localization: req.body.localization,
-        mood: req.body.mood,
-        pain: req.body.pain,
+        menstruation: req.body.menstruation || "",
+        localization: req.body.localization || "",
+        mood: req.body.mood || "",
+        pain: req.body.pain || "",
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
         aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
-        pressure: req.body.pressure,
-        sleep_duration: req.body.sleep_duration,
-        notes: req.body.notes,
+        pressure: req.body.pressure || "",
+        sleep_duration: req.body.sleep_duration || "",
+        notes: req.body.notes || "",
         reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
-        weather: req.body.weather
+        weather: req.body.weather || ""
          });
     report.save(function (err,saved) {
         if (err) { return next(err); }
@@ -157,18 +157,18 @@ exports.report_update = function(req, res, next) {
         //user: req.body.userId,
         start_time: req.body.start_time,
         start_date: start,
-        menstruation: req.body.menstruation,
-        localization: req.body.localization,
-        mood: req.body.mood,
-        pain: req.body.pain,
+        menstruation: req.body.menstruation || "",
+        localization: req.body.localization || "",
+        mood: req.body.mood || "",
+        pain: req.body.pain || "",
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
         aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
-        pressure: req.body.pressure,
-        sleep_duration: req.body.sleep_duration,
-        notes: req.body.notes,
+        pressure: req.body.pressure || "",
+        sleep_duration: req.body.sleep_duration || "",
+        notes: req.body.notes || "",
         reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
-        weather: req.body.weather,
+        weather: req.body.weather || "",
         _id: id
     }
 
