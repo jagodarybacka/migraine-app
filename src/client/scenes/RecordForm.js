@@ -128,7 +128,7 @@ class RecordForm extends Component {
 
     this.firstTab = 0;
     this.lastTab = 12;
-    
+
     this.currentDate = this.currentDate.bind(this);
     this.subtractsOneHour = this.subtractsOneHour.bind(this);
  //   this.notYetEnd = this.notYetEnd.bind(this);
@@ -212,7 +212,7 @@ class RecordForm extends Component {
       data:{
         ...data,
         [`${name}_time`]: time,
-        [`${name}_date`]: date   
+        [`${name}_date`]: date
       }
     });
   }
@@ -224,7 +224,7 @@ class RecordForm extends Component {
     this.setState({
       data:{
         ...data,
-        [`${name}_time`]: newTime 
+        [`${name}_time`]: newTime
       }
     })
   }
@@ -236,7 +236,7 @@ class RecordForm extends Component {
   //   console.log(data.end_date)
   //   this.setState({
   //     data: rest
- 
+
   //   });
   // }
 
@@ -279,21 +279,6 @@ class RecordForm extends Component {
               <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
-              <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <SleepDuration valueData={data.sleep_duration} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Menstruation valueData={data.menstruation} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Localization valueData={data.localization} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Mood valueData={data.mood} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
               <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
             </div>
             <div className="record-tab">
@@ -307,6 +292,21 @@ class RecordForm extends Component {
             </div>
             <div className="record-tab">
               <Reliefs values={data.reliefs} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <Mood valueData={data.mood} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <SleepDuration valueData={data.sleep_duration} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <Menstruation valueData={data.menstruation} onChange={this.handleChangeTabValue} />
+            </div>
+            <div className="record-tab">
+              <Localization valueData={data.localization} onChange={this.handleChangeTabValue} />
             </div>
           </SwipeableViews>
         </form>
