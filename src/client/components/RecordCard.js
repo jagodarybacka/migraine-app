@@ -54,7 +54,7 @@ const RecordCard = (props) => {
   if (props.isMock) {
     return (
       <Card className="RecordCard" color={colorList[3]} onClick={props.handleClick}>
-        <h4>No migraines yet</h4>
+        <h4>{languageText.recordCard.noMigraines}</h4>
       </Card>
     )
   }
