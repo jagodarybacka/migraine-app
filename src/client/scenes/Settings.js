@@ -315,8 +315,9 @@ class Settings extends Component {
           <Divider text='Form fields to include'/>
           <div>
           {
-            fields.map((field) => (
+            fields.map((field, index) => (
               <Checkbox
+              key={index}
               small
               text={field.text}
               value={field.text}
