@@ -35,7 +35,7 @@ const Header = (props) => {
   const classes = props.isForm ? 'header-img' : 'header-img hidden'
   return (
     <TopHeader className="Header">
-      <Link to="/home" className={!props.isForm && "hidden"}>
+      <Link to="/home" className={!props.isForm ? "hidden" : ''}>
         <img
           className={classes}
           src={BackImg}
@@ -43,12 +43,13 @@ const Header = (props) => {
         />
       </Link>
       <Logo size="50px"></Logo>
-      <img
-        className={classes}
-        src={SaveImg}
-        alt="save"
-        onClick={props.saveClick}
-      />
+      <Link to={props.saveLink || '/home'} className={!props.isForm ? "hidden" : ''}>
+        <img
+          className={classes}
+          src={SaveImg}
+          alt="save"
+        />
+      </Link>
     </TopHeader>
   );
 }

@@ -158,6 +158,67 @@ class Summary extends Component {
 
     if (state && state.data) {
       const { data } = state;
+      const undefined_bubble = <Bubble text={languageText.addForm.notYet} color='#9e9e9e' />
+
+      const start_date = data.start_date && data.start_time ? (
+        <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
+      ) : (
+        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+      );
+
+      const end_date =  data.end_date && data.end_time  ? (
+        <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />
+      ) : (
+        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+      );
+
+      const pressure = data.pressure ? (
+        <Bubble text={data.pressure +" mmHG"} color='#cddc39' />
+      ) : undefined_bubble;
+
+      const sleep_duration = data.sleep_duration ? (
+        <Bubble text={data.sleep_duration +"h"} color='#cddc39' />
+      ) : undefined_bubble;
+
+      const pain = data.pain ? (
+        <Bubble text={this.getTranslatedValue(data.pain,"pain")} img={faceNeutral} color='#ED8836' />
+      ) : undefined_bubble;
+
+      const menstruation = data.menstruation ? (
+        <Bubble text={this.getTranslatedValue(data.menstruation,"menstruation")} img={drop} color='#E91E63' />
+      ) : undefined_bubble;
+
+      const mood = data.mood ? (
+        <Bubble text={this.getTranslatedValue(data.mood,"mood")} img={faceSmile} color='#ffc107' />
+      ) : undefined_bubble;
+
+      const localization = data.localization ? (
+        <Bubble text={this.getTranslatedValue(data.localization,"localization")} img={localization} color='#cddc39' />
+      ) : undefined_bubble;
+
+      const medicines = data.medicines && data.medicines.length ?
+        data.medicines.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"medicines")} img={medicine} color='#00bcd4' />
+        ))
+       : undefined_bubble;
+
+      const triggers = data.triggers && data.triggers.length ?
+        data.triggers.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
+        ))
+       : undefined_bubble;
+
+      const aura = data.aura && data.aura.length ?
+        data.aura.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
+        ))
+       : undefined_bubble;
+
+      const reliefs = data.reliefs && data.reliefs.length ?
+        data.reliefs.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
+        ))
+       : undefined_bubble;
 
       result = (
         <SummaryComponent>
@@ -165,52 +226,29 @@ class Summary extends Component {
           <h2>{languageText.addForm.summary}</h2>
 
           <Divider text={languageText.addForm.start} />
-          <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
-
+          { start_date }
           <Divider text={languageText.addForm.end} />
-          {!!data.end_date && !!data.end_time ? (
-            <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />
-          ) : (
-            <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
-          )}
+          { end_date }
           <Divider text={languageText.addForm.pressure.title} />
-          <Bubble text={data.pressure +" mmHG"} color='#cddc39' />
-
+          { pressure }
           <Divider text={languageText.addForm.sleepDuration.title} />
-          <Bubble text={data.sleep_duration +"h"} color='#cddc39' />
-
+          { sleep_duration }
           <Divider text={languageText.addForm.pain} />
-          <Bubble text={this.getTranslatedValue(data.pain,"pain")} img={faceNeutral} color='#ED8836' />
-
+          { pain }
           <Divider text={languageText.addForm.menstruation} />
-          <Bubble text={this.getTranslatedValue(data.menstruation,"menstruation")} img={drop} color='#E91E63' />
-
+          { menstruation }
           <Divider text={languageText.addForm.mood} />
-          <Bubble text={this.getTranslatedValue(data.mood,"mood")} img={faceSmile} color='#ffc107' />
-
+          { mood }
           <Divider text={languageText.addForm.localization} />
-          <Bubble text={this.getTranslatedValue(data.localization,"localization")} img={localization} color='#cddc39' />
-
+          { localization }
           <Divider text={languageText.addForm.medicines} />
-          {data.medicines.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"medicines")} img={medicine} color='#00bcd4' />
-          ))}
-
+          { medicines }
           <Divider text={languageText.addForm.triggers} />
-          {data.triggers.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
-          ))}
-
+          { triggers }
           <Divider text={languageText.addForm.aura} />
-          {data.aura.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
-          ))}
-
+          { aura }
           <Divider text={languageText.addForm.reliefs} />
-          {data.reliefs.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
-          ))}
-
+          { reliefs }
           <Divider text={languageText.addForm.notes} />
           <textarea key={"notes"} readOnly={preview} value={this.state.notes} onChange={this.handleChangeNotes} type="text"  placeholder={languageText.addForm.notesPlaceholder} />
 

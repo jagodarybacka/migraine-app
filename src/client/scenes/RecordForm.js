@@ -220,7 +220,7 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header isForm />
+        <Header isForm saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
           <SwipeableViews className="form-container" index={currentTab}>
             <div className="record-tab">
@@ -264,21 +264,21 @@ class RecordForm extends Component {
             </div>
           </SwipeableViews>
         </form>
-        {this.isComplete() && (
-          <div>
-            <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
-              <Button text={languageText.recordForm.summary} />
-            </Link>
-          </div>
-        )}
-
         <Buttons>
           <Button
             onClick={() => this.changeTab('prev')}
             disabled={currentTab === this.firstTab}
             text="<"
           />
-          <p> {languageText.recordForm.migraineRecord}</p>
+          {
+            this.isComplete() ? (
+              <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
+                <Button small text={languageText.recordForm.summary} />
+              </Link>
+            ) : (
+              <p> {languageText.recordForm.migraineRecord}</p>
+            )
+          }
           <Button
             onClick={() => this.changeTab('next')}
             disabled={currentTab === this.lastTab}
