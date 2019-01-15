@@ -99,6 +99,8 @@ class WeatherWidget extends Component {
             this.checkIfGeolocation();
           }
         }
+      } else {
+        this.checkIfGeolocation();
       }
     }
   }
@@ -204,7 +206,7 @@ class WeatherWidget extends Component {
 
   async getForecastForCity() {
     const city = this.state.city_name;
-    if(city.length == 0){
+    if(city.length === 0){
       return;
     }
     const forecast = await getForecastForCity(city);
