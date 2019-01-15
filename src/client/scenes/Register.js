@@ -97,6 +97,9 @@ class Register extends Component {
 					localStorage.setItem('userId', response.data.userId);
 					localStorage.setItem('userMail', response.data.userMail);
           localStorage.setItem('userName', response.data.userName);
+          localStorage.removeItem('forecast_time');
+          localStorage.removeItem('weather_time');
+          localStorage.removeItem('weather');
           window.location = response.data.redirectURL;
         } else {
           _this.state.errors = [];

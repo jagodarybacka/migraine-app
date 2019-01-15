@@ -4,6 +4,7 @@ var passport = require("passport");
 var crypto = require('crypto');
 const nodemailer = require("nodemailer");
 var async = require('async');
+var tools = require('../helpers/stats.js');
 
 
 exports.validateRegister = (req, res, next) => {
@@ -56,13 +57,16 @@ exports.change_password = (req, res, next) => {
     if (sanitizedUser){
 			sanitizedUser.changePassword(req.body.oldPassword, req.body.password, function(err){
 					if(err) {
-						return res.status(204).send([err.message]);
+						res.status(204)
+						res.send([err.message]);
 					}
 					sanitizedUser.save();
-					res.status(200).send('Password change successful');
+					res.status(200);
+					res.send('Password change successful');
 			});
     } else {
-        res.status(404).send('This user does not exist');
+				res.status(404);
+        res.send('This user does not exist');
     }
 	})
 }
@@ -90,7 +94,8 @@ exports.change_user_data = (req, res, next) => {
 				res.json({'message':'User data change successful'});
 			});
     } else {
-        res.status(404).send('This user does not exist');
+			res.status(404);
+      res.send('This user does not exist');
     }
 	})
 }
@@ -109,7 +114,8 @@ exports.forgotten_password = (req, res, next) => {
 					return res.json({errors : [err.message]});
 				}
         if (!user) {
-          return res.status(404).send('No account with that email address exists.');
+					res.status(404);
+          return res.send('No account with that email address exists.');
         }
         user.resetPasswordToken = token;
 				user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
@@ -154,7 +160,8 @@ exports.reset_password = (req, res, next) => {
 				return res.json({errors : [err.message]});
 			}
 			if (!user) {
-				return res.status(404).send('Reset token invalid or has expired');
+				res.status(404);
+				res.send('Reset token invalid or has expired');
 			}
 			user.setPassword(req.body.password, function(err){
 				if(err) {
@@ -167,5 +174,57 @@ exports.reset_password = (req, res, next) => {
 					res.json({'message':'Password change successful'});
         });
 		});
+		});
+}
+
+exports.save_forecast = (req, res, next) => {
+	const userId = req.session.userId;
+	const forecast = req.body.weather_forecast;
+	const now = new Date();
+	User.findById(userId)
+	.exec( function(err, found_user) {
+		if (err) { return next(err); }
+		if (found_user) {
+			const forecasts = tools.modifyForecasts(found_user.weather_forecasts, forecast);
+			User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: forecasts}}, {}, function (err,mod_user) {
+				if (err) { return next(err); }
+				console.log('Forecast saved');
+				return res.json("Forecast saved");
+			});
+		}
+	});
+}
+
+exports.get_forecast = (req, res, next) => {
+	const userId = req.session.userId;
+	const start = new Date(req.params.start);
+	const end = new Date(req.params.end);
+	User.findById(userId)
+	.exec( function(err, found_user) {
+		if (err) { return next(err); }
+		if (found_user) {
+			if(found_user.weather_forecasts && found_user.weather_forecasts.length > 0){
+				const forecasts = tools.getForecasts(found_user.weather_forecasts, start, end);
+				return res.json(forecasts);
+			}
+			else {
+				res.status(204);
+        res.send("No content")
+			}	
+		}
+	});
+}
+
+exports.clear_forecast = (req,res,next) => {
+		const userId = req.session.userId;
+		User.findById(userId)
+		.exec( function(err, found_user) {
+			if (err) { return next(err); }
+			if (found_user) {
+				User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: []}}, {}, function (err,mod_user) {
+					if (err) { return next(err); }
+					return res.json("Forecast cleared");
+				});
+			}
 		});
 }

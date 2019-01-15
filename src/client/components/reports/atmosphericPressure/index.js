@@ -6,6 +6,8 @@ import _ from 'lodash'
 
 import { parse, get } from './utils'
 import mockedData from './mock/mock.json'
+import axios from 'axios';
+import {languageText} from '../../../languages/MultiLanguage.js'
 
 const FONT = '10px Roboto'
 
@@ -26,12 +28,18 @@ class AtmosphericPressure extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      timePeriod: {
+        from: new Date(2019,0,13),
+        to: new Date(2019,0,18)
+      },
+      migraines: []
     }
   }
 
   componentDidMount() {
     this.fetchData();
+    this.fetchMigraines();
   }
 
   componentDidUpdate() {
@@ -39,10 +47,31 @@ class AtmosphericPressure extends Component {
   }
 
   fetchData() {
-    const parsedForecast = parse.forecast(mockedData)
-    this.setState({
-      data: parsedForecast
+    const url = "/api/forecast/" + this.state.timePeriod.from + '-' + this.state.timePeriod.to;
+    axios.get(url)
+    .then((res) => {
+      const parsedForecast = parse.forecast(res.data);
+      this.setState({
+        data: parsedForecast
+      })
     })
+    .catch((err) => console.log(err));
+  }
+
+  fetchMigraines() {
+    const url = "/api/reports/pressure/" + this.state.timePeriod.from + '-' + this.state.timePeriod.to;
+    axios.get(url)
+    .then((res) => {
+      if(res.status === 204){
+        alert(languageText.atmosphericPressure.noData);
+      }
+      if(res.data) {
+        this.setState({
+          migraines: res.data
+        })
+      }
+    })
+    .catch((err) => console.log(err));
   }
 
   updateCanvas() {

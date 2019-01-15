@@ -28,6 +28,9 @@ const Start = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="start"
+      onNowButtonClick={props.onNowButtonClick}
+      onSubtractHourClick={props.onSubtractHourClick}
+     // onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='start'
     />
@@ -40,6 +43,9 @@ const End = props => {
       valueDate={props.valueDate}
       valueTime={props.valueTime}
       name="end"
+      onNowButtonClick={props.onNowButtonClick}
+      onSubtractHourClick={props.onSubtractHourClick}
+    //  onNotYetClick = {props.onNotYetClick}
       onChange={props.onChange}
       id='end'
       end

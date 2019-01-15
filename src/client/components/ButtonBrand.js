@@ -13,6 +13,7 @@ const Brand = styled.button`
   background-color: ${props => props.brand == 'fb' ? '#4759B2' : '#D84B37'};
   width: 50px;
   height: 50px;
+  outline: none;
 `
 const Img = styled.img`
   width: 90%;
@@ -20,7 +21,7 @@ const Img = styled.img`
 
 const ButtonBrand = (props) => {
   return (
-    <Brand brand={props.brand}>
+    <Brand brand={props.brand} onClick={props.onClick}>
       <Img src={props.brand == 'fb' ? fb : google} />
     </Brand>
   )
