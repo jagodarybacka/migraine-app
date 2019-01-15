@@ -1,6 +1,6 @@
 {
 	"settings":{
-		"chooseLanguage": "Wybierz język", 
+		"chooseLanguage": "Wybierz język",
 		"changeData": "Zmień dane",
 		"changePassword": "Zmień hasło",
 		"oldPassword": "Stare hasło",
@@ -11,7 +11,13 @@
 		"usernamePlaceholder": "Nazwę użytkownika",
 		"eng": "Angielski",
 		"pol": "Polski",
-		"logout": "Wyloguj"
+		"logout": "Wyloguj",
+		"failed":"Wylogowywanie nie powiodło się",
+		"sthWentWrong": "Coś poszło nie tak",
+		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
+		"dataChanged": "Dane zostały zmienione",
+		"passwordChanged": "Hasło zostało zmienione"
+
 	},
 	"home":{
 	    "add": "Dodaj ból głowy"
@@ -33,6 +39,8 @@
 	"recordForm":{
 		"title": "Dodaj nową migrenę",
 		"titleEdit": "Edytuj migrenę",
+		"paragraph": "W tym formularzu możesz zanotować różne aspekty swojego stanu. Śledzenie wyzwalaczy migreny pomoże Ci uniknąć ich później.",
+		"feelBetter": "Mamy nadzieję, że wkrótce poczujesz się lepiej!",
 		"summary": "Podsumowanie",
 		"migraineRecord": "Zapis migreny"
 	},
@@ -41,7 +49,8 @@
 		"tapToStart": "Kliknij, aby rozpocząć..."
 	},
 	"recordCard":{
-		"migraine": "Migrena"
+		"migraine": "Migrena",
+		"noMigraines": "Brak migren"
 	},
 	"menuBar":{
 		"home": "Strona główna",
@@ -53,12 +62,16 @@
 		"rain": "Deszcz",
 		"humidity": "Wilgotność",
 		"pressure": "Ciśnienie atmosferyczne",
-		"windSpeed": "Prędkość wiatru"
+		"windSpeed": "Prędkość wiatru",
+		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
+		"placeholder": "Wprowadź ",
+		"city": "miasto",
+		"setLocation": "Ustaw lokalizację"
 	},
 	"register":{
 		"invalidEmail": "Nieprawidłowy adres email",
 		"error4chars": "Pole musi być wypełnione conajmniej 4 znakami.",
-		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami.",
+		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę.",
 		"password": "Hasło",
 		"logIn": "Log In",
 		"username": "Nazwa użytkownika",
@@ -102,8 +115,14 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
-		"sleepDuration": "Długość snu [godz.]",
-		"pressure": "Ciśnienie krwi [mmHG] (przykład: 120/80)",
+		"sleepDuration": {
+			"title": "Długość snu",
+			"subtitle": "Jednostka - godzina"
+		},
+		"pressure": {
+			"title": "Ciśnienie krwi",
+			"subtitle": "Jednostka - [mmHG], przykład: 120/80"
+		},
 		"aura": "aura",
 		"notes": "Notatki",
 		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",
@@ -173,6 +192,9 @@
 		"pressure":"Ciśnienie atmosferyczne",
 		"oftenTogether": "Często występujace razem"
 	},
+	"atmosphericPressure": {
+		"noData": "Brak danych"
+	},
 	"reportsSummary":{
 		"last30Days": "Ostatnie 30 dni",
 		"last60Days":"Ostatnie 60 dni",
@@ -185,7 +207,8 @@
 		"total": "całkowity czas trwania ataków",
 		"migraine": "migrena",
 		"migraines": "migreny",
-		"confirm": "Potwierdź"
+		"confirm": "Potwierdź",
+		"sthWentWrong": "Coś poszło nie tak"
 	},
 	"oftenTogether":{
 		"painOptions": [
@@ -219,5 +242,18 @@
 		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
 		"headerButton": "Dowiedz się więcej"
-	}	
+	},
+	"forgottenPassword": {
+		"resetPassword": "Zresetuj hasło",
+		"sendEmail": "Wyślij email",
+		"invalidEmail": "Niepoprawny adres email",
+		"emailNotFound": "Nie znaleziono adresu email"
+	},
+	"resetPassword": {
+		"resetPassword": "Zresetuj hasło",
+		"reset": "Resetuj",
+		"password": "Hasło",
+		"emailNotFound": "Nie znaleziono adresu email",
+		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę."
+	}
 }

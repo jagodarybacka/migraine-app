@@ -80,11 +80,19 @@ class Login extends Component {
 			{	email: email.value,
 				password: password.value
 			}).then(response => {
-				if(response.data.redirectURL){ // save basic info on user in session for other components
+        if(response.data.redirectURL){ // save basic info on user in session for other components
+          if(localStorage.getItem('userId')){
+            if(localStorage.getItem('userId') != response.data.userId){
+              localStorage.removeItem('forecast_time');
+              localStorage.removeItem('weather_time');
+              localStorage.removeItem('weather');
+              localStorage.removeItem('city_name');
+            }
+          }
 					localStorage.setItem('isLogged', true);
 					localStorage.setItem('userId', response.data.userId);
 					localStorage.setItem('userMail', response.data.userMail);
-					localStorage.setItem('userName', response.data.userName);
+          localStorage.setItem('userName', response.data.userName);
 					window.location=response.data.redirectURL;
         }
         else {

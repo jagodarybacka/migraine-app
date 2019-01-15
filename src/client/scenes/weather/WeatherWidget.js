@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import axios from 'axios';
+import Button from '../../components/Button';
 
-import allergyIcon from "../../assets/weather/allergy.png"
 import cloudyIcon from "../../assets/weather/cloudy.png"
-import hailIcon from "../../assets/weather/hail.png"
 import humidityIcon from "../../assets/weather/humidity.png"
 import partlyCloudyIcon from "../../assets/weather/partly-cloudy.png"
 import pressureIcon from "../../assets/weather/pressure.png"
@@ -17,15 +17,33 @@ import nightIcon from "../../assets/weather/clear-night.png"
 import cloudyNightIcon from "../../assets/weather/cloudy-night.png"
 import veryCloudyIcon from "../../assets/weather/very-cloudy.png"
 import foggyIcon from "../../assets/weather/foggy.png"
-import temperatureIcon from "../../assets/weather/temperature.png"
 import windIcon from "../../assets/weather/wind.png"
-import lastDayIcon from "../../assets/weather/last-day.png"
 import { getGeolocation } from '../../utils/GetGeolocation'
-import { getWeather } from '../Weather'
-import {Widget, Header, Element} from './WeatherWidget.styles'
+import { getWeather, getWeatherForCity, getForecast, getForecastForCity } from '../Weather'
+import {Widget, Header, Element, City, Input} from './WeatherWidget.styles'
 import {languageText} from '../../languages/MultiLanguage.js';
 
 class WeatherWidget extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      city_name: localStorage.getItem('city_name') || "",
+      currentWeather: undefined,
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleCityChange = this.handleCityChange.bind(this);
+    this.getWeatherForCity = this.getWeatherForCity.bind(this);
+    this.getWeatherForLocation = this.getWeatherForLocation.bind(this);
+    this.getWeatherForecast = this.getWeatherForecast.bind(this);
+    this.getForecastForLocation = this.getForecastForLocation.bind(this);
+    this.getForecastForCity = this.getForecastForCity.bind(this);
+    this.success = this.success.bind(this);
+    this.fail = this.fail.bind(this);
+    this.successForecast = this.successForecast.bind(this);
+    this.failForecast = this.failForecast.bind(this);
+  }
+
   icons = {
     '01d' : sunnyIcon,        //clear
     '02d' : partlyCloudyIcon, //few clouds
@@ -48,50 +66,175 @@ class WeatherWidget extends Component {
   }
 
   componentDidMount() {
+    this.getWeatherForecast();
     if(!localStorage.getItem('weather')  || !localStorage.getItem('weather_time')) {
-      this.saveWeather()
-    } else {
-      const now = new Date()
-      const then = new Date(localStorage.getItem('weather_time'))
-      const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
-      if(diff > 30) {
-        this.saveWeather();
-      } else {
-        const weather = JSON.parse(localStorage.getItem('weather')).weather
-        this.setState({
-          weather: weather,
-          temperature: weather.main.temp,
-          icon: String(weather.weather[0].icon),
-          description: weather.weather[0].description,
-          humidity: weather.main.humidity,
-          pressure: weather.main.pressure,
-          rain: weather.rain ? weather.rain.rain : 0,
-          wind: weather.wind.speed
-        })
+      this.checkIfGeolocation()
+    } 
+    else {
+      if(localStorage.getItem('weather_time') != null) {
+        const now = new Date()
+        const then = new Date(localStorage.getItem('weather_time'))
+        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
+        if(diff > 30) {
+          this.checkIfGeolocation();
+        } else {
+          if(JSON.parse(localStorage.getItem('weather')) != null){
+            const weather = JSON.parse(localStorage.getItem('weather')).weather
+            this.setState((prevState) => ({
+              ...prevState.city_name,
+              currentWeather: {
+                weather: weather,
+                temperature: weather.main.temp,
+                icon: String(weather.weather[0].icon),
+                description: weather.weather[0].description,
+                humidity: weather.main.humidity,
+                pressure: weather.main.pressure,
+                rain: weather.rain ? weather.rain.rain : 0,
+                wind: weather.wind.speed
+            }
+           }))
+          }
+          else {
+            this.checkIfGeolocation();
+          }
+        }
       }
     }
   }
 
-  async saveWeather(){
+  checkIfGeolocation() {
+    navigator.geolocation.getCurrentPosition(this.success,this.fail,{timeout:10000});
+  }
+
+  success(position) {
+    this.getWeatherForLocation();
+  }
+
+  fail(error) {
+    this.getWeatherForCity();
+  }
+
+  checkIfGeolocationForecast() {
+    navigator.geolocation.getCurrentPosition(this.successForecast,this.failForecast,{timeout:10000});
+  }
+
+  successForecast(position) {
+    this.getForecastForLocation();
+  }
+
+  failForecast(error) {
+    this.getForecastForCity();
+  }
+
+  async getWeatherForLocation(){
     const geolocation = await getGeolocation()
     const weather = await getWeather(geolocation)
-    this.setState({
-      weather: weather,
-      temperature: weather.main.temp,
-      icon: String(weather.weather[0].icon),
-      //description: weather.weather[0].description,
-      humidity: weather.main.humidity,
-      pressure: weather.main.pressure,
-      rain: weather.rain ? weather.rain.rain : 0,
-      wind: weather.wind.speed
+    this.setState((prevState) => ({
+      ...prevState.city_name,
+      currentWeather: {
+        weather: weather,
+        temperature: weather.main.temp,
+        icon: String(weather.weather[0].icon),
+        humidity: weather.main.humidity,
+        pressure: weather.main.pressure,
+        rain: weather.rain ? weather.rain.rain : 0,
+        wind: weather.wind.speed
+      }
+    }), () => {
+      localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
+      localStorage.setItem('weather_time', new Date());
     })
-    localStorage.setItem('weather', JSON.stringify(this.state));
-    localStorage.setItem('weather_time', new Date());
+  }
+
+  async getWeatherForCity() {
+    const city = this.state.city_name;
+    if(city.length == 0){
+      return;
+    }
+    const weather = await getWeatherForCity(city);
+    console.log(weather);
+    this.setState((prevState) => ({
+      ...prevState.city_name,
+      currentWeather: {
+        weather: weather,
+        temperature: weather.main.temp,
+        icon: String(weather.weather[0].icon),
+        humidity: weather.main.humidity,
+        pressure: weather.main.pressure,
+        rain: weather.rain ? weather.rain.rain : 0,
+        wind: weather.wind.speed
+      }
+      }
+    ), () => {
+      localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
+      localStorage.setItem('weather_time', new Date());
+      localStorage.setItem('city_name', this.state.city_name);
+    })
+  }
+
+  getWeatherForecast() {
+    if(!localStorage.getItem('forecast_time')){
+      this.checkIfGeolocationForecast()
+    } else {
+      if(localStorage.getItem('forecast_time') != null){
+        const now = new Date()
+        const then = new Date(localStorage.getItem('forecast_time'))
+        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
+        if(diff > 6) {
+          this.checkIfGeolocationForecast()
+        }
+      } else {
+        this.checkIfGeolocationForecast()
+      }
+    }
+  }
+
+  async getForecastForLocation() {
+    const geolocation = await getGeolocation()
+    const forecast = await getForecast(geolocation)
+    const url = 'api/forecast';
+    axios.post(url, {
+      weather_forecast: forecast
+    })
+    .then((res) => {
+      localStorage.setItem('forecast_time', new Date())
+    })
+    .catch((err) => console.log(err));
+  }
+
+  async getForecastForCity() {
+    const city = this.state.city_name;
+    if(city.length == 0){
+      return;
+    }
+    const forecast = await getForecastForCity(city);
+    const url = 'api/forecast';
+    axios.post(url, {
+      weather_forecast: forecast
+    })
+    .then((res) => {
+      localStorage.setItem('forecast_time', new Date())
+    })
+    .catch((err) => console.log(err));
+  }
+
+  async handleCityChange(e) {
+    e.preventDefault();
+    this.getWeatherForCity();
+  }
+
+  handleChange(evt) {
+    const { value, name } = evt.target;
+    this.setState((prevState) => ({
+        ...prevState,
+        [name]: value
+      }
+    ))
   }
   
   render() {
-    if(this.state) {
-      const {temperature,icon, humidity, pressure, rain, wind } = this.state
+    if(this.state.currentWeather) {
+      const {temperature,icon, humidity, pressure, rain, wind } = this.state.currentWeather
       return (
       <Widget >
         <Header>
@@ -129,7 +272,23 @@ class WeatherWidget extends Component {
         </Element>
       </Widget>
       ) 
-    } else return null
+    } else {
+      const placeholder = languageText.weather.placeholder + languageText.weather.city;
+      return (
+        <City>
+          <Header>
+            <p>{languageText.weather.forecast}</p>
+            <p className="text">{languageText.weather.geolocationDisabled}</p>
+          </Header>
+          <Input
+            type="text"
+            name="city_name"
+            placeholder={placeholder}
+            value={this.state.city_name}
+            onChange={this.handleChange}/>
+          <Button type="submit" onClick={this.handleCityChange} small="true" text={languageText.weather.setLocation} primary />
+        </City>
+      )}
   }
 }
 

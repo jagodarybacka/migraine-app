@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
-import date from '../../assets/date.png'
-import time from '../../assets/time.png'
 import faceNeutral from '../../assets/face-neutral.png'
 import faceSmile from '../../assets/face-smile.png'
 import drop from '../../assets/drop.png'
@@ -159,7 +156,8 @@ const Pressure = props => {
   return (
     <Text
     valueData={props.valueData}
-    title = {languageText.addForm.pressure}
+    title = {languageText.addForm.pressure.title}
+    subtitle = {languageText.addForm.pressure.subtitle}
     name="pressure"
     type= "text"
     onChange={props.onChange}
@@ -171,7 +169,8 @@ const SleepDuration = props => {
   return (
     <Text
     valueData={props.valueData}
-    title = {languageText.addForm.sleepDuration}
+    title = {languageText.addForm.sleepDuration.title}
+    subtitle = {languageText.addForm.sleepDuration.subtitle}
     name="sleep_duration"
     type= "number"
     onChange={props.onChange}

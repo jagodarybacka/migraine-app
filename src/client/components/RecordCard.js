@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
 import deleteIcon from '../assets/trash.png';
 import editIcon from '../assets/edit.png';
 import {languageText} from '../languages/MultiLanguage.js';
@@ -49,9 +48,16 @@ const RecordCard = (props) => {
   const color = colorList[props.intensity-1] || colorList[0] ;
   const strengthList = languageText.addForm.painAnswers.map(a => a.text);
   const strength = strengthList[props.intensity-1];
-  const Img = props.isRecent ? "" : <div className="img"><img src={deleteIcon} id={props.id} onClick={props.handleDelete}></img></div> ;
-  const Img2 = props.isRecent ? "" : <div className="img2"><img src={editIcon} id={props.id} onClick={props.handleEdit}></img></div>;
+  const Img = props.isRecent ? "" : <div className="img"><img src={deleteIcon} alt="delete" id={props.id} onClick={props.handleDelete}></img></div> ;
+  const Img2 = props.isRecent ? "" : <div className="img2"><img src={editIcon} alt="edit" id={props.id} onClick={props.handleEdit}></img></div>;
 
+  if (props.isMock) {
+    return (
+      <Card className="RecordCard" color={colorList[3]} onClick={props.handleClick}>
+        <h4>{languageText.recordCard.noMigraines}</h4>
+      </Card>
+    )
+  }
   return (
     <Card className="RecordCard" color={color} onClick={props.handleClick}>
       <time>{props.date}</time>

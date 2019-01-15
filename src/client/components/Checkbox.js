@@ -65,7 +65,7 @@ class Checkbox extends React.Component {
 
   render() {
     return (
-      <Check class="Check" color={this.props.color}>
+      <Check className="Check" color={this.props.color}>
         <input
           checked={this.props.checked}
           name={this.props.name}
@@ -74,7 +74,7 @@ class Checkbox extends React.Component {
           onChange={this.props.onChange}
           onClick={this.handleClick}
           />
-        <FauxBg class="bg" color={this.props.color}/>
+        <FauxBg className="bg" color={this.props.color}/>
         <img src={
             this.props.checked ? this.props.img : this.props.imgColor
           } alt=''/>

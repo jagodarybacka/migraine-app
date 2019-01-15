@@ -1,6 +1,6 @@
 {
 	"settings":{
-		"chooseLanguage": "Choose language", 
+		"chooseLanguage": "Choose language",
 		"changeData": "Change data",
 		"changePassword": "Change password",
 		"oldPassword": "Old password",
@@ -11,7 +11,12 @@
 		"usernamePlaceholder": "Username",
 		"eng": "English",
 		"pol": "Polish",
-		"logout": "Logout"
+		"logout": "Logout",
+		"failed":"Log out failed",
+		"sthWentWrong": "Something went wrong",
+		"oldPasswordIncorrect": "Old password incorrect",
+		"dataChanged": "User data changed",
+		"passwordChanged": "Password changed"
 	},
 	"home":{
 	    "add": "Add headache"
@@ -33,7 +38,9 @@
 	"recordForm":{
 		"title": "Record new Migraine",
 		"titleEdit": "Edit Migraine",
-		"summary": "Summary",
+		"paragraph": "In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.",
+		"feelBetter": "Feel better soon!",
+		"summary": "Save migraine",
 		"migraineRecord": "Migraine Record"
 	},
 	"welcome":{
@@ -41,7 +48,8 @@
 		"tapToStart": "Tap to start..."
 	},
 	"recordCard":{
-		"migraine": "Migraine"
+		"migraine": "Migraine",
+		"noMigraines": "No migraines yet"
 	},
 	"menuBar":{
 		"home": "Home",
@@ -53,12 +61,16 @@
 		"rain": "Rain",
 		"humidity": "Humidity",
 		"pressure": "Atmospheric pressure",
-		"windSpeed": "Wind speed"
+		"windSpeed": "Wind speed",
+		"geolocationDisabled": "Your geolocation is disabled. You can set your city manually:",
+		"placeholder": "Enter ",
+		"city": "city",
+		"setLocation": "Set localization"
 	},
 	"register":{
 		"invalidEmail": "Invalid email address.",
 		"error4chars": "This field must be greater than 4 characters",
-		"error8chars": "This field must be greater than 8 characters",
+		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number",
 		"password": "Password",
 		"logIn": "Log In",
 		"username": "Username",
@@ -95,15 +107,21 @@
 		"start": "Start",
 		"notYet":"Not yet",
 		"end": "End",
-		"summary": "Summary",
+		"summary": "Save migraine",
 		"menstruation": "Menstruation",
 		"localization": "Localization",
 		"mood": "Mood",
 		"pain": "Pain Intensity",
 		"medicines": "Medicines",
 		"triggers": "Possible Triggers",
-		"sleepDuration": "Sleep duration [h]",
-		"pressure": "Blood pressure [mmHG] (example: 120/80)",
+		"sleepDuration": {
+			"title": "Sleep duration",
+			"subtitle": "Unit - [h]"
+		},
+		"pressure": {
+			"title": "Blood pressure",
+			"subtitle": "Unit - [mmHG], example: 120/80"
+		},
 		"aura": "aura",
 		"notes": "Notes",
 		"notesPlaceholder": "Write something...",
@@ -173,6 +191,9 @@
 		"pressure":"Atmospheric pressure",
 		"oftenTogether": "Often together"
 	},
+	"atmosphericPressure": {
+		"noData": "No data"
+	},
 	"reportsSummary":{
 		"last30Days": "Last 30 days",
 		"last60Days":"Last 60 days",
@@ -185,7 +206,8 @@
 		"total": "total attacks duration",
 		"migraine": "migraine",
 		"migraines": "migraines",
-		"confirm": "Confirm"
+		"confirm": "Confirm",
+		"sthWentWrong": "Something went wrong"
 	},
 	"oftenTogether":{
 		"painOptions": [
@@ -219,5 +241,18 @@
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
 		"headerButton": "Find out more"
-	}	
+	},
+	"forgottenPassword": {
+		"resetPassword": "Reset Password",
+		"sendEmail": "Send email",
+		"invalidEmail": "Invalid email address",
+		"emailNotFound": "Email not found"
+	},
+	"resetPassword": {
+		"resetPassword": "Reset Password",
+		"reset": "Reset",
+		"password": "Password",
+		"emailNotFound": "Email not found",
+		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number"
+	}
 }

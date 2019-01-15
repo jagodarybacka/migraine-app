@@ -9,6 +9,9 @@ import { validateEmail } from '../utils/Validators';
 import TextInput from '../components/TextInput'
 import Button from '../components/Button'
 
+import {languageText} from '../languages/MultiLanguage.js';
+
+
 const FormComp = styled.form`
   text-align: center;
 `
@@ -18,7 +21,7 @@ class ForgottenPassword extends Component {
     super(props);
     this.state = {
       fields: {
-        email: {
+        emailReset: {
           value: '',
           isValid: false,
           errorMsg: '',
@@ -47,23 +50,22 @@ class ForgottenPassword extends Component {
     evt.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { email } = fields;
+    const { emailReset } = fields;
 
-    if (!validateEmail(email.value)) {
+    if (!validateEmail(emailReset.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+      fields = this.changeValidation(fields, 'emailReset', false, languageText.forgottenPassword.invalidEmail);
     } else {
-      fields = this.changeValidation(fields, 'email', true);
+      fields = this.changeValidation(fields, 'emailReset', true);
     }
     this.setState({ fields }, () => {
         if(isValid){
             axios.post('/api/forgot', {
-                email: email.value
+                email: emailReset.value
             })
             .then(res => {
                 if(res.status == 404){
-                    console.log("404");
-                    alert('Email not found');
+                    alert(languageText.forgottenPassword.emailNotFound);
                     return;
                 }
                 else {
@@ -91,21 +93,22 @@ class ForgottenPassword extends Component {
   }
 
   render() {
-    const { email} = this.state.fields;
+    const { emailReset} = this.state.fields;
 
     return (
       <FormComp name="Reset password" submit="Send" onSubmit={this.handleSubmit}>
-        <h1>Reset password</h1>
+        <h1>{languageText.forgottenPassword.resetPassword}</h1>
         <TextInput
           type="email"
-          id="email"
+          id="emailReset"
+          placeholder="Email"
           name="Email"
-          value={email.value}
-          isValid={email.isValid}
-          errorMsg={email.errorMsg}
+          value={emailReset.value}
+          isValid={emailReset.isValid}
+          errorMsg={emailReset.errorMsg}
           onChange={this.handleChange}
         />
-        <Button type="submit" text="Send" />
+        <Button type="submit" text={languageText.forgottenPassword.sendEmail}/>
       </FormComp>
     )
   }

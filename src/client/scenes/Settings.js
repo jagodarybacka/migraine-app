@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
 
 import Header from '../components/Header';
@@ -62,7 +61,7 @@ class Settings extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
-  }  
+  }
 
   logout(){
     localStorage.setItem('isLogged',false);
@@ -71,21 +70,19 @@ class Settings extends Component {
         isLogged: false
       }
     ))
-    console.log(this.state)
   }
 
   handleLogOut() {
     axios.get('/api/logout').then(res => {
-      console.log(this.state.message); 
       this.setState({message: res.data.message});
       this.logout();
       window.location = '/';
 		}).catch(err =>{
 			console.log(err);
-			this.setState({message: "Failed to log out!"});
+			this.setState({message: languageText.settings.failed});
 		});
   };
-  
+
   componentDidMount() {
     window.scrollTo(0, 0)
   };
@@ -97,7 +94,6 @@ class Settings extends Component {
         isLogged: isLoggedIn === 'true'
       }
     ))
-    console.log(this.state.isLogged)
   }
 
   handleChange(evt) {
@@ -136,11 +132,11 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { oldPassword, password } = fields;
 
     if (!validatePassword(password.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters and contains at least one uppercase letter, one lowercase letter, one digit and one special symbol');
+      fields = this.changeValidation(fields, 'password', false, languageText.register.error8chars);
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
@@ -152,18 +148,18 @@ class Settings extends Component {
           password: password.value
         })
         .then(res => {
-          if(res.status == 404){
-            alert('Something went wrong');
+          if(res.status === 404){
+            alert(languageText.settings.sthWentWrong);
             return;
-          } else if(res.status == 204){
-            alert("Old password incorrect");
+          } else if(res.status === 204){
+            alert(languageText.settings.oldPasswordIncorrect);
             return;
           } else {
             if(res.data.errors) {
               alert(res.data.errors);
               return;
             }
-            alert('Password changed');
+            alert(languageText.settings.passwordChanged);
             this.clearFields();
           }
         })
@@ -176,18 +172,18 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { username, email } = fields;
 
     if (username.value.length > 0 && !validateLength(username.value, 4)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'username', false, 'This field must be greater than 4 characters');
+      fields = this.changeValidation(fields, 'username', false, languageText.register.error4chars);
     } else {
       fields = this.changeValidation(fields, 'username', true);
     }
 
     if (email.value.length && !validateEmail(email.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
+      fields = this.changeValidation(fields, 'email', false, languageText.register.invalidEmail);
     } else {
       fields = this.changeValidation(fields, 'email', true);
     }
@@ -200,14 +196,14 @@ class Settings extends Component {
         })
         .then(res => {
           if(res.status == 404){
-            alert('Something went wrong');
+            alert(languageText.settings.sthWentWrong);
             return;
           } else {
             if(res.data.errors) {
               alert(res.data.errors);
               return;
             }
-            alert('User data changed');
+            alert(languageText.settings.dataChanged);
             this.clearFields();
           }
         })
@@ -273,8 +269,8 @@ class Settings extends Component {
           />
           <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
           <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang == "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang == "pl" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
         <Menubar />
       </SettingsComponent>
     );

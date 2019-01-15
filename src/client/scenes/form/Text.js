@@ -4,25 +4,25 @@ import styled from 'styled-components'
 import { languageText } from '../../languages/MultiLanguage';
 
 const Input = styled.input`
-  display: block;
-  width: 90%;
+  width: 50%;
   padding: 10px 5%;
-  background: transparent;
+  background: #fff;
   border: none;
-  border-bottom: solid 1px #4c5062;
   font-weight: 300;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 `;
 
-const Field = styled.div`
-  margin-top: 10px;
-  margin-bottom: 30px;
-`;
 
 const Text = (props) => {
     const text = languageText.text.enter + ` ${props.title.toLowerCase()}`
+    const subtitle = props.subtitle && ( <h3 style={{opacity: "0.8"}}>{props.subtitle}</h3>)
+
     return (
         <div>
             <h2>{props.title}</h2>
+            { subtitle }
             <Input
                 type={props.type}
                 name={props.name}

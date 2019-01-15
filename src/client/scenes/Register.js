@@ -87,12 +87,20 @@ class Register extends Component {
 
     if (isValid) {
       var _this = this;
-      axios.post("/users", {
+      axios.post("/api/users", {
         username: username.value,
         email: email.value,
         password: password.value,
       }).then(response => {
         if (response.data.redirectURL) {
+          if(localStorage.getItem('userId')){
+            if(localStorage.getItem('userId') != response.data.userId){
+              localStorage.removeItem('forecast_time');
+              localStorage.removeItem('weather_time');
+              localStorage.removeItem('weather');
+              localStorage.removeItem('city_name');
+            }
+          }
           localStorage.setItem('isLogged', true);
 					localStorage.setItem('userId', response.data.userId);
 					localStorage.setItem('userMail', response.data.userMail);
