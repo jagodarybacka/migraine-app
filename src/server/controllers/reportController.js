@@ -122,7 +122,7 @@ exports.report_add = function(req, res,next) {
         sleep_duration: req.body.sleep_duration || "",
         notes: req.body.notes || "",
         reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
-        weather: req.body.weather || ""
+        weather: req.body.weather || {}
          });
     report.save(function (err,saved) {
         if (err) { return next(err); }
@@ -168,7 +168,7 @@ exports.report_update = function(req, res, next) {
         sleep_duration: req.body.sleep_duration || "",
         notes: req.body.notes || "",
         reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
-        weather: req.body.weather || "",
+        weather: req.body.weather || {},
         _id: id
     }
 
