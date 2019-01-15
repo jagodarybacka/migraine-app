@@ -209,10 +209,8 @@ class RecordForm extends Component {
   notYetEnd(){
     const { data } = this.state;
     const {end_time, end_date, ...rest} = data
-
-    console.log(data.end_date)
     this.setState({
-      data: rest 
+      data: rest
     });
   }
 

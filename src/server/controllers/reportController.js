@@ -79,7 +79,7 @@ exports.report_add = function(req, res,next) {
         pressure: req.body.pressure,
         sleep_duration: req.body.sleep_duration,
         notes: req.body.notes,
-        reliefs: (typeof req.body.reliefs==='undefind') ? [] : req.body.reliefs,
+        reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
         weather: req.body.weather
         });
     report.save(function (err,saved) {
@@ -102,7 +102,7 @@ exports.report_add = function(req, res,next) {
         pressure: req.body.pressure,
         sleep_duration: req.body.sleep_duration,
         notes: req.body.notes,
-        reliefs: (typeof req.body.reliefs==='undefind') ? [] : req.body.reliefs,
+        reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
         weather: req.body.weather
          });
     report.save(function (err,saved) {
@@ -134,30 +134,35 @@ exports.report_update = function(req, res, next) {
     const start = new Date(Number(start_date[0]),Number(start_date[1])-1,Number(start_date[2]),Number(start_time[0]),Number(start_time[1]),0);
    
     let data ={
-        user: userId,
-        //user: req.body.userId,
-        start_time: req.body.start_time,
-        start_date: start,
-        menstruation: req.body.menstruation,
-        localization: req.body.localization,
-        mood: req.body.mood,
-        pain: req.body.pain,
-        medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
-        triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
-        aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
-        pressure: req.body.pressure,
-        sleep_duration: req.body.sleep_duration,
-        notes: req.body.notes,
-        reliefs: (typeof req.body.reliefs==='undefind') ? [] : req.body.reliefs,
-        weather: req.body.weather,
-        _id: id
+        $set: {
+            user: userId,
+            //user: req.body.userId,
+            start_time: req.body.start_time,
+            start_date: start,
+            menstruation: req.body.menstruation,
+            localization: req.body.localization,
+            mood: req.body.mood,
+            pain: req.body.pain,
+            medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
+            triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
+            aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
+            pressure: req.body.pressure,
+            sleep_duration: req.body.sleep_duration,
+            notes: req.body.notes,
+            reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,
+            weather: req.body.weather,
+            _id: id,
+        }
     }
 
     if(req.body.end_date && req.body.end_time) {
         const end_time = req.body.end_time.split(":");
         const end_date = req.body.end_date.split("-"); 
         const end = new Date(Number(end_date[0]),Number(end_date[1])-1,Number(end_date[2]),Number(end_time[0]),Number(end_time[1]),0);
-        data = {...data, end_time: req.body.end_time, end_date: end}
+        data.$set = {...data.$set, end_time: req.body.end_time, end_date: end}
+    }
+    else{
+        data.$unset = {end_time: "", end_date: ""}
     }
       
     Report.findById(id)
@@ -165,7 +170,7 @@ exports.report_update = function(req, res, next) {
             if (err) { return next(err); }
             if (found_report) {
                 var report = new Report(data);
-            Report.findByIdAndUpdate(id, report, {}, function (err,mod_report) {
+            Report.findByIdAndUpdate(id, data, {'new': true}, function (err,mod_report) {
                 if (err) { return next(err); }
                 res.json(report);
             });
