@@ -103,8 +103,8 @@ const Hello = (props) => {
     <div>
       {title}
       <img src={MonitorImg} alt='monitor'/>
-      <p className="start-paragraph">In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.</p>
-      <p className="start-paragraph">Feel better soon!</p>
+      <p className="start-paragraph">{languageText.recordForm.paragraph}</p>
+      <p className="start-paragraph">{languageText.recordForm.feelBetter}</p>
     </div>
   )
 }
