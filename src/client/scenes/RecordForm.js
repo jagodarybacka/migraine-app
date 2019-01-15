@@ -156,6 +156,7 @@ class RecordForm extends Component {
   handleChangeTabValue(evt) {
     const { data } = this.state;
     const { name, value, type } = evt.target;
+    console.log(data)
     let result;
       if (type === 'checkbox') {
         result = data[name] || [];
@@ -260,9 +261,52 @@ class RecordForm extends Component {
     )
   }
 
+  getUserFormField(field) {
+    return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
+  }
+
   render() {
     const { currentTab, data } = this.state;
     const { match } = this.props;
+    const fields = [{
+      component: Medicines,
+      name: 'medicines'
+    }, {
+      component: Aura,
+      name: 'aura'
+    }, {
+      component: Triggers,
+      name: 'triggers'
+    }, {
+      component: Reliefs,
+      name: 'reliefs'
+    }, {
+      component: Mood,
+      name: 'mood'
+    }, {
+      component: Pressure,
+      name: 'pressure'
+    }, {
+      component: SleepDuration,
+      name: 'sleep_duration'
+    }, {
+      component: Menstruation,
+      name: 'menstruation'
+    }, {
+      component: Localization,
+      name: 'localization'
+    }]
+    const tabs = fields.map((field, id) => {
+      if (this.getUserFormField(field.name)) {
+        return (
+          <div className="record-tab" key={id}>
+            <field.component values={data[field.name]} valueData={data[field.name]} onChange={this.handleChangeTabValue} />
+          </div>
+        )
+      }
+      return null;
+    }).filter(view => !!view);
+
 
     return (
       <Container className="Form">
@@ -281,33 +325,9 @@ class RecordForm extends Component {
             <div className="record-tab">
               <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
             </div>
-            <div className="record-tab">
-              <Medicines values={data.medicines} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Aura values={data.aura} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Triggers values={data.triggers} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Reliefs values={data.reliefs} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Mood valueData={data.mood} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <SleepDuration valueData={data.sleep_duration} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Menstruation valueData={data.menstruation} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Localization valueData={data.localization} onChange={this.handleChangeTabValue} />
-            </div>
+            {
+              tabs
+            }
           </SwipeableViews>
         </form>
         <Buttons>
