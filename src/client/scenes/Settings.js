@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button';
 import Divider from '../components/Divider';
+import Checkbox from '../components/Checkbox';
 import axios from 'axios';
 import TextInput from '../components/TextInput';
 import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
@@ -13,7 +14,7 @@ import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage
 const SettingsComponent = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 7rem 0;
+  padding: 5rem 0.25em;
   margin: 0;
   text-align: center;
   height: auto;
@@ -56,6 +57,7 @@ class Settings extends Component {
     }
     this.baseFieldsState = this.state.fields;
 
+    this.toggleUserFormField = this.toggleUserFormField.bind(this);
     this.clearFields = this.clearFields.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -217,12 +219,51 @@ class Settings extends Component {
     window.location.reload();
   }
 
+  toggleUserFormField(field) {
+    const old = this.getUserFormField(field)
+    localStorage.setItem(`form-${field}`, !old)
+    this.forceUpdate();
+  }
+
+  getUserFormField(field) {
+    return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
+  }
+
   render() {
     const { username, email, oldPassword, password } = this.state.fields;
+    const fields = [{
+      text: 'Medicines',
+      field: 'medicines'
+    }, {
+      text: 'Aura',
+      field: 'aura'
+    }, {
+      text: 'Triggers',
+      field: 'triggers'
+    }, {
+      text: 'Reliefs',
+      field: 'reliefs'
+    }, {
+      text: 'Mood',
+      field: 'mood'
+    }, {
+      text: 'Blood pressure',
+      field: 'pressure'
+    }, {
+      text: 'Sleep duration',
+      field: 'sleep_duration'
+    }, {
+      text: 'Menstruation',
+      field: 'menstruation'
+    }, {
+      text: 'Localization',
+      field: 'localization'
+    }]
     let currentLang = getLanguage();
     return (
       <SettingsComponent className="Settings">
-        <Header />
+          <Header />
+          <Divider text={languageText.settings.logout}/>
           <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
           <Divider text={languageText.settings.changeData}/>
           <TextInput
@@ -271,6 +312,21 @@ class Settings extends Component {
           <Divider text={languageText.settings.chooseLanguage}/>
             <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
             <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
+          <Divider text='Form fields to include'/>
+          <div>
+          {
+            fields.map((field, index) => (
+              <Checkbox
+              key={index}
+              small
+              text={field.text}
+              value={field.text}
+              checked={this.getUserFormField(field.field)}
+              onChange={() => this.toggleUserFormField(field.field)}
+              />
+            ))
+          }
+          </div>
         <Menubar />
       </SettingsComponent>
     );

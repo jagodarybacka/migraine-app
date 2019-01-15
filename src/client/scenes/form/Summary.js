@@ -145,6 +145,10 @@ class Summary extends Component {
       return "";
   }
 
+  getUserFormField(field) {
+    return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
+  }
+
   render() {
     const { state } = this.props.location;
     let preview = false;
@@ -229,26 +233,35 @@ class Summary extends Component {
           { start_date }
           <Divider text={languageText.addForm.end} />
           { end_date }
-          <Divider text={languageText.addForm.pressure.title} />
-          { pressure }
-          <Divider text={languageText.addForm.sleepDuration.title} />
-          { sleep_duration }
           <Divider text={languageText.addForm.pain} />
           { pain }
-          <Divider text={languageText.addForm.menstruation} />
-          { menstruation }
-          <Divider text={languageText.addForm.mood} />
-          { mood }
-          <Divider text={languageText.addForm.localization} />
-          { localization }
-          <Divider text={languageText.addForm.medicines} />
-          { medicines }
-          <Divider text={languageText.addForm.triggers} />
-          { triggers }
-          <Divider text={languageText.addForm.aura} />
-          { aura }
-          <Divider text={languageText.addForm.reliefs} />
-          { reliefs }
+          { this.getUserFormField('medicines') && (<Divider text={languageText.addForm.medicines} />) }
+          { this.getUserFormField('medicines') && medicines }
+
+          { this.getUserFormField('aura') && (<Divider text={languageText.addForm.aura} />) }
+          { this.getUserFormField('aura') && aura }
+
+          { this.getUserFormField('triggers') && (<Divider text={languageText.addForm.triggers} />) }
+          { this.getUserFormField('triggers') && triggers }
+
+          { this.getUserFormField('reliefs') && (<Divider text={languageText.addForm.reliefs} />) }
+          { this.getUserFormField('reliefs') && reliefs }
+
+          { this.getUserFormField('mood') && (<Divider text={languageText.addForm.mood} />) }
+          { this.getUserFormField('mood') && mood }
+
+          { this.getUserFormField('pressure') && (<Divider text={languageText.addForm.pressure.title} />) }
+          { this.getUserFormField('pressure') && pressure }
+
+          { this.getUserFormField('sleep_duration') && (<Divider text={languageText.addForm.sleepDuration.title} />) }
+          { this.getUserFormField('sleep_duration') && sleep_duration }
+
+          { this.getUserFormField('menstruation') && (<Divider text={languageText.addForm.menstruation} />) }
+          { this.getUserFormField('menstruation') && menstruation }
+
+          { this.getUserFormField('localization') && (<Divider text={languageText.addForm.localization} />) }
+          { this.getUserFormField('localization') && localization }
+
           <Divider text={languageText.addForm.notes} />
           <textarea key={"notes"} readOnly={preview} value={this.state.notes} onChange={this.handleChangeNotes} type="text"  placeholder={languageText.addForm.notesPlaceholder} />
 
