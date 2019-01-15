@@ -71,30 +71,32 @@ class WeatherWidget extends Component {
       this.checkIfGeolocation()
     } 
     else {
-      const now = new Date()
-      const then = new Date(localStorage.getItem('weather_time'))
-      const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
-      if(diff > 30) {
-        this.checkIfGeolocation();
-      } else {
-        if(JSON.parse(localStorage.getItem('weather')) != null){
-          const weather = JSON.parse(localStorage.getItem('weather')).weather
-          this.setState((prevState) => ({
-            ...prevState.city_name,
-            currentWeather: {
-              weather: weather,
-              temperature: weather.main.temp,
-              icon: String(weather.weather[0].icon),
-              description: weather.weather[0].description,
-              humidity: weather.main.humidity,
-              pressure: weather.main.pressure,
-              rain: weather.rain ? weather.rain.rain : 0,
-              wind: weather.wind.speed
-          }
-         }))
-        }
-        else {
+      if(localStorage.getItem('weather_time') != null) {
+        const now = new Date()
+        const then = new Date(localStorage.getItem('weather_time'))
+        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
+        if(diff > 30) {
           this.checkIfGeolocation();
+        } else {
+          if(JSON.parse(localStorage.getItem('weather')) != null){
+            const weather = JSON.parse(localStorage.getItem('weather')).weather
+            this.setState((prevState) => ({
+              ...prevState.city_name,
+              currentWeather: {
+                weather: weather,
+                temperature: weather.main.temp,
+                icon: String(weather.weather[0].icon),
+                description: weather.weather[0].description,
+                humidity: weather.main.humidity,
+                pressure: weather.main.pressure,
+                rain: weather.rain ? weather.rain.rain : 0,
+                wind: weather.wind.speed
+            }
+           }))
+          }
+          else {
+            this.checkIfGeolocation();
+          }
         }
       }
     }
@@ -138,9 +140,10 @@ class WeatherWidget extends Component {
         rain: weather.rain ? weather.rain.rain : 0,
         wind: weather.wind.speed
       }
-    }))
-    localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
-    localStorage.setItem('weather_time', new Date());
+    }), () => {
+      localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
+      localStorage.setItem('weather_time', new Date());
+    })
   }
 
   async getWeatherForCity() {
@@ -162,20 +165,25 @@ class WeatherWidget extends Component {
         wind: weather.wind.speed
       }
       }
-    ))
-    localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
-    localStorage.setItem('weather_time', new Date());
-    localStorage.setItem('city_name', this.state.city_name);
+    ), () => {
+      localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
+      localStorage.setItem('weather_time', new Date());
+      localStorage.setItem('city_name', this.state.city_name);
+    })
   }
 
   getWeatherForecast() {
     if(!localStorage.getItem('forecast_time')){
       this.checkIfGeolocationForecast()
     } else {
-      const now = new Date()
-      const then = new Date(localStorage.getItem('forecast_time'))
-      const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
-      if(diff > 6) {
+      if(localStorage.getItem('forecast_time') != null){
+        const now = new Date()
+        const then = new Date(localStorage.getItem('forecast_time'))
+        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
+        if(diff > 6) {
+          this.checkIfGeolocationForecast()
+        }
+      } else {
         this.checkIfGeolocationForecast()
       }
     }
@@ -189,10 +197,9 @@ class WeatherWidget extends Component {
       weather_forecast: forecast
     })
     .then((res) => {
-      // console.log(res);
+      localStorage.setItem('forecast_time', new Date())
     })
     .catch((err) => console.log(err));
-    localStorage.setItem('forecast_time', new Date())
   }
 
   async getForecastForCity() {
@@ -206,10 +213,9 @@ class WeatherWidget extends Component {
       weather_forecast: forecast
     })
     .then((res) => {
-      // console.log(res);
+      localStorage.setItem('forecast_time', new Date())
     })
     .catch((err) => console.log(err));
-    localStorage.setItem('forecast_time', new Date())
   }
 
   async handleCityChange(e) {
