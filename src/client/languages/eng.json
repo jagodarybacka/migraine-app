@@ -38,7 +38,7 @@
 	"recordForm":{
 		"title": "Record new Migraine",
 		"titleEdit": "Edit Migraine",
-		"summary": "Summary",
+		"summary": "Save migraine",
 		"migraineRecord": "Migraine Record"
 	},
 	"welcome":{
@@ -104,7 +104,7 @@
 		"start": "Start",
 		"notYet":"Not yet",
 		"end": "End",
-		"summary": "Summary",
+		"summary": "Save migraine",
 		"menstruation": "Menstruation",
 		"localization": "Localization",
 		"mood": "Mood",

@@ -9,8 +9,6 @@ import moment from 'moment';
 
 import Button from '../components/Button'
 import Header from '../components/Header'
-import FormSimple from '../components/FormSimple'
-import TextInput from '../components/TextInput'
 
 import MonitorImg from '../assets/monitor.png'
 
@@ -104,7 +102,7 @@ const Hello = (props) => {
   return (
     <div>
       {title}
-      <img src={MonitorImg} />
+      <img src={MonitorImg} alt='monitor'/>
       <p className="start-paragraph">In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.</p>
       <p className="start-paragraph">Feel better soon!</p>
     </div>
@@ -268,7 +266,7 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header isForm />
+        <Header isForm saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
           <SwipeableViews className="form-container" index={currentTab}>
             <div className="record-tab">
@@ -312,21 +310,21 @@ class RecordForm extends Component {
             </div>
           </SwipeableViews>
         </form>
-        {this.isComplete() && (
-          <div>
-            <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
-              <Button text={languageText.recordForm.summary} />
-            </Link>
-          </div>
-        )}
-
         <Buttons>
           <Button
             onClick={() => this.changeTab('prev')}
             disabled={currentTab === this.firstTab}
             text="<"
           />
-          <p> {languageText.recordForm.migraineRecord}</p>
+          {
+            this.isComplete() ? (
+              <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
+                <Button small text={languageText.recordForm.summary} />
+              </Link>
+            ) : (
+              <p> {languageText.recordForm.migraineRecord}</p>
+            )
+          }
           <Button
             onClick={() => this.changeTab('next')}
             disabled={currentTab === this.lastTab}

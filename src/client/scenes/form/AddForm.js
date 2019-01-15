@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
-import date from '../../assets/date.png'
-import time from '../../assets/time.png'
 import faceNeutral from '../../assets/face-neutral.png'
 import faceSmile from '../../assets/face-smile.png'
 import drop from '../../assets/drop.png'

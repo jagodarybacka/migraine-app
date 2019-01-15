@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
 
 import Header from '../components/Header';
@@ -62,7 +61,7 @@ class Settings extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
-  }  
+  }
 
   logout(){
     localStorage.setItem('isLogged',false);
@@ -83,7 +82,7 @@ class Settings extends Component {
 			this.setState({message: languageText.settings.failed});
 		});
   };
-  
+
   componentDidMount() {
     window.scrollTo(0, 0)
   };
@@ -133,7 +132,7 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { oldPassword, password } = fields;
 
     if (!validatePassword(password.value)) {
       isValid = false;
@@ -173,7 +172,7 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { username, email } = fields;
 
     if (username.value.length > 0 && !validateLength(username.value, 4)) {
       isValid = false;
@@ -270,8 +269,8 @@ class Settings extends Component {
           />
           <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
           <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang == "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang == "pl" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
         <Menubar />
       </SettingsComponent>
     );
