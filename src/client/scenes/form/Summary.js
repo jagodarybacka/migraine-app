@@ -6,8 +6,6 @@ import axios from 'axios';
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
 import Bubble from '../../components/Bubble';
-import RecordCard from '../../components/RecordCard'
-
 
 import date from '../../assets/date.png'
 import time from '../../assets/time.png'
@@ -61,9 +59,9 @@ const TimeDateComponent = styled.div`
 const TimeDate = (props) => {
   return (
     <TimeDateComponent>
-      <img src={date}/>
+      <img alt='date' src={date}/>
       <p>{props.date}</p>
-      <img src={time}/>
+      <img alt='time' src={time}/>
       <p>{props.time}</p>
     </TimeDateComponent>
   )
@@ -91,7 +89,7 @@ const AcceptButton = (props) => {
     <AcceptComponent
       onClick={props.onClick}
     >
-      <img src={accept} />
+      <img src={accept} alt='accept'/>
     </AcceptComponent>
   )
 }
@@ -137,11 +135,11 @@ class Summary extends Component {
   }
 
   getTranslatedValue(toTranslate, type){
-    if(toTranslate == '')
+    if(toTranslate === '')
       return '';
     let translationDict = languageText.addForm[type+"Answers"];
-    let foundPair = translationDict.find(f => f.value == toTranslate);
-    if(foundPair != undefined)
+    let foundPair = translationDict.find(f => f.value === toTranslate);
+    if(foundPair !== undefined)
       return foundPair.text;
     else
       return "";

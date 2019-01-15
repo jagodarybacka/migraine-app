@@ -8,8 +8,6 @@ import {languageText} from '../languages/MultiLanguage.js';
 
 import Button from '../components/Button'
 import Header from '../components/Header'
-import FormSimple from '../components/FormSimple'
-import TextInput from '../components/TextInput'
 
 import MonitorImg from '../assets/monitor.png'
 
@@ -103,7 +101,7 @@ const Hello = (props) => {
   return (
     <div>
       {title}
-      <img src={MonitorImg} />
+      <img src={MonitorImg} alt='monitor'/>
       <p className="start-paragraph">In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.</p>
       <p className="start-paragraph">Feel better soon!</p>
     </div>

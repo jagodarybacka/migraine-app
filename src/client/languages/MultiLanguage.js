@@ -14,7 +14,7 @@ export function getLanguage(lang){
 }
 
 export let languageText =(()=>{
-    if(window.langFile == undefined){
+    if(window.langFile === undefined){
         let language = localStorage.getItem('lang');
         if(language == null){
             localStorage.setItem('lang', 'eng');

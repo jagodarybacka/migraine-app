@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
 
 import Header from '../components/Header';
@@ -62,7 +61,7 @@ class Settings extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
-  }  
+  }
 
   logout(){
     localStorage.setItem('isLogged',false);
@@ -76,7 +75,7 @@ class Settings extends Component {
 
   handleLogOut() {
     axios.get('/api/logout').then(res => {
-      console.log(this.state.message); 
+      console.log(this.state.message);
       this.setState({message: res.data.message});
       this.logout();
       window.location = '/';
@@ -85,7 +84,7 @@ class Settings extends Component {
 			this.setState({message: "Failed to log out!"});
 		});
   };
-  
+
   componentDidMount() {
     window.scrollTo(0, 0)
   };
@@ -136,7 +135,7 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { oldPassword, password } = fields;
 
     if (!validatePassword(password.value)) {
       isValid = false;
@@ -152,10 +151,10 @@ class Settings extends Component {
           password: password.value
         })
         .then(res => {
-          if(res.status == 404){
+          if(res.status === 404){
             alert('Something went wrong');
             return;
-          } else if(res.status == 204){
+          } else if(res.status === 204){
             alert("Old password incorrect");
             return;
           } else {
@@ -176,7 +175,7 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { username, email } = fields;
 
     if (username.value.length > 0 && !validateLength(username.value, 4)) {
       isValid = false;
@@ -199,7 +198,7 @@ class Settings extends Component {
           email: email.value
         })
         .then(res => {
-          if(res.status == 404){
+          if(res.status === 404){
             alert('Something went wrong');
             return;
           } else {
@@ -273,8 +272,8 @@ class Settings extends Component {
           />
           <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
           <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang == "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang == "pl" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
         <Menubar />
       </SettingsComponent>
     );
