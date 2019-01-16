@@ -197,8 +197,10 @@ exports.save_forecast = (req, res, next) => {
 
 exports.get_forecast = (req, res, next) => {
 	const userId = req.session.userId;
-	const start = new Date(req.params.start);
-	const end = new Date(req.params.end);
+	const startTime = new Date(req.params.start);
+	const endTime = new Date(req.params.end);
+	const start = new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate(), 0,0,0);
+  const end = new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDate(),23,59,0);
 	User.findById(userId)
 	.exec( function(err, found_user) {
 		if (err) { return next(err); }

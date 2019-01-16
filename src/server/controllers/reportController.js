@@ -39,8 +39,10 @@ exports.reports_all = function(req,res,next) {
 
 exports.reports_period = function(req,res,next) {
     const userId = req.session.userId;
-	const start = new Date(req.params.start);
-    const end = new Date(req.params.end);
+    const startTime = new Date(req.params.start);
+    const endTime = new Date(req.params.end);
+	const start = new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate(), 0,0,0);
+    const end = new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDate(),23,59,0);
     Report.find({user: userId, start_date : { $gte: start}, end_date : { $lte: end } }, '_id start_date end_date pain')
     .exec(function(err,found_reports){
         if(err) {return next(err);}
