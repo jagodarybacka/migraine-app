@@ -40,6 +40,11 @@ const ReportName = styled.h2`
   font-size: 1.2em;
 `
 
+const ReportsContainer = styled.div`
+  margin: 80px 0;
+  height: auto;
+`
+
 class Reports extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +65,7 @@ class Reports extends Component {
 
   render() {
     return (
-      <div>
+      <ReportsContainer>
         <Header />
         <ReportName>{MODE[this.state.mode].header}</ReportName>
         {
@@ -72,7 +77,7 @@ class Reports extends Component {
           <Button small img={oftenTogetherImg} primary={this.state.mode === 3} onClick={() => this.toggleReport(3)}/>
         </Buttons>
         <Menubar />
-      </div>
+      </ReportsContainer>
     )
   }
 
