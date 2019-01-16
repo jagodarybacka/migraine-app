@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import _ from 'lodash'
 
 import { parse, get } from './utils'
-import mockedData from './mock/mock.json'
 import axios from 'axios';
 import {languageText} from '../../../languages/MultiLanguage.js'
 
@@ -13,8 +12,8 @@ const FONT = '10px Roboto'
 
 const MARGIN_LEFT = 50;
 const MARGIN_RIGHT = 15;
-const MARGIN_TOP = 20;
-const MARGIN_BOTTOM = 30;
+// const MARGIN_TOP = 20;
+// const MARGIN_BOTTOM = 30;
 
 const COLORS = {
   'No Pain': '#AADD6D',
@@ -136,7 +135,7 @@ class AtmosphericPressure extends Component {
     const pressureCoordinates = this.getPressureCoordinates(rangeOfPressure.min, rangeOfPressure.max)
 
     for (let i = rangeOfPressure.min; i <= rangeOfPressure.max; i += step) {
-      const coord = pressureCoordinates.find(el => el.pressure == i).coordY
+      const coord = pressureCoordinates.find(el => el.pressure === i).coordY
       this.drawHorizontalLine(ctx, [leftPadding, coord], [rightPadding, coord])
       ctx.fillText(`${i}`, leftPadding, coord - 4);
     }
@@ -167,8 +166,8 @@ class AtmosphericPressure extends Component {
     const dateCoordinates = this.getDateCoordinates(parsedDates)
 
     data.forEach(entry => {
-      const coordX = dateCoordinates.find(date => date.date.toString() == new Date(entry.date).toString()).coordX;
-      const coordY = pressureCoordinates.find(pressure => pressure.pressure == Math.floor(entry.pressure)).coordY;
+      const coordX = dateCoordinates.find(date => date.date.toString() === new Date(entry.date).toString()).coordX;
+      const coordY = pressureCoordinates.find(pressure => pressure.pressure === Math.floor(entry.pressure)).coordY;
       this.drawDot(ctx, coordX, coordY)
     })
   }

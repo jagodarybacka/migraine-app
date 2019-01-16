@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import {Link} from "react-router-dom";
 import {languageText} from '../languages/MultiLanguage.js';
-import axios from 'axios';
 
 import Logo from '../components/Logo'
 import Button from '../components/Button'
@@ -25,7 +22,6 @@ class Join extends Component {
   }
 
   render() {
-    const logoMargin = '10% 0';
     return (
       <div>
         <h1 style={{textTransform: 'uppercase'}}>{languageText.join.migraine}</h1>

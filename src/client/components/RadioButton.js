@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 
@@ -78,8 +78,8 @@ class RadioButton extends React.Component {
           />
         <FauxBg className="bg" color={this.props.color}/>
         <label htmlFor={this.props.id}>
-          <img src={this.props.imgColor} />
-          <img className="imgChecked" src={this.props.img} />
+          <img src={this.props.imgColor} alt="" />
+          <img className="imgChecked" src={this.props.img} alt="" />
           {this.props.text}
         </label>
       </RadioComponent>

@@ -1,8 +1,5 @@
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Route, Redirect } from 'react-router';
 
 import { validateEmail, validateLength, validatePassword } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
@@ -94,7 +91,7 @@ class Register extends Component {
       }).then(response => {
         if (response.data.redirectURL) {
           if(localStorage.getItem('userId')){
-            if(localStorage.getItem('userId') != response.data.userId){
+            if(localStorage.getItem('userId') !== response.data.userId){
               localStorage.removeItem('forecast_time');
               localStorage.removeItem('weather_time');
               localStorage.removeItem('weather');

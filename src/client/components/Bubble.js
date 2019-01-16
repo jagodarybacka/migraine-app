@@ -24,7 +24,7 @@ const BubbleComponent = styled.div`
 
 
 const Bubble = (props) => {
-  const img = props.img ? <img src={props.img} /> : "";
+  const img = props.img ? <img src={props.img} alt="icon" /> : "";
 
   return (
     <BubbleComponent color={props.color}>

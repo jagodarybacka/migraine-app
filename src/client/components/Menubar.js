@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import Logo from './Logo';
 import { Link } from 'react-router-dom'
 import home from '../assets/home.png'
 import settings from '../assets/settings.png'
@@ -46,19 +45,19 @@ const Menubar = () => {
     <Menu>
       <MenuButton>
         <Link to="/home">
-        <img src={home} />
+        <img src={home} alt="home" />
         <h6>{languageText.menuBar.home}</h6>
         </Link>
       </MenuButton>
       <MenuButton>
         <Link to="/reports">
-        <img src={stats} />
+        <img src={stats} alt="stats" />
         <h6>{languageText.menuBar.reports}</h6>
         </Link>
       </MenuButton>
       <MenuButton>
         <Link to="/settings">
-          <img src={settings} />
+          <img src={settings} alt="settings" />
           <h6>{languageText.menuBar.settings}</h6>
         </Link>
       </MenuButton>

@@ -26,12 +26,12 @@ class Web extends Component {
             <img className="language__button" src={eng} alt={languageText.web.engAlt} onClick={() => this.setNewLanguage('eng')} />
         </Language>
         <Header>
-          <img className="header__logo" src={logo} />
+          <img className="header__logo" src={logo} alt="logo" />
           <h1 className="header__title">{languageText.web.title}</h1>
           <h2 className="header__subtitle">{languageText.web.subtitle}</h2>
           <div className="header__box">
             <h3 className="header__text">{languageText.web.headerText}</h3>
-            <img className="header__qr" src={qr} />
+            <img className="header__qr" src={qr} alt="qr"/>
             <button className="header__button">{languageText.web.headerButton}</button>
           </div>
         </Header>

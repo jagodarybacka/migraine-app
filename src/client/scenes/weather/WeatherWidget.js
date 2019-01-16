@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
 import axios from 'axios';
 import Button from '../../components/Button';
 import moment from 'moment';
@@ -151,7 +150,7 @@ class WeatherWidget extends Component {
 
   async getWeatherForCity() {
     const city = this.state.city_name;
-    if(city.length == 0){
+    if(city.length === 0){
       return;
     }
     const weather = await getWeatherForCity(city);
@@ -241,32 +240,32 @@ class WeatherWidget extends Component {
       <Widget >
         <Header>
           <p>{languageText.weather.forecast}</p>
-          <img src={this.icons[icon]} />
+          <img src={this.icons[icon]} alt="weatherIcon" />
           <h3>{temperature}{String.fromCharCode(176)}C </h3>
         </Header>
         <Element>
-          <img src={rainIcon}/>
+          <img src={rainIcon} alt="rain"/>
           <p>
             <span className="name">{languageText.weather.rain}</span>
             <span className="value">{rain}</span>
           </p>
         </Element>
         <Element>
-          <img src={humidityIcon}/>
+          <img src={humidityIcon} alt="humidity"/>
           <p>
             <span className="name">{languageText.weather.humidity}</span>
             <span className="value">{humidity}%</span>
           </p>
         </Element>
         <Element>
-          <img src={pressureIcon}/>
+          <img src={pressureIcon} alt="pressure"/>
           <p>
             <span className="name">{languageText.weather.pressure}</span>
             <span className="value">{pressure} hPa</span>
           </p>
         </Element>
         <Element>
-          <img src={windIcon}/>
+          <img src={windIcon} alt="wind"/>
           <p>
             <span className="name">{languageText.weather.windSpeed}</span>
             <span className="value">{wind}m/s</span>
