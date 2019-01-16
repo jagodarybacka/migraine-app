@@ -76,7 +76,7 @@ class AtmosphericPressure extends Component {
     axios.get(url)
     .then((res) => {
       if(res.status === 204){
-        alert(languageText.atmosphericPressure.noData);
+        console.log(languageText.atmosphericPressure.noData);
       }
       if(res.data) {
         this.setState({
