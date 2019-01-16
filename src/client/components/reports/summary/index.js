@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CustomPeriod from './CustomPeriod'
+import CustomPeriod from '../../CustomPeriod'
 import { SummaryComponent, Select, CustomIcon } from './styles'
 import axios from 'axios';
 import customImg from '../../../assets/custom-options.png'

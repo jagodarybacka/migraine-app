@@ -3,6 +3,8 @@ import React, {
 } from 'react'
 import styled from 'styled-components';
 import _ from 'lodash'
+import CustomPeriod from '../../CustomPeriod'
+import customImg from '../../../assets/custom-options.png'
 
 import { parse, get } from './utils'
 import axios from 'axios';
@@ -24,9 +26,52 @@ const COLORS = {
 }
 
 const AtmosphericPressureComponent = styled.div`
+  margin: 0 5%;
+  background-color: #fff;
+  padding: 0;
+  padding-top: ${props => props.custom ? '3em' : '2em'};
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   canvas {
     background-color: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+  .summary__period {
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 1em;
+    font-size: 1em;
+    opacity: 0.6;
+  }
+`
+
+export const CustomIcon = styled.img`
+  width: 32px;
+  height: auto;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+`
+export const CustomPeriodComponent = styled.div`
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 0;
+  .custom__cancel {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+  }
+  .custom__header {
+    margin: 1em 0 0;
   }
 `
 
@@ -40,8 +85,11 @@ class AtmosphericPressure extends Component {
         from: new Date('2019-01-10'),
         to: new Date('2019-01-18')
       },
-      migraines: []
+      migraines: [],
+      customPeriodVisible: false,
+      customPeriodApplied: false
     }
+    this.handleCustomPeriod = this.handleCustomPeriod.bind(this);
   }
 
   componentDidMount() {
@@ -87,7 +135,8 @@ class AtmosphericPressure extends Component {
   }
 
   updateCanvas() {
-    const ctx = this.refs.canvas.getContext('2d')
+    const ctx = this.refs.canvas.getContext('2d');
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.font = FONT;
     ctx.fillStyle = "#4C5062";
 
@@ -247,10 +296,48 @@ class AtmosphericPressure extends Component {
     })
   }
 
+  handleCustomPeriod({from, to, cancel}) {
+    if (cancel) {
+      this.setState({
+        customPeriodVisible: false
+      })
+      return;
+    }
+    this.setState((prevState) => ({
+      ...prevState,
+      customPeriodVisible: false,
+      customPeriodApplied: true,
+      timePeriod: {from: from, to: to}
+    }), () => {
+      this.fetchData();
+      this.fetchMigraines();
+    })
+  }
+
   render() {
+
+    const customPeriod = this.state.customPeriodVisible ? (
+      <CustomPeriod onConfirmFn={this.handleCustomPeriod.bind(this)}/>
+    ) : '';
+
+    const customPeriodRange = this.state.customPeriodApplied && (
+      <p className="summary__period">
+        {localStorage.getItem('lang') === 'eng' 
+          ? this.state.timePeriod.from.toDateString() 
+          : this.state.timePeriod.from.toLocaleDateString() }
+        <br />
+        {localStorage.getItem('lang') === 'eng' 
+          ? this.state.timePeriod.to.toDateString()
+          : this.state.timePeriod.to.toLocaleDateString() }
+      </p>
+    )
+
     return (
-      <AtmosphericPressureComponent width={300} height={300}>
+      <AtmosphericPressureComponent width={300} height={300} custom={this.state.customPeriodApplied}>
+        <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/>
+        { customPeriodRange }
         <canvas ref='canvas' width = {300} height = {350}/>
+        { customPeriod }
       </AtmosphericPressureComponent>
     )
   }
