@@ -72,7 +72,7 @@ class WeatherWidget extends Component {
       this.checkIfGeolocation()
     } 
     else {
-      if(moment(localStorage.getItem('weather_time')).isValid()) {
+      if(moment(localStorage.getItem('weather_time'),'ddd MMM DD YYYY HH:mm:ss').isValid()) {
         const now = new Date()
         const then = new Date(localStorage.getItem('weather_time'))
         const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
@@ -178,7 +178,7 @@ class WeatherWidget extends Component {
     if(!localStorage.getItem('forecast_time')){
       this.checkIfGeolocationForecast()
     } else {
-      if(moment(localStorage.getItem('forecast_time')).isValid()){
+      if(moment(localStorage.getItem('forecast_time'),'ddd MMM DD YYYY HH:mm:ss').isValid()){
         const now = new Date()
         const then = new Date(localStorage.getItem('forecast_time'))
         const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
