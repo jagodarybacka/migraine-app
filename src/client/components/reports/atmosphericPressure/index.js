@@ -14,8 +14,6 @@ const FONT = '10px Roboto'
 
 const MARGIN_LEFT = 50;
 const MARGIN_RIGHT = 15;
-// const MARGIN_TOP = 20;
-// const MARGIN_BOTTOM = 30;
 
 const COLORS = {
   'No Pain': '#AADD6D',
@@ -81,8 +79,8 @@ class AtmosphericPressure extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      daysPast: 4,
-      daysFuture: 2,
+      daysPast: 8,
+      daysFuture: 1,
       data: [],
       timePeriod: {
         from: new Date(),
@@ -121,7 +119,8 @@ class AtmosphericPressure extends Component {
         alert(languageText.atmosphericPressure.noPressureData);
       }
       if(res.data) {
-        const parsedForecast = parse.forecast(res.data);
+        const parsedForecast = parse.forecast(res.data, this.state.timePeriod.from, this.state.timePeriod.to);
+        console.log(parsedForecast)
         this.setState({
           data: parsedForecast
         })
@@ -334,18 +333,18 @@ class AtmosphericPressure extends Component {
 
     const periodRange = (
       <p className="summary__period">
-        {localStorage.getItem('lang') === 'eng' 
-          ? this.state.timePeriod.from.toDateString() 
+        {localStorage.getItem('lang') === 'eng'
+          ? this.state.timePeriod.from.toDateString()
           : this.state.timePeriod.from.toLocaleDateString() }
         <br />
-        {localStorage.getItem('lang') === 'eng' 
+        {localStorage.getItem('lang') === 'eng'
           ? this.state.timePeriod.to.toDateString()
           : this.state.timePeriod.to.toLocaleDateString() }
       </p>
     )
 
-    const Icon = this.state.customPeriodVisible 
-      ? "" 
+    const Icon = this.state.customPeriodVisible
+      ? ""
       : ( <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> )
 
     return (

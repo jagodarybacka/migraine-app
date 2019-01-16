@@ -5,13 +5,30 @@ const _ = require('lodash')
  * @param  {array} forecast json forecast data
  * @return {array}
  */
-const parseForecast = (forecast) => {
-  return forecast.map((el) => {
+const parseForecast = (forecast, from, to) => {
+  const firstExisting = new Date(forecast[0].dt_txt)
+  const mockedPressure = forecast[0].main.pressure
+  let curr = typeof from === "string" ? new Date(from) : from;
+  let missingDates = []
+
+  while (curr.toString() !== firstExisting.toString()) {
+    missingDates.push(curr)
+    curr = new Date(curr.setHours(curr.getHours()+3))
+  }
+
+  missingDates = missingDates.map((date) => ({
+    pressure: mockedPressure, date: date.toString(), omit: true
+  }))
+
+  const existingDates = forecast.map((el) => {
     return {
       pressure: el.main.pressure,
-      date: el.dt_txt
+      date: el.dt_txt,
+      omit: false
     }
   })
+
+  return missingDates.concat(existingDates)
 }
 
 /**
