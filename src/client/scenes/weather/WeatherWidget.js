@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import Button from '../../components/Button';
+import moment from 'moment';
 
 import cloudyIcon from "../../assets/weather/cloudy.png"
 import humidityIcon from "../../assets/weather/humidity.png"
@@ -71,7 +72,7 @@ class WeatherWidget extends Component {
       this.checkIfGeolocation()
     } 
     else {
-      if(localStorage.getItem('weather_time') != null) {
+      if(moment(localStorage.getItem('weather_time'),'ddd MMM DD YYYY HH:mm:ss').isValid()) {
         const now = new Date()
         const then = new Date(localStorage.getItem('weather_time'))
         const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
@@ -98,6 +99,8 @@ class WeatherWidget extends Component {
             this.checkIfGeolocation();
           }
         }
+      } else {
+        this.checkIfGeolocation();
       }
     }
   }
@@ -152,7 +155,6 @@ class WeatherWidget extends Component {
       return;
     }
     const weather = await getWeatherForCity(city);
-    console.log(weather);
     this.setState((prevState) => ({
       ...prevState.city_name,
       currentWeather: {
@@ -176,7 +178,7 @@ class WeatherWidget extends Component {
     if(!localStorage.getItem('forecast_time')){
       this.checkIfGeolocationForecast()
     } else {
-      if(localStorage.getItem('forecast_time') != null){
+      if(moment(localStorage.getItem('forecast_time'),'ddd MMM DD YYYY HH:mm:ss').isValid()){
         const now = new Date()
         const then = new Date(localStorage.getItem('forecast_time'))
         const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
@@ -204,7 +206,7 @@ class WeatherWidget extends Component {
 
   async getForecastForCity() {
     const city = this.state.city_name;
-    if(city.length == 0){
+    if(city.length === 0){
       return;
     }
     const forecast = await getForecastForCity(city);

@@ -61,7 +61,7 @@ const TimeDateComponent = styled.div`
   }
 `
 
-const DateTime = (props) => {
+const  DateTimeCustomPeriod = (props) => {
   const monthNames = languageText.dateTime.monthNames;//["January", "February", "March", "April", "May", "June",
     //"July", "August", "September", "October", "November", "December"
  // ];
@@ -85,7 +85,7 @@ const DateTime = (props) => {
       <label>{languageText.dateTime.date}</label>
       <img src={dateImg}/>
       <input
-        value={inputDate}
+        value={inputDate ? inputDate : undefined}
         name={`${props.name}_date`}
         type='date'
         id={props.id}
@@ -110,4 +110,4 @@ const DateTime = (props) => {
 }
 
 
-export default DateTime;
+export default DateTimeCustomPeriod;
