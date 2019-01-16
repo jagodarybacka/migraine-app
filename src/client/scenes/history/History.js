@@ -38,6 +38,7 @@ const Records = styled.ul`
     }
 `
 const NoMoreStyle = styled.ul`
+    padding: 0;
     margin-bottom: 5rem;
 `
 
@@ -65,7 +66,7 @@ class History extends Component {
       })
       .catch((err) => console.log(err));
   }
-  
+
   getIntensity(key) {
     const options = ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum'];
     return options.indexOf(key) + 1;
@@ -96,7 +97,7 @@ class History extends Component {
       })
       .catch((err) => console.log(err));
     }
-    
+
   }
 
   parseHistory(data) {
@@ -154,7 +155,7 @@ class History extends Component {
                           <RecordCard handleClick={() => this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
                             duration={formattedDuration + "h"}
                             intensity={this.getIntensity(item.pain)}
-                            isRecent={false} 
+                            isRecent={false}
                             id={item._id}
                             handleDelete={this.deleteReport}
                             handleEdit={this.editReport}

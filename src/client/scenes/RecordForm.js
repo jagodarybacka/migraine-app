@@ -4,12 +4,13 @@ import { Link, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
+import moment from 'moment';
 
 
 import Button from '../components/Button'
 import Header from '../components/Header'
-import FormSimple from '../components/FormSimple'
-import TextInput from '../components/TextInput'
+
+import MonitorImg from '../assets/monitor.png'
 
 import {
   Start,
@@ -44,23 +45,36 @@ const Container = styled.article`
 
   form {
     width: 100%;
+    margin-top: 75px;
+    height: calc(100% - 142px);
   }
 
   .record-tab {
     margin: 0 auto;
     max-width: 400px;
   }
+
+  .start-paragraph {
+    text-transform: initial;
+    margin: 1em;
+    opacity: 0.8;
+  }
+
+  .form-container {
+    overflow-y: scroll;
+    max-height: 100%;
+  }
 `;
 
 const Buttons = styled.div `
-  position: absolute;
-  bottom: 0;
   display: flex;
   width: 90%;
   max-width: 860px;
   justify-content: space-between;
   align-items: center;
   outline: none;
+  margin: 15px 0;
+
 
   > button {
     min-width: auto;
@@ -81,9 +95,19 @@ const Buttons = styled.div `
   }
 `;
 
-const Hello = (props) => (props.edit 
-  ? <h1>{languageText.recordForm.titleEdit}</h1> 
-  : <h1>{languageText.recordForm.title}</h1> )
+const Hello = (props) => {
+  const title = props.edit
+    ? <h1>{languageText.recordForm.titleEdit}</h1>
+    : <h1>{languageText.recordForm.title}</h1>
+  return (
+    <div>
+      {title}
+      <img src={MonitorImg} alt='monitor'/>
+      <p className="start-paragraph">{languageText.recordForm.paragraph}</p>
+      <p className="start-paragraph">{languageText.recordForm.feelBetter}</p>
+    </div>
+  )
+}
 
 class RecordForm extends Component {
   constructor(props) {
@@ -94,7 +118,7 @@ class RecordForm extends Component {
       currentTab: 0,
       data: {
         weather: JSON.parse(localStorage.getItem('weather')) || undefined
-        
+
       },
       dateValidation: {
         valid: true,
@@ -105,6 +129,9 @@ class RecordForm extends Component {
     this.firstTab = 0;
     this.lastTab = 12;
 
+    this.currentDate = this.currentDate.bind(this);
+    this.subtractsOneHour = this.subtractsOneHour.bind(this);
+    this.notYetEnd = this.notYetEnd.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
   }
@@ -133,7 +160,7 @@ class RecordForm extends Component {
       if (type === 'checkbox') {
         result = data[name] || [];
         const shouldUncheck = result.indexOf(value);
-  
+
         if (shouldUncheck >= 0) {
           result.splice(shouldUncheck, 1);
         } else {
@@ -145,7 +172,7 @@ class RecordForm extends Component {
       } else {
         result = value;
       }
-  
+
       this.setState((prevState) => {
         return {
           ...prevState,
@@ -173,6 +200,46 @@ class RecordForm extends Component {
     this.setState({ currentTab: nextTab });
   }
 
+  // const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  // const time = `${new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()}:${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
+  // const date = `${new Date().getFullYear()}-${month[new Date().getMonth()]}-${new Date().getDate()}`;
+
+  currentDate(name){
+    const { data } = this.state;
+    const time = moment().format('HH:mm');
+    const date = moment().format('YYYY-MM-DD');
+    this.setState({
+      data:{
+        ...data,
+        [`${name}_time`]: time,
+        [`${name}_date`]: date
+      }
+    });
+  }
+
+  subtractsOneHour(name){
+    const { data } = this.state;
+    const currentTime = data[`${name}_time`]
+    const newTime = moment(currentTime,'HH:mm').subtract(1, 'hour').format('HH:mm');
+    this.setState({
+      data:{
+        ...data,
+        [`${name}_time`]: newTime
+      }
+    })
+  }
+
+  notYetEnd(){
+    const { data } = this.state;
+    const {end_time, end_date, ...rest} = data
+
+    this.setState({
+      data: rest
+    });
+  }
+
+
+
   isComplete() {
     const { data } = this.state;
     return (
@@ -187,75 +254,94 @@ class RecordForm extends Component {
       (data.aura && !!data.aura.length) &&
       (data.medicines && !!data.medicines.length) &&
       (data.triggers && !!data.triggers.length) &&
-      data.reliefs    
+      data.reliefs
     )
+  }
+
+  getUserFormField(field) {
+    return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
   }
 
   render() {
     const { currentTab, data } = this.state;
     const { match } = this.props;
+    const fields = [{
+      component: Medicines,
+      name: 'medicines'
+    }, {
+      component: Aura,
+      name: 'aura'
+    }, {
+      component: Triggers,
+      name: 'triggers'
+    }, {
+      component: Reliefs,
+      name: 'reliefs'
+    }, {
+      component: Mood,
+      name: 'mood'
+    }, {
+      component: Pressure,
+      name: 'pressure'
+    }, {
+      component: SleepDuration,
+      name: 'sleep_duration'
+    }, {
+      component: Menstruation,
+      name: 'menstruation'
+    }, {
+      component: Localization,
+      name: 'localization'
+    }]
+    const tabs = fields.map((field, id) => {
+      if (this.getUserFormField(field.name)) {
+        return (
+          <div className="record-tab" key={id}>
+            <field.component values={data[field.name]} valueData={data[field.name]} onChange={this.handleChangeTabValue} />
+          </div>
+        )
+      }
+      return null;
+    }).filter(view => !!view);
+
 
     return (
       <Container className="Form">
-        <Header />
+        <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
-          <SwipeableViews index={currentTab}>
+          <SwipeableViews className="form-container" index={currentTab}>
             <div className="record-tab">
               <Hello edit={this.edit} />
             </div>
             <div className="record-tab">
-              <Start onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
+              <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
-            </div>
-            <div className="record-tab">
-              <Pressure valueData={data.pressure} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <SleepDuration valueData={data.sleep_duration} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Menstruation valueData={data.menstruation} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Localization valueData={data.localization} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Mood valueData={data.mood} onChange={this.handleChangeTabValue} />
+              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onNotYetClick={this.notYetEnd} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
               <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
             </div>
-            <div className="record-tab">
-              <Medicines values={data.medicines} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Aura values={data.aura} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Triggers values={data.triggers} onChange={this.handleChangeTabValue} />
-            </div>
-            <div className="record-tab">
-              <Reliefs values={data.reliefs} onChange={this.handleChangeTabValue} />
-            </div>
+            {
+              tabs
+            }
           </SwipeableViews>
         </form>
-        {this.isComplete() && (
-          <div>
-            <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
-              <Button text={languageText.recordForm.summary} />
-            </Link>
-          </div>
-        )}
-
         <Buttons>
           <Button
             onClick={() => this.changeTab('prev')}
             disabled={currentTab === this.firstTab}
             text="<"
           />
-          <p> {languageText.recordForm.migraineRecord}</p>
+          {
+            this.isComplete() ? (
+              <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
+                <Button small text={languageText.recordForm.summary} />
+              </Link>
+            ) : (
+              <p> {languageText.recordForm.migraineRecord}</p>
+            )
+          }
           <Button
             onClick={() => this.changeTab('next')}
             disabled={currentTab === this.lastTab}

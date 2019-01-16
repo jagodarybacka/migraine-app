@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,7 +13,6 @@ import Register from '../../scenes/Register'
 import Settings from '../../scenes/Settings'
 import History from '../../scenes/history/History'
 import Summary from '../../scenes/form/Summary'
-import TextInput from '../../components/TextInput'
 import Reports from '../../scenes/Reports'
 
 const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {

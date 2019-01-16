@@ -1,6 +1,6 @@
 {
 	"settings":{
-		"chooseLanguage": "Wybierz język", 
+		"chooseLanguage": "Wybierz język",
 		"changeData": "Zmień dane",
 		"changePassword": "Zmień hasło",
 		"oldPassword": "Stare hasło",
@@ -16,7 +16,19 @@
 		"sthWentWrong": "Coś poszło nie tak",
 		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
 		"dataChanged": "Dane zostały zmienione",
-		"passwordChanged": "Hasło zostało zmienione"
+		"passwordChanged": "Hasło zostało zmienione",
+		"formFieldsOptions": [
+			{"text":"Leki", "field":"medicines"},
+			{"text":"Aura", "field":"aura"},
+			{"text":"Przyczyny", "field":"triggers"},
+			{"text":"Pomoce", "field":"reliefs"},
+			{"text":"Nastrój", "field":"mood"},
+			{"text":"Ciśnienie", "field":"pressure"},
+			{"text":"Długość snu", "field":"sleep_duration"},
+			{"text":"Menstruacja", "field":"menstruation"},
+			{"text":"Lokalizacja", "field":"localization"}
+		],
+		"formFields": "Elementy wyświetlane w formularzu"
 
 	},
 	"home":{
@@ -39,6 +51,8 @@
 	"recordForm":{
 		"title": "Dodaj nową migrenę",
 		"titleEdit": "Edytuj migrenę",
+		"paragraph": "W tym formularzu możesz zanotować różne aspekty swojego stanu. Śledzenie wyzwalaczy migreny pomoże Ci uniknąć ich później.",
+		"feelBetter": "Mamy nadzieję, że wkrótce poczujesz się lepiej!",
 		"summary": "Podsumowanie",
 		"migraineRecord": "Zapis migreny"
 	},
@@ -47,7 +61,8 @@
 		"tapToStart": "Kliknij, aby rozpocząć..."
 	},
 	"recordCard":{
-		"migraine": "Migrena"
+		"migraine": "Migrena",
+		"noMigraines": "Brak migren"
 	},
 	"menuBar":{
 		"home": "Strona główna",
@@ -59,7 +74,11 @@
 		"rain": "Deszcz",
 		"humidity": "Wilgotność",
 		"pressure": "Ciśnienie atmosferyczne",
-		"windSpeed": "Prędkość wiatru"
+		"windSpeed": "Prędkość wiatru",
+		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
+		"placeholder": "Wprowadź ",
+		"city": "miasto",
+		"setLocation": "Ustaw lokalizację"
 	},
 	"register":{
 		"invalidEmail": "Nieprawidłowy adres email",
@@ -108,8 +127,14 @@
 		"pain": "Intensywność bólu",
 		"medicines": "Leki",
 		"triggers": "Możliwe przyczyny",
-		"sleepDuration": "Długość snu [godz.]",
-		"pressure": "Ciśnienie krwi [mmHG] (przykład: 120/80)",
+		"sleepDuration": {
+			"title": "Długość snu",
+			"subtitle": "Jednostka - godzina"
+		},
+		"pressure": {
+			"title": "Ciśnienie krwi",
+			"subtitle": "Jednostka - [mmHG], przykład: 120/80"
+		},
 		"aura": "aura",
 		"notes": "Notatki",
 		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",
@@ -178,6 +203,10 @@
 		"summary": "Podsumowanie",
 		"pressure":"Ciśnienie atmosferyczne",
 		"oftenTogether": "Często występujace razem"
+	},
+	"atmosphericPressure": {
+		"noData": "Brak danych",
+		"noPressureData": "Brak danych o ciśnieniu"
 	},
 	"reportsSummary":{
 		"last30Days": "Ostatnie 30 dni",

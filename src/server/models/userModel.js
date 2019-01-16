@@ -22,7 +22,10 @@ var UserSchema = new Schema({
 		ref: 'Report'
 	}],
 	resetPasswordToken: String,
-	resetPasswordExpires: Date
+	resetPasswordExpires: Date,
+	weather_forecasts: {
+		type: Object
+	}
 });
 UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 UserSchema.plugin(mongodbErrorHandler);

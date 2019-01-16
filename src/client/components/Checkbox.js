@@ -7,7 +7,7 @@ const Check = styled.label`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 10px;
+  padding: ${props => props.small ? '0' : '5px 10px'};
   border-radius: 10px;
   margin: 0.5rem;
   position: relative;
@@ -16,8 +16,8 @@ const Check = styled.label`
   p {
     font-weight: 400;
     text-transform: none !important;
-    font-size: 1.2rem;
-    color: ${props => props.color};
+    font-size:  ${props => props.small ? '1em' : '1.2rem'};
+    color: ${props => props.color || '#000'};
   }
 
   img {
@@ -30,7 +30,7 @@ const Check = styled.label`
   }
 
   input:checked ~ div{
-    background-color: ${props => props.color};
+    background-color: ${props => props.color || '#000'};
     border: none;
   }
   input:checked ~ p{
@@ -44,7 +44,7 @@ const FauxBg = styled.div`
   height: 100%;
   background-color: white;
   border-radius: 10px;
-  border: 2px solid ${props => props.color};
+  border: 2px solid ${props => props.color || '#000'};
   z-index: -1;
 `
 
@@ -65,7 +65,7 @@ class Checkbox extends React.Component {
 
   render() {
     return (
-      <Check class="Check" color={this.props.color}>
+      <Check className="Check" color={this.props.color} small={this.props.small}>
         <input
           checked={this.props.checked}
           name={this.props.name}
@@ -74,10 +74,14 @@ class Checkbox extends React.Component {
           onChange={this.props.onChange}
           onClick={this.handleClick}
           />
-        <FauxBg class="bg" color={this.props.color}/>
-        <img src={
-            this.props.checked ? this.props.img : this.props.imgColor
-          } alt=''/>
+        <FauxBg className="bg" color={this.props.color}/>
+        {
+          this.props.img && (
+            <img src={
+              this.props.checked ? this.props.img : this.props.imgColor
+            } alt=''/>
+          )
+        }
         <p>{this.props.text}</p>
       </Check>
     )

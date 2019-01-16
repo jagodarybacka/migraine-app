@@ -6,8 +6,6 @@ import axios from 'axios';
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
 import Bubble from '../../components/Bubble';
-import RecordCard from '../../components/RecordCard'
-
 
 import date from '../../assets/date.png'
 import time from '../../assets/time.png'
@@ -61,9 +59,9 @@ const TimeDateComponent = styled.div`
 const TimeDate = (props) => {
   return (
     <TimeDateComponent>
-      <img src={date}/>
+      <img alt='date' src={date}/>
       <p>{props.date}</p>
-      <img src={time}/>
+      <img alt='time' src={time}/>
       <p>{props.time}</p>
     </TimeDateComponent>
   )
@@ -77,8 +75,8 @@ const AcceptComponent = styled.button`
   border-radius: 32px;
   margin: 0 0 3rem 0;
   box-shadow: 0px 1px 12px 0px rgba(0,0,0,0.5);
-  outline: none; 
-  
+  outline: none;
+
   img {
     width: 28px;
     height: 28px;
@@ -91,7 +89,7 @@ const AcceptButton = (props) => {
     <AcceptComponent
       onClick={props.onClick}
     >
-      <img src={accept} />
+      <img src={accept} alt='accept'/>
     </AcceptComponent>
   )
 }
@@ -122,7 +120,7 @@ class Summary extends Component {
 
   submit() {
     let { data, id } = this.props.location.state;
-    data = { ...data, notes: this.state.notes } 
+    data = { ...data, notes: this.state.notes }
 
     const { match } = this.props
     let method = 'POST'
@@ -137,14 +135,18 @@ class Summary extends Component {
   }
 
   getTranslatedValue(toTranslate, type){
-    if(toTranslate == '')
+    if(toTranslate === '')
       return '';
     let translationDict = languageText.addForm[type+"Answers"];
-    let foundPair = translationDict.find(f => f.value == toTranslate);
-    if(foundPair != undefined)
+    let foundPair = translationDict.find(f => f.value === toTranslate);
+    if(foundPair !== undefined)
       return foundPair.text;
     else
       return "";
+  }
+
+  getUserFormField(field) {
+    return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
   }
 
   render() {
@@ -153,13 +155,74 @@ class Summary extends Component {
     if(state.preview){
       preview = true;
     }
-    
+
     let result = (
       <div>Loading...</div>
     );
 
     if (state && state.data) {
       const { data } = state;
+      const undefined_bubble = <Bubble text={languageText.addForm.notYet} color='#9e9e9e' />
+
+      const start_date = data.start_date && data.start_time ? (
+        <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
+      ) : (
+        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+      );
+
+      const end_date =  data.end_date && data.end_time  ? (
+        <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />
+      ) : (
+        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+      );
+
+      const pressure = data.pressure ? (
+        <Bubble text={data.pressure +" mmHG"} color='#cddc39' />
+      ) : undefined_bubble;
+
+      const sleep_duration = data.sleep_duration ? (
+        <Bubble text={data.sleep_duration +"h"} color='#cddc39' />
+      ) : undefined_bubble;
+
+      const pain = data.pain ? (
+        <Bubble text={this.getTranslatedValue(data.pain,"pain")} img={faceNeutral} color='#ED8836' />
+      ) : undefined_bubble;
+
+      const menstruation = data.menstruation ? (
+        <Bubble text={this.getTranslatedValue(data.menstruation,"menstruation")} img={drop} color='#E91E63' />
+      ) : undefined_bubble;
+
+      const mood = data.mood ? (
+        <Bubble text={this.getTranslatedValue(data.mood,"mood")} img={faceSmile} color='#ffc107' />
+      ) : undefined_bubble;
+
+      const localization = data.localization ? (
+        <Bubble text={this.getTranslatedValue(data.localization,"localization")} img={localization} color='#cddc39' />
+      ) : undefined_bubble;
+
+      const medicines = data.medicines && data.medicines.length ?
+        data.medicines.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"medicines")} img={medicine} color='#00bcd4' />
+        ))
+       : undefined_bubble;
+
+      const triggers = data.triggers && data.triggers.length ?
+        data.triggers.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
+        ))
+       : undefined_bubble;
+
+      const aura = data.aura && data.aura.length ?
+        data.aura.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
+        ))
+       : undefined_bubble;
+
+      const reliefs = data.reliefs && data.reliefs.length ?
+        data.reliefs.map(name => (
+          <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
+        ))
+       : undefined_bubble;
 
       result = (
         <SummaryComponent>
@@ -167,51 +230,37 @@ class Summary extends Component {
           <h2>{languageText.addForm.summary}</h2>
 
           <Divider text={languageText.addForm.start} />
-          <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
-
+          { start_date }
           <Divider text={languageText.addForm.end} />
-          {!!data.end_date && !!data.end_time ? (
-            <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />            
-          ) : (
-            <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
-          )}
-          <Divider text={languageText.addForm.pressure} />
-          <Bubble text={data.pressure +" mmHG"} color='#cddc39' />
-
-          <Divider text={languageText.addForm.sleepDuration} />
-          <Bubble text={data.sleep_duration +"h"} color='#cddc39' />
-
+          { end_date }
           <Divider text={languageText.addForm.pain} />
-          <Bubble text={this.getTranslatedValue(data.pain,"pain")} img={faceNeutral} color='#ED8836' />
-          
-          <Divider text={languageText.addForm.menstruation} />
-          <Bubble text={this.getTranslatedValue(data.menstruation,"menstruation")} img={drop} color='#E91E63' />
+          { pain }
+          { this.getUserFormField('medicines') && (<Divider text={languageText.addForm.medicines} />) }
+          { this.getUserFormField('medicines') && medicines }
 
-          <Divider text={languageText.addForm.mood} />
-          <Bubble text={this.getTranslatedValue(data.mood,"mood")} img={faceSmile} color='#ffc107' />
+          { this.getUserFormField('aura') && (<Divider text={languageText.addForm.aura} />) }
+          { this.getUserFormField('aura') && aura }
 
-          <Divider text={languageText.addForm.localization} />
-          <Bubble text={this.getTranslatedValue(data.localization,"localization")} img={localization} color='#cddc39' />
+          { this.getUserFormField('triggers') && (<Divider text={languageText.addForm.triggers} />) }
+          { this.getUserFormField('triggers') && triggers }
 
-          <Divider text={languageText.addForm.medicines} />
-          {data.medicines.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"medicines")} img={medicine} color='#00bcd4' />
-          ))}
+          { this.getUserFormField('reliefs') && (<Divider text={languageText.addForm.reliefs} />) }
+          { this.getUserFormField('reliefs') && reliefs }
 
-          <Divider text={languageText.addForm.triggers} />
-          {data.triggers.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"triggers")} img={questionmark} color='#607d8b' />
-          ))}
+          { this.getUserFormField('mood') && (<Divider text={languageText.addForm.mood} />) }
+          { this.getUserFormField('mood') && mood }
 
-          <Divider text={languageText.addForm.aura} />
-          {data.aura.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"aura")} img={eye} color='#67252e' />
-          ))}
-         
-          <Divider text={languageText.addForm.reliefs} />
-          {data.reliefs.map(name => (
-            <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
-          ))}
+          { this.getUserFormField('pressure') && (<Divider text={languageText.addForm.pressure.title} />) }
+          { this.getUserFormField('pressure') && pressure }
+
+          { this.getUserFormField('sleep_duration') && (<Divider text={languageText.addForm.sleepDuration.title} />) }
+          { this.getUserFormField('sleep_duration') && sleep_duration }
+
+          { this.getUserFormField('menstruation') && (<Divider text={languageText.addForm.menstruation} />) }
+          { this.getUserFormField('menstruation') && menstruation }
+
+          { this.getUserFormField('localization') && (<Divider text={languageText.addForm.localization} />) }
+          { this.getUserFormField('localization') && localization }
 
           <Divider text={languageText.addForm.notes} />
           <textarea key={"notes"} readOnly={preview} value={this.state.notes} onChange={this.handleChangeNotes} type="text"  placeholder={languageText.addForm.notesPlaceholder} />

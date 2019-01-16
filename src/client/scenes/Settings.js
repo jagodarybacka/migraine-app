@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
 
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button';
 import Divider from '../components/Divider';
+import Checkbox from '../components/Checkbox';
 import axios from 'axios';
 import TextInput from '../components/TextInput';
 import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
@@ -14,7 +14,7 @@ import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage
 const SettingsComponent = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 7rem 0;
+  padding: 5rem 0.25em;
   margin: 0;
   text-align: center;
   height: auto;
@@ -57,12 +57,13 @@ class Settings extends Component {
     }
     this.baseFieldsState = this.state.fields;
 
+    this.toggleUserFormField = this.toggleUserFormField.bind(this);
     this.clearFields = this.clearFields.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
-  }  
+  }
 
   logout(){
     localStorage.setItem('isLogged',false);
@@ -83,7 +84,7 @@ class Settings extends Component {
 			this.setState({message: languageText.settings.failed});
 		});
   };
-  
+
   componentDidMount() {
     window.scrollTo(0, 0)
   };
@@ -133,7 +134,7 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { oldPassword, password } = fields;
 
     if (!validatePassword(password.value)) {
       isValid = false;
@@ -173,7 +174,7 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email, oldPassword, password} = fields;
+    const { username, email } = fields;
 
     if (username.value.length > 0 && !validateLength(username.value, 4)) {
       isValid = false;
@@ -218,12 +219,24 @@ class Settings extends Component {
     window.location.reload();
   }
 
+  toggleUserFormField(field) {
+    const old = this.getUserFormField(field)
+    localStorage.setItem(`form-${field}`, !old)
+    this.forceUpdate();
+  }
+
+  getUserFormField(field) {
+    return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
+  }
+
   render() {
     const { username, email, oldPassword, password } = this.state.fields;
+    const fields = languageText.settings.formFieldsOptions;
     let currentLang = getLanguage();
     return (
       <SettingsComponent className="Settings">
-        <Header />
+          <Header />
+          <Divider text={languageText.settings.logout}/>
           <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
           <Divider text={languageText.settings.changeData}/>
           <TextInput
@@ -270,8 +283,23 @@ class Settings extends Component {
           />
           <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
           <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang == "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang == "pl" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
+          <Divider text={languageText.settings.formFields}/>
+          <div>
+          {
+            fields.map((field, index) => (
+              <Checkbox
+              key={index}
+              small
+              text={field.text}
+              value={field.text}
+              checked={this.getUserFormField(field.field)}
+              onChange={() => this.toggleUserFormField(field.field)}
+              />
+            ))
+          }
+          </div>
         <Menubar />
       </SettingsComponent>
     );

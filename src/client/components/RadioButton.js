@@ -76,7 +76,7 @@ class RadioButton extends React.Component {
           onChange={this.props.onChange}
           color={this.props.color}
           />
-        <FauxBg class="bg" color={this.props.color}/>
+        <FauxBg className="bg" color={this.props.color}/>
         <label htmlFor={this.props.id}>
           <img src={this.props.imgColor} />
           <img className="imgChecked" src={this.props.img} />
