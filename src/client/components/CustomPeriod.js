@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import DateTimeCustomPeriod from '../../DateTimeCustomPeriod'
-import Button from '../../Button'
-import ExitIcon from '../../../assets/exit.png'
-import { CustomPeriodComponent } from './styles'
-import {languageText} from '../../../languages/MultiLanguage.js';
+import DateTimeCustomPeriod from './DateTimeCustomPeriod'
+import Button from './Button'
+import ExitIcon from '../assets/exit.png'
+import { CustomPeriodComponent } from './reports/summary/styles'
+import {languageText} from '../languages/MultiLanguage.js';
 
 class CustomPeriod extends Component {
   constructor(props) {
