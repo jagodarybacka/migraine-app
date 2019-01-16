@@ -57,6 +57,7 @@ export const CustomIcon = styled.img`
   position: absolute;
   top: 1em;
   right: 1em;
+  z-index: 100;
 `
 export const CustomPeriodComponent = styled.div`
   position: absolute;
@@ -98,8 +99,6 @@ class AtmosphericPressure extends Component {
     const to = new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
     this.setState((prevState) => ({
       ...prevState,
-      customPeriodVisible: false,
-      customPeriodApplied: true,
       timePeriod: {from: from, to: to}
     }), () => {
       this.fetchData();
