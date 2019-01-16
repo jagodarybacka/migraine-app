@@ -27,8 +27,7 @@ const getRange = (data) => ({
 
 const getDaysBetween = (a, b) => Math.ceil(Math.abs(a.getTime() - b.getTime()) / (1000 * 3600 * 24))
 
-const getNiceDateFormat = (dates) => dates.map((d) => `${d.getDate()}/${d.getMonth()}`)
-
+const getNiceDateFormat = (dates) => dates.map((d) => `${d.getDate()}/${d.getMonth()+1}`)
 
 /**
  * Get parsed forecast and creates array of pressures

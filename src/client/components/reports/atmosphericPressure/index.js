@@ -38,8 +38,8 @@ class AtmosphericPressure extends Component {
     this.state = {
       data: [],
       timePeriod: {
-        from: new Date(2019,0,13),
-        to: new Date(2019,0,18)
+        from: new Date('2019-01-10'),
+        to: new Date('2019-01-18')
       },
       migraines: []
     }
@@ -90,6 +90,8 @@ class AtmosphericPressure extends Component {
     this.drawDateAxis(ctx);
     this.drawPressureAxis(ctx);
     this.drawMigraines(ctx);
+    ctx.fillStyle = "#4C5062";
+
     this.drawGraph(ctx)
   }
 
@@ -102,15 +104,12 @@ class AtmosphericPressure extends Component {
     const axisStart = MARGIN_LEFT;
     const axisEnd = canvasWidth - MARGIN_RIGHT;
 
-    const listOfDates = _.uniq(get.niceDateFormat(parsedDates)) // TODO: refactor
+    const listOfDates = _.uniq(get.niceDateFormat(parsedDates))
     const daysBetween = listOfDates.length;
     const padding = (axisEnd - axisStart) / daysBetween
 
-    const dateCoordinates = this.getDateCoordinates(parsedDates)
-
     let x = axisStart;
     listOfDates.forEach((date) => {
-      // console.log(x, date, dateCoordinates.find(entry => entry.date === date)) // TODO: refactor to ue dateCoordinates
       ctx.fillText(date, x, bottomPadding);
       x += padding;
     })
@@ -173,20 +172,12 @@ class AtmosphericPressure extends Component {
     // Setup variables
     const canvas = this.refs.canvas;
     const canvasHeight = canvas.height;
+    const blockHeight =  canvasHeight - 60;
 
     const parsedDates = parse.date(this.state.data);
     const dateCoordinates = this.getDateCoordinates(parsedDates)
 
     const migraines = this.state.migraines;
-
-    // Drawing stuff
-    const blockHeight =  canvasHeight - 60;
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300)
-    gradient.addColorStop(0, 'rgba(250, 250, 250, 0)');
-    ctx.fillStyle = gradient;
-
-
-    console.log(dateCoordinates)
 
     // DRAW!
     const migrainesToDraw = migraines.map((migraine) => {
@@ -204,18 +195,22 @@ class AtmosphericPressure extends Component {
           end_coord
         }
       }
+      return undefined;
     }).filter(migraine => !!migraine)
 
     migrainesToDraw.forEach(draw => {
-      const color = COLORS[draw.migraine.pain]
+      const duration = draw.end_coord.coordX - draw.start_coord.coordX || 5;
+      const color = COLORS[draw.migraine.pain] || '#9e9e9e'
+      const gradient = ctx.createLinearGradient(0, 0, 0, 300)
+      gradient.addColorStop(0, 'rgba(250, 250, 250, 0)');
       gradient.addColorStop(1, color);
-      ctx.fillRect(draw.start_coord.coordX, 30, draw.end_coord.coordX, blockHeight)
+      ctx.fillStyle = gradient;
+      ctx.fillRect(draw.start_coord.coordX, 30, duration, blockHeight)
     })
   }
 
   getPressureCoordinates(min, max) {
     const canvas = this.refs.canvas;
-    const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
     const yBottom = canvasHeight - 30;
