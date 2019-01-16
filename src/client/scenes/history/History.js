@@ -9,6 +9,7 @@ import RecordCard from '../../components/RecordCard'
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
+import { filer, filter } from '../../utils/Filter';
 
 import {languageText} from '../../languages/MultiLanguage.js';
 
@@ -50,6 +51,7 @@ class History extends Component {
     this.state = {
       history: {},
       order: [],
+      rawData: []
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -122,7 +124,13 @@ class History extends Component {
       });
     }
 
-    this.setState({ history, order });
+    this.setState({ history, order, rawData: data },
+      () => {
+        const results = filter(this.state.rawData, 
+          {start: new Date('2019-01-01'), end: new Date('2019-01-19')},
+          {localization:"Outside",triggers:"Sport"});
+        console.log(results);
+      });
   }
 
   render() {
