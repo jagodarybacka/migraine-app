@@ -127,7 +127,8 @@ class History extends Component {
     this.setState({ history, order, rawData: data },
       () => {
         const results = filter(this.state.rawData, 
-          {start: new Date('2018-11-01'), end: new Date('2019-01-19')},
+          {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
+          // {pain:"Mild"});
           {localization:["Outside","Work"],triggers:"Sport"});
           // {localization:["Outside","Work"]});
           // {localization:"Outside",triggers:["Sport","Stress"]});

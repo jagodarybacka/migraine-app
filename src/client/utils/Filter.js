@@ -11,10 +11,12 @@ function search(report){
     return Object.keys(this).every((key) => {
         if(typeof this[key] !== 'string'){
             let contains = false;
-            this[key].forEach((el) => {
-                if(report[key].includes(el) || report[key] === el)
-                    contains = true;
-            })
+            if(report[key]){
+                this[key].forEach((el) => {
+                    if(report[key].includes(el) || report[key] === el)
+                        contains = true;
+                })
+            }
             return contains;
         } 
         else
