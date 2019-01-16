@@ -46,7 +46,7 @@ exports.reports_period = function(req,res,next) {
     Report.find({user: userId, start_date : { $gte: start}, end_date : { $lte: end } }, '_id start_date end_date pain')
     .exec(function(err,found_reports){
         if(err) {return next(err);}
-        if(found_reports.length == 0){
+        if(found_reports.length === 0){
             res.status(204);
             res.send("No content");
         }
@@ -202,15 +202,15 @@ exports.report_stats = function(req, res, next) {
     const days = req.params.days;
     const now = new Date();
     let endDate;
-    if(days == 30){
+    if(days === 30){
         endDate = new Date(now.getFullYear(), now.getMonth()-1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-    } else if(days == 60) {
+    } else if(days === 60) {
         endDate = new Date(now.getFullYear(), now.getMonth()-2, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-    } else if(days ==365) {
+    } else if(days ===365) {
         endDate = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
     }
     const userId = req.session.userId;
-    User.findById(userId, 'username _id email')
+    User.findById(userId, 'username _id email registration_date')
     .exec(function(err,found_user){
         if(err) {return next(err);}
         if(found_user)
@@ -232,12 +232,12 @@ exports.report_stats = function(req, res, next) {
                 Report.find({user: found_user._id}).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
-                    if(found_reports.length == 0){
+                    if(found_reports.length === 0){
                         res.status(204);
                         res.send("No content");
                     }
                     else {
-                        const stats = tools.computeStats(found_reports, days, now);
+                        const stats = tools.computeStats(found_reports, days, now, found_user);
                         res.json(stats);
                     }
                 });
@@ -258,7 +258,7 @@ exports.report_stats_custom = function(req, res, next) {
             Report.find({user: found_user._id, start_date : { $gte: start}, end_date : { $lte: end } }).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {return next(err);}
-                    if(found_reports.length == 0){
+                    if(found_reports.length === 0){
                         res.status(204);
                         res.send("No content");
                     }

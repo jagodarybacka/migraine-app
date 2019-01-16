@@ -149,7 +149,7 @@ class WeatherWidget extends Component {
   }
 
   async getWeatherForCity() {
-    const city = this.state.city_name;
+    const city = this.state.city_name.trim();
     if(city.length === 0){
       return;
     }
@@ -169,7 +169,7 @@ class WeatherWidget extends Component {
     ), () => {
       localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
       localStorage.setItem('weather_time', new Date());
-      localStorage.setItem('city_name', this.state.city_name);
+      localStorage.setItem('city_name', this.state.city_name.trim());
     })
   }
 
@@ -204,7 +204,7 @@ class WeatherWidget extends Component {
   }
 
   async getForecastForCity() {
-    const city = this.state.city_name;
+    const city = this.state.city_name.trim();
     if(city.length === 0){
       return;
     }

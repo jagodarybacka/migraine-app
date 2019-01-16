@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 module.exports = {
-    computeStats: function(reports, days, now) {  
+    computeStats: function(reports, days, now, user) {  
         const attacks = reports.length;
         let pain = 0;
         let daysWithPain = 0;
@@ -18,7 +18,11 @@ module.exports = {
                 daysWithPain+=daysDiff;
             }
         })
-        const period = days != "all" ? days : Math.ceil((now.getTime() - firstAttack.getTime())/ (1000*60*60*24))
+        const period = days !== "all" 
+            ? days 
+            : user.registration_date 
+                ? Math.ceil((now.getTime() - new Date(user.registration_date).getTime())/(1000*60*60*24))
+                : Math.ceil((now.getTime() - firstAttack.getTime())/ (1000*60*60*24))
         const total = Math.round(pain / (60));
         const painDays = daysWithPain;
         const noPainDays = period - painDays;
@@ -55,7 +59,6 @@ module.exports = {
         let latest;
         if(oldForecasts && oldForecasts.length > 0){
             latest = moment(oldForecasts[oldForecasts.length-1].dt_txt,'YYYY-MM-DD HH:mm:ss');
-            console.log(latest);
         }
         const city = forecast.city;
         const forecasts = forecast.list.map((forecast) => ({
