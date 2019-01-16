@@ -29,7 +29,7 @@ const AtmosphericPressureComponent = styled.div`
   margin: 0 5%;
   background-color: #fff;
   padding: 0;
-  padding-top: ${props => props.custom ? '3em' : '2em'};
+  padding-top: 3em;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -82,8 +82,8 @@ class AtmosphericPressure extends Component {
     this.state = {
       data: [],
       timePeriod: {
-        from: new Date('2019-01-10'),
-        to: new Date('2019-01-18')
+        from: new Date(),
+        to: new Date()
       },
       migraines: [],
       customPeriodVisible: false,
@@ -93,8 +93,18 @@ class AtmosphericPressure extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
-    this.fetchMigraines();
+    const now = new Date();
+    const from = new Date(now.getFullYear(),now.getMonth(),now.getDate()-3);
+    const to = new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
+    this.setState((prevState) => ({
+      ...prevState,
+      customPeriodVisible: false,
+      customPeriodApplied: true,
+      timePeriod: {from: from, to: to}
+    }), () => {
+      this.fetchData();
+      this.fetchMigraines();
+    })
   }
 
   componentDidUpdate() {
@@ -320,7 +330,7 @@ class AtmosphericPressure extends Component {
       <CustomPeriod onConfirmFn={this.handleCustomPeriod.bind(this)}/>
     ) : '';
 
-    const customPeriodRange = this.state.customPeriodApplied && (
+    const periodRange = (
       <p className="summary__period">
         {localStorage.getItem('lang') === 'eng' 
           ? this.state.timePeriod.from.toDateString() 
@@ -333,9 +343,9 @@ class AtmosphericPressure extends Component {
     )
 
     return (
-      <AtmosphericPressureComponent width={300} height={300} custom={this.state.customPeriodApplied}>
+      <AtmosphericPressureComponent width={300} height={300}>
         <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/>
-        { customPeriodRange }
+        { periodRange }
         <canvas ref='canvas' width = {300} height = {350}/>
         { customPeriod }
       </AtmosphericPressureComponent>
