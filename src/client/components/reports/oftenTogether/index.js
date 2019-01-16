@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
 import { OftenTogetherComponent, Select, TogetherField } from './styles'
 import {languageText} from '../../../languages/MultiLanguage.js'
-import { lang } from 'moment';
 
 class OftenTogether extends Component {
   constructor(props) {

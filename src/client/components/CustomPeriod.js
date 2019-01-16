@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import DateTimeCustomPeriod from '../../DateTimeCustomPeriod'
-import Button from '../../Button'
-import ExitIcon from '../../../assets/exit.png'
-import { CustomPeriodComponent } from './styles'
-import {languageText} from '../../../languages/MultiLanguage.js';
+import DateTimeCustomPeriod from './DateTimeCustomPeriod'
+import Button from './Button'
+import ExitIcon from '../assets/exit.png'
+import { CustomPeriodComponent } from './reports/summary/styles'
+import {languageText} from '../languages/MultiLanguage.js';
 
 class CustomPeriod extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class CustomPeriod extends Component {
     return (
       <CustomPeriodComponent>
         <h3 className="custom__header">{languageText.reportsSummary.customPeriod}</h3>
-        <img className="custom__cancel" src={ExitIcon} onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
+        <img className="custom__cancel" src={ExitIcon} alt="exit" onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
         <DateTimeCustomPeriod date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
         <DateTimeCustomPeriod date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
         { confirm }

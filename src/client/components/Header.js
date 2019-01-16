@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import BackImg from '../assets/back-arrow.png'
 import SaveImg from '../assets/save.png'

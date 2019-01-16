@@ -17,6 +17,9 @@ var UserSchema = new Schema({
 		trim: true,
 		required: "Please Supply an email address"
 	},
+	registration_date: {
+		type: Date
+	},
 	reports: [{
 		type: Schema.ObjectId,
 		ref: 'Report'
