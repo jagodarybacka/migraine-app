@@ -205,7 +205,8 @@
 		"oftenTogether": "Often together"
 	},
 	"atmosphericPressure": {
-		"noData": "No data"
+		"noData": "No data",
+		"noPressureData": "No pressure data"
 	},
 	"reportsSummary":{
 		"last30Days": "Last 30 days",

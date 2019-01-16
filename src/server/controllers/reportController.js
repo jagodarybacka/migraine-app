@@ -49,7 +49,6 @@ exports.reports_period = function(req,res,next) {
             res.send("No content");
         }
         else {
-            console.log(found_reports);
             res.json(found_reports);
         }
     });

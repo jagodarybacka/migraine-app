@@ -205,7 +205,13 @@ exports.get_forecast = (req, res, next) => {
 		if (found_user) {
 			if(found_user.weather_forecasts && found_user.weather_forecasts.length > 0){
 				const forecasts = tools.getForecasts(found_user.weather_forecasts, start, end);
-				return res.json(forecasts);
+				if(forecasts.length == 0){
+					res.status(204);
+					res.send("No content")
+				}
+				else {
+					return res.json(forecasts);
+				}		
 			}
 			else {
 				res.status(204);

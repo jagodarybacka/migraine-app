@@ -58,10 +58,15 @@ class AtmosphericPressure extends Component {
     const url = "/api/forecast/" + this.state.timePeriod.from + '-' + this.state.timePeriod.to;
     axios.get(url)
     .then((res) => {
-      const parsedForecast = parse.forecast(res.data);
-      this.setState({
-        data: parsedForecast
-      })
+      if(res.status === 204) {
+        alert(languageText.atmosphericPressure.noPressureData);
+      }
+      if(res.data) {
+        const parsedForecast = parse.forecast(res.data);
+        this.setState({
+          data: parsedForecast
+        })
+      }
     })
     .catch((err) => console.log(err));
   }

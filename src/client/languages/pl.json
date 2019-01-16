@@ -205,7 +205,8 @@
 		"oftenTogether": "Często występujace razem"
 	},
 	"atmosphericPressure": {
-		"noData": "Brak danych"
+		"noData": "Brak danych",
+		"noPressureData": "Brak danych o ciśnieniu"
 	},
 	"reportsSummary":{
 		"last30Days": "Ostatnie 30 dni",
