@@ -13,7 +13,7 @@ import faceNeutral from '../../assets/face-neutral.png'
 import faceSmile from '../../assets/face-smile.png'
 import drop from '../../assets/drop.png'
 import eye from '../../assets/eye.png'
-import localization from '../../assets/localization.png'
+import localizationIcon from '../../assets/localization.png'
 import medicine from '../../assets/medicine.png'
 import questionmark from '../../assets/questionmark.png'
 import accept from '../../assets/accept.png'
@@ -197,7 +197,7 @@ class Summary extends Component {
       ) : undefined_bubble;
 
       const localization = data.localization ? (
-        <Bubble text={this.getTranslatedValue(data.localization,"localization")} img={localization} color='#cddc39' />
+        <Bubble text={this.getTranslatedValue(data.localization,"localization")} img={localizationIcon} color='#cddc39' />
       ) : undefined_bubble;
 
       const medicines = data.medicines && data.medicines.length ?

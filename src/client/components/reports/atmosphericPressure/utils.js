@@ -1,4 +1,3 @@
-const mock = require('./mock/mock.json')
 const _ = require('lodash')
 
 /**

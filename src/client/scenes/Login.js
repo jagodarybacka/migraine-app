@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
 import axios from'axios';
 import { Link } from 'react-router-dom'
@@ -82,7 +80,7 @@ class Login extends Component {
 			}).then(response => {
         if(response.data.redirectURL){ // save basic info on user in session for other components
           if(localStorage.getItem('userId')){
-            if(localStorage.getItem('userId') != response.data.userId){
+            if(localStorage.getItem('userId') !== response.data.userId){
               localStorage.removeItem('forecast_time');
               localStorage.removeItem('weather_time');
               localStorage.removeItem('weather');

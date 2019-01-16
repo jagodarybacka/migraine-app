@@ -197,7 +197,7 @@ class Settings extends Component {
           email: email.value
         })
         .then(res => {
-          if(res.status == 404){
+          if(res.status === 404){
             alert(languageText.settings.sthWentWrong);
             return;
           } else {

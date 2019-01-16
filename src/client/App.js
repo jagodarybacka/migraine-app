@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { isMobile, isBrowser } from 'react-device-detect';
+import React from 'react';
+import { isBrowser } from 'react-device-detect';
 import Web from './base/web/Web'
 import Mobile from './base/mobile/Mobile'
 

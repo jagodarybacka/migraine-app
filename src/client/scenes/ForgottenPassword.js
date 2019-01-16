@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
 import axios from'axios';
-import { Link } from 'react-router-dom'
 
 import { validateEmail } from '../utils/Validators';
 import TextInput from '../components/TextInput'
@@ -64,7 +62,7 @@ class ForgottenPassword extends Component {
                 email: emailReset.value
             })
             .then(res => {
-                if(res.status == 404){
+                if(res.status === 404){
                     alert(languageText.forgottenPassword.emailNotFound);
                     return;
                 }

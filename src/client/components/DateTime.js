@@ -1,31 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import dateImg from '../assets/date.png'
-import timeImg from '../assets/time.png'
-
+import timeImg from '../assets/time.png';
 import {languageText} from '../languages/MultiLanguage.js';
 
-const Input = styled.input`
-  background-color: transparent;
-  border: none;
-  border-bottom: solid 1px #4c5062;
-  font-size: 3.2rem;
-  width: 80%; // 100% for type="time"
-  display: block;
-  text-align: center;
-  display: none;
-`;
-// const InputDate = Input.extend`
-//   font-size: 1.8rem;
-//   color: #4C5062;
-// `
-const Placeholder = styled.p`
-  font-size: 1.2rem !important;
-  text-transform: none !important;
-  margin: 0.2rem 0.8rem;
-  font-weight: 400;
-`
 
 const TimeDateComponent = styled.div`
   display: flex;
@@ -83,7 +62,7 @@ const DateTime = (props) => {
   const el = props.date ? (
     <TimeDateComponent>
       <label>{languageText.dateTime.date}</label>
-      <img src={dateImg}/>
+      <img src={dateImg} alt="date"/>
       <input
         value={inputDate}
         name={`${props.name}_date`}
@@ -95,7 +74,7 @@ const DateTime = (props) => {
   ) : (
     <TimeDateComponent>
       <label>{languageText.dateTime.time}</label>
-      <img src={timeImg}/>
+      <img src={timeImg} alt="time"/>
       <input
         value={inputTime}
         name={`${props.name}_time`}

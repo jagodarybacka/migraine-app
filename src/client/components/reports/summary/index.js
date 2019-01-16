@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
 import CustomPeriod from './CustomPeriod'
-import Button from '../../Button'
 import { SummaryComponent, Select, CustomIcon } from './styles'
 import axios from 'axios';
 import customImg from '../../../assets/custom-options.png'
@@ -34,7 +32,7 @@ class Summary extends Component {
 
   getStats() {
     let url;
-    if(this.state.selectedOption == "custom"){
+    if(this.state.selectedOption === "custom"){
       url = "/api/reports/stats/custom/" + this.state.customPeriod.from + '-' + this.state.customPeriod.to;
     }
     else {
@@ -83,7 +81,7 @@ class Summary extends Component {
       return;
     }
 
-    if (!this.state.options.includes((op) => op.value == "custom")){
+    if (!this.state.options.includes((op) => op.value === "custom")){
       this.state.options.unshift({value: 'custom', label: languageText.reportsSummary.customPeriod})
       }
     this.setState({
