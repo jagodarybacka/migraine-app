@@ -16,6 +16,14 @@ const MARGIN_RIGHT = 15;
 const MARGIN_TOP = 20;
 const MARGIN_BOTTOM = 30;
 
+const COLORS = {
+  'No Pain': '#AADD6D',
+  'Mild': '#A7C651',
+  'Moderate': '#EAB933',
+  'Intense': '#ED8836',
+  'Maximum': '#EF6F5A',
+}
+
 const AtmosphericPressureComponent = styled.div`
   canvas {
     background-color: #fff;
@@ -30,8 +38,8 @@ class AtmosphericPressure extends Component {
     this.state = {
       data: [],
       timePeriod: {
-        from: new Date(2019,0,13),
-        to: new Date(2019,0,18)
+        from: new Date('2019-01-10'),
+        to: new Date('2019-01-18')
       },
       migraines: []
     }
@@ -81,7 +89,9 @@ class AtmosphericPressure extends Component {
 
     this.drawDateAxis(ctx);
     this.drawPressureAxis(ctx);
-    this.drawMigraine(ctx);
+    this.drawMigraines(ctx);
+    ctx.fillStyle = "#4C5062";
+
     this.drawGraph(ctx)
   }
 
@@ -94,15 +104,12 @@ class AtmosphericPressure extends Component {
     const axisStart = MARGIN_LEFT;
     const axisEnd = canvasWidth - MARGIN_RIGHT;
 
-    const listOfDates = _.uniq(get.niceDateFormat(parsedDates)) // TODO: refactor
+    const listOfDates = _.uniq(get.niceDateFormat(parsedDates))
     const daysBetween = listOfDates.length;
     const padding = (axisEnd - axisStart) / daysBetween
 
-    const dateCoordinates = this.getDateCoordinates(parsedDates)
-
     let x = axisStart;
     listOfDates.forEach((date) => {
-      // console.log(x, date, dateCoordinates.find(entry => entry.date === date)) // TODO: refactor to ue dateCoordinates
       ctx.fillText(date, x, bottomPadding);
       x += padding;
     })
@@ -112,19 +119,14 @@ class AtmosphericPressure extends Component {
     const parsedPressures = _.uniq(parse.pressure(this.state.data)).sort()
     const canvas = this.refs.canvas;
     const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
 
     const leftPadding = 15;
     const rightPadding = canvasWidth - MARGIN_RIGHT;
-    const canvasBottom = canvasHeight - MARGIN_BOTTOM;
-    const canvasTop = MARGIN_TOP;
 
     const rangeOfPressure = get.range(parsedPressures)
     const pressureDifference = rangeOfPressure.max - rangeOfPressure.min;
 
     const step = pressureDifference <= 10 ? 1 : 2;
-    const numberOfSteps = pressureDifference / step;
-    const padding = (canvasBottom - canvasTop) / numberOfSteps;
 
     const pressureCoordinates = this.getPressureCoordinates(rangeOfPressure.min, rangeOfPressure.max)
 
@@ -166,24 +168,49 @@ class AtmosphericPressure extends Component {
     })
   }
 
-  drawMigraine(ctx) {
+  drawMigraines(ctx) {
+    // Setup variables
     const canvas = this.refs.canvas;
-    const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const axisStart = canvasHeight - MARGIN_BOTTOM;
-    const axisEnd = MARGIN_TOP;
+    const blockHeight =  canvasHeight - 60;
 
-    const blockHeight =  canvasHeight - 60
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300)
-    gradient.addColorStop(0, 'rgba(250, 250, 250, 0)');
-    gradient.addColorStop(1, '#fde');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(50, 30, 50, blockHeight)
+    const parsedDates = parse.date(this.state.data);
+    const dateCoordinates = this.getDateCoordinates(parsedDates)
+
+    const migraines = this.state.migraines;
+
+    // DRAW!
+    const migrainesToDraw = migraines.map((migraine) => {
+      // Remove minutes
+      const start = new Date(parse.fixHour(migraine.start_date.slice(0, -11)))
+      const end = new Date(parse.fixHour(migraine.end_date.slice(0, -11)))
+
+      let start_coord = dateCoordinates.find((el) => el.date.toString() === start.toString())
+      let end_coord = dateCoordinates.find((el) => el.date.toString() === end.toString())
+
+      if (start_coord && end_coord) {
+        return {
+          migraine,
+          start_coord,
+          end_coord
+        }
+      }
+      return undefined;
+    }).filter(migraine => !!migraine)
+
+    migrainesToDraw.forEach(draw => {
+      const duration = draw.end_coord.coordX - draw.start_coord.coordX || 5;
+      const color = COLORS[draw.migraine.pain] || '#9e9e9e'
+      const gradient = ctx.createLinearGradient(0, 0, 0, 300)
+      gradient.addColorStop(0, 'rgba(250, 250, 250, 0)');
+      gradient.addColorStop(1, color);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(draw.start_coord.coordX, 30, duration, blockHeight)
+    })
   }
 
   getPressureCoordinates(min, max) {
     const canvas = this.refs.canvas;
-    const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
     const yBottom = canvasHeight - 30;

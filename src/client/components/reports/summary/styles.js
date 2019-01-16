@@ -68,7 +68,7 @@ export const CustomIcon = styled.img`
   height: auto;
   position: absolute;
   top: 2em;
-  right: 1.5em;
+  right: 1em;
 `
 export const CustomPeriodComponent = styled.div`
   position: absolute;
