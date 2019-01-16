@@ -27,7 +27,7 @@ exports.validateRegister = (req, res, next) => {
   };
 
 exports.register = async (req, res, next) => {
-	const user = new User({username: req.body.username, email: req.body.email });
+	const user = new User({username: req.body.username, email: req.body.email, registrationDate: new Date() });
 	await User.register(user, req.body.password, function(err, user) {
 		if (err) {
 			return res.json({errors : [err.message]});
