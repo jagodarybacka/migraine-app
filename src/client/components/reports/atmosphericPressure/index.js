@@ -81,6 +81,8 @@ class AtmosphericPressure extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      daysPast: 4,
+      daysFuture: 2,
       data: [],
       timePeriod: {
         from: new Date(),
@@ -95,8 +97,9 @@ class AtmosphericPressure extends Component {
 
   componentDidMount() {
     const now = new Date();
-    const from = new Date(now.getFullYear(),now.getMonth(),now.getDate()-3);
-    const to = new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
+    const { daysPast, daysFuture } = this.state;
+    const from = new Date(now.getFullYear(),now.getMonth(),now.getDate()-daysPast);
+    const to = new Date(now.getFullYear(),now.getMonth(),now.getDate()+daysFuture);
     this.setState((prevState) => ({
       ...prevState,
       timePeriod: {from: from, to: to}
@@ -341,9 +344,13 @@ class AtmosphericPressure extends Component {
       </p>
     )
 
+    const Icon = this.state.customPeriodVisible 
+      ? "" 
+      : ( <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> )
+
     return (
       <AtmosphericPressureComponent width={300} height={300}>
-        <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/>
+        { Icon }
         { periodRange }
         <canvas ref='canvas' width = {300} height = {350}/>
         { customPeriod }
