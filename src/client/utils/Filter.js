@@ -8,8 +8,18 @@ export function filter(reports, timePeriod, query) {
 }
 
 function search(report){
-    return Object.keys(this).every((key) => 
-        report[key] === this[key] || report[key].includes(this[key]));
+    return Object.keys(this).every((key) => {
+        if(typeof this[key] !== 'string'){
+            let contains = false;
+            this[key].forEach((el) => {
+                if(report[key].includes(el) || report[key] === el)
+                    contains = true;
+            })
+            return contains;
+        } 
+        else
+            return report[key] === this[key] || report[key].includes(this[key]);
+    });
 }
 
 function timeFilter(reports, timePeriod) {
