@@ -131,7 +131,7 @@ class RecordForm extends Component {
 
     this.currentDate = this.currentDate.bind(this);
     this.subtractsOneHour = this.subtractsOneHour.bind(this);
- //   this.notYetEnd = this.notYetEnd.bind(this);
+    this.notYetEnd = this.notYetEnd.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
   }
@@ -229,16 +229,14 @@ class RecordForm extends Component {
     })
   }
 
-  // notYetEnd(){
-  //   const { data } = this.state;
-  //   const {end_time, end_date, ...rest} = data
+  notYetEnd(){
+    const { data } = this.state;
+    const {end_time, end_date, ...rest} = data
 
-  //   console.log(data.end_date)
-  //   this.setState({
-  //     data: rest
-
-  //   });
-  // }
+    this.setState({
+      data: rest
+    });
+  }
 
 
 
@@ -319,7 +317,7 @@ class RecordForm extends Component {
               <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
             <div className="record-tab">
-              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
+              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onNotYetClick={this.notYetEnd} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
             <div className="record-tab">
               <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
