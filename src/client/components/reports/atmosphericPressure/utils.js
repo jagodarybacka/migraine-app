@@ -6,29 +6,27 @@ const _ = require('lodash')
  * @return {array}
  */
 const parseForecast = (forecast, from, to) => {
-  const firstExisting = new Date(forecast[0].dt_txt)
-  const mockedPressure = forecast[0].main.pressure
-  let curr = typeof from === "string" ? new Date(from) : from;
-  let missingDates = []
+  const fromDate = typeof from === "string" ? new Date(from) : from;
+  const toDate = typeof to === "string" ? new Date(to) : to;
+  let curr = fromDate;
+  let dates = []
 
-  while (curr.toString() !== firstExisting.toString()) {
-    missingDates.push(curr)
+  while (curr.toString() !== toDate.toString()) {
+    dates.push(curr)
     curr = new Date(curr.setHours(curr.getHours()+3))
   }
 
-  missingDates = missingDates.map((date) => ({
-    pressure: mockedPressure, date: date.toString(), omit: true
+  dates = dates.map((date) => ({
+    pressure: undefined, date: date.toString(), omit: true
   }))
 
-  const existingDates = forecast.map((el) => {
-    return {
-      pressure: el.main.pressure,
-      date: el.dt_txt,
-      omit: false
-    }
+  forecast.forEach((el) => {
+    const index = dates.findIndex((date) => date === el.dt_txt)
+    dates[index].pressure = el.main.pressure;
+    dates[index].omit = false;
   })
 
-  return missingDates.concat(existingDates)
+  return dates
 }
 
 /**
