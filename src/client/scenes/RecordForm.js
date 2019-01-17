@@ -127,9 +127,9 @@ class RecordForm extends Component {
     };
 
     this.firstTab = 0;
-    this.lastTab = 12;
 
     this.currentDate = this.currentDate.bind(this);
+    this.changeSwipeable = this.changeSwipeable.bind(this);
     this.subtractsOneHour = this.subtractsOneHour.bind(this);
     this.notYetEnd = this.notYetEnd.bind(this);
     this.changeTab = this.changeTab.bind(this);
@@ -198,6 +198,10 @@ class RecordForm extends Component {
     }
 
     this.setState({ currentTab: nextTab });
+  }
+
+  changeSwipeable(index){
+    this.setState({ currentTab: index });
   }
 
   // const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
@@ -304,12 +308,11 @@ class RecordForm extends Component {
       return null;
     }).filter(view => !!view);
 
-
     return (
       <Container className="Form">
         <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
-          <SwipeableViews className="form-container" index={currentTab}>
+          <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index) }>
             <div className="record-tab">
               <Hello edit={this.edit} />
             </div>
@@ -344,7 +347,7 @@ class RecordForm extends Component {
           }
           <Button
             onClick={() => this.changeTab('next')}
-            disabled={currentTab === this.lastTab}
+            disabled={currentTab === tabs.length+3 }
             text=">"
           />
         </Buttons>
