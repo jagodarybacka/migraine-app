@@ -226,9 +226,11 @@ class AtmosphericPressure extends Component {
     const dateCoordinates = this.getDateCoordinates(parsedDates)
 
     data.forEach(entry => {
-      const coordX = dateCoordinates.find(date => date.date.toString() === new Date(entry.date).toString()).coordX;
-      const coordY = pressureCoordinates.find(pressure => pressure.pressure === Math.floor(entry.pressure)).coordY;
-      this.drawDot(ctx, coordX, coordY)
+      if (!entry.omit) {
+        const coordX = dateCoordinates.find(date => date.date.toString() === new Date(entry.date).toString()).coordX;
+        const coordY = pressureCoordinates.find(pressure => pressure.pressure === Math.floor(entry.pressure)).coordY;
+        this.drawDot(ctx, coordX, coordY)
+      }
     })
   }
 

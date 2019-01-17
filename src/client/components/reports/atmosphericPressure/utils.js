@@ -11,20 +11,24 @@ const parseForecast = (forecast, from, to) => {
   let curr = fromDate;
   let dates = []
 
-  while (curr.toString() !== toDate.toString()) {
+  while (curr <= toDate) {
     dates.push(curr)
     curr = new Date(curr.setHours(curr.getHours()+3))
   }
 
   dates = dates.map((date) => ({
-    pressure: undefined, date: date.toString(), omit: true
+    pressure: undefined, date, omit: true
   }))
 
   forecast.forEach((el) => {
-    const index = dates.findIndex((date) => date === el.dt_txt)
-    dates[index].pressure = el.main.pressure;
-    dates[index].omit = false;
+    const index = dates.findIndex(({date}) => date.toString()  === new Date(el.dt_txt).toString())
+    if (dates[index]) {
+      console.log('find')
+      dates[index].pressure = el.main.pressure;
+      dates[index].omit = false;
+    }
   })
+  console.log(dates)
 
   return dates
 }
@@ -47,7 +51,7 @@ const getNiceDateFormat = (dates) => dates.map((d) => `${d.getDate()}/${d.getMon
  * Get parsed forecast and creates array of pressures
  * @type {Array.<Object>} forecast - parsed forecast
  */
-const parsePressure = (forecast) => forecast.map(el => parseInt(el.pressure))
+const parsePressure = (forecast) => forecast.filter(el => !el.omit).map(el => parseInt(el.pressure))
 /**
  * Get parsed forecast and creates array of dates
  * @type {Array.<Object>} forecast - parsed forecast
