@@ -57,6 +57,7 @@ class HistoryWidget extends Component {
               duration={formattedDuration + "h"}
               intensity={this.getIntensity(item.pain)}
               isRecent={true}
+              hasEnd={!!item.end_date}
             />
           )}
           <Link to="/history">{languageText.historyWidget.seeAll}</Link>
