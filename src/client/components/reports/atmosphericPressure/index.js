@@ -141,7 +141,7 @@ class AtmosphericPressure extends Component {
       if(res.status === 204){
         this.setState({
           migraines: [],
-          errorMigraine: 'No migraines recorded in this period'
+          errorMigraine: 'No migraines to display in this period'
         })
       }
       if(res.data) {
