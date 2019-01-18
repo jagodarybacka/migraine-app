@@ -67,6 +67,9 @@ img {
   width: 24px;
   height: 24px;
 }
+p {
+  margin: 0.5em 0;
+}
 `
 
 export const City = styled.section`

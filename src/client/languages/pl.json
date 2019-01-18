@@ -62,6 +62,7 @@
 	},
 	"recordCard":{
 		"migraine": "Migrena",
+		"notYetEnded": "Jeszcze się nie skończyła",
 		"noMigraines": "Brak migren"
 	},
 	"menuBar":{
@@ -207,6 +208,8 @@
 		"oftenTogether": "Często występujace razem"
 	},
 	"atmosphericPressure": {
+		"errorPressure": "Brak danych o ciśnieniu atmosferycznym",
+		"errorMigraine": "Brak migren w tym okresie czasu",
 		"noData": "Brak danych",
 		"noPressureData": "Brak danych o ciśnieniu"
 	},

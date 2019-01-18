@@ -39,7 +39,16 @@ const Card = styled.div`
     position: absolute;
     right: 4rem;
     top: 2.5rem;
-
+  }
+  .not-yet {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background: #f44336;
+    padding: 0 5px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.42)
   }
 `
 
@@ -60,6 +69,7 @@ const RecordCard = (props) => {
   }
   return (
     <Card className="RecordCard" color={color} onClick={props.handleClick}>
+      { !props.hasEnd && <div className='not-yet'>{languageText.recordCard.notYetEnded}</div>}
       <time>{props.date}</time>
       <h4>{props.type ? props.type : languageText.recordCard.migraine}</h4>
       <p>{props.duration}  {strength}</p>

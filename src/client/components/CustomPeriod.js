@@ -22,7 +22,7 @@ class CustomPeriod extends Component {
   handleDateChange(ev, name) {
   const state = {
       ...this.state,
-      [name]: new Date(ev.target.value)
+      [name]: new Date(`${ev.target.value}T00:00`)
     }
     this.setState(state)
     this.validate(state)

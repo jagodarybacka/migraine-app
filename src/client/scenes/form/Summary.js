@@ -36,6 +36,7 @@ const SummaryComponent = styled.section`
     box-sizing: border-box;
     border-radius: 10px;
     outline: none;
+    margin-bottom: 1em;
   }
 `
 const TimeDateComponent = styled.div`

@@ -62,11 +62,12 @@
 	},
 	"recordCard":{
 		"migraine": "Migraine",
+		"notYetEnded": "Not yet ended",
 		"noMigraines": "No migraines yet"
 	},
 	"menuBar":{
 		"home": "Home",
-		"reports": "Raports",
+		"reports": "Reports",
 		"settings": "Settings"
 	},
 	"weather":{
@@ -207,6 +208,8 @@
 		"oftenTogether": "Often together"
 	},
 	"atmosphericPressure": {
+		"errorPressure": "No atmospheric pressure data available",
+		"errorMigraine": "No migraines to display in this period",
 		"noData": "No data",
 		"noPressureData": "No pressure data"
 	},
