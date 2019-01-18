@@ -22,11 +22,11 @@ end_time: {
 },
 menstruation: {
     type: String, 
-    enum: ['Yes', 'Coming Soon', 'No', ""], 
+    // enum: ['Yes', 'Coming Soon', 'No', ""], 
 },
 localization: {
     type: String,
-    enum: ['Home', 'Outside', 'Transit', 'Work', 'Bed','School'],
+    // enum: ['Home', 'Outside', 'Transit', 'Work', 'Bed','School'],
 },
 mood: {
     type: String,
@@ -38,7 +38,7 @@ pain: {
 },
 aura: [{
     type: String,
-    enum: ['Nausea', 'Visual Disturbances', 'Hypersensitive To Light', 'Hypersensitive To Sound', 'Hypersensitive To Smell', 'No'],
+    // enum: ['Nausea', 'Visual Disturbances', 'Hypersensitive To Light', 'Hypersensitive To Sound', 'Hypersensitive To Smell', 'No'],
 }],
 sleep_duration: {
     type: Number,

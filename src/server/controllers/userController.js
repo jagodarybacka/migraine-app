@@ -261,3 +261,58 @@ exports.clear_forecast = (req,res,next) => {
 			}
 		});
 }
+
+exports.add_custom_answer = (req,res,next) => {
+	const userId = req.session.userId;
+	const option = req.body.option;
+	const value = req.body.value;
+	User.findById(userId)
+	.exec( function(err, found_user) {
+		if(err) {
+			return res.json({errors : [err.message]});
+		}
+		if(found_user) {
+			if(found_user.custom_answers[option]){
+				if(!found_user.custom_answers[option].includes(value)){
+					found_user.custom_answers[option].push(value);
+					found_user.save(function(err) {
+						if (err) { 
+									return res.json({errors : [err.message]});
+								}
+								return res.json("Answer saved");
+					} )
+				} else {
+					return res.json("Answer already in database");
+				}
+			}
+		} else {
+			res.status(404);
+			res.send('This user does not exist');
+			return;
+		}
+	})
+}
+
+exports.get_custom_answers = (req,res,next) => {
+	const userId = req.session.userId;
+	User.findById(userId, 'custom_answers _id')
+	.exec( function(err, found_user) {
+		if(err) {
+			return res.json({errors : [err.message]});
+		}
+		if(found_user) {
+			console.log(found_user);
+			if(found_user.custom_answers) {
+				res.json(found_user.custom_answers);
+			} else {
+				res.status(204);
+				res.send('No content');
+				return;
+			}
+		} else {
+			res.status(404);
+			res.send('This user does not exist');
+			return;
+		}
+	})
+}

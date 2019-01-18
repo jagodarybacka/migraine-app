@@ -36,6 +36,15 @@ class Home extends Component {
       .catch((err) => {
         console.log(err)
       });
+
+    const option = {option: "localization", value: "Holiday"};
+    axios.post('/api/users/answer',option)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err)
+    });
   }
 
   render() {

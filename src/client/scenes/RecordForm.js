@@ -6,10 +6,8 @@ import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
 import moment from 'moment';
 
-
 import Button from '../components/Button'
 import Header from '../components/Header'
-
 import MonitorImg from '../assets/monitor.png'
 
 import {
@@ -26,7 +24,6 @@ import {
   SleepDuration,
   Reliefs
 } from './form/AddForm';
-
 
 const Container = styled.article`
   padding: 0;
@@ -123,7 +120,8 @@ class RecordForm extends Component {
       dateValidation: {
         valid: true,
         err_msg: ""
-      }
+      },
+      customAnswers: {}
     };
 
     this.firstTab = 0;
@@ -134,6 +132,7 @@ class RecordForm extends Component {
     this.notYetEnd = this.notYetEnd.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
+    this.parseCustomAnswers = this.parseCustomAnswers.bind(this);
   }
 
   componentDidMount() {
@@ -151,6 +150,37 @@ class RecordForm extends Component {
         this.setState({ data: data.report })
       })
     }
+    axios.get('/api/users/answer')
+      .then((res) => {
+        if(res.status === 204){
+          console.log("No content");
+        } else {
+          const data = this.parseCustomAnswers(res.data);
+          this.setState((prevState) => ({
+            ...prevState,
+            customAnswers: data
+          }))
+       }
+      })
+      .catch((err) => {console.log(err);})
+  }
+
+  parseCustomAnswers(answers) {
+    for(var op in answers) {
+      if(answers[op].length > 0){
+        answers[op] = this.mapValues(answers[op]);
+      }
+    }
+    return answers;
+  }
+
+  mapValues(values) {
+    return values.map((value) => {
+      return {
+        text: value,
+        value: value
+      }
+    })
   }
 
   handleChangeTabValue(evt) {
@@ -183,7 +213,6 @@ class RecordForm extends Component {
         }
       })
   }
-
 
   changeTab(direction) {
     const { currentTab } = this.state;
@@ -242,8 +271,6 @@ class RecordForm extends Component {
     });
   }
 
-
-
   isComplete() {
     const { data } = this.state;
     return (
@@ -267,41 +294,52 @@ class RecordForm extends Component {
   }
 
   render() {
-    const { currentTab, data } = this.state;
+    const { currentTab, data, customAnswers } = this.state;
     const { match } = this.props;
     const fields = [{
-      component: Medicines,
-      name: 'medicines'
-    }, {
-      component: Aura,
-      name: 'aura'
-    }, {
-      component: Triggers,
-      name: 'triggers'
-    }, {
-      component: Reliefs,
-      name: 'reliefs'
-    }, {
-      component: Mood,
-      name: 'mood'
-    }, {
-      component: Pressure,
-      name: 'pressure'
-    }, {
-      component: SleepDuration,
-      name: 'sleep_duration'
-    }, {
-      component: Menstruation,
-      name: 'menstruation'
-    }, {
-      component: Localization,
-      name: 'localization'
-    }]
+        component: Medicines,
+        name: 'medicines',
+        custom: true
+      }, {
+        component: Aura,
+        name: 'aura',
+        custom: true
+      }, {
+        component: Triggers,
+        name: 'triggers',
+        custom: true
+      }, {
+        component: Reliefs,
+        name: 'reliefs',
+        custom: true
+      }, {
+        component: Mood,
+        name: 'mood'
+      }, {
+        component: Pressure,
+        name: 'pressure'
+      }, {
+        component: SleepDuration,
+        name: 'sleep_duration'
+      }, {
+        component: Menstruation,
+        name: 'menstruation'
+      }, {
+        component: Localization,
+        name: 'localization',
+        custom: true
+      }]
+
     const tabs = fields.map((field, id) => {
       if (this.getUserFormField(field.name)) {
         return (
           <div className="record-tab" key={id}>
-            <field.component values={data[field.name]} valueData={data[field.name]} onChange={this.handleChangeTabValue} />
+            <field.component 
+              onCustomAnswer={this.handleCustomAnswer}
+              customAnswers = {customAnswers[field.name]}
+              values={data[field.name]} 
+              valueData={data[field.name]} 
+              onChange={this.handleChangeTabValue} />
           </div>
         )
       }
