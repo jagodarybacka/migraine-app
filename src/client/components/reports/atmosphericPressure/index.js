@@ -120,7 +120,7 @@ class AtmosphericPressure extends Component {
       if(res.status === 204) {
         this.setState({
           data: [],
-          errorPressure: 'No atmospheric pressure data available'
+          errorPressure: languageText.atmosphericPressure.errorPressure
         })
       }
       if(res.data) {
@@ -141,7 +141,7 @@ class AtmosphericPressure extends Component {
       if(res.status === 204){
         this.setState({
           migraines: [],
-          errorMigraine: 'No migraines to display in this period'
+          errorMigraine: languageText.atmosphericPressure.errorMigraine
         })
       }
       if(res.data) {

@@ -69,7 +69,7 @@ const RecordCard = (props) => {
   }
   return (
     <Card className="RecordCard" color={color} onClick={props.handleClick}>
-      { !props.hasEnd && <div className='not-yet'>Not yet ended</div>}
+      { !props.hasEnd && <div className='not-yet'>{languageText.recordCard.notYetEnded}</div>}
       <time>{props.date}</time>
       <h4>{props.type ? props.type : languageText.recordCard.migraine}</h4>
       <p>{props.duration}  {strength}</p>
