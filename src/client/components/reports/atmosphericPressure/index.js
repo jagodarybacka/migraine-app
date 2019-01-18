@@ -88,7 +88,9 @@ class AtmosphericPressure extends Component {
       },
       migraines: [],
       customPeriodVisible: false,
-      customPeriodApplied: false
+      customPeriodApplied: false,
+      errorPressure: '',
+      errorMigraine: ''
     }
     this.handleCustomPeriod = this.handleCustomPeriod.bind(this);
   }
@@ -116,13 +118,16 @@ class AtmosphericPressure extends Component {
     axios.get(url)
     .then((res) => {
       if(res.status === 204) {
-        alert(languageText.atmosphericPressure.noPressureData);
+        this.setState({
+          data: [],
+          errorPressure: 'No atmospheric pressure data available'
+        })
       }
       if(res.data) {
         const parsedForecast = parse.forecast(res.data, this.state.timePeriod.from, this.state.timePeriod.to);
-        console.log(parsedForecast)
         this.setState({
-          data: parsedForecast
+          data: parsedForecast,
+          errorPressure: ''
         })
       }
     })
@@ -134,11 +139,15 @@ class AtmosphericPressure extends Component {
     axios.get(url)
     .then((res) => {
       if(res.status === 204){
-        console.log(languageText.atmosphericPressure.noData);
+        this.setState({
+          migraines: [],
+          errorMigraine: 'No migraines recorded in this period'
+        })
       }
       if(res.data) {
         this.setState({
-          migraines: res.data
+          migraines: res.data,
+          errorMigraine: ''
         })
       }
     })
@@ -157,10 +166,16 @@ class AtmosphericPressure extends Component {
     ctx.fillStyle = "#4C5062";
 
     this.drawGraph(ctx)
+    ctx.fillText(this.state.errorPressure, 65, 40);
+    ctx.fillText(this.state.errorMigraine, 70, 25);
   }
 
   drawDateAxis(ctx) {
-    const parsedDates = parse.date(this.state.data);
+    let parsedDates = parse.date(this.state.data)
+    if (!parsedDates.length) {
+      parsedDates = get.datesFromPeriod(this.state.timePeriod.from, this.state.timePeriod.to);
+    }
+
     const canvas = this.refs.canvas;
     const canvasWidth = canvas.width;
     const bottomPadding = canvas.height - 10;
@@ -197,7 +212,7 @@ class AtmosphericPressure extends Component {
     for (let i = rangeOfPressure.min; i <= rangeOfPressure.max; i += step) {
       const coord = pressureCoordinates.find(el => el.pressure === i).coordY
       this.drawHorizontalLine(ctx, [leftPadding, coord], [rightPadding, coord])
-      ctx.fillText(`${i}`, leftPadding, coord - 4);
+      i > 0 && ctx.fillText(`${i}`, leftPadding, coord - 4);
     }
   }
 
@@ -239,8 +254,11 @@ class AtmosphericPressure extends Component {
     const canvas = this.refs.canvas;
     const canvasHeight = canvas.height;
     const blockHeight =  canvasHeight - 60;
-
-    const parsedDates = parse.date(this.state.data);
+    let forecastData = this.state.data;
+    if (!forecastData.length) {
+      forecastData = parse.forecast([], this.state.timePeriod.from, this.state.timePeriod.to)
+    }
+    const parsedDates = parse.date(forecastData);
     const dateCoordinates = this.getDateCoordinates(parsedDates)
 
     const migraines = this.state.migraines;

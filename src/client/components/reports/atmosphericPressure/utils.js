@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const moment = require('moment')
 
 /**
  * parsing 5 days forecast to array of pressure and dates
@@ -37,11 +38,22 @@ const parseForecast = (forecast, from, to) => {
  * @return {[type]}      [description]
  */
 const getRange = (data) => ({
-  max: _.max(data),
-  min: _.min(data)
+  max: _.max(data) || -1,
+  min: _.min(data) || -1
 })
 
 const getDaysBetween = (a, b) => Math.ceil(Math.abs(a.getTime() - b.getTime()) / (1000 * 3600 * 24))
+
+const getDatesFromPeriod = (from, to) => {
+  let curr = from;
+  let dates = []
+
+  while (curr <= to) {
+    dates.push(curr)
+    curr = moment(curr).add(1, 'day').toDate();
+  }
+  return dates;
+}
 
 const getNiceDateFormat = (dates) => dates.map((d) => `${d.getDate()}/${d.getMonth()+1}`)
 
@@ -68,6 +80,7 @@ const parseFixHour = (dateString) => {
   if (hour > 15 && hour < 18) return `${base}15:00`;
   if (hour > 18 && hour < 21) return `${base}18:00`;
   if (hour > 21) return `${base}21:00`;
+  if (hour < 10) return `${base}0${hour}:00`
   return `${base}${hour}:00`
 }
 
@@ -75,7 +88,8 @@ module.exports = {
   get: {
     range: getRange,
     daysBetween: getDaysBetween,
-    niceDateFormat: getNiceDateFormat
+    niceDateFormat: getNiceDateFormat,
+    datesFromPeriod: getDatesFromPeriod
   },
   parse: {
     forecast: parseForecast,
