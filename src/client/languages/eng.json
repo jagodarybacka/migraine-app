@@ -252,9 +252,9 @@
 		],
 		"weather":"Weather",
 		"triggers": "Triggers",
-		"localization": "Localizations",
+		"localization": "Localization",
 		"reliefs": "Helpful during migraine",
-		"medicines": "Leki",
+		"medicines": "Medicines",
 		"error": "You're missing some data. Please, while recording a migraine, always take your time to fill out the form so we can provide you more useful informations.",
 		"weatherOptions":[
 			{"text": "Storm", "value": "Thunderstorm"},
