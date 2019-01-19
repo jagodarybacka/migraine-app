@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import logo from '../../svg/logo.svg'
 import pl from '../../assets/lang/plIcon.png';
 import eng from '../../assets/lang/engIcon.png';
-import { Page, Language, Header, Footer } from './web.styles';
+import { Page, Language, HeaderParalax, Footer } from './web.styles';
 import {languageText, setLanguage} from '../../languages/MultiLanguage.js';
 
 import ImgForm from './assets/page-form.png'
@@ -12,6 +12,7 @@ import ImgSummary from './assets/page-summary.png'
 import ImgPressure from './assets/page-pressure.png'
 import ImgSummaryReport from './assets/page-summary-report.png'
 import ImgTogether from './assets/page-together.png'
+import ImgHeader from './assets/header.png'
 
 
 class Home extends Component {
@@ -34,19 +35,20 @@ class Home extends Component {
       <img className="language__button" src={eng} alt={languageText.web.engAlt} onClick={() => this.setNewLanguage('eng')} />
       </Language>
         <div className="web__container">
-          <Header>
-            <img className="header__logo" src={logo} alt="logo" />
-            <h1 className="header__title">{languageText.web.title}</h1>
-            <h2 className="header__subtitle">{languageText.web.subtitle}</h2>
-            <div className="header__box">
-            </div>
-          </Header>
-          <Link to="/download">
-            <button className="web__button">Get Application</button>
-          </Link>
-          <p>
-            <span className="web__p--brand">Migrane app</span>is your digital diary where you keep track of your headaches, auras and migraines. Take notes about every condition you have and you will get back meaningful informations about your triggers.
-          </p>
+          <HeaderParalax>
+            <Link to="/download">
+              <img className="header__img" src={ImgHeader} alt="Migraine App" />
+            </Link>
+          </HeaderParalax>
+
+          <div className="web__features">
+            <p>
+              <span className="web__p--brand">Migrane app</span>is your digital diary where you keep track of your headaches, auras and migraines. Take notes about every condition you have and you will get back meaningful informations about your triggers.
+            </p>
+            <Link to="/download">
+              <button className="web__button">Get Application</button>
+            </Link>
+          </div>
 
           <div className="web__features">
             <h3 className="features__header">Application features</h3>
@@ -73,7 +75,7 @@ class Home extends Component {
           </div>
         </div>
         <Footer>
-          <h4>Migraine App. 2018-2019</h4>        
+          <h4>Migraine App. 2018-2019</h4>
         </Footer>
       </Page>
     )

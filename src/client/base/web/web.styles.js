@@ -50,7 +50,7 @@ export const Page = styled.div`
     }
 
     .web__features {
-      margin: 2rem 0;
+      margin-bottom: 4rem;
       padding: 2rem 0 4rem;
       background: #fff;
       box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
@@ -147,6 +147,15 @@ export const Header = styled.header`
     width: 100%;
   }
 `
+
+export const HeaderParalax = styled.div`
+  max-height: 600px;
+  overflow: hidden;
+  text-align: center;
+  img {
+    background-attachment: fixed;
+  }
+`;
 
 export const Footer = styled.footer`
   background: #ff9292cf;
