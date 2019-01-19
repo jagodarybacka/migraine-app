@@ -20,6 +20,10 @@ class Download extends Component {
     window.location.reload();
   }
 
+  componentDidMount(){
+    window.scroll(0,0);
+  }
+
   render() {
     return (
       <Page>
@@ -41,7 +45,7 @@ class Download extends Component {
             </div>
 
             <div className="header__contaier">
-              <h3 className="header__text">Install application on your mobile device</h3>
+              <h3 className="header__text">{languageText.web.installApp}</h3>
               <img className="header__img" src={ImgInstall} alt="install" />
             </div>
           </div>

@@ -42,10 +42,10 @@ class Home extends Component {
 
           <div className="web__features">
             <p>
-              <span className="web__p--brand">Migrane app</span>is your digital diary where you keep track of your headaches, auras and migraines. Take notes about every condition you have and you will get back meaningful informations about your triggers.
+              <span className="web__p--brand">{languageText.infoPage.appName}</span>{languageText.infoPage.appDescription}
             </p>
             <Link to="/download">
-              <button className="web__button">Get Application</button>
+              <button className="web__button">{languageText.infoPage.getApplication}</button>
             </Link>
           </div>
 
