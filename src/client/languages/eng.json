@@ -255,7 +255,7 @@
 		"localization": "Localizations",
 		"reliefs": "Helpful during migraine",
 		"medicines": "Leki",
-		"error": "You don't have some data. Please, while recording a migraine, always take your time to fill out the form so we can provide you more useful informations.",
+		"error": "You're missing some data. Please, while recording a migraine, always take your time to fill out the form so we can provide you more useful informations.",
 		"weatherOptions":[
 			{"text": "Storm", "value": "Thunderstorm"},
 			{"text": "Drizzle", "value": "Drizzle"},
