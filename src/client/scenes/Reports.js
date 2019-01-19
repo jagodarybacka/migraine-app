@@ -67,15 +67,15 @@ class Reports extends Component {
     return (
       <ReportsContainer>
         <Header />
-        <ReportName>{MODE[this.state.mode].header}</ReportName>
-        {
-          MODE[this.state.mode].component
-        }
         <Buttons>
           <Button small img={summaryImg} primary={this.state.mode === 1} onClick={() => this.toggleReport(1)}/>
           <Button small img={pressureImg} primary={this.state.mode === 2} onClick={() => this.toggleReport(2)}/>
           <Button small img={oftenTogetherImg} primary={this.state.mode === 3} onClick={() => this.toggleReport(3)}/>
         </Buttons>
+        <ReportName>{MODE[this.state.mode].header}</ReportName>
+        {
+          MODE[this.state.mode].component
+        }
         <Menubar />
       </ReportsContainer>
     )

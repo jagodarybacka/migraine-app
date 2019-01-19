@@ -77,5 +77,176 @@ module.exports = {
             const fDate = moment(f.dt_txt, 'YYYY-MM-DD HH:mm:ss');
             return fDate.isAfter(start) && fDate.isBefore(end);
         })
+    },
+
+    getInformations(reports) {
+        const significanceLevel = 0.7;
+        let weather = {};
+        let triggers = {};
+        let localization = {};
+        let reliefs = {};
+        let medicines = {};
+        reports.forEach((report) => {
+            if(report.triggers)
+                triggers = this.modifyObject(triggers,report.triggers);
+            if(report.localization)
+                localization = this.modifyObject(localization,report.localization);
+            if(report.reliefs)
+                reliefs = this.modifyObject(reliefs,report.reliefs);
+            if(report.medicines)
+                medicines = this.modifyObject(medicines,report.medicines);
+            if(report.weather)
+                weather = this.modifyWeather(weather,report.weather);
+        })
+        // console.log(triggers,localization,reliefs,medicines,weather);
+        const { triggersCount, localizationCount, reliefsCount, medicinesCount } = this.countSum(triggers,localization,reliefs, medicines);
+        const weatherCount = this.countWeatherSum(weather);
+        const triggersSignificance = this.countSignificance(triggers,triggersCount, significanceLevel);
+        const localizationSignificance = this.countSignificance(localization,localizationCount, significanceLevel);
+        const reliefsSignificance = this.countSignificance(reliefs,reliefsCount, significanceLevel);
+        const medicinesSignificance = this.countSignificance(medicines,medicinesCount,significanceLevel);
+        const weatherSignificance = this.countWeatherSignificance(weather,weatherCount, significanceLevel);
+        // console.log(triggersSignificance, localizationSignificance, reliefsSignificance, weatherSignificance);
+        return {
+            triggers: this.getSignificant(triggersSignificance),
+            localization: this.getSignificant(localizationSignificance),
+            reliefs: this.getSignificant(reliefsSignificance),
+            medicines: this.getSignificant(medicinesSignificance),
+            weather: this.getSignificantWeather(weatherSignificance)
+        }
+    },
+
+    getSignificantWeather(weather) {
+        return {
+            pressure: this.getSignificant(weather.pressure),
+            temperature: this.getSignificant(weather.temperature),
+            description: this.getSignificant(weather.description)
+        };
+    },
+
+    getSignificant(object){
+        let values = [];
+        for(let answer in object){
+            if(object[answer]){
+                values.push(answer);
+            }
+        }
+        return values;
+    },
+
+    countWeatherSignificance(weather,count,significanceLevel) {
+        for(let option in weather) {
+            weather[option] = this.countSignificance(weather[option],count[option],significanceLevel)
+        }
+        return weather;
+    },
+
+    countSignificance(object,count,significanceLevel) {
+        for(let answer in object){
+            object[answer] = (object[answer] / count) >= significanceLevel ? true : false ;
+        }
+        return object;
+    },
+
+    countWeatherSum(weather){
+        let pressureCount = 0;
+        let temperatureCount = 0;
+        let descriptionCount = 0;
+        for(let option in weather.pressure){
+            pressureCount += weather.pressure[option]
+        }
+        for(let option in weather.temperature){
+            temperatureCount += weather.temperature[option]
+        }
+        for(let option in weather.description){
+            descriptionCount += weather.description[option]
+        }
+        return {
+            pressure: pressureCount,
+            temperature: temperatureCount,
+            description: descriptionCount
+        }
+    },
+
+    countSum(triggers,localization,reliefs, medicines){
+        let triggersCount = 0; 
+        let localizationCount = 0; 
+        let reliefsCount = 0;
+        let medicinesCount = 0;
+        for(let answer in triggers){
+            triggersCount += triggers[answer]
+        }
+        for(let answer in localization){
+            localizationCount += localization[answer]
+        }
+        for(let answer in reliefs){
+            reliefsCount += reliefs[answer]
+        }
+        for(let answer in medicines){
+            medicinesCount += medicines[answer]
+        }
+        return { triggersCount, localizationCount, reliefsCount, medicinesCount };
+    },
+
+    sort(object) {
+        var sortable = [];
+        for (var answer in object) {
+            sortable.push([answer, object[answer]]);
+        }
+
+        return sortable.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+    },
+
+    modifyWeather(object, weather) {
+        if(weather){
+            if(weather.pressure){
+                object = this.parseProp(object,'pressure',weather.pressure)
+            }
+            if(weather.temperature){
+                object = this.parseProp(object,'temperature',weather.temperature)
+            }
+            if(weather.weather){
+                if(weather.weather.weather[0].main){
+                object = this.parseProp(object,'description',weather.weather.weather[0].main)
+                }
+            }
+        }
+        return object;
+    },
+
+    parseProp(object,name,value){
+        if(object.hasOwnProperty(name)){
+            if(object[name][value]){
+                object[name][value] += 1;
+            }
+            else {
+                object[name][value] = 1;
+            }
+        } else {
+            object[name] = {};
+            object[name][value] = 1;
+        }
+        return object;
+    },
+
+    modifyObject(object, values) {
+        if(typeof values !== 'string'){
+            values.forEach((value) => {
+                if(object.hasOwnProperty(value)){
+                    object[value] += 1;
+                } else {
+                    object[value] = 1;
+                }
+            })
+        } else {
+            if(object.hasOwnProperty(values)){
+                object[values] += 1;
+            } else {
+                object[values] = 1;
+            }
+        }
+        return object;
     }
 }

@@ -193,7 +193,9 @@
 			{"text": "Zmęcznie", "value": "Tiredness"},
 			{"text": "Odwodnienie", "value": "Dehydration"},
 			{"text": "Głód", "value": "Hunger"},
-			{"text": "Sport", "value": "Sport"}
+			{"text": "Sport", "value": "Sport"},
+			{"text": "Silny zapach", "value": "Strong smell"},
+			{"text": "Depresja", "value": "Depression"}
 		],
 		"auraAnswers": [
 			{"text": "Nudności", "value": "Nausea"},
@@ -221,7 +223,7 @@
 	},
 	"atmosphericPressure": {
 		"errorPressure": "Brak danych o ciśnieniu atmosferycznym",
-		"errorMigraine": "Brak migren w tym okresie czasu",
+		"errorMigraine": "Brak migren w tym przedziale czasu",
 		"noData": "Brak danych",
 		"noPressureData": "Brak danych o ciśnieniu"
 	},
@@ -250,16 +252,52 @@
 		],
 		"weather":"Pogoda",
 		"triggers": "Przyczyny",
+		"localization": "Lokalizacje",
+		"reliefs": "Pomocne w trakcie migreny",
+		"medicines": "Leki",
+		"error": "Brakuje Ci niektórych danych. Prosimy, w trakcie dodawania migreny poświęć czas na wypełnienie formularza, byśmy mogli dostarczyć Ci więcej przydatnych informacji.",
 		"weatherOptions":[
-			{"text": "Burza", "value": "Storm"},
-			{"text": "1018 hPa", "value": "1018 hPa"},
-			{"text": "Deszcz", "value": "Rain"}
+			{"text": "Burza", "value": "Thunderstorm"},
+			{"text": "Mżawka", "value": "Drizzle"},
+			{"text": "Deszcz", "value": "Rain"},
+			{"text": "Śnieg", "value": "Snow"},
+			{"text": "Mgła", "value": "Atmosphere"},
+			{"text": "Słońce", "value": "Clear"},
+			{"text": "Zachmurzenie", "value": "Clouds"}
 		],
 		"triggersOptions":[
-			{"text": "Odwodnienie", "value": "Dehydration"},
+			{"text": "Alkohol", "value": "Alcohol"},
 			{"text": "Stres", "value": "Stress"},
+			{"text": "Zmęcznie", "value": "Tiredness"},
+			{"text": "Odwodnienie", "value": "Dehydration"},
+			{"text": "Głód", "value": "Hunger"},
+			{"text": "Sport", "value": "Sport"},
 			{"text": "Silny zapach", "value": "Strong smell"},
 			{"text": "Depresja", "value": "Depression"}
+		],
+		"reliefsOptions":[
+			{"text": "Zaciemniony pokój", "value": "Dark room"},
+			{"text": "Joga/medytacja", "value": "Yoga/meditate"},
+			{"text": "Sen", "value": "Sleep"},
+			{"text": "Ciepły prysznic", "value": "Hot shower"},
+			{"text": "Zimny prysznic", "value": "Cold shower"},
+			{"text": "Kostki lodu", "value": "Ice packs"},
+			{"text": "Termofor", "value": "Heat pad"},
+			{"text": "Żadne/Inne", "value": "None/Others"}
+		],
+		"localizationOptions": [
+			{"text": "Dom", "value": "Home"},
+			{"text": "Na zewnątrz", "value": "Outside"},
+			{"text": "W drodze", "value": "Transit"},
+			{"text": "Praca", "value": "Work"},
+			{"text": "Łóżko", "value": "Bed"},
+			{"text": "Szkoła", "value": "School"}
+		],
+		"medicinesOptions": [
+			{"text": "Ibuprofen", "value": "Ibuprofen"},
+			{"text": "Paracetamol", "value": "Paracetamol"},
+			{"text": "Kodeina", "value": "Codeine"},
+			{"text": "Triptan", "value": "Triptans"}
 		]
 	},
 	"text":{
