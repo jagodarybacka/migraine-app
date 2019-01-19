@@ -8,10 +8,9 @@ import Button from '../components/Button';
 import Divider from '../components/Divider';
 import Checkbox from '../components/Checkbox';
 import localizationIcon from '../assets/localization.png'
-import medicinesIcon from '../assets/medicine-color.png'
-import triggersIcon from '../assets/questionmark-color.png'
-import reliefsIcon from '../assets/questionmark-color2.png'
-import auraIcon from '../assets/eye-color.png'
+import medicinesIcon from '../assets/medicine.png'
+import questionmarkIcon from '../assets/questionmark.png'
+import auraIcon from '../assets/eye.png'
 
 import axios from 'axios';
 import TextInput from '../components/TextInput';
@@ -43,6 +42,23 @@ const Buttons = styled.div`
   img {
     width: 30px;
     heigth: 30px;
+  }
+`
+
+const List = styled.div`
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin: 2em 10%;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  flex-wrap: wrap;
+  justify-content: center;
+  h4{
+    margin: 5px;
+    text-transform: uppercase;
+    font-weight: 300;
   }
 `
 
@@ -78,7 +94,8 @@ class Settings extends Component {
       },
       ifCustomAnswer: false,
       answerType: '',
-      current: {}
+      current: {},
+      customAnswers: {}
     }
     this.baseFieldsState = this.state.fields;
 
@@ -89,6 +106,7 @@ class Settings extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
     this.addAnswer = this.addAnswer.bind(this);
+    this.getAnswers = this.getAnswers.bind(this);
   }
 
   logout(){
@@ -112,8 +130,43 @@ class Settings extends Component {
   };
 
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.getAnswers();
   };
+
+  getAnswers() {
+    axios.get('/api/users/answer')
+    .then((res) => {
+      if(res.status === 204){
+        console.log("No content");
+      } else {
+        const data = this.parseCustomAnswers(res.data);
+        this.setState((prevState) => ({
+          ...prevState,
+          customAnswers: data
+        }))
+     }
+    })
+    .catch((err) => {console.log(err);})
+  }
+
+  parseCustomAnswers(answers) {
+    for(var op in answers) {
+      if(answers[op].length > 0){
+        answers[op] = this.mapValues(answers[op]);
+      }
+    }
+    return answers;
+  }
+
+  mapValues(values) {
+    return values.map((value) => {
+      return {
+        text: value,
+        value: value
+      }
+    })
+  }
 
   componentWillMount(){
     const isLoggedIn = localStorage.getItem('isLogged');
@@ -258,10 +311,15 @@ class Settings extends Component {
   addAnswer(option){
     this.setState((prevState) => ({
       ...prevState,
-      ifCustomAnswer: true,
+      ifCustomAnswer: false,
       answerType: option.field,
       current: option
-    }))
+    }), () => {
+      this.setState((prevState) => ({
+        ...prevState,
+        ifCustomAnswer: true
+      }))
+    })
   }
 
   handleCustomAnswer(data,cancel){
@@ -269,11 +327,12 @@ class Settings extends Component {
       const option = {option: data.answerType, value: data.answer};
       axios.post('/api/users/answer',option)
       .then((res) => {
+        console.log(res.data);
         this.setState((prevState) => ({
           ...prevState,
           ifCustomAnswer: false,
           answerType: ''
-        }))
+        }), () => this.getAnswers())
       })
       .catch((err) => {
         console.log(err)
@@ -303,6 +362,16 @@ class Settings extends Component {
       }
       )
     })
+
+    const answersList = this.state.ifCustomAnswer 
+      ? languageText.addForm[this.state.answerType + `Answers`].concat(this.state.customAnswers[this.state.answerType]) 
+      : [];
+
+    const Answers = answersList.length > 0 ? (
+      answersList.map((answer, index) => (
+        <h4 key={index}>{answer.text}</h4>
+      ))
+    ) : '';
 
     let currentLang = getLanguage();
     return (
@@ -335,12 +404,24 @@ class Settings extends Component {
                 small
                 onClick={() => this.addAnswer(option)}
                 primary={this.state.answerType ===option.field} 
-                img={option.src}/>
+                img= {option.field === 'localization' 
+                  ? localizationIcon 
+                  : option.field === "aura"
+                    ? auraIcon
+                    : option.field === "medicines"
+                      ? medicinesIcon
+                      : option.field === "triggers"
+                        ? questionmarkIcon
+                        : questionmarkIcon}/>
                 <h6>{option.text}</h6>
                 </div>
               ))
             }
           </Buttons>
+          { this.state.ifCustomAnswer ? 
+            (<List>
+               { Answers }
+            </List>) : "" }
           { customAnswer }
           <Divider text={languageText.settings.chooseLanguage}/>
             <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />

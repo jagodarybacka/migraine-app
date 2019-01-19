@@ -273,7 +273,8 @@ exports.add_custom_answer = (req,res,next) => {
 		}
 		if(found_user) {
 			if(found_user.custom_answers[option]){
-				if(!found_user.custom_answers[option].includes(value)){
+				const answers = found_user.custom_answers[option].map((answer) => answer.toLowerCase());
+				if(!answers.includes(value.toLowerCase())){
 					found_user.custom_answers[option].push(value);
 					found_user.save(function(err) {
 						if (err) { 
@@ -301,7 +302,7 @@ exports.get_custom_answers = (req,res,next) => {
 			return res.json({errors : [err.message]});
 		}
 		if(found_user) {
-			console.log(found_user);
+			// console.log(found_user);
 			if(found_user.custom_answers) {
 				res.json(found_user.custom_answers);
 			} else {

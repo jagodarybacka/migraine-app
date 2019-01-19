@@ -335,7 +335,6 @@ class RecordForm extends Component {
         return (
           <div className="record-tab" key={id}>
             <field.component 
-              onCustomAnswer={this.handleCustomAnswer}
               customAnswers = {customAnswers[field.name]}
               values={data[field.name]} 
               valueData={data[field.name]} 
