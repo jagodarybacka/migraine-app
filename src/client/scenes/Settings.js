@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
-
+import CustomAnswer from './CustomAnswer';
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button';
 import Divider from '../components/Divider';
 import Checkbox from '../components/Checkbox';
+import localizationIcon from '../assets/localization.png'
+import medicinesIcon from '../assets/medicine-color.png'
+import triggersIcon from '../assets/questionmark-color.png'
+import reliefsIcon from '../assets/questionmark-color2.png'
+import auraIcon from '../assets/eye-color.png'
+
 import axios from 'axios';
 import TextInput from '../components/TextInput';
 import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
@@ -21,6 +27,22 @@ const SettingsComponent = styled.div`
 
   .chosenLang{
     color: red;
+  }
+`
+
+const Buttons = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 10px;
+  h6 {
+    margin: 5px 0 0 0;
+    text-transform: uppercase;
+  }
+  img {
+    width: 30px;
+    heigth: 30px;
   }
 `
 
@@ -53,7 +75,10 @@ class Settings extends Component {
           isValid: false,
           errorMsg: '',
         }
-      }
+      },
+      ifCustomAnswer: false,
+      answerType: '',
+      current: {}
     }
     this.baseFieldsState = this.state.fields;
 
@@ -63,6 +88,7 @@ class Settings extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
+    this.addAnswer = this.addAnswer.bind(this);
   }
 
   logout(){
@@ -229,15 +255,96 @@ class Settings extends Component {
     return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
   }
 
+  addAnswer(option){
+    this.setState((prevState) => ({
+      ...prevState,
+      ifCustomAnswer: true,
+      answerType: option.field,
+      current: option
+    }))
+  }
+
+  handleCustomAnswer(data,cancel){
+    if(data.answer && data.answerType){
+      const option = {option: data.answerType, value: data.answer};
+      axios.post('/api/users/answer',option)
+      .then((res) => {
+        this.setState((prevState) => ({
+          ...prevState,
+          ifCustomAnswer: false,
+          answerType: ''
+        }))
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        ifCustomAnswer: false,
+        answerType: ''
+      }))
+    }
+  }
+
   render() {
+    const customAnswer = this.state.ifCustomAnswer 
+      ? (<CustomAnswer answerType={this.state.answerType} current={this.state.current} onConfirmFn={this.handleCustomAnswer.bind(this)}/>) 
+      : '';
+    
     const { username, email, oldPassword, password } = this.state.fields;
     const fields = languageText.settings.formFieldsOptions;
+    const answers = languageText.settings.customAnswers.map((answer) => {
+      return ({
+        field: answer.field,
+        text: answer.text,
+        placeholder: answer.placeholder,
+        src: answer.field + 'Icon'
+      }
+      )
+    })
+
     let currentLang = getLanguage();
     return (
       <SettingsComponent className="Settings">
           <Header />
           <Divider text={languageText.settings.logout}/>
           <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
+          <Divider text={languageText.settings.formFields}/>
+          <div>
+          {
+            fields.map((field, index) => (
+              <Checkbox
+              key={index}
+              small
+              text={field.text}
+              value={field.text}
+              checked={this.getUserFormField(field.field)}
+              onChange={() => this.toggleUserFormField(field.field)}
+              />
+            ))
+          }
+          </div>
+          <Divider text={languageText.settings.setCustomAnswers}/>
+          <Buttons>
+            {
+              answers.map((option, index) => (
+                <div key={index}>
+                <Button 
+                key={index}
+                small
+                onClick={() => this.addAnswer(option)}
+                primary={this.state.answerType ===option.field} 
+                img={option.src}/>
+                <h6>{option.text}</h6>
+                </div>
+              ))
+            }
+          </Buttons>
+          { customAnswer }
+          <Divider text={languageText.settings.chooseLanguage}/>
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
           <Divider text={languageText.settings.changeData}/>
           <TextInput
             type="text"
@@ -282,26 +389,9 @@ class Settings extends Component {
             onChange={this.handleChange}
           />
           <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
-          <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
-          <Divider text={languageText.settings.formFields}/>
-          <div>
-          {
-            fields.map((field, index) => (
-              <Checkbox
-              key={index}
-              small
-              text={field.text}
-              value={field.text}
-              checked={this.getUserFormField(field.field)}
-              onChange={() => this.toggleUserFormField(field.field)}
-              />
-            ))
-          }
-          </div>
         <Menubar />
-      </SettingsComponent>
+      </SettingsComponent> 
+
     );
   }
 }
