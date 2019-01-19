@@ -42,19 +42,19 @@ class Home extends Component {
 
           <div className="web__features">
             <p>
-              <span className="web__p--brand">Migrane app</span>is your digital diary where you keep track of your headaches, auras and migraines. Take notes about every condition you have and you will get back meaningful informations about your triggers.
+              <span className="web__p--brand">{languageText.infoPage.appName}</span>{languageText.infoPage.appDescription}
             </p>
             <Link to="/download">
-              <button className="web__button">Get Application</button>
+              <button className="web__button">{languageText.infoPage.getApplication}</button>
             </Link>
           </div>
 
           <div className="web__features">
-            <h3 className="features__header">Application features</h3>
+          <h3 className="features__header">{languageText.infoPage.featuresHeader}</h3>
 
             <div className="features__section">
-              <h4 className="features__subheader">Quick save and easy browse</h4>
-              <p>When you want to save informations about your migraine you can adjust the amount of informations you want to include. Your past migraines will be available to browse any time you will need them.</p>
+              <h4 className="features__subheader">{languageText.infoPage.featuresSubheader}</h4>
+              <p>{languageText.infoPage.featuresDescription}</p>
               <div className="features__imgs">
                 <img className="features__img" alt="Form" src={ImgForm}/>
                 <img className="features__img" alt="Summary" src={ImgSummary}/>
@@ -63,8 +63,8 @@ class Home extends Component {
             </div>
 
             <div className="features__section">
-              <h4 className="features__subheader">Meaningful reports</h4>
-              <p>Three kinds of reports will give you helpful informations what may caused your migraines.</p>
+              <h4 className="features__subheader">{languageText.infoPage.reportsSubheader}</h4>
+              <p>{languageText.infoPage.reportsDescription}</p>
               <div className="features__imgs">
                 <img className="features__img" alt="Summary report" src={ImgSummaryReport}/>
                 <img className="features__img" alt="Atmospheric Pressure report" src={ImgPressure}/>

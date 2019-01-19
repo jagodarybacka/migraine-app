@@ -56,6 +56,7 @@ class History extends Component {
     this.deleteReport = this.deleteReport.bind(this);
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
+    this.formatDuration = this.formatDuration.bind(this);
 
   }
 
@@ -125,6 +126,22 @@ class History extends Component {
     this.setState({ history, order });
   }
 
+  formatDuration(duration) {
+    let text = "";
+    if(duration.days() > 0){
+      text+=duration.days() + "d ";
+    }
+    if(duration.hours() > 0){
+      text+=duration.hours() + "h ";
+    }
+    if(duration.minutes() > 0){
+      if(duration.days() === 0){
+        text+=duration.minutes() + "min";
+      }
+    }
+    return text;
+  }
+
   render() {
     const { history, order } = this.state;
 
@@ -143,15 +160,14 @@ class History extends Component {
                   <Records>
                     <Divider text={monthName} />
                     {history[chunk].map((item) => {
-                      const startDate = moment(item.start_date);
-                      const endDate = moment(item.end_date);
+                      const startDate = moment(item.start_date, 'YYYY-MM-DDTHH:mm:ss');
+                      const endDate =  item.end_date ? moment(item.end_date,'YYYY-MM-DDTHH:mm:ss') : moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
                       const duration = moment.duration(endDate.diff(startDate));
-                      const formattedDuration = duration.asHours().toFixed(1).replace(/\.0$/, '');
-
+                      const formattedDuration = this.formatDuration(duration);
                       return (
                         <li key={item._id}>
                           <RecordCard handleClick={() => this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
-                            duration={formattedDuration + "h"}
+                            duration={formattedDuration}
                             intensity={this.getIntensity(item.pain)}
                             isRecent={false}
                             id={item._id}

@@ -28,7 +28,19 @@
 			{"text":"Menstruacja", "field":"menstruation"},
 			{"text":"Lokalizacja", "field":"localization"}
 		],
-		"formFields": "Elementy wyświetlane w formularzu"
+		"formFields": "Elementy wyświetlane w formularzu",
+		"setCustomAnswers": "Dodaj własne odpowiedzi do formularza",
+		"customAnswers": [
+			{"text": "Lokalizacja", "field": "localization", "placeholder":"Lokalizację"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aurę"},
+			{"text": "Przyczyny", "field": "triggers", "placeholder":"Przyczynę"},
+			{"text": "Leki", "field": "medicines", "placeholder":"lek"},
+			{"text": "Pomoce", "field": "reliefs", "placeholder":"pomocny czynnik"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Wprowadź ",
+			"header": "Dodaj "
+		}
 
 	},
 	"home":{
@@ -109,6 +121,8 @@
 	},
 	"dateTime":{
 		"date": "Data",
+		"from": "Od",
+		"to": "Do",
 		"time":"Godzina",
 		"monthNames": ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
 						"Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"]
@@ -257,7 +271,18 @@
 		"title": "MIGRAINE APP",
 		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
-		"headerButton": "Dowiedz się więcej"
+		"headerButton": "Dowiedz się więcej",
+		"installApp": "Zainstaluj aplikację na swoim urządzeniu"
+	},
+	"infoPage": {
+		"getApplication": "Pobierz aplikację",
+		"appName": "Migraine app",
+		"appDescription": "to Twój elektroniczny dziennik gdzie możesz śledzić swoje bóle głowy, migreny oraz aurę. Twórz notatki na temat swojego stanu, a otrzymasz pomocne informacje o jego przyczynach.",
+		"featuresHeader": "Funkcjonalności",
+		"featuresSubheader": "Zapisuj i przeglądaj",
+		"featuresDescription": "Kiedy chcesz zapisać informacje o migrenie możesz dostosować ilość informacji jakie chcesz uwzględnić. Twoje migreny będą dostępne do przeglądania i edycji w każdym momencie.",
+		"reportsSubheader": "Pomocne raporty",
+		"reportsDescription": "Trzy rodzaje raportów dadzą Ci dostęp do informacji o tym co może powodować Twoje migreny."
 	},
 	"forgottenPassword": {
 		"resetPassword": "Zresetuj hasło",

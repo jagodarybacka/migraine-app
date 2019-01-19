@@ -143,7 +143,7 @@ class Summary extends Component {
     if(foundPair !== undefined)
       return foundPair.text;
     else
-      return "";
+      return toTranslate;
   }
 
   getUserFormField(field) {

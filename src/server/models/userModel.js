@@ -28,6 +28,14 @@ var UserSchema = new Schema({
 	resetPasswordExpires: Date,
 	weather_forecasts: {
 		type: Object
+	},
+	custom_answers: {
+		localization: [{ type: String }],
+		aura: [{ type: String }],
+		medicines: [{ type: String }],
+		triggers: [{ type: String }],
+		reliefs: [{ type: String }]
+
 	}
 });
 UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
