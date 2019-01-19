@@ -193,7 +193,9 @@
 			{"text": "Tiredness", "value": "Tiredness"},
 			{"text": "Dehydration", "value": "Dehydration"},
 			{"text": "Hunger", "value": "Hunger"},
-			{"text": "Sport", "value": "Sport"}
+			{"text": "Sport", "value": "Sport"},
+			{"text": "Strong smell", "value": "Strong smell"},
+			{"text": "Depression", "value": "Depression"}
 		],
 		"auraAnswers": [
 			{"text": "Nausea", "value": "Nausea"},
@@ -250,16 +252,52 @@
 		],
 		"weather":"Weather",
 		"triggers": "Triggers",
+		"localization": "Localizations",
+		"reliefs": "Helpful during migraine",
+		"medicines": "Leki",
+		"error": "You don't have some data. Please, while recording a migraine, always take your time to fill out the form so we can provide you more useful informations.",
 		"weatherOptions":[
-			{"text": "Storm", "value": "Storm"},
-			{"text": "1018 hPa", "value": "1018 hPa"},
-			{"text": "Rain", "value": "Rain"}
+			{"text": "Storm", "value": "Thunderstorm"},
+			{"text": "Drizzle", "value": "Drizzle"},
+			{"text": "Rain", "value": "Rain"},
+			{"text": "Snow", "value": "Snow"},
+			{"text": "Mist", "value": "Atmosphere"},
+			{"text": "Sun", "value": "Clear"},
+			{"text": "Clouds", "value": "Clouds"}
 		],
 		"triggersOptions":[
-			{"text": "Dehydration", "value": "Dehydration"},
+			{"text": "Alcohol", "value": "Alcohol"},
 			{"text": "Stress", "value": "Stress"},
+			{"text": "Tiredness", "value": "Tiredness"},
+			{"text": "Dehydration", "value": "Dehydration"},
+			{"text": "Hunger", "value": "Hunger"},
+			{"text": "Sport", "value": "Sport"},
 			{"text": "Strong smell", "value": "Strong smell"},
 			{"text": "Depression", "value": "Depression"}
+		],
+		"reliefsOptions": [
+			{"text": "Dark room", "value": "Dark room"},
+			{"text": "Yoga/meditate", "value": "Yoga/meditate"},
+			{"text": "Sleep", "value": "Sleep"},
+			{"text": "Hot shower", "value": "Hot shower"},
+			{"text": "Clod shower", "value": "Cold shower"},
+			{"text": "Ice packs", "value": "Ice packs"},
+			{"text": "Heat pad", "value": "Heat pad"},
+			{"text": "None of these/others", "value": "None/Others"}
+		],
+		"localizationOptions": [
+			{"text": "Home", "value": "Home"},
+			{"text": "Outside", "value": "Outside"},
+			{"text": "Transit", "value": "Transit"},
+			{"text": "Work", "value": "Work"},
+			{"text": "Bed", "value": "Bed"},
+			{"text": "School", "value": "School"}
+		],
+		"medicinesOptions": [
+			{"text": "Ibuprofen", "value": "Ibuprofen"},
+			{"text": "Paracetamol", "value": "Paracetamol"},
+			{"text": "Codeine", "value": "Codeine"},
+			{"text": "Triptans", "value": "Triptans"}
 		]
 	},
 	"text":{
