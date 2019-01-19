@@ -9,7 +9,7 @@ import ButtonBrand from '../components/ButtonBrand'
 class Join extends Component {
   constructor(props) {
     super(props);
-    
+
     if (window.localStorage.getItem('isLogged') === 'true') {
       props.history.push('/home');
     }
@@ -32,11 +32,6 @@ class Join extends Component {
         <Link to="/register">
           <Button text={languageText.join.signIn} />
         </Link>
-        <p>{languageText.join.orJoinWith}</p>
-        <div>
-          <ButtonBrand brand="google" />
-          <ButtonBrand brand="fb" onClick={this.loginFacebook} />
-        </div>
       </div>
     )
   }

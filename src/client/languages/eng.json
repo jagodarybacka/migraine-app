@@ -37,7 +37,7 @@
 	"join":{
 	    "migraine": "Migraine",
 		"logIn": "Log In",
-		"signIn": "Sign In",
+		"signIn": "Register",
 		"orJoinWith": "or join with"
 	},
 	"login":{
