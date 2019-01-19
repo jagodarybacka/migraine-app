@@ -34,6 +34,7 @@ class HistoryWidget extends Component {
     super(props);
 
     this.getIntensity = this.getIntensity.bind(this);
+    this.formatDuration = this.formatDuration.bind(this);
   }
 
   getIntensity(key) {
@@ -41,20 +42,36 @@ class HistoryWidget extends Component {
     return options.indexOf(key) + 1;
   }
 
+  formatDuration(duration) {
+    let text = "";
+    if(duration.days() > 0){
+      text+=duration.days() + "d ";
+    }
+    if(duration.hours() > 0){
+      text+=duration.hours() + "h ";
+    }
+    if(duration.minutes() > 0){
+      if(duration.days() === 0){
+        text+=duration.minutes() + "min";
+      }
+    }
+    return text;
+  }
+
   render() {
     const item = this.props.item;
     if(item){
-      const startDate = moment(item.start_date);
-      const endDate = moment(item.end_date);
+      const startDate = moment(item.start_date,'YYYY-MM-DDTHH:mm:ss');
+      const endDate = item.end_date ? moment(item.end_date,'YYYY-MM-DDTHH:mm:ss') : moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
       const duration = moment.duration(endDate.diff(startDate));
-      const formattedDuration = duration.asHours().toFixed(1).replace(/\.0$/, '');
+      const formattedDuration = this.formatDuration(duration);
       return (
         <Widget >
           <h3>{languageText.historyWidget.title}</h3>
           {item && (
             <RecordCard
               date={`${moment(item.start_date).format('DD.MM.YYYY')}`}
-              duration={formattedDuration + "h"}
+              duration={formattedDuration}
               intensity={this.getIntensity(item.pain)}
               isRecent={true}
               hasEnd={!!item.end_date}
