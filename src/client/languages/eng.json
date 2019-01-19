@@ -28,7 +28,19 @@
 			{"text":"Menstruation", "field":"menstruation"},
 			{"text":"Localization", "field":"localization"}
 		],
-		"formFields": "Form fields to include"
+		"formFields": "Form fields to include",
+		"setCustomAnswers": "Add custom answers to form",
+		"customAnswers": [
+			{"text": "Localization", "field": "localization", "placeholder":"Localization"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aura"},
+			{"text": "Triggers", "field": "triggers", "placeholder":"Trigger"},
+			{"text": "Medicines", "field": "medicines", "placeholder":"Medicine"},
+			{"text": "Reliefs", "field": "reliefs", "placeholder":"Relief"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Enter ",
+			"header": "Custom "
+		}
 
 	},
 	"home":{

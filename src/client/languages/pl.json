@@ -28,7 +28,19 @@
 			{"text":"Menstruacja", "field":"menstruation"},
 			{"text":"Lokalizacja", "field":"localization"}
 		],
-		"formFields": "Elementy wyświetlane w formularzu"
+		"formFields": "Elementy wyświetlane w formularzu",
+		"setCustomAnswers": "Dodaj własne odpowiedzi do formularza",
+		"customAnswers": [
+			{"text": "Lokalizacja", "field": "localization", "placeholder":"Lokalizację"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aurę"},
+			{"text": "Przyczyny", "field": "triggers", "placeholder":"Przyczynę"},
+			{"text": "Leki", "field": "medicines", "placeholder":"lek"},
+			{"text": "Pomoce", "field": "reliefs", "placeholder":"pomocny czynnik"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Wprowadź ",
+			"header": "Dodaj "
+		}
 
 	},
 	"home":{
