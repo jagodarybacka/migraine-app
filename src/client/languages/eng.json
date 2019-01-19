@@ -28,7 +28,19 @@
 			{"text":"Menstruation", "field":"menstruation"},
 			{"text":"Localization", "field":"localization"}
 		],
-		"formFields": "Form fields to include"
+		"formFields": "Form fields to include",
+		"setCustomAnswers": "Add custom answers to form",
+		"customAnswers": [
+			{"text": "Localization", "field": "localization", "placeholder":"Localization"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aura"},
+			{"text": "Triggers", "field": "triggers", "placeholder":"Trigger"},
+			{"text": "Medicines", "field": "medicines", "placeholder":"Medicine"},
+			{"text": "Reliefs", "field": "reliefs", "placeholder":"Relief"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Enter ",
+			"header": "Custom "
+		}
 
 	},
 	"home":{
@@ -109,6 +121,8 @@
 	},
 	"dateTime":{
 		"date": "Date",
+		"from": "From",
+		"to": "To",
 		"time":"Time",
 		"monthNames": ["January", "February", "March", "April", "May", "June",
 						"July", "August", "September", "October", "November", "December"]
@@ -258,6 +272,16 @@
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
 		"headerButton": "Find out more"
+	},
+	"infoPage": {
+		"getApplication": "Get Application",
+		"appName": "Migraine app",
+		"appDescription": "is your digital diary where you keep track of your headaches, auras and migraines. Take notes about every condition you have and you will get back meaningful informations about your triggers.",
+		"featuresHeader": "Application features",
+		"featuresSubheader": "Quick save and easy browse",
+		"featuresDescription": "When you want to save informations about your migraine you can adjust the amount of informations you want to include. Your past migraines will be available to browse any time you will need them.",
+		"reportsSubheader": "Meaningful reports",
+		"reportsDescription": "Three kinds of reports will give you helpful informations what may caused your migraines."
 	},
 	"forgottenPassword": {
 		"resetPassword": "Reset Password",

@@ -67,6 +67,34 @@ class WeatherWidget extends Component {
 
   componentDidMount() {
     this.getWeatherForecast();
+    this.getWeather();
+  }
+
+  checkIfGeolocation() {
+    navigator.geolocation.getCurrentPosition(this.success,this.fail,{timeout:10000});
+  }
+
+  success(position) {
+    this.getWeatherForLocation();
+  }
+
+  fail(error) {
+    this.getWeatherForCity();
+  }
+
+  checkIfGeolocationForecast() {
+    navigator.geolocation.getCurrentPosition(this.successForecast,this.failForecast,{timeout:10000});
+  }
+
+  successForecast(position) {
+    this.getForecastForLocation();
+  }
+
+  failForecast(error) {
+    this.getForecastForCity();
+  }
+
+  getWeather() {
     if(!localStorage.getItem('weather')  || !localStorage.getItem('weather_time')) {
       this.checkIfGeolocation()
     } 
@@ -102,30 +130,6 @@ class WeatherWidget extends Component {
         this.checkIfGeolocation();
       }
     }
-  }
-
-  checkIfGeolocation() {
-    navigator.geolocation.getCurrentPosition(this.success,this.fail,{timeout:10000});
-  }
-
-  success(position) {
-    this.getWeatherForLocation();
-  }
-
-  fail(error) {
-    this.getWeatherForCity();
-  }
-
-  checkIfGeolocationForecast() {
-    navigator.geolocation.getCurrentPosition(this.successForecast,this.failForecast,{timeout:10000});
-  }
-
-  successForecast(position) {
-    this.getForecastForLocation();
-  }
-
-  failForecast(error) {
-    this.getForecastForCity();
   }
 
   async getWeatherForLocation(){
@@ -198,6 +202,10 @@ class WeatherWidget extends Component {
       weather_forecast: forecast
     })
     .then((res) => {
+      if(res.data.errors) {
+        console.log(res.data.errors);
+        return;
+      }
       localStorage.setItem('forecast_time', new Date())
     })
     .catch((err) => console.log(err));
@@ -214,6 +222,10 @@ class WeatherWidget extends Component {
       weather_forecast: forecast
     })
     .then((res) => {
+      if(res.data.errors) {
+        console.log(res.data.errors);
+        return;
+      }
       localStorage.setItem('forecast_time', new Date())
     })
     .catch((err) => console.log(err));
@@ -221,7 +233,8 @@ class WeatherWidget extends Component {
 
   async handleCityChange(e) {
     e.preventDefault();
-    this.getWeatherForCity();
+    this.checkIfGeolocation();
+    this.checkIfGeolocationForecast();
   }
 
   handleChange(evt) {

@@ -126,7 +126,7 @@ exports.report_add = function(req, res,next) {
         medicines: (typeof req.body.medicines==='undefined') ? [] : req.body.medicines,
         triggers: (typeof req.body.triggers==='undefined') ? [] : req.body.triggers,
         aura: (typeof req.body.aura==='undefined') ? [] : req.body.aura,
-        pressure: req.body.pressure || "",
+        pressure: req.body.pressure || undefined,
         sleep_duration: req.body.sleep_duration || undefined,
         notes: req.body.notes || undefined,
         reliefs: (typeof req.body.reliefs==='undefined') ? [] : req.body.reliefs,

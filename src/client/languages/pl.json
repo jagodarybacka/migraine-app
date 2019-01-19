@@ -28,7 +28,19 @@
 			{"text":"Menstruacja", "field":"menstruation"},
 			{"text":"Lokalizacja", "field":"localization"}
 		],
-		"formFields": "Elementy wyświetlane w formularzu"
+		"formFields": "Elementy wyświetlane w formularzu",
+		"setCustomAnswers": "Dodaj własne odpowiedzi do formularza",
+		"customAnswers": [
+			{"text": "Lokalizacja", "field": "localization", "placeholder":"Lokalizację"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aurę"},
+			{"text": "Przyczyny", "field": "triggers", "placeholder":"Przyczynę"},
+			{"text": "Leki", "field": "medicines", "placeholder":"lek"},
+			{"text": "Pomoce", "field": "reliefs", "placeholder":"pomocny czynnik"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Wprowadź ",
+			"header": "Dodaj "
+		}
 
 	},
 	"home":{
@@ -109,6 +121,8 @@
 	},
 	"dateTime":{
 		"date": "Data",
+		"from": "Od",
+		"to": "Do",
 		"time":"Godzina",
 		"monthNames": ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
 						"Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"]
@@ -258,6 +272,16 @@
 		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
 		"headerButton": "Dowiedz się więcej"
+	},
+	"infoPage": {
+		"getApplication": "Pobierz aplikację",
+		"appName": "Migraine app",
+		"appDescription": "to twój elektroniczny dziennik gdzie możesz śledzić swoje bóle głowy, migreny oraz aurę. Twórz notatki na temat swojego stanu, a otrzymasz informacje o jego przyczynach.",
+		"featuresHeader": "Application features",
+		"featuresSubheader": "Quick save and easy browse",
+		"featuresDescription": "When you want to save informations about your migraine you can adjust the amount of informations you want to include. Your past migraines will be available to browse any time you will need them.",
+		"reportsSubheader": "Meaningful reports",
+		"reportsDescription": "Three kinds of reports will give you helpful informations what may caused your migraines."
 	},
 	"forgottenPassword": {
 		"resetPassword": "Zresetuj hasło",
