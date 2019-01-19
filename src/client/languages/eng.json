@@ -271,7 +271,8 @@
 		"title": "MIGRAINE APP",
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
-		"headerButton": "Find out more"
+		"headerButton": "Find out more",
+		"installApp": "Install application on your mobile device"
 	},
 	"infoPage": {
 		"getApplication": "Get Application",
