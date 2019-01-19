@@ -14,9 +14,6 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-scripts": "2.1.2",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bcryptjs": "^2.4.3",
@@ -37,9 +34,13 @@
     "nodemailer": "^4.7.0",
     "passport": "^0.4.0",
     "passport-local-mongoose": "^5.0.1",
+    "react": "^16.7.0",
     "react-device-detect": "^1.6.1",
+    "react-document-meta": "^3.0.0-beta.2",
+    "react-dom": "^16.7.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.2",
     "react-swipeable-views": "^0.13.0",
     "sendgrid": "^5.2.3",
     "styled-components": "^4.1.1"
