@@ -35,7 +35,7 @@
 	    "add": "Dodaj ból głowy"
 	},
 	"join":{
-	    "migraine": "Migrena",
+	    "migraine": "Migraine app",
 		"logIn": "Zaloguj",
 		"signIn": "Rejestracja",
 		"orJoinWith": "lub dołącz przez"
@@ -57,7 +57,7 @@
 		"migraineRecord": "Zapis migreny"
 	},
 	"welcome":{
-		"migraine": "Migrena",
+		"migraine": "Migraine app",
 		"tapToStart": "Kliknij, aby rozpocząć..."
 	},
 	"recordCard":{
@@ -254,7 +254,7 @@
 	"web":{
 		"plAlt": "polski",
 		"engAlt": "angielski",
-		"title": "MIGRENA",
+		"title": "MIGRAINE APP",
 		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
 		"headerButton": "Dowiedz się więcej"
