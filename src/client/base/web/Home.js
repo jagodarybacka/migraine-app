@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-import logo from '../../svg/logo.svg'
 import pl from '../../assets/lang/plIcon.png';
 import eng from '../../assets/lang/engIcon.png';
 import { Page, Language, HeaderParalax, Footer } from './web.styles';

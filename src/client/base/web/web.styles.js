@@ -9,7 +9,7 @@ export const Page = styled.div`
   background-image: url(${bg});
 
   .web__container {
-    width: 0%;
+    width: 60%;
     min-width: 1000px;
     margin: auto;
     margin-top: 5%;
@@ -39,7 +39,10 @@ export const Page = styled.div`
       text-transform: uppercase;
       cursor: pointer;
       box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
-
+      transition: background 0.2s ease-in-out;
+      &:hover {
+        background: #f92e2e;
+      }
     }
 
     .web__p--brand {
@@ -80,6 +83,8 @@ export const Page = styled.div`
       height: auto;
       max-height: 500px;
       width: auto;
+      margin: 0 10px;
+      box-shadow: 0px 3px 12px 1px rgba(0, 0, 0, 0.21);
     }
   }
 `
@@ -108,10 +113,10 @@ export const Header = styled.header`
     margin-bottom: 0;
   }
 
-  .header__subtitle {
-    opacity: 0.5;
+  .header__text {
+    font-size: 1.5em;
     text-align: center;
-    font-weight: 400;
+    margin-top: 2em;
   }
 
   .header__logo {
@@ -137,6 +142,10 @@ export const Header = styled.header`
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    transition: background 0.2s ease-in-out;
+    &:hover {
+      background: #f92e2e;
+    }
   }
 
   .header__box {
@@ -146,14 +155,40 @@ export const Header = styled.header`
     flex-direction: column;
     width: 100%;
   }
+
+  .header__img {
+    height: auto;
+    max-height: 500px;
+    width: auto;
+    margin: 0 10px;
+    box-shadow: 0px 3px 12px 1px rgba(0, 0, 0, 0.21);
+  }
+
+  .header__contaier {
+    margin-bottom: 4rem;
+    padding: 2rem 0 4rem;
+    background: #fff;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    width: 50%;
+    min-width: 800px;
+  }
 `
 
 export const HeaderParalax = styled.div`
   max-height: 600px;
   overflow: hidden;
   text-align: center;
+  opacity: 0.9;
+  transition: opacity 0.5s ease-in;
+  &:hover {
+    opacity: 1;
+  }
   img {
-    background-attachment: fixed;
+    transition: transform 1s ease-in-out;
+    transform: translateY(10px);
+    &:hover {
+      transform: translateY(0px)
+    }
   }
 `;
 
