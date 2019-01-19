@@ -333,3 +333,23 @@ exports.report_stats_custom = function(req, res, next) {
         }
     });
 };
+
+exports.reports_together = function(req, res, next) {
+    const userId = req.session.userId;
+    const pain = req.params.pain;
+    Report.find({user: userId, pain: pain })
+    .exec(function(err,found_reports){
+        if(err) {
+            return res.json({errors : [err.message]});
+        }
+        if(found_reports && found_reports.length > 0) {
+            const results = tools.getInformations(found_reports);
+            res.json(results);
+            return;
+        } else {
+            res.status(204);
+            res.send("No content");
+            return;
+        }
+    })
+}
