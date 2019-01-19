@@ -28,7 +28,19 @@
 			{"text":"Menstruation", "field":"menstruation"},
 			{"text":"Localization", "field":"localization"}
 		],
-		"formFields": "Form fields to include"
+		"formFields": "Form fields to include",
+		"setCustomAnswers": "Add custom answers to form",
+		"customAnswers": [
+			{"text": "Localization", "field": "localization", "placeholder":"Localization"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aura"},
+			{"text": "Triggers", "field": "triggers", "placeholder":"Trigger"},
+			{"text": "Medicines", "field": "medicines", "placeholder":"Medicine"},
+			{"text": "Reliefs", "field": "reliefs", "placeholder":"Relief"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Enter ",
+			"header": "Custom "
+		}
 
 	},
 	"home":{
@@ -62,11 +74,12 @@
 	},
 	"recordCard":{
 		"migraine": "Migraine",
+		"notYetEnded": "Not yet ended",
 		"noMigraines": "No migraines yet"
 	},
 	"menuBar":{
 		"home": "Home",
-		"reports": "Raports",
+		"reports": "Reports",
 		"settings": "Settings"
 	},
 	"weather":{
@@ -108,6 +121,8 @@
 	},
 	"dateTime":{
 		"date": "Date",
+		"from": "From",
+		"to": "To",
 		"time":"Time",
 		"monthNames": ["January", "February", "March", "April", "May", "June",
 						"July", "August", "September", "October", "November", "December"]
@@ -205,6 +220,8 @@
 		"oftenTogether": "Often together"
 	},
 	"atmosphericPressure": {
+		"errorPressure": "No atmospheric pressure data available",
+		"errorMigraine": "No migraines to display in this period",
 		"noData": "No data",
 		"noPressureData": "No pressure data"
 	},

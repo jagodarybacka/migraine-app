@@ -58,7 +58,7 @@ const  DateTimeCustomPeriod = (props) => {
 
   const el = props.date ? (
     <TimeDateComponent>
-      <label>{languageText.dateTime.date}</label>
+      <label>{props.label==="From" ? languageText.dateTime.from : languageText.dateTime.to}</label>
       <img src={dateImg} alt="date"/>
       <input
         value={inputDate ? inputDate : undefined}

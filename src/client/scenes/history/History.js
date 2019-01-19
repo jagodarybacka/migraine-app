@@ -137,7 +137,6 @@ class History extends Component {
             {!!order.length && order.map((chunk) => {
               const month = chunk.substring(4);
               const monthName = languageText.dateTime.monthNames[moment(month, 'MM').format('M') -1]
-              //const monthName = moment(month, 'MM').format('MMMM');
 
               return (
                 <li key={chunk}>
@@ -149,7 +148,6 @@ class History extends Component {
                       const duration = moment.duration(endDate.diff(startDate));
                       const formattedDuration = duration.asHours().toFixed(1).replace(/\.0$/, '');
 
-
                       return (
                         <li key={item._id}>
                           <RecordCard handleClick={() => this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
@@ -159,6 +157,7 @@ class History extends Component {
                             id={item._id}
                             handleDelete={this.deleteReport}
                             handleEdit={this.editReport}
+                            hasEnd={!!item.end_date}
                             />
                         </li>
                       )

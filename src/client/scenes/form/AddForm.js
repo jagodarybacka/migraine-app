@@ -67,7 +67,10 @@ const Menstruation = props => {
 }
 
 const Localization = props => {
-  const answers = languageText.addForm.localizationAnswers;//['Home', 'Outside', 'Transit', 'Work', 'Bed','School']
+  let answers = languageText.addForm.localizationAnswers;
+  if(props.customAnswers) {
+    answers = answers.concat(props.customAnswers) 
+  }
   return (
     <SingleChoice
       title={languageText.addForm.localization}
@@ -82,7 +85,7 @@ const Localization = props => {
 }
 
 const Mood = props => {
-  const answers = languageText.addForm.moodAnswers;//['Very Good', 'Good', 'Ok', 'Bad', 'Very Bad']
+  const answers = languageText.addForm.moodAnswers;
   return (
     <SingleChoice
       title={languageText.addForm.mood}
@@ -96,7 +99,7 @@ const Mood = props => {
 }
 
 const Pain = props => {
-  const answers =languageText.addForm.painAnswers;// ['No Pain', 'Mild', 'Moderate', 'Intense', 'Maximum']
+  const answers =languageText.addForm.painAnswers;
   return (
     <SingleChoice
       title={languageText.addForm.pain}
@@ -110,7 +113,10 @@ const Pain = props => {
 }
 
 const Medicines = props => {
-  const answers = languageText.addForm.medicinesAnswers;//['Ibuprofen', 'Paracetamol', 'Codeine', 'Triptans']
+  let answers = languageText.addForm.medicinesAnswers;
+  if(props.customAnswers) {
+    answers = answers.concat(props.customAnswers) 
+  }
   return (
     <MultipleChoice
       values={props.values}
@@ -124,7 +130,10 @@ const Medicines = props => {
 }
 
 const Triggers = props => {
-  const answers = languageText.addForm.triggersAnswers;//['Alcohol', 'Stress', 'Tiredness', 'Dehydration', 'Hunger', 'Sport']
+  let answers = languageText.addForm.triggersAnswers;
+  if(props.customAnswers) {
+    answers = answers.concat(props.customAnswers) 
+  }
   return (
     <MultipleChoice
       values={props.values}
@@ -138,7 +147,10 @@ const Triggers = props => {
 }
 
 const Aura = props => {
-  const answers = languageText.addForm.auraAnswers;//['Nausea', 'Visual Disturbances', 'Hypersensitive To Light', 'Hypersensitive To Sound', 'Hypersensitive To Smell']
+  let answers = languageText.addForm.auraAnswers;
+  if(props.customAnswers) {
+    answers = answers.concat(props.customAnswers) 
+  }
   return (
     <MultipleChoice
       values={props.values}
@@ -178,7 +190,10 @@ const SleepDuration = props => {
 }
 
 const Reliefs = props => {
-  const answers = languageText.addForm.reliefsAnswers;
+  let answers = languageText.addForm.reliefsAnswers;
+  if(props.customAnswers) {
+    answers = answers.concat(props.customAnswers) 
+  }
   return (
     <MultipleChoice
       values={props.values}
