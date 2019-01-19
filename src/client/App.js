@@ -6,8 +6,8 @@ import DocumentMeta from 'react-document-meta';
 
 const App = () => {
   const meta = {
-    title: 'Migraine App',
-    description: 'Mobile diary for migraineurs',
+    'og:title': 'Migraine App',
+    'og:description': 'Mobile diary for migraineurs',
   }
   if (isBrowser) {
     return (
