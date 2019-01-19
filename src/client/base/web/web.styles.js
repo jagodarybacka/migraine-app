@@ -158,7 +158,7 @@ export const Header = styled.header`
 
   .header__img {
     height: auto;
-    max-height: 500px;
+    max-height: 700px;
     width: auto;
     margin: 0 10px;
     box-shadow: 0px 3px 12px 1px rgba(0, 0, 0, 0.21);

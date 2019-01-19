@@ -6,7 +6,10 @@ import pl from '../../assets/lang/plIcon.png';
 import eng from '../../assets/lang/engIcon.png';
 import { Page, Language, Header, Footer } from './web.styles';
 import {languageText, setLanguage} from '../../languages/MultiLanguage.js';
-import ImgInstall from './assets/install.png'
+import ImgInstallEng from './assets/install1-eng.jpg'
+import ImgInstallPl from './assets/install1-pl.jpg'
+import ImgAddEng from './assets/install2-eng.jpg'
+import ImgAddPl from './assets/install2-pl.jpg'
 
 class Download extends Component {
   constructor(props) {
@@ -25,6 +28,15 @@ class Download extends Component {
   }
 
   render() {
+    let ImgInstall;
+    let ImgAdd;
+    if (localStorage.lang === "eng") {
+      ImgInstall = ImgInstallEng;
+      ImgAdd = ImgAddEng
+    } else {
+      ImgInstall = ImgInstallPl;
+      ImgAdd = ImgAddPl
+    }
     return (
       <Page>
         <Language>
@@ -47,6 +59,7 @@ class Download extends Component {
             <div className="header__contaier">
               <h3 className="header__text">{languageText.web.installApp}</h3>
               <img className="header__img" src={ImgInstall} alt="install" />
+              <img className="header__img" src={ImgAdd} alt="install" />
             </div>
           </div>
         </Header>
