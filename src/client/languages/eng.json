@@ -47,9 +47,9 @@
 	    "add": "Add headache"
 	},
 	"join":{
-	    "migraine": "Migraine",
+	    "migraine": "Migraine app",
 		"logIn": "Log In",
-		"signIn": "Sign In",
+		"signIn": "Register",
 		"orJoinWith": "or join with"
 	},
 	"login":{
@@ -69,7 +69,7 @@
 		"migraineRecord": "Migraine Record"
 	},
 	"welcome":{
-		"migraine": "Migraine",
+		"migraine": "Migraine app",
 		"tapToStart": "Tap to start..."
 	},
 	"recordCard":{
@@ -268,7 +268,7 @@
 	"web":{
 		"plAlt": "polish",
 		"engAlt": "english",
-		"title": "MIGRAINE",
+		"title": "MIGRAINE APP",
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
 		"headerButton": "Find out more"
