@@ -273,6 +273,16 @@
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
 		"headerButton": "Dowiedz się więcej"
 	},
+	"infoPage": {
+		"getApplication": "Pobierz aplikację",
+		"appName": "Migraine app",
+		"appDescription": "to twój elektroniczny dziennik gdzie możesz śledzić swoje bóle głowy, migreny oraz aurę. Twórz notatki na temat swojego stanu, a otrzymasz informacje o jego przyczynach.",
+		"featuresHeader": "Application features",
+		"featuresSubheader": "Quick save and easy browse",
+		"featuresDescription": "When you want to save informations about your migraine you can adjust the amount of informations you want to include. Your past migraines will be available to browse any time you will need them.",
+		"reportsSubheader": "Meaningful reports",
+		"reportsDescription": "Three kinds of reports will give you helpful informations what may caused your migraines."
+	},
 	"forgottenPassword": {
 		"resetPassword": "Zresetuj hasło",
 		"sendEmail": "Wyślij email",
