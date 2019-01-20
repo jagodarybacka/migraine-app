@@ -34,6 +34,7 @@
     "nodemailer": "^4.7.0",
     "passport": "^0.4.0",
     "passport-local-mongoose": "^5.0.1",
+    "pdfmake": "^0.1.40",
     "react": "^16.7.0",
     "react-device-detect": "^1.6.1",
     "react-dom": "^16.7.0",

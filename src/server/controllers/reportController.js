@@ -352,4 +352,54 @@ exports.reports_together = function(req, res, next) {
             return;
         }
     })
+};
+
+exports.pdf_data = function(req, res, next) {
+    console.log("pdf")
+    const userId = req.session.userId;
+	async.parallel({
+        reports: function(callback) {
+            Report.find({user: userId}).sort({start_date: -1})
+            .exec(callback)
+        },
+        togetherNoPain: function(callback) {
+            Report.find({user: userId, pain: "No pain"})
+            .exec(callback)
+        },
+        togetherMild: function(callback) {
+            Report.find({user: userId, pain: "Mild"})
+            .exec(callback)
+        },
+        togetherModerate: function(callback) {
+            Report.find({user: userId, pain: "Moderate"})
+            .exec(callback)
+        },
+        togetherIntense: function(callback) {
+            Report.find({user: userId, pain: "Intense"})
+            .exec(callback)
+        },
+        togetherMaximum: function(callback) {
+            Report.find({user: userId, pain: "Maximum"})
+            .exec(callback)
+        },
+	}, function(err, results) {
+        if (err) { 
+            return res.json({errors : [err.message]});
+        }
+        const stats =  results.reports.length > 0 ? tools.computeStats(results.reports, "all", new Date()) : {};
+        const noPain =  results.togetherNoPain.length > 0 ? tools.getInformations(results.togetherNoPain) : {};
+        const mild = results.togetherMild ? tools.getInformations(results.togetherMild) : {};
+        const moderate =  results.togetherModerate ? tools.getInformations(results.togetherModerate) : {};
+        const intense =  results.togetherIntense ? tools.getInformations(results.togetherIntense) : {};
+        const maximum =  results.togetherMaximum ? tools.getInformations(results.togetherMaximum) : {};
+        res.json({
+            "results":results.reports, 
+            "stats":stats, 
+            "noPain":noPain, 
+            "mild":mild, 
+            "moderate":moderate, 
+            "intense":intense, 
+            "maximum":maximum});
+        return;
+  });
 }
