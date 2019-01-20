@@ -16,7 +16,6 @@ function createDocDefinition(data) {
     let definition = {};
     definition.content = [];
     const textTitle = languageText.pdfGeneration.title + "\n";
-    console.log(textTitle);
     const mainTitle = {text: textTitle, style: "title", alignment: 'center'};
     definition.content.push(mainTitle);
     const textSubTitle = languageText.pdfGeneration.subtitle + "\n";
