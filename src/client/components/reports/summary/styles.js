@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
  export const SummaryComponent = styled.div`
   margin: 0 5%;
+  min-width: 300px;
   background-color: #fff;
   padding: 1.5em 0;
   position: relative;

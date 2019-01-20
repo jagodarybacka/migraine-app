@@ -43,7 +43,7 @@ class OftenTogether extends Component {
     return (
       <OftenTogetherComponent>
         { IconQuestion }
-        <h2>Pain intensity</h2>
+        <h2>{languageText.addForm.pain}</h2>
         <Select>
           {selectables}
         </Select>

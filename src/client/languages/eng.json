@@ -215,9 +215,13 @@
 		]
 	},
 	"reports":{
+		"report": "Report",
 		"summary": "Summary",
 		"pressure":"Atmospheric pressure",
-		"oftenTogether": "Often together"
+		"oftenTogether": "Often together",
+		"summaryDescription": "Pick time period - check amount and duration of your migraines. Track your treatment progress by checking number of days with and without pain.",
+		"pressureDescription":"Pick time period and check atmospheric pressure and migraines marked on a graph. You should look for a correlation between pressure changes and migraines. Pressure unit - [hPa]",
+		"oftenTogetherDescription": "Pick pain intensity and check what may be your migraine trigger. Take your time when you fill new migraine form and this report will show you reliable informations."
 	},
 	"atmosphericPressure": {
 		"errorPressure": "No atmospheric pressure data available",

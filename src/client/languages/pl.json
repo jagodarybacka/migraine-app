@@ -215,9 +215,13 @@
 		]
 	},
 	"reports":{
+		"report": "Raport",
 		"summary": "Podsumowanie",
 		"pressure":"Ciśnienie atmosferyczne",
-		"oftenTogether": "Często występujace razem"
+		"oftenTogether": "Często występujace razem",
+		"summaryDescription": "Wybierz przedział czasu - sprawdź ilość i długość migren. Śledź postępy w leczeniu sprawdzając ilość dni bólu. Dokładnie zapisuj czas trwania migren, aby ten raport był wiarygodny.",
+		"pressureDescription":"Wybierz przedział czasu i zobacz na wykresie zaznaczone migreny oraz ciśnienie atmosferyczne. Szukaj korelacji pomiędzy zmianami w ciśnieniu, a migrenami. Ciśnienie atmosferyczne wyrażone jest w [hPa]",
+		"oftenTogetherDescription": "Wybierz nasilenie bólu i zobacz jakie czynniki wpływają na pojawienie się migren. Dodając migreny poświęć czas na dokładne wypełnienie formularza, aby raport był wiarygodny."
 	},
 	"atmosphericPressure": {
 		"errorPressure": "Brak danych o ciśnieniu atmosferycznym",
