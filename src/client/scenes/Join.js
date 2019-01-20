@@ -4,7 +4,6 @@ import {languageText} from '../languages/MultiLanguage.js';
 
 import Logo from '../components/Logo'
 import Button from '../components/Button'
-import ButtonBrand from '../components/ButtonBrand'
 
 class Join extends Component {
   constructor(props) {

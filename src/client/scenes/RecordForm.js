@@ -233,10 +233,6 @@ class RecordForm extends Component {
     this.setState({ currentTab: index });
   }
 
-  // const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-  // const time = `${new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()}:${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
-  // const date = `${new Date().getFullYear()}-${month[new Date().getMonth()]}-${new Date().getDate()}`;
-
   currentDate(name){
     const { data } = this.state;
     const time = moment().format('HH:mm');
@@ -301,10 +297,6 @@ class RecordForm extends Component {
         name: 'medicines',
         custom: true
       }, {
-        component: Aura,
-        name: 'aura',
-        custom: true
-      }, {
         component: Triggers,
         name: 'triggers',
         custom: true
@@ -312,22 +304,26 @@ class RecordForm extends Component {
         component: Reliefs,
         name: 'reliefs',
         custom: true
+      },  {
+        component: Localization,
+        name: 'localization',
+        custom: true
+      }, {
+        component: Aura,
+        name: 'aura',
+        custom: true
       }, {
         component: Mood,
         name: 'mood'
+      }, {
+        component: Menstruation,
+        name: 'menstruation'
       }, {
         component: Pressure,
         name: 'pressure'
       }, {
         component: SleepDuration,
         name: 'sleep_duration'
-      }, {
-        component: Menstruation,
-        name: 'menstruation'
-      }, {
-        component: Localization,
-        name: 'localization',
-        custom: true
       }]
 
     const tabs = fields.map((field, id) => {
