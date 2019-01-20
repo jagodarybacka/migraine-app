@@ -235,7 +235,7 @@
 		"customPeriod": "Custom period",
 		"painDays": "pain days",
 		"noPainDays": "no pain days",
-		"averge": "average attack duration",
+		"average": "average attack duration",
 		"total": "total attacks duration",
 		"migraine": "migraine",
 		"migraines": "migraines",
@@ -338,5 +338,20 @@
 		"password": "Password",
 		"emailNotFound": "Email not found",
 		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number"
+	},
+	"pdfGeneration": {
+		"title": "MIGRAINE APP",
+		"subtitle": "Szczegółowy raport dotyczący Twoich migren",
+		"timeSpan": "Przedział czasu",
+		"stats30Header": "Ostatnie 30 dni",
+		"stats60Header": "Ostatnie 60 dni",
+		"statsYearHeader": "Ostatni rok",
+		"statsAllHeader": "Od czasu założenia konta",
+		"attacks": "Liczba migren",
+		"painDays": "Dni z bólem",
+		"noPainDays": "Dni bez bólu",
+		"average": "Średni czas trwania ataku [h]",
+		"total": "Całkowity czas trwania ataków [h]",
+		"pain": "Siła bólu: "
 	}
 }
