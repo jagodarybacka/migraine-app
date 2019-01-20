@@ -354,6 +354,22 @@
 		"noPainDays": "Dni bez bólu",
 		"average": "Średni czas trwania ataku [h]",
 		"total": "Całkowity czas trwania ataków [h]",
-		"pain": "Siła bólu: "
+		"painStrength": "Siła bólu: ",
+		"reportsTitle": "Lista migren",
+		"startDate": "Data rozpoczęcia: ",
+		"endDate": "Data zakończenia: ",
+		"durationTime": "Czas trwania: ",
+		"pain": "Intensywność bólu: ",
+		"medicines": "Leki: ",
+		"triggers": "Możliwe przyczyny: ",
+		"reliefs": "Pomocne w trakcie migreny: ",
+		"localization": "Lokalizacja: ",
+		"aura": "Aura: ",
+		"mood": "Nastrój: ",
+		"menstruation": "Menstruacja: ",
+		"bloodPressure": "Ciśnienie krwi: ",
+		"sleepDuration": "Długość snu: ",
+		"notes": "Notatka: ",
+		"migraineHeader": "Migrena"
 	}
 }

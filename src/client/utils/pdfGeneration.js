@@ -5,9 +5,7 @@ import moment from 'moment';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export function generatePdf(data) {
-    // console.log(data);
     const docDefinition = createDocDefinition(data);
-    // console.log(docDefinition);
     pdfMake.createPdf(docDefinition).download();
 }
 
@@ -27,13 +25,108 @@ function createDocDefinition(data) {
     if(data.stats) {
         definition = statsContent(definition, data.stats, data.user);
     }
+    if(data.reports.length > 0) {
+        if(data.together || data.stats) {
+            definition.content.push({text: "", pageBreak: 'after'});
+        }
+        definition = reportsContent(definition, data.reports);
+    }
     definition = setStyles(definition);
     return definition;
 
 }
 
+function reportsContent(object, reports) {
+    const reportsTitle = "\n" + languageText.pdfGeneration.reportsTitle + "\n";
+    object.content.push({text: reportsTitle, style: 'header'})
+    reports.forEach((report) => {
+        const title = "\n" + languageText.pdfGeneration.migraineHeader;
+        object.content.push({text: title, style: 'subheader'});
+        if(report.start_date){
+            const text = [languageText.pdfGeneration.startDate,{text: formatDate(report.start_date), bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.end_date){
+            const text = [languageText.pdfGeneration.endDate,{text: formatDate(report.end_date), bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.start_date && report.end_date) {
+            const startDate = moment(report.start_date,'YYYY-MM-DDTHH:mm:ss');
+            const endDate = moment(report.end_date,'YYYY-MM-DDTHH:mm:ss');
+            const duration = moment.duration(endDate.diff(startDate));
+            const formattedDuration = formatDuration(duration);
+            const text = [languageText.pdfGeneration.durationTime,{text: formattedDuration, bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.pain){
+            const text = [languageText.pdfGeneration.pain,{text: getTranslatedValueForm(report.pain,"pain"), bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.medicines && report.medicines.length > 0){
+            let values = "";
+            report.medicines.forEach((answer) => {
+                values += getTranslatedValueForm(answer,"medicines") + "\t"
+            })
+            const text = [languageText.pdfGeneration.medicines,{text: values, bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.triggers && report.triggers.length > 0){
+            let values = "";
+            report.triggers.forEach((answer) => {
+                values += getTranslatedValueForm(answer,"triggers") + "\t"
+            })
+            const text = [languageText.pdfGeneration.triggers,{text: values, bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.reliefs && report.reliefs.length > 0){
+            let values = "";
+            report.reliefs.forEach((answer) => {
+                values += getTranslatedValueForm(answer,"reliefs") + "\t"
+            })
+            const text = [languageText.pdfGeneration.reliefs,{text: values, bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.localization){
+            const text = [languageText.pdfGeneration.localization,{text: getTranslatedValueForm(report.localization,"localization"), bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.aura && report.aura.length > 0){
+            let values = "";
+            report.aura.forEach((answer) => {
+                values += getTranslatedValueForm(answer,"aura") + "\t"
+            })
+            const text = [languageText.pdfGeneration.aura,{text: values, bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.mood){
+            const text = [languageText.pdfGeneration.mood,{text: getTranslatedValueForm(report.mood,"mood"), bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.menstruation){
+            const text = [languageText.pdfGeneration.menstruation,{text: getTranslatedValueForm(report.menstruation,"menstruation"), bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.pressure){
+            const pressure = report.pressure + 'mmHG';
+            const text = [languageText.pdfGeneration.pressure,{text: pressure, bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.sleep_duration){
+            const sleep_duration = report.sleep_duration + 'h';
+            const text = [languageText.pdfGeneration.sleepDuration,{text: sleep_duration, bold: true}];
+            object.content.push({text: text});
+        }
+        if(report.notes){
+            const text = [languageText.pdfGeneration.notes,{text: report.notes, bold: true}];
+            object.content.push({text: text});
+        }
+
+    })
+    return object;
+}
+
 function statsContent(object, stats, user) {
-    const statsTitle = "\n" + languageText.reports.summary + "\n";
+    const statsTitle = "\n" + languageText.reports.summary + "\n\n";
     object.content.push({text: statsTitle, style: 'header'})
     let table = {
         table: {}
@@ -74,7 +167,7 @@ function togetherContent(object, together) {
         };
         table.table.body = [];
         table.table.widths = ['*'];
-        const subheader = "\n" + languageText.pdfGeneration.pain + getTranslatedValue("No Pain","pain");
+        const subheader = "\n" + languageText.pdfGeneration.painStrength + getTranslatedValue("No Pain","pain");
         object.content.push({text: subheader, style: 'subheader'});
         for(let option in together["noPain"]){
             if(together["noPain"][option].length > 0 && option !== 'weather'){
@@ -112,7 +205,7 @@ function togetherContent(object, together) {
         };
         table.table.body = [];
         table.table.widths = ['*'];
-        const subheader = "\n" + languageText.pdfGeneration.pain + getTranslatedValue("Mild","pain");
+        const subheader = "\n" + languageText.pdfGeneration.painStrength + getTranslatedValue("Mild","pain");
         object.content.push({text: subheader, style: 'subheader'});
         for(let option in together["mild"]){
             if(together["mild"][option].length > 0 && option !== 'weather'){
@@ -150,7 +243,7 @@ function togetherContent(object, together) {
         };
         table.table.body = [];
         table.table.widths = ['*'];
-        const subheader = "\n" + languageText.pdfGeneration.pain + getTranslatedValue("Moderate","pain");
+        const subheader = "\n" + languageText.pdfGeneration.painStrength + getTranslatedValue("Moderate","pain");
         object.content.push({text: subheader, style: 'subheader'});
         for(let option in together["moderate"]){
             if(together["moderate"][option].length > 0 && option !== 'weather'){
@@ -188,7 +281,7 @@ function togetherContent(object, together) {
         };
         table.table.body = [];
         table.table.widths = ['*'];
-        const subheader = "\n" + languageText.pdfGeneration.pain + getTranslatedValue("Intense","pain");
+        const subheader = "\n" + languageText.pdfGeneration.painStrength + getTranslatedValue("Intense","pain");
         object.content.push({text: subheader, style: 'subheader'});
         for(let option in together["intense"]){
             if(together["intense"][option].length > 0 && option !== 'weather'){
@@ -226,7 +319,7 @@ function togetherContent(object, together) {
         };
         table.table.body = [];
         table.table.widths = ['*'];
-        const subheader = "\n" + languageText.pdfGeneration.pain + getTranslatedValue("Maximum","pain");
+        const subheader = "\n" + languageText.pdfGeneration.painStrength + getTranslatedValue("Maximum","pain");
         object.content.push({text: subheader, style: 'subheader'});
         for(let option in together["maximum"]){
             if(together["maximum"][option].length > 0 && option === 'weather'){
@@ -258,7 +351,6 @@ function togetherContent(object, together) {
         if(table.table.body.length > 0)
             object.content.push(table);
     }
-    
     return object;
 }
 
@@ -266,6 +358,22 @@ function formatDate(d) {
     const date = new Date(d);
     return date.toLocaleDateString();
 }
+
+function formatDuration(duration) {
+    let text = "";
+    if(duration.days() > 0){
+      text+=duration.days() + "d ";
+    }
+    if(duration.hours() > 0){
+      text+=duration.hours() + "h ";
+    }
+    if(duration.minutes() > 0){
+      if(duration.days() === 0){
+        text+=duration.minutes() + "min";
+      }
+    }
+    return text;
+  }
 
 function setStyles(object) {
     object.styles = {
@@ -299,6 +407,17 @@ function setStyles(object) {
     return object;
 }
 
+function getTranslatedValueForm(toTranslate, type){
+    if(toTranslate === '')
+      return '';
+    let translationDict = languageText.addForm[type+"Answers"];
+    let foundPair = translationDict.find(f => f.value === toTranslate);
+    if(foundPair !== undefined)
+      return foundPair.text;
+    else
+      return toTranslate;
+  }
+
 function getTranslatedValue(toTranslate, type){
     if(toTranslate === '')
       return '';
@@ -310,7 +429,7 @@ function getTranslatedValue(toTranslate, type){
       return toTranslate;
   }
 
-  function getWeather(weather){
+function getWeather(weather){
     if(weather) {
       let answers = [];
       if(weather.pressure && weather.pressure.length !== 0){
