@@ -245,11 +245,11 @@ exports.report_stats = function(req, res, next) {
     const days = req.params.days;
     const now = new Date();
     let endDate;
-    if(days === 30){
+    if(days === "30"){
         endDate = new Date(now.getFullYear(), now.getMonth()-1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-    } else if(days === 60) {
+    } else if(days === "60") {
         endDate = new Date(now.getFullYear(), now.getMonth()-2, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-    } else if(days ===365) {
+    } else if(days ==="365") {
         endDate = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
     }
     const userId = req.session.userId;
@@ -355,11 +355,30 @@ exports.reports_together = function(req, res, next) {
 };
 
 exports.pdf_data = function(req, res, next) {
-    console.log("pdf")
     const userId = req.session.userId;
+    const now = new Date();
+    const endDate30 = new Date(now.getFullYear(), now.getMonth()-1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    const endDate60 = new Date(now.getFullYear(), now.getMonth()-2, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    const endDateYear = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
 	async.parallel({
+        user: function(callback) {
+            User.findById(userId, 'username _id email registration_date')
+            .exec(callback)
+        }, 
         reports: function(callback) {
             Report.find({user: userId}).sort({start_date: -1})
+            .exec(callback)
+        },
+        reports30: function(callback) {
+            Report.find({user: userId, start_date : { $gte: endDate30 }}).sort({start_date: -1})
+            .exec(callback)
+        },
+        reports60: function(callback) {
+            Report.find({user: userId, start_date : { $gte: endDate60 }}).sort({start_date: -1})
+            .exec(callback)
+        },
+        reportsYear: function(callback) {
+            Report.find({user: userId, start_date : { $gte: endDateYear }}).sort({start_date: -1})
             .exec(callback)
         },
         togetherNoPain: function(callback) {
@@ -386,20 +405,33 @@ exports.pdf_data = function(req, res, next) {
         if (err) { 
             return res.json({errors : [err.message]});
         }
-        const stats =  results.reports.length > 0 ? tools.computeStats(results.reports, "all", new Date()) : {};
+        const reports = results.reports.length > 0 ? results.reports : [];
+        const statsAll =  results.reports.length > 0 ? tools.computeStats(results.reports, "all", new Date()) : {};
+        const stats30 =  results.reports30.length > 0 ? tools.computeStats(results.reports30, "30", new Date()) : {};
+        const stats60 =  results.reports60.length > 0 ? tools.computeStats(results.reports60, "60", new Date()) : {};
+        const statsYear =  results.reportsYear.length > 0 ? tools.computeStats(results.reportsYear, "365", new Date()) : {};
         const noPain =  results.togetherNoPain.length > 0 ? tools.getInformations(results.togetherNoPain) : {};
         const mild = results.togetherMild ? tools.getInformations(results.togetherMild) : {};
         const moderate =  results.togetherModerate ? tools.getInformations(results.togetherModerate) : {};
         const intense =  results.togetherIntense ? tools.getInformations(results.togetherIntense) : {};
         const maximum =  results.togetherMaximum ? tools.getInformations(results.togetherMaximum) : {};
         res.json({
-            "results":results.reports, 
-            "stats":stats, 
-            "noPain":noPain, 
-            "mild":mild, 
-            "moderate":moderate, 
-            "intense":intense, 
-            "maximum":maximum});
+            "user": results.user,
+            "reports": reports, 
+            "stats":{
+                "statsAll": statsAll,
+                "stats30": stats30,
+                "stats60": stats60,
+                "statsYear": statsYear,
+            },
+            "together": {
+                "noPain": noPain, 
+                "mild": mild, 
+                "moderate": moderate, 
+                "intense": intense, 
+                "maximum": maximum
+            }
+        });
         return;
   });
 }

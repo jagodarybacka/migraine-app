@@ -144,7 +144,7 @@ class Summary extends Component {
           <div className='summary__container'><span className='summary__number'>{noPainDays}</span><p className='summary__text'>{languageText.reportsSummary.noPainDays}</p></div>
         </div>
         <div className='summary__row'>
-          <div className='summary__container'><span className='summary__number'>{`${average}h`}</span><p className='summary__text'>{languageText.reportsSummary.averge}</p></div>
+          <div className='summary__container'><span className='summary__number'>{`${average}h`}</span><p className='summary__text'>{languageText.reportsSummary.average}</p></div>
           <div className='summary__container'><span className='summary__number'>{`${total}h`}</span><p className='summary__text'>{languageText.reportsSummary.total}</p></div>
         </div>
         { customPeriod }

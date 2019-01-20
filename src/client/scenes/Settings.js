@@ -432,8 +432,8 @@ class Settings extends Component {
                { Answers }
             </List>) : "" }
           { customAnswer }
-          <Divider text="Export data to pdf"/>
-            <Button onClick={this.getPdf} text="Generate pdf"/>
+          <Divider text={languageText.settings.exportData}/>
+            <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
           <Divider text={languageText.settings.chooseLanguage}/>
             <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
             <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
