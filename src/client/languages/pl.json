@@ -17,6 +17,8 @@
 		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
 		"dataChanged": "Dane zostały zmienione",
 		"passwordChanged": "Hasło zostało zmienione",
+		"exportData": "Eksportuj dane do PDF",
+		"generatePdf": "Wygeneruj PDF",
 		"formFieldsOptions": [
 			{"text":"Leki", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},
