@@ -24,11 +24,11 @@ function createDocDefinition(data) {
     }
     if(data.stats) {
         definition = statsContent(definition, data.stats, data.user);
-        definition.content.push({text: "", pageBreak: 'after'});
-    } else {
-        definition.content.push({text: "", pageBreak: 'after'});
     }
     if(data.reports.length > 0) {
+        if(data.together || data.stats) {
+            definition.content.push({text: "", pageBreak: 'after'});
+        }
         definition = reportsContent(definition, data.reports);
     }
     definition = setStyles(definition);
