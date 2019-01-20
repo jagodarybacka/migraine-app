@@ -10,6 +10,12 @@ import ImgInstallEng from './assets/install1-eng.jpg'
 import ImgInstallPl from './assets/install1-pl.jpg'
 import ImgAddEng from './assets/install2-eng.jpg'
 import ImgAddPl from './assets/install2-pl.jpg'
+import iphone1Pl from './assets/iphone1-pl.png'
+import iphone2Pl from './assets/iphone2-pl.png'
+import iphone3Pl from './assets/iphone3-pl.png'
+import iphone1Eng from './assets/iphone1-eng.jpg'
+import iphone2Eng from './assets/iphone2-eng.jpg'
+import iphone3Eng from './assets/iphone3-eng.jpg'
 
 class Download extends Component {
   constructor(props) {
@@ -30,12 +36,21 @@ class Download extends Component {
   render() {
     let ImgInstall;
     let ImgAdd;
+    let ImgIphone1;
+    let ImgIphone2;
+    let ImgIphone3;
     if (localStorage.lang === "eng") {
       ImgInstall = ImgInstallEng;
-      ImgAdd = ImgAddEng
+      ImgAdd = ImgAddEng;
+      ImgIphone1 = iphone1Eng;
+      ImgIphone2 = iphone2Eng;
+      ImgIphone3 = iphone3Eng;
     } else {
       ImgInstall = ImgInstallPl;
-      ImgAdd = ImgAddPl
+      ImgAdd = ImgAddPl;
+      ImgIphone1 = iphone1Pl;
+      ImgIphone2 = iphone2Pl;
+      ImgIphone3 = iphone3Pl;
     }
     return (
       <Page>
@@ -57,9 +72,15 @@ class Download extends Component {
             </div>
 
             <div className="header__contaier">
-              <h3 className="header__text">{languageText.web.installApp}</h3>
+              <h3 className="header__text">{languageText.web.installApp.android}</h3>
               <img className="header__img" src={ImgInstall} alt="install" />
               <img className="header__img" src={ImgAdd} alt="install" />
+            </div>
+            <div className="header__contaier">
+              <h3 className="header__text">{languageText.web.installApp.iphone}</h3>
+              <img className="header__img-iphone" src={ImgIphone1} alt="install"/>
+              <img className="header__img-iphone" src={ImgIphone2} alt="install"/>
+              <img className="header__img-iphone" src={ImgIphone3} alt="install"/> 
             </div>
           </div>
         </Header>

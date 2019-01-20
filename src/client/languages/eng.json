@@ -17,6 +17,8 @@
 		"oldPasswordIncorrect": "Old password incorrect",
 		"dataChanged": "User data changed",
 		"passwordChanged": "Password changed",
+		"exportData": "Export data to PDF",
+		"generatePdf": "Generate PDF",
 		"formFieldsOptions": [
 			{"text":"Medicines", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},
@@ -193,7 +195,9 @@
 			{"text": "Tiredness", "value": "Tiredness"},
 			{"text": "Dehydration", "value": "Dehydration"},
 			{"text": "Hunger", "value": "Hunger"},
-			{"text": "Sport", "value": "Sport"}
+			{"text": "Sport", "value": "Sport"},
+			{"text": "Strong smell", "value": "Strong smell"},
+			{"text": "Depression", "value": "Depression"}
 		],
 		"auraAnswers": [
 			{"text": "Nausea", "value": "Nausea"},
@@ -237,7 +241,7 @@
 		"customPeriod": "Custom period",
 		"painDays": "pain days",
 		"noPainDays": "no pain days",
-		"averge": "average attack duration",
+		"average": "average attack duration",
 		"total": "total attacks duration",
 		"migraine": "migraine",
 		"migraines": "migraines",
@@ -252,18 +256,55 @@
 			{"text": "Intense", "value": "Intense"},
 			{"text": "Maximum", "value": "Maximum"}
 		],
+		"humidity": "Humidity ",
 		"weather":"Weather",
 		"triggers": "Triggers",
+		"localization": "Localization",
+		"reliefs": "Helpful during migraine",
+		"medicines": "Medicines",
+		"error": "You're missing some data. Please, while recording a migraine, always take your time to fill out the form so we can provide you more useful informations.",
 		"weatherOptions":[
-			{"text": "Storm", "value": "Storm"},
-			{"text": "1018 hPa", "value": "1018 hPa"},
-			{"text": "Rain", "value": "Rain"}
+			{"text": "Storm", "value": "Thunderstorm"},
+			{"text": "Drizzle", "value": "Drizzle"},
+			{"text": "Rain", "value": "Rain"},
+			{"text": "Snow", "value": "Snow"},
+			{"text": "Mist", "value": "Atmosphere"},
+			{"text": "Sun", "value": "Clear"},
+			{"text": "Clouds", "value": "Clouds"}
 		],
 		"triggersOptions":[
-			{"text": "Dehydration", "value": "Dehydration"},
+			{"text": "Alcohol", "value": "Alcohol"},
 			{"text": "Stress", "value": "Stress"},
+			{"text": "Tiredness", "value": "Tiredness"},
+			{"text": "Dehydration", "value": "Dehydration"},
+			{"text": "Hunger", "value": "Hunger"},
+			{"text": "Sport", "value": "Sport"},
 			{"text": "Strong smell", "value": "Strong smell"},
 			{"text": "Depression", "value": "Depression"}
+		],
+		"reliefsOptions": [
+			{"text": "Dark room", "value": "Dark room"},
+			{"text": "Yoga/meditate", "value": "Yoga/meditate"},
+			{"text": "Sleep", "value": "Sleep"},
+			{"text": "Hot shower", "value": "Hot shower"},
+			{"text": "Cold shower", "value": "Cold shower"},
+			{"text": "Ice packs", "value": "Ice packs"},
+			{"text": "Heat pad", "value": "Heat pad"},
+			{"text": "None of these/others", "value": "None/Others"}
+		],
+		"localizationOptions": [
+			{"text": "Home", "value": "Home"},
+			{"text": "Outside", "value": "Outside"},
+			{"text": "Transit", "value": "Transit"},
+			{"text": "Work", "value": "Work"},
+			{"text": "Bed", "value": "Bed"},
+			{"text": "School", "value": "School"}
+		],
+		"medicinesOptions": [
+			{"text": "Ibuprofen", "value": "Ibuprofen"},
+			{"text": "Paracetamol", "value": "Paracetamol"},
+			{"text": "Codeine", "value": "Codeine"},
+			{"text": "Triptans", "value": "Triptans"}
 		]
 	},
 	"text":{
@@ -276,7 +317,10 @@
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
 		"headerButton": "Find out more",
-		"installApp": "Install application on your mobile device"
+		"installApp": {
+			"android": "Install application on your Android mobile device",
+			"iphone": "Install application on your iOS mobile device"
+		}
 	},
 	"infoPage": {
 		"getApplication": "Get Application",
@@ -300,5 +344,20 @@
 		"password": "Password",
 		"emailNotFound": "Email not found",
 		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number"
+	},
+	"pdfGeneration": {
+		"title": "MIGRAINE APP",
+		"subtitle": "Szczegółowy raport dotyczący Twoich migren",
+		"timeSpan": "Przedział czasu",
+		"stats30Header": "Ostatnie 30 dni",
+		"stats60Header": "Ostatnie 60 dni",
+		"statsYearHeader": "Ostatni rok",
+		"statsAllHeader": "Od czasu założenia konta",
+		"attacks": "Liczba migren",
+		"painDays": "Dni z bólem",
+		"noPainDays": "Dni bez bólu",
+		"average": "Średni czas trwania ataku [h]",
+		"total": "Całkowity czas trwania ataków [h]",
+		"pain": "Siła bólu: "
 	}
 }

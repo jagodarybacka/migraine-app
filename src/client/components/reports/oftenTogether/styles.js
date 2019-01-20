@@ -7,6 +7,7 @@ export const OftenTogetherComponent = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 90%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 
   h2 {
@@ -26,7 +27,6 @@ export const OftenTogetherComponent = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 300px;
   }
 `
 
@@ -58,4 +58,15 @@ export const TogetherField = styled.div`
   border-radius: 10px;
   text-align: center;
 
+`
+
+export const ErrorMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: auto;
+  h5 {
+    font-weight: 300;
+    margin: 1em;
+  }
 `
