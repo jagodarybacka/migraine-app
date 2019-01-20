@@ -310,7 +310,10 @@
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
 		"headerButton": "Find out more",
-		"installApp": "Install application on your mobile device"
+		"installApp": {
+			"android": "Install application on your Android mobile device",
+			"iphone": "Install application on your iOS mobile device"
+		}
 	},
 	"infoPage": {
 		"getApplication": "Get Application",

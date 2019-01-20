@@ -10,6 +10,9 @@ import ImgInstallEng from './assets/install1-eng.jpg'
 import ImgInstallPl from './assets/install1-pl.jpg'
 import ImgAddEng from './assets/install2-eng.jpg'
 import ImgAddPl from './assets/install2-pl.jpg'
+import iphone1 from './assets/iphone1.png'
+import iphone2 from './assets/iphone2.png'
+import iphone3 from './assets/iphone3.png'
 
 class Download extends Component {
   constructor(props) {
@@ -57,9 +60,15 @@ class Download extends Component {
             </div>
 
             <div className="header__contaier">
-              <h3 className="header__text">{languageText.web.installApp}</h3>
+              <h3 className="header__text">{languageText.web.installApp.android}</h3>
               <img className="header__img" src={ImgInstall} alt="install" />
               <img className="header__img" src={ImgAdd} alt="install" />
+            </div>
+            <div className="header__contaier">
+              <h3 className="header__text">{languageText.web.installApp.iphone}</h3>
+              <img className="header__img-iphone" src={iphone1} alt="install"/>
+              <img className="header__img-iphone" src={iphone2} alt="install"/>
+              <img className="header__img-iphone" src={iphone3} alt="install"/> 
             </div>
           </div>
         </Header>

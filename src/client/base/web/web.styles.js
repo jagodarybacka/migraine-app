@@ -164,6 +164,14 @@ export const Header = styled.header`
     box-shadow: 0px 3px 12px 1px rgba(0, 0, 0, 0.21);
   }
 
+  .header__img-iphone {
+    height: auto;
+    max-height: 400px;
+    width: auto;
+    margin: 0 10px;
+    box-shadow: 0px 3px 12px 1px rgba(0, 0, 0, 0.21);
+  }
+
   .header__contaier {
     margin-bottom: 4rem;
     padding: 2rem 0 4rem;

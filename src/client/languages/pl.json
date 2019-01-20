@@ -310,7 +310,10 @@
 		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
 		"headerButton": "Dowiedz się więcej",
-		"installApp": "Zainstaluj aplikację na swoim urządzeniu"
+		"installApp": {
+			"android":"Zainstaluj aplikację na swoim urządzeniu z Androidem",
+			"iphone":"Zainstaluj aplikację na swoim urządzeniu z iOS"
+		}
 	},
 	"infoPage": {
 		"getApplication": "Pobierz aplikację",
