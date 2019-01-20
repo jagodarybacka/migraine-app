@@ -250,6 +250,7 @@
 			{"text": "Intensywny", "value": "Intense"},
 			{"text": "Maksymalny", "value": "Maximum"}
 		],
+		"humidity": "Wilgotność ",
 		"weather":"Pogoda",
 		"triggers": "Przyczyny",
 		"localization": "Lokalizacja",

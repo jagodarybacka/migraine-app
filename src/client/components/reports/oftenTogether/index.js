@@ -77,6 +77,11 @@ class OftenTogether extends Component {
           answers.push(value + String.fromCharCode(176) + "C")
         })
       }
+      if(weather.humidity && weather.humidity.length !== 0){
+        weather.humidity.forEach((value) => {
+          answers.push(languageText.oftenTogether.humidity + value + '%')
+        })
+      }
       if(weather.description && weather.description.length !== 0){
         weather.description.forEach((value) => {
           answers.push(value)

@@ -120,7 +120,8 @@ module.exports = {
         return {
             pressure: this.getSignificant(weather.pressure),
             temperature: this.getSignificant(weather.temperature),
-            description: this.getSignificant(weather.description)
+            description: this.getSignificant(weather.description),
+            humidity: this.getSignificant(weather.humidity)
         };
     },
 
@@ -152,6 +153,7 @@ module.exports = {
         let pressureCount = 0;
         let temperatureCount = 0;
         let descriptionCount = 0;
+        let humidityCount = 0;
         for(let option in weather.pressure){
             pressureCount += weather.pressure[option]
         }
@@ -161,10 +163,14 @@ module.exports = {
         for(let option in weather.description){
             descriptionCount += weather.description[option]
         }
+        for(let option in weather.humidity){
+            humidityCount += weather.humidity[option]
+        }
         return {
             pressure: pressureCount,
             temperature: temperatureCount,
-            description: descriptionCount
+            description: descriptionCount,
+            humidity: humidityCount
         }
     },
 
@@ -206,6 +212,9 @@ module.exports = {
             }
             if(weather.temperature){
                 object = this.parseProp(object,'temperature',weather.temperature)
+            }
+            if(weather.humidity){
+                object = this.parseProp(object,'humidity',weather.humidity)
             }
             if(weather.weather){
                 if(weather.weather.weather[0].main){
