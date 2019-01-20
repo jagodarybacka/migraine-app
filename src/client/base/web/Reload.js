@@ -1,7 +1,5 @@
 const Reload = (props) => {
-    if (window.localStorage.getItem('isLogged') === 'true') {
-        props.history.push('/');
-    }
+    props.history.push('/');
     return null;
 }
 
