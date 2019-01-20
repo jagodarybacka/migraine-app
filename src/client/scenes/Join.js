@@ -18,6 +18,8 @@ const Language = styled.div`
   margin: 0 2vw 0 2vw;
 
   .language__button {
+    height: 50px;
+    width: auto;
     margin: 0 0.5em;
     outline: none;
     border: none;
