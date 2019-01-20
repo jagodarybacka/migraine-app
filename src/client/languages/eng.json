@@ -250,6 +250,7 @@
 			{"text": "Intense", "value": "Intense"},
 			{"text": "Maximum", "value": "Maximum"}
 		],
+		"humidity": "Humidity ",
 		"weather":"Weather",
 		"triggers": "Triggers",
 		"localization": "Localization",
