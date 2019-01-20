@@ -17,6 +17,8 @@
 		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
 		"dataChanged": "Dane zostały zmienione",
 		"passwordChanged": "Hasło zostało zmienione",
+		"exportData": "Eksportuj dane do PDF",
+		"generatePdf": "Wygeneruj PDF",
 		"formFieldsOptions": [
 			{"text":"Leki", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},
@@ -235,7 +237,7 @@
 		"customPeriod": "Niestandardowy okres",
 		"painDays": "dni z bólem",
 		"noPainDays": "dni bez bólu",
-		"averge": "średni czas trwania ataku",
+		"average": "średni czas trwania ataku",
 		"total": "całkowity czas trwania ataków",
 		"migraine": "migrena",
 		"migraines": "migreny",
@@ -338,5 +340,20 @@
 		"password": "Hasło",
 		"emailNotFound": "Nie znaleziono adresu email",
 		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę."
+	},
+	"pdfGeneration": {
+		"title": "MIGRAINE APP",
+		"subtitle": "Szczegółowy raport dotyczący Twoich migren",
+		"timeSpan": "Przedział czasu",
+		"stats30Header": "Ostatnie 30 dni",
+		"stats60Header": "Ostatnie 60 dni",
+		"statsYearHeader": "Ostatni rok",
+		"statsAllHeader": "Od czasu założenia konta",
+		"attacks": "Liczba migren",
+		"painDays": "Dni z bólem",
+		"noPainDays": "Dni bez bólu",
+		"average": "Średni czas trwania ataku [h]",
+		"total": "Całkowity czas trwania ataków [h]",
+		"pain": "Siła bólu: "
 	}
 }
