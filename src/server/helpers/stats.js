@@ -20,7 +20,7 @@ module.exports = {
         })
         const period = days !== "all" 
             ? days 
-            : user.registration_date 
+            : user && user.registration_date 
                 ? Math.ceil((now.getTime() - new Date(user.registration_date).getTime())/(1000*60*60*24))
                 : Math.ceil((now.getTime() - firstAttack.getTime())/ (1000*60*60*24))
         const total = Math.round(pain / (60));

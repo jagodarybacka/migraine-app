@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
+import { generatePdf } from '../utils/pdfGeneration';
 import CustomAnswer from './CustomAnswer';
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
@@ -346,6 +347,14 @@ class Settings extends Component {
     }
   }
 
+  getPdf() {
+    axios.get("/api/pdf")
+    .then((res) => {
+        generatePdf(res.data);
+    })
+    .catch((err) => console.log(err))
+  }
+
   render() {
     const customAnswer = this.state.ifCustomAnswer 
       ? (<CustomAnswer answerType={this.state.answerType} current={this.state.current} onConfirmFn={this.handleCustomAnswer.bind(this)}/>) 
@@ -423,6 +432,8 @@ class Settings extends Component {
                { Answers }
             </List>) : "" }
           { customAnswer }
+          <Divider text="Export data to pdf"/>
+            <Button onClick={this.getPdf} text="Generate pdf"/>
           <Divider text={languageText.settings.chooseLanguage}/>
             <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
             <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />

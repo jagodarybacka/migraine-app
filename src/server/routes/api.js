@@ -53,6 +53,8 @@ router.post("/users/answer", auth_controller.isLoggedIn, user_controller.add_cus
 
 router.get("/reports/together/:pain", auth_controller.isLoggedIn, report_controller.reports_together);
 
+router.get("/pdf", auth_controller.isLoggedIn, report_controller.pdf_data);
+
 /// USER ROUTES ///
 
 /* Register User */
