@@ -207,4 +207,7 @@ export const Footer = styled.footer`
   text-transform: uppercase;
   padding: 2em;
   margin-top: 2em;
+  a {
+    text-decoration: underline;
+  }
 `

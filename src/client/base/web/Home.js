@@ -75,6 +75,7 @@ class Home extends Component {
         </div>
         <Footer>
           <h4>Migraine App. 2018-2019</h4>
+          <h4>Logo design by <a href="https://dribbble.com/laurareen">Laura Reen</a></h4>
         </Footer>
       </Page>
     )

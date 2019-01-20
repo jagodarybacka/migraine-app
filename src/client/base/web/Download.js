@@ -80,12 +80,13 @@ class Download extends Component {
               <h3 className="header__text">{languageText.web.installApp.iphone}</h3>
               <img className="header__img-iphone" src={ImgIphone1} alt="install"/>
               <img className="header__img-iphone" src={ImgIphone2} alt="install"/>
-              <img className="header__img-iphone" src={ImgIphone3} alt="install"/> 
+              <img className="header__img-iphone" src={ImgIphone3} alt="install"/>
             </div>
           </div>
         </Header>
         <Footer>
           <h4>Migraine App. 2018-2019</h4>
+          <h4>Logo design by <a href="https://dribbble.com/laurareen">Laura Reen</a></h4>
         </Footer>
 
       </Page>
