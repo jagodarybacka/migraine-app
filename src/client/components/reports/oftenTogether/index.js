@@ -9,8 +9,7 @@ class OftenTogether extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      helpVisible: false
-    }
+      helpVisible: false,
       selectedOption: 'Moderate',
       data: {},
       error: false
@@ -36,7 +35,7 @@ class OftenTogether extends Component {
       }
       if(res.data) {
         let error = false;
-        if(res.data.localization.length === 0 || res.data.reliefs.length === 0 || 
+        if(res.data.localization.length === 0 || res.data.reliefs.length === 0 ||
             res.data.triggers.length === 0 || res.data.medicines.length === 0 ){
           error = true;
         }
@@ -135,7 +134,7 @@ class OftenTogether extends Component {
       <div className="together__section" key={i}>
         <h3 className="together__header">{section.header}</h3>
         <div className="together__fields">
-          { section.fields && section.fields.length !== 0 
+          { section.fields && section.fields.length !== 0
             ? section.fields.map((field, j) => (<TogetherField color={section.color} key={j}>{this.getTranslatedValue(field,section.value)}</TogetherField>))
             : ''
           }
@@ -151,9 +150,9 @@ class OftenTogether extends Component {
       <QuestionIcon src={questionImg} onClick={() => this.setState({helpVisible: true})}/>
     ) : ''
 
-    const error = this.state.error 
+    const error = this.state.error
       ? (<ErrorMessage><h5>{languageText.oftenTogether.error}</h5></ErrorMessage>) : '';
-    
+
     return (
       <OftenTogetherComponent>
         { IconQuestion }
