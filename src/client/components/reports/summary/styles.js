@@ -70,6 +70,12 @@ export const CustomIcon = styled.img`
   top: 2em;
   right: 1em;
 `
+
+export const QuestionIcon = styled(CustomIcon)`
+  left: 1em;
+  opacity: 0.6;
+`
+
 export const CustomPeriodComponent = styled.div`
   position: absolute;
   background: #fff;

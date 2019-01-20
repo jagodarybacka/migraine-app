@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { OftenTogetherComponent, Select, TogetherField } from './styles'
+import { OftenTogetherComponent, Select, TogetherField, QuestionIcon } from './styles'
 import {languageText} from '../../../languages/MultiLanguage.js'
+import questionImg from '../../../assets/questionmark-circle.png'
+import Help from '../../Help'
 
 class OftenTogether extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      helpVisible: false
+    }
   }
 
   render() {
@@ -28,12 +32,23 @@ class OftenTogether extends Component {
       </div>
     ))
 
+    const helpModal = this.state.helpVisible ? (
+      <Help type="oftenTogether" onConfirmFn={() => {this.setState({helpVisible: false})}}/>
+    ) : ''
+
+    const IconQuestion = !this.state.helpVisible ? (
+      <QuestionIcon src={questionImg} onClick={() => this.setState({helpVisible: true})}/>
+    ) : ''
+
     return (
       <OftenTogetherComponent>
+        { IconQuestion }
+        <h2>Pain intensity</h2>
         <Select>
           {selectables}
         </Select>
         <div>{sections}</div>
+        { helpModal }
       </OftenTogetherComponent>
     )
   }
