@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { OftenTogetherComponent, Select, TogetherField, ErrorMessage } from './styles'
+import { OftenTogetherComponent, Select, TogetherField, ErrorMessage, QuestionIcon } from './styles'
 import {languageText} from '../../../languages/MultiLanguage.js'
+import questionImg from '../../../assets/questionmark-circle.png'
+import Help from '../../Help'
 import axios from 'axios';
 
 class OftenTogether extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      helpVisible: false,
       selectedOption: 'Moderate',
       data: {},
       error: false
@@ -32,7 +35,7 @@ class OftenTogether extends Component {
       }
       if(res.data) {
         let error = false;
-        if(res.data.localization.length === 0 || res.data.reliefs.length === 0 || 
+        if(res.data.localization.length === 0 || res.data.reliefs.length === 0 ||
             res.data.triggers.length === 0 || res.data.medicines.length === 0 ){
           error = true;
         }
@@ -131,18 +134,29 @@ class OftenTogether extends Component {
       <div className="together__section" key={i}>
         <h3 className="together__header">{section.header}</h3>
         <div className="together__fields">
-          { section.fields && section.fields.length !== 0 
+          { section.fields && section.fields.length !== 0
             ? section.fields.map((field, j) => (<TogetherField color={section.color} key={j}>{this.getTranslatedValue(field,section.value)}</TogetherField>))
             : ''
           }
         </div>
       </div>
     ))
-    
-    const error = this.state.error 
+
+    const helpModal = this.state.helpVisible ? (
+      <Help type="oftenTogether" onConfirmFn={() => {this.setState({helpVisible: false})}}/>
+    ) : ''
+
+    const IconQuestion = !this.state.helpVisible ? (
+      <QuestionIcon src={questionImg} onClick={() => this.setState({helpVisible: true})}/>
+    ) : ''
+
+    const error = this.state.error
       ? (<ErrorMessage><h5>{languageText.oftenTogether.error}</h5></ErrorMessage>) : '';
+
     return (
       <OftenTogetherComponent>
+        { IconQuestion }
+        <h2>{languageText.addForm.pain}</h2>
         <Select
           onChange={this.handleSelectChange}
           value={selectedOption}>
@@ -150,6 +164,7 @@ class OftenTogether extends Component {
         </Select>
         { error }
         <div>{sections}</div>
+        { helpModal }
       </OftenTogetherComponent>
     )
   }

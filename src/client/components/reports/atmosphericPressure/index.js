@@ -4,7 +4,9 @@ import React, {
 import styled from 'styled-components';
 import _ from 'lodash'
 import CustomPeriod from '../../CustomPeriod'
+import Help from '../../Help'
 import customImg from '../../../assets/custom-options.png'
+import questionImg from '../../../assets/questionmark-circle.png'
 
 import { parse, get } from './utils'
 import axios from 'axios';
@@ -56,6 +58,10 @@ export const CustomIcon = styled.img`
   top: 1em;
   right: 1em;
   z-index: 100;
+`
+export const QuestionIcon = styled(CustomIcon)`
+  left: 1em;
+  opacity: 0.6;
 `
 export const CustomPeriodComponent = styled.div`
   position: absolute;
@@ -351,6 +357,10 @@ class AtmosphericPressure extends Component {
       <CustomPeriod onConfirmFn={this.handleCustomPeriod.bind(this)}/>
     ) : '';
 
+    const helpModal = this.state.helpVisible ? (
+      <Help type="atmosphericPressure" onConfirmFn={() => {this.setState({helpVisible: false})}}/>
+    ) : ''
+
     const periodRange = (
       <p className="summary__period">
         {localStorage.getItem('lang') === 'eng'
@@ -363,16 +373,22 @@ class AtmosphericPressure extends Component {
       </p>
     )
 
-    const Icon = this.state.customPeriodVisible
+    const IconPeriod = this.state.customPeriodVisible || this.state.helpVisible
       ? ""
       : ( <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> )
 
+    const IconQuestion = this.state.customPeriodVisible || this.state.helpVisible
+      ? ""
+      : ( <QuestionIcon src={questionImg}  onClick={() => this.setState({helpVisible: true})} /> )
+
     return (
       <AtmosphericPressureComponent width={300} height={300}>
-        { Icon }
+        { IconQuestion }
+        { IconPeriod }
         { periodRange }
         <canvas ref='canvas' width = {300} height = {350}/>
         { customPeriod }
+        { helpModal }
       </AtmosphericPressureComponent>
     )
   }
