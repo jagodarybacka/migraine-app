@@ -57,6 +57,11 @@ const Container = styled.article`
     opacity: 0.8;
   }
 
+  a {
+    color: #2196f3;
+    font-weight: 500;
+  }
+
   .form-container {
     overflow-y: scroll;
     max-height: 100%;
@@ -102,6 +107,13 @@ const Hello = (props) => {
       <img src={MonitorImg} alt='monitor'/>
       <p className="start-paragraph">{languageText.recordForm.paragraph}</p>
       <p className="start-paragraph">{languageText.recordForm.feelBetter}</p>
+      <p className="start-paragraph">
+        {languageText.recordForm.inside}
+        <Link to='/settings'>
+          {languageText.recordForm.settings}
+        </Link>
+        {languageText.recordForm.customize}
+      </p>
     </div>
   )
 }
