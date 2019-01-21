@@ -12,6 +12,9 @@ import localizationIcon from '../assets/localization.png'
 import medicinesIcon from '../assets/medicine.png'
 import questionmarkIcon from '../assets/questionmark.png'
 import auraIcon from '../assets/eye.png'
+import user from '../assets/user-male.png'
+import form from '../assets/form.png'
+import app from '../assets/app.png'
 
 import axios from 'axios';
 import TextInput from '../components/TextInput';
@@ -20,7 +23,8 @@ import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage
 const SettingsComponent = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 5rem 0.25em;
+  padding: 4rem 0.25em;
+  padding-bottom: 9em;
   margin: 0;
   text-align: center;
   height: auto;
@@ -28,6 +32,13 @@ const SettingsComponent = styled.div`
   .chosenLang{
     color: red;
   }
+`
+
+const SettingsCard = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 const Buttons = styled.div`
@@ -46,6 +57,12 @@ const Buttons = styled.div`
   }
 `
 
+const LanguageButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 const List = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -62,6 +79,35 @@ const List = styled.div`
     font-weight: 300;
   }
 `
+
+const Menu = styled.ul`
+  position: fixed;
+  bottom: 4em;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #fff;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.24);
+`
+
+const MenuButton = styled.li`
+  margin: 0.5rem;
+  opacity: 0.6;
+  width: 6em;
+  h6 {
+    margin: 5px 0 0 0;
+    text-transform: uppercase;
+  }
+  img {
+    width: 30px;
+    heigth: 30px;
+  }
+`
+
 
 class Settings extends Component {
   constructor(props){
@@ -96,7 +142,8 @@ class Settings extends Component {
       ifCustomAnswer: false,
       answerType: '',
       current: {},
-      customAnswers: {}
+      customAnswers: {},
+      currentTab: "form"
     }
     this.baseFieldsState = this.state.fields;
 
@@ -108,6 +155,7 @@ class Settings extends Component {
     this.handleDataChange = this.handleDataChange.bind(this);
     this.addAnswer = this.addAnswer.bind(this);
     this.getAnswers = this.getAnswers.bind(this);
+    this.handleChangeTab = this.handleChangeTab.bind(this);
   }
 
   logout(){
@@ -355,6 +403,13 @@ class Settings extends Component {
     .catch((err) => console.log(err))
   }
 
+  handleChangeTab(name) {
+    this.setState((prevState) => ({
+      ...prevState,
+      currentTab: name
+    }))
+  }
+
   render() {
     const customAnswer = this.state.ifCustomAnswer 
       ? (<CustomAnswer answerType={this.state.answerType} current={this.state.current} onConfirmFn={this.handleCustomAnswer.bind(this)}/>) 
@@ -383,105 +438,140 @@ class Settings extends Component {
     ) : '';
 
     let currentLang = getLanguage();
+
+    const CurrentSettings = this.state.currentTab === "form" 
+    ? (
+      <SettingsCard>
+        <Divider text={languageText.settings.exportData}/>
+          <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
+        <Divider text={languageText.settings.formFields}/>
+        <div>
+        {
+          fields.map((field, index) => (
+            <Checkbox
+            key={index}
+            small
+            text={field.text}
+            value={field.text}
+            checked={this.getUserFormField(field.field)}
+            onChange={() => this.toggleUserFormField(field.field)}
+            />
+          ))
+        }
+        </div>
+        <Divider text={languageText.settings.setCustomAnswers}/>
+        <Buttons>
+          {
+            answers.map((option, index) => (
+              <div key={index}>
+              <Button 
+              key={index}
+              small
+              onClick={() => this.addAnswer(option)}
+              primary={this.state.answerType ===option.field} 
+              img= {option.field === 'localization' 
+                ? localizationIcon 
+                : option.field === "aura"
+                  ? auraIcon
+                  : option.field === "medicines"
+                    ? medicinesIcon
+                    : option.field === "triggers"
+                      ? questionmarkIcon
+                      : questionmarkIcon}/>
+              <h6>{option.text}</h6>
+              </div>
+            ))
+          }
+        </Buttons>
+        { this.state.ifCustomAnswer ? 
+          (<List>
+            { Answers }
+          </List>) : "" }
+        { customAnswer }
+      </SettingsCard>
+    ) 
+    : this.state.currentTab === "app" 
+      ? (
+        <SettingsCard>
+          <Divider text={languageText.settings.chooseLanguage}/>
+          <LanguageButtons>
+          <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
+          <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
+          </LanguageButtons>
+        </SettingsCard>
+      ) 
+      : this.state.currentTab === "user" 
+        ? (
+          <SettingsCard>
+            <Divider text={languageText.settings.logout}/>
+            <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
+            <Divider text={languageText.settings.changeData}/>
+            <TextInput
+              type="text"
+              id="username"
+              placeholder={languageText.settings.usernamePlaceholder}
+              name={languageText.settings.username}
+              value={username.value}
+              isValid={username.isValid}
+              errorMsg={username.errorMsg}
+              onChange={this.handleChange}
+            />
+            <TextInput
+              type="email"
+              id="email"
+              placeholder="Email"
+              name="Email"
+              value={email.value}
+              isValid={email.isValid}
+              errorMsg={email.errorMsg}
+              onChange={this.handleChange}
+            />
+            <Button type="submit" onClick={this.handleDataChange} small="true" text={languageText.settings.buttonText} primary />
+            <Divider text={languageText.settings.changePassword}/>
+            <TextInput
+              type="password"
+              id="oldPassword"
+              placeholder={languageText.settings.oldPassword}
+              name={languageText.settings.oldPassword}
+              value={oldPassword.value}
+              isValid={oldPassword.isValid}
+              errorMsg={oldPassword.errorMsg}
+              onChange={this.handleChange}
+            />
+            <TextInput
+              type="password"
+              id="password"
+              placeholder={languageText.settings.newPassword}
+              name={languageText.settings.newPassword}
+              value={password.value}
+              isValid={password.isValid}
+              errorMsg={password.errorMsg}
+              onChange={this.handleChange}
+            />
+            <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
+          </SettingsCard>
+        )
+        : "";
+
     return (
       <SettingsComponent className="Settings">
           <Header />
-          <Divider text={languageText.settings.logout}/>
-          <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
-          <Divider text={languageText.settings.formFields}/>
-          <div>
-          {
-            fields.map((field, index) => (
-              <Checkbox
-              key={index}
-              small
-              text={field.text}
-              value={field.text}
-              checked={this.getUserFormField(field.field)}
-              onChange={() => this.toggleUserFormField(field.field)}
-              />
-            ))
-          }
-          </div>
-          <Divider text={languageText.settings.setCustomAnswers}/>
-          <Buttons>
-            {
-              answers.map((option, index) => (
-                <div key={index}>
-                <Button 
-                key={index}
-                small
-                onClick={() => this.addAnswer(option)}
-                primary={this.state.answerType ===option.field} 
-                img= {option.field === 'localization' 
-                  ? localizationIcon 
-                  : option.field === "aura"
-                    ? auraIcon
-                    : option.field === "medicines"
-                      ? medicinesIcon
-                      : option.field === "triggers"
-                        ? questionmarkIcon
-                        : questionmarkIcon}/>
-                <h6>{option.text}</h6>
-                </div>
-              ))
-            }
-          </Buttons>
-          { this.state.ifCustomAnswer ? 
-            (<List>
-               { Answers }
-            </List>) : "" }
-          { customAnswer }
-          <Divider text={languageText.settings.exportData}/>
-            <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
-          <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
-          <Divider text={languageText.settings.changeData}/>
-          <TextInput
-            type="text"
-            id="username"
-            placeholder={languageText.settings.usernamePlaceholder}
-            name={languageText.settings.username}
-            value={username.value}
-            isValid={username.isValid}
-            errorMsg={username.errorMsg}
-            onChange={this.handleChange}
-          />
-          <TextInput
-            type="email"
-            id="email"
-            placeholder="Email"
-            name="Email"
-            value={email.value}
-            isValid={email.isValid}
-            errorMsg={email.errorMsg}
-            onChange={this.handleChange}
-          />
-          <Button type="submit" onClick={this.handleDataChange} small="true" text={languageText.settings.buttonText} primary />
-          <Divider text={languageText.settings.changePassword}/>
-          <TextInput
-            type="password"
-            id="oldPassword"
-            placeholder={languageText.settings.oldPassword}
-            name={languageText.settings.oldPassword}
-            value={oldPassword.value}
-            isValid={oldPassword.isValid}
-            errorMsg={oldPassword.errorMsg}
-            onChange={this.handleChange}
-          />
-          <TextInput
-            type="password"
-            id="password"
-            placeholder={languageText.settings.newPassword}
-            name={languageText.settings.newPassword}
-            value={password.value}
-            isValid={password.isValid}
-            errorMsg={password.errorMsg}
-            onChange={this.handleChange}
-          />
-          <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
-        <Menubar />
+          { CurrentSettings }
+          <Menu>
+            <MenuButton onClick={() => this.handleChangeTab("form")}>
+              <img src={form} alt="form" />
+              <h6>{languageText.settings.formCard}</h6>
+            </MenuButton>
+            <MenuButton onClick={() => this.handleChangeTab("app")}>
+              <img src={app} alt="app" />
+              <h6>{languageText.settings.appCard}</h6>
+            </MenuButton>
+            <MenuButton onClick={() => this.handleChangeTab("user")}>
+              <img src={user} alt="user" />
+              <h6>{languageText.settings.userCard}</h6>
+            </MenuButton>
+          </Menu>
+          <Menubar />
       </SettingsComponent> 
 
     );

@@ -24,6 +24,7 @@ const Menu = styled.ul`
 const MenuButton = styled.li`
   margin: 0.5rem;
   opacity: 0.6;
+  width: 6em;
   a {
     display: flex;
     flex-direction: column;

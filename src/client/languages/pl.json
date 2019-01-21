@@ -1,5 +1,8 @@
 {
 	"settings":{
+		"formCard": "Formularz",
+		"appCard": "Aplikacja",
+		"userCard": "Użytkownik",
 		"chooseLanguage": "Wybierz język",
 		"changeData": "Zmień dane",
 		"changePassword": "Zmień hasło",

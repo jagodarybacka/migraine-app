@@ -1,5 +1,8 @@
 {
 	"settings":{
+		"formCard": "Form",
+		"appCard": "Application",
+		"userCard": "User",
 		"chooseLanguage": "Choose language",
 		"changeData": "Change data",
 		"changePassword": "Change password",
@@ -215,7 +218,7 @@
 			{"text": "Yoga/meditate", "value": "Yoga/meditate"},
 			{"text": "Sleep", "value": "Sleep"},
 			{"text": "Hot shower", "value": "Hot shower"},
-			{"text": "Clod shower", "value": "Cold shower"},
+			{"text": "Cold shower", "value": "Cold shower"},
 			{"text": "Ice packs", "value": "Ice packs"},
 			{"text": "Heat pad", "value": "Heat pad"},
 			{"text": "None of these/others", "value": "None/Others"}
