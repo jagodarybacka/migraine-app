@@ -10,7 +10,7 @@ export const CustomAnswerComponent = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: stretch;
-  width: 80%;
+  width: 100%;
   height: 80%;
   text-align: center;
   .custom__cancel {

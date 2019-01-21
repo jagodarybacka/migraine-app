@@ -1,5 +1,8 @@
 {
 	"settings":{
+		"formCard": "Form",
+		"appCard": "Application",
+		"userCard": "User",
 		"chooseLanguage": "Choose language",
 		"changeData": "Change data",
 		"changePassword": "Change password",
