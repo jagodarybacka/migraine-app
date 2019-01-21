@@ -6,10 +6,8 @@ import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
 import moment from 'moment';
 
-
 import Button from '../components/Button'
 import Header from '../components/Header'
-
 import MonitorImg from '../assets/monitor.png'
 
 import {
@@ -26,7 +24,6 @@ import {
   SleepDuration,
   Reliefs
 } from './form/AddForm';
-
 
 const Container = styled.article`
   padding: 0;
@@ -58,6 +55,11 @@ const Container = styled.article`
     text-transform: initial;
     margin: 1em;
     opacity: 0.8;
+  }
+
+  a {
+    color: #2196f3;
+    font-weight: 500;
   }
 
   .form-container {
@@ -105,6 +107,13 @@ const Hello = (props) => {
       <img src={MonitorImg} alt='monitor'/>
       <p className="start-paragraph">{languageText.recordForm.paragraph}</p>
       <p className="start-paragraph">{languageText.recordForm.feelBetter}</p>
+      <p className="start-paragraph">
+        {languageText.recordForm.inside}
+        <Link to='/settings'>
+          {languageText.recordForm.settings}
+        </Link>
+        {languageText.recordForm.customize}
+      </p>
     </div>
   )
 }
@@ -123,17 +132,19 @@ class RecordForm extends Component {
       dateValidation: {
         valid: true,
         err_msg: ""
-      }
+      },
+      customAnswers: {}
     };
 
     this.firstTab = 0;
-    this.lastTab = 12;
 
     this.currentDate = this.currentDate.bind(this);
+    this.changeSwipeable = this.changeSwipeable.bind(this);
     this.subtractsOneHour = this.subtractsOneHour.bind(this);
     this.notYetEnd = this.notYetEnd.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
+    this.parseCustomAnswers = this.parseCustomAnswers.bind(this);
   }
 
   componentDidMount() {
@@ -151,6 +162,37 @@ class RecordForm extends Component {
         this.setState({ data: data.report })
       })
     }
+    axios.get('/api/users/answer')
+      .then((res) => {
+        if(res.status === 204){
+          console.log("No content");
+        } else {
+          const data = this.parseCustomAnswers(res.data);
+          this.setState((prevState) => ({
+            ...prevState,
+            customAnswers: data
+          }))
+       }
+      })
+      .catch((err) => {console.log(err);})
+  }
+
+  parseCustomAnswers(answers) {
+    for(var op in answers) {
+      if(answers[op].length > 0){
+        answers[op] = this.mapValues(answers[op]);
+      }
+    }
+    return answers;
+  }
+
+  mapValues(values) {
+    return values.map((value) => {
+      return {
+        text: value,
+        value: value
+      }
+    })
   }
 
   handleChangeTabValue(evt) {
@@ -184,7 +226,6 @@ class RecordForm extends Component {
       })
   }
 
-
   changeTab(direction) {
     const { currentTab } = this.state;
     let nextTab = currentTab;
@@ -200,9 +241,9 @@ class RecordForm extends Component {
     this.setState({ currentTab: nextTab });
   }
 
-  // const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-  // const time = `${new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()}:${new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()}`;
-  // const date = `${new Date().getFullYear()}-${month[new Date().getMonth()]}-${new Date().getDate()}`;
+  changeSwipeable(index){
+    this.setState({ currentTab: index });
+  }
 
   currentDate(name){
     const { data } = this.state;
@@ -238,8 +279,6 @@ class RecordForm extends Component {
     });
   }
 
-
-
   isComplete() {
     const { data } = this.state;
     return (
@@ -263,53 +302,62 @@ class RecordForm extends Component {
   }
 
   render() {
-    const { currentTab, data } = this.state;
+    const { currentTab, data, customAnswers } = this.state;
     const { match } = this.props;
     const fields = [{
-      component: Medicines,
-      name: 'medicines'
-    }, {
-      component: Aura,
-      name: 'aura'
-    }, {
-      component: Triggers,
-      name: 'triggers'
-    }, {
-      component: Reliefs,
-      name: 'reliefs'
-    }, {
-      component: Mood,
-      name: 'mood'
-    }, {
-      component: Pressure,
-      name: 'pressure'
-    }, {
-      component: SleepDuration,
-      name: 'sleep_duration'
-    }, {
-      component: Menstruation,
-      name: 'menstruation'
-    }, {
-      component: Localization,
-      name: 'localization'
-    }]
+        component: Medicines,
+        name: 'medicines',
+        custom: true
+      }, {
+        component: Triggers,
+        name: 'triggers',
+        custom: true
+      }, {
+        component: Reliefs,
+        name: 'reliefs',
+        custom: true
+      },  {
+        component: Localization,
+        name: 'localization',
+        custom: true
+      }, {
+        component: Aura,
+        name: 'aura',
+        custom: true
+      }, {
+        component: Mood,
+        name: 'mood'
+      }, {
+        component: Menstruation,
+        name: 'menstruation'
+      }, {
+        component: Pressure,
+        name: 'pressure'
+      }, {
+        component: SleepDuration,
+        name: 'sleep_duration'
+      }]
+
     const tabs = fields.map((field, id) => {
       if (this.getUserFormField(field.name)) {
         return (
           <div className="record-tab" key={id}>
-            <field.component values={data[field.name]} valueData={data[field.name]} onChange={this.handleChangeTabValue} />
+            <field.component 
+              customAnswers = {customAnswers[field.name]}
+              values={data[field.name]} 
+              valueData={data[field.name]} 
+              onChange={this.handleChangeTabValue} />
           </div>
         )
       }
       return null;
     }).filter(view => !!view);
 
-
     return (
       <Container className="Form">
         <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
-          <SwipeableViews className="form-container" index={currentTab}>
+          <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index) }>
             <div className="record-tab">
               <Hello edit={this.edit} />
             </div>
@@ -344,7 +392,7 @@ class RecordForm extends Component {
           }
           <Button
             onClick={() => this.changeTab('next')}
-            disabled={currentTab === this.lastTab}
+            disabled={currentTab === tabs.length+3 }
             text=">"
           />
         </Buttons>

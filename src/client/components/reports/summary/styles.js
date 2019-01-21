@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
  export const SummaryComponent = styled.div`
   margin: 0 5%;
+  min-width: 300px;
   background-color: #fff;
   padding: 1.5em 0;
   position: relative;
@@ -70,6 +71,12 @@ export const CustomIcon = styled.img`
   top: 2em;
   right: 1em;
 `
+
+export const QuestionIcon = styled(CustomIcon)`
+  left: 1em;
+  opacity: 0.6;
+`
+
 export const CustomPeriodComponent = styled.div`
   position: absolute;
   background: #fff;

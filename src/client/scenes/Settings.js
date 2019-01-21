@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
-
+import { generatePdf } from '../utils/pdfGeneration';
+import CustomAnswer from './CustomAnswer';
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button';
 import Divider from '../components/Divider';
 import Checkbox from '../components/Checkbox';
+import localizationIcon from '../assets/localization.png'
+import medicinesIcon from '../assets/medicine.png'
+import questionmarkIcon from '../assets/questionmark.png'
+import auraIcon from '../assets/eye.png'
+
 import axios from 'axios';
 import TextInput from '../components/TextInput';
 import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
@@ -21,6 +27,39 @@ const SettingsComponent = styled.div`
 
   .chosenLang{
     color: red;
+  }
+`
+
+const Buttons = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 10px;
+  h6 {
+    margin: 5px 0 0 0;
+    text-transform: uppercase;
+  }
+  img {
+    width: 30px;
+    heigth: 30px;
+  }
+`
+
+const List = styled.div`
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin: 2em 10%;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  flex-wrap: wrap;
+  justify-content: center;
+  h4{
+    margin: 5px;
+    text-transform: uppercase;
+    font-weight: 300;
   }
 `
 
@@ -53,7 +92,11 @@ class Settings extends Component {
           isValid: false,
           errorMsg: '',
         }
-      }
+      },
+      ifCustomAnswer: false,
+      answerType: '',
+      current: {},
+      customAnswers: {}
     }
     this.baseFieldsState = this.state.fields;
 
@@ -63,6 +106,8 @@ class Settings extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
+    this.addAnswer = this.addAnswer.bind(this);
+    this.getAnswers = this.getAnswers.bind(this);
   }
 
   logout(){
@@ -86,8 +131,43 @@ class Settings extends Component {
   };
 
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.getAnswers();
   };
+
+  getAnswers() {
+    axios.get('/api/users/answer')
+    .then((res) => {
+      if(res.status === 204){
+        console.log("No content");
+      } else {
+        const data = this.parseCustomAnswers(res.data);
+        this.setState((prevState) => ({
+          ...prevState,
+          customAnswers: data
+        }))
+     }
+    })
+    .catch((err) => {console.log(err);})
+  }
+
+  parseCustomAnswers(answers) {
+    for(var op in answers) {
+      if(answers[op].length > 0){
+        answers[op] = this.mapValues(answers[op]);
+      }
+    }
+    return answers;
+  }
+
+  mapValues(values) {
+    return values.map((value) => {
+      return {
+        text: value,
+        value: value
+      }
+    })
+  }
 
   componentWillMount(){
     const isLoggedIn = localStorage.getItem('isLogged');
@@ -229,15 +309,134 @@ class Settings extends Component {
     return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
   }
 
+  addAnswer(option){
+    this.setState((prevState) => ({
+      ...prevState,
+      ifCustomAnswer: false,
+      answerType: option.field,
+      current: option
+    }), () => {
+      this.setState((prevState) => ({
+        ...prevState,
+        ifCustomAnswer: true
+      }))
+    })
+  }
+
+  handleCustomAnswer(data,cancel){
+    if(data.answer && data.answerType){
+      const option = {option: data.answerType, value: data.answer};
+      axios.post('/api/users/answer',option)
+      .then((res) => {
+        console.log(res.data);
+        this.setState((prevState) => ({
+          ...prevState,
+          ifCustomAnswer: false,
+          answerType: ''
+        }), () => this.getAnswers())
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        ifCustomAnswer: false,
+        answerType: ''
+      }))
+    }
+  }
+
+  getPdf() {
+    axios.get("/api/pdf")
+    .then((res) => {
+        generatePdf(res.data);
+    })
+    .catch((err) => console.log(err))
+  }
+
   render() {
+    const customAnswer = this.state.ifCustomAnswer 
+      ? (<CustomAnswer answerType={this.state.answerType} current={this.state.current} onConfirmFn={this.handleCustomAnswer.bind(this)}/>) 
+      : '';
+    
     const { username, email, oldPassword, password } = this.state.fields;
     const fields = languageText.settings.formFieldsOptions;
+    const answers = languageText.settings.customAnswers.map((answer) => {
+      return ({
+        field: answer.field,
+        text: answer.text,
+        placeholder: answer.placeholder,
+        src: answer.field + 'Icon'
+      }
+      )
+    })
+
+    const answersList = this.state.ifCustomAnswer 
+      ? languageText.addForm[this.state.answerType + `Answers`].concat(this.state.customAnswers[this.state.answerType]) 
+      : [];
+
+    const Answers = answersList.length > 0 ? (
+      answersList.map((answer, index) => (
+        <h4 key={index}>{answer.text}</h4>
+      ))
+    ) : '';
+
     let currentLang = getLanguage();
     return (
       <SettingsComponent className="Settings">
           <Header />
           <Divider text={languageText.settings.logout}/>
           <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
+          <Divider text={languageText.settings.formFields}/>
+          <div>
+          {
+            fields.map((field, index) => (
+              <Checkbox
+              key={index}
+              small
+              text={field.text}
+              value={field.text}
+              checked={this.getUserFormField(field.field)}
+              onChange={() => this.toggleUserFormField(field.field)}
+              />
+            ))
+          }
+          </div>
+          <Divider text={languageText.settings.setCustomAnswers}/>
+          <Buttons>
+            {
+              answers.map((option, index) => (
+                <div key={index}>
+                <Button 
+                key={index}
+                small
+                onClick={() => this.addAnswer(option)}
+                primary={this.state.answerType ===option.field} 
+                img= {option.field === 'localization' 
+                  ? localizationIcon 
+                  : option.field === "aura"
+                    ? auraIcon
+                    : option.field === "medicines"
+                      ? medicinesIcon
+                      : option.field === "triggers"
+                        ? questionmarkIcon
+                        : questionmarkIcon}/>
+                <h6>{option.text}</h6>
+                </div>
+              ))
+            }
+          </Buttons>
+          { this.state.ifCustomAnswer ? 
+            (<List>
+               { Answers }
+            </List>) : "" }
+          { customAnswer }
+          <Divider text={languageText.settings.exportData}/>
+            <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
+          <Divider text={languageText.settings.chooseLanguage}/>
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
           <Divider text={languageText.settings.changeData}/>
           <TextInput
             type="text"
@@ -282,26 +481,9 @@ class Settings extends Component {
             onChange={this.handleChange}
           />
           <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
-          <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
-          <Divider text={languageText.settings.formFields}/>
-          <div>
-          {
-            fields.map((field, index) => (
-              <Checkbox
-              key={index}
-              small
-              text={field.text}
-              value={field.text}
-              checked={this.getUserFormField(field.field)}
-              onChange={() => this.toggleUserFormField(field.field)}
-              />
-            ))
-          }
-          </div>
         <Menubar />
-      </SettingsComponent>
+      </SettingsComponent> 
+
     );
   }
 }

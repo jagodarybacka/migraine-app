@@ -4,7 +4,9 @@ import React, {
 import styled from 'styled-components';
 import _ from 'lodash'
 import CustomPeriod from '../../CustomPeriod'
+import Help from '../../Help'
 import customImg from '../../../assets/custom-options.png'
+import questionImg from '../../../assets/questionmark-circle.png'
 
 import { parse, get } from './utils'
 import axios from 'axios';
@@ -14,8 +16,6 @@ const FONT = '10px Roboto'
 
 const MARGIN_LEFT = 50;
 const MARGIN_RIGHT = 15;
-// const MARGIN_TOP = 20;
-// const MARGIN_BOTTOM = 30;
 
 const COLORS = {
   'No Pain': '#AADD6D',
@@ -59,6 +59,10 @@ export const CustomIcon = styled.img`
   right: 1em;
   z-index: 100;
 `
+export const QuestionIcon = styled(CustomIcon)`
+  left: 1em;
+  opacity: 0.6;
+`
 export const CustomPeriodComponent = styled.div`
   position: absolute;
   background: #fff;
@@ -81,8 +85,8 @@ class AtmosphericPressure extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      daysPast: 4,
-      daysFuture: 2,
+      daysPast: 8,
+      daysFuture: 1,
       data: [],
       timePeriod: {
         from: new Date(),
@@ -90,7 +94,9 @@ class AtmosphericPressure extends Component {
       },
       migraines: [],
       customPeriodVisible: false,
-      customPeriodApplied: false
+      customPeriodApplied: false,
+      errorPressure: '',
+      errorMigraine: ''
     }
     this.handleCustomPeriod = this.handleCustomPeriod.bind(this);
   }
@@ -118,12 +124,16 @@ class AtmosphericPressure extends Component {
     axios.get(url)
     .then((res) => {
       if(res.status === 204) {
-        alert(languageText.atmosphericPressure.noPressureData);
+        this.setState({
+          data: [],
+          errorPressure: languageText.atmosphericPressure.errorPressure
+        })
       }
       if(res.data) {
-        const parsedForecast = parse.forecast(res.data);
+        const parsedForecast = parse.forecast(res.data, this.state.timePeriod.from, this.state.timePeriod.to);
         this.setState({
-          data: parsedForecast
+          data: parsedForecast,
+          errorPressure: ''
         })
       }
     })
@@ -135,11 +145,15 @@ class AtmosphericPressure extends Component {
     axios.get(url)
     .then((res) => {
       if(res.status === 204){
-        console.log(languageText.atmosphericPressure.noData);
+        this.setState({
+          migraines: [],
+          errorMigraine: languageText.atmosphericPressure.errorMigraine
+        })
       }
       if(res.data) {
         this.setState({
-          migraines: res.data
+          migraines: res.data,
+          errorMigraine: ''
         })
       }
     })
@@ -158,10 +172,16 @@ class AtmosphericPressure extends Component {
     ctx.fillStyle = "#4C5062";
 
     this.drawGraph(ctx)
+    ctx.fillText(this.state.errorPressure, 65, 40);
+    ctx.fillText(this.state.errorMigraine, 70, 25);
   }
 
   drawDateAxis(ctx) {
-    const parsedDates = parse.date(this.state.data);
+    let parsedDates = parse.date(this.state.data)
+    if (!parsedDates.length) {
+      parsedDates = get.datesFromPeriod(this.state.timePeriod.from, this.state.timePeriod.to);
+    }
+
     const canvas = this.refs.canvas;
     const canvasWidth = canvas.width;
     const bottomPadding = canvas.height - 10;
@@ -198,7 +218,7 @@ class AtmosphericPressure extends Component {
     for (let i = rangeOfPressure.min; i <= rangeOfPressure.max; i += step) {
       const coord = pressureCoordinates.find(el => el.pressure === i).coordY
       this.drawHorizontalLine(ctx, [leftPadding, coord], [rightPadding, coord])
-      ctx.fillText(`${i}`, leftPadding, coord - 4);
+      i > 0 && ctx.fillText(`${i}`, leftPadding, coord - 4);
     }
   }
 
@@ -227,9 +247,11 @@ class AtmosphericPressure extends Component {
     const dateCoordinates = this.getDateCoordinates(parsedDates)
 
     data.forEach(entry => {
-      const coordX = dateCoordinates.find(date => date.date.toString() === new Date(entry.date).toString()).coordX;
-      const coordY = pressureCoordinates.find(pressure => pressure.pressure === Math.floor(entry.pressure)).coordY;
-      this.drawDot(ctx, coordX, coordY)
+      if (!entry.omit) {
+        const coordX = dateCoordinates.find(date => date.date.toString() === new Date(entry.date).toString()).coordX;
+        const coordY = pressureCoordinates.find(pressure => pressure.pressure === Math.floor(entry.pressure)).coordY;
+        this.drawDot(ctx, coordX, coordY)
+      }
     })
   }
 
@@ -238,8 +260,11 @@ class AtmosphericPressure extends Component {
     const canvas = this.refs.canvas;
     const canvasHeight = canvas.height;
     const blockHeight =  canvasHeight - 60;
-
-    const parsedDates = parse.date(this.state.data);
+    let forecastData = this.state.data;
+    if (!forecastData.length) {
+      forecastData = parse.forecast([], this.state.timePeriod.from, this.state.timePeriod.to)
+    }
+    const parsedDates = parse.date(forecastData);
     const dateCoordinates = this.getDateCoordinates(parsedDates)
 
     const migraines = this.state.migraines;
@@ -332,28 +357,38 @@ class AtmosphericPressure extends Component {
       <CustomPeriod onConfirmFn={this.handleCustomPeriod.bind(this)}/>
     ) : '';
 
+    const helpModal = this.state.helpVisible ? (
+      <Help type="atmosphericPressure" onConfirmFn={() => {this.setState({helpVisible: false})}}/>
+    ) : ''
+
     const periodRange = (
       <p className="summary__period">
-        {localStorage.getItem('lang') === 'eng' 
-          ? this.state.timePeriod.from.toDateString() 
+        {localStorage.getItem('lang') === 'eng'
+          ? this.state.timePeriod.from.toDateString()
           : this.state.timePeriod.from.toLocaleDateString() }
         <br />
-        {localStorage.getItem('lang') === 'eng' 
+        {localStorage.getItem('lang') === 'eng'
           ? this.state.timePeriod.to.toDateString()
           : this.state.timePeriod.to.toLocaleDateString() }
       </p>
     )
 
-    const Icon = this.state.customPeriodVisible 
-      ? "" 
+    const IconPeriod = this.state.customPeriodVisible || this.state.helpVisible
+      ? ""
       : ( <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> )
+
+    const IconQuestion = this.state.customPeriodVisible || this.state.helpVisible
+      ? ""
+      : ( <QuestionIcon src={questionImg}  onClick={() => this.setState({helpVisible: true})} /> )
 
     return (
       <AtmosphericPressureComponent width={300} height={300}>
-        { Icon }
+        { IconQuestion }
+        { IconPeriod }
         { periodRange }
         <canvas ref='canvas' width = {300} height = {350}/>
         { customPeriod }
+        { helpModal }
       </AtmosphericPressureComponent>
     )
   }

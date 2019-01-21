@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import CustomPeriod from '../../CustomPeriod'
-import { SummaryComponent, Select, CustomIcon } from './styles'
+import Help from '../../Help'
+import { SummaryComponent, Select, CustomIcon, QuestionIcon } from './styles'
 import axios from 'axios';
 import customImg from '../../../assets/custom-options.png'
+import questionImg from '../../../assets/questionmark-circle.png'
 import {languageText} from '../../../languages/MultiLanguage.js'
 
 class Summary extends Component {
@@ -22,7 +24,8 @@ class Summary extends Component {
       customPeriod: {
         from: '',
         to: ''
-      }
+      },
+      helpVisible: false
     }
 
     this.handleSelectChange = this.handleSelectChange.bind(this);
@@ -102,17 +105,23 @@ class Summary extends Component {
     const average = stats.average || 0;
     const total = stats.total || 0;
 
+    const IconQuestion = <QuestionIcon src={questionImg} onClick={() => this.setState({helpVisible: true})}/>
+
+    const helpModal = this.state.helpVisible ? (
+      <Help type="summary" onConfirmFn={() => {this.setState({helpVisible: false})}}/>
+    ) : ''
+
     const customPeriod = this.state.customPeriodVisible ? (
       <CustomPeriod onConfirmFn={this.handleCustomPeriod.bind(this)}/>
     ) : '';
 
     const customPeriodRange = this.state.customPeriodApplied && (
       <p className="summary__period">
-        {localStorage.getItem('lang') === 'eng' 
-          ? this.state.customPeriod.from.toDateString() 
+        {localStorage.getItem('lang') === 'eng'
+          ? this.state.customPeriod.from.toDateString()
           : this.state.customPeriod.from.toLocaleDateString() }
         <br />
-        {localStorage.getItem('lang') === 'eng' 
+        {localStorage.getItem('lang') === 'eng'
           ? this.state.customPeriod.to.toDateString()
           : this.state.customPeriod.to.toLocaleDateString() }
       </p>
@@ -132,6 +141,7 @@ class Summary extends Component {
               )
           })}
         </Select>
+        { IconQuestion }
         <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/>
         { customPeriodRange }
         <div className='summary__container summary__container--row'>
@@ -144,10 +154,11 @@ class Summary extends Component {
           <div className='summary__container'><span className='summary__number'>{noPainDays}</span><p className='summary__text'>{languageText.reportsSummary.noPainDays}</p></div>
         </div>
         <div className='summary__row'>
-          <div className='summary__container'><span className='summary__number'>{`${average}h`}</span><p className='summary__text'>{languageText.reportsSummary.averge}</p></div>
+          <div className='summary__container'><span className='summary__number'>{`${average}h`}</span><p className='summary__text'>{languageText.reportsSummary.average}</p></div>
           <div className='summary__container'><span className='summary__number'>{`${total}h`}</span><p className='summary__text'>{languageText.reportsSummary.total}</p></div>
         </div>
         { customPeriod }
+        { helpModal }
       </SummaryComponent>
     )
   }

@@ -47,6 +47,14 @@ router.get("/forecast/:start-:end", auth_controller.isLoggedIn, user_controller.
 
 router.get("/forecast/clear", auth_controller.isLoggedIn, user_controller.clear_forecast);
 
+router.get('/users/answer', auth_controller.isLoggedIn, user_controller.get_custom_answers);
+
+router.post("/users/answer", auth_controller.isLoggedIn, user_controller.add_custom_answer);
+
+router.get("/reports/together/:pain", auth_controller.isLoggedIn, report_controller.reports_together);
+
+router.get("/pdf", auth_controller.isLoggedIn, report_controller.pdf_data);
+
 /// USER ROUTES ///
 
 /* Register User */

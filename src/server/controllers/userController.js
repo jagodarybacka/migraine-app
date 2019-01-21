@@ -20,8 +20,7 @@ exports.validateRegister = (req, res, next) => {
 
 	const errors = req.validationErrors();
 	if (errors) {
-	  res.json({body: req.body, errors: errors });
-	  return;
+	  return res.json({body: req.body, errors: errors });
 	}
 	next(); // there were no errors!
   };
@@ -35,7 +34,7 @@ exports.register = async (req, res, next) => {
 		passport.authenticate("local")(req, res, function() {
 			if (err) {
 				console.log("error",err);
-				return next(err);
+				return res.json({errors : [err.message]});
 			}
 			return res.json({
 				redirectURL:"/home",
@@ -59,14 +58,17 @@ exports.change_password = (req, res, next) => {
 					if(err) {
 						res.status(204)
 						res.send([err.message]);
+						return;
 					}
 					sanitizedUser.save();
 					res.status(200);
 					res.send('Password change successful');
+					return;
 			});
     } else {
 				res.status(404);
-        res.send('This user does not exist');
+				res.send('This user does not exist');
+				return;
     }
 	})
 }
@@ -95,7 +97,8 @@ exports.change_user_data = (req, res, next) => {
 			});
     } else {
 			res.status(404);
-      res.send('This user does not exist');
+			res.send('This user does not exist');
+			return;
     }
 	})
 }
@@ -162,6 +165,7 @@ exports.reset_password = (req, res, next) => {
 			if (!user) {
 				res.status(404);
 				res.send('Reset token invalid or has expired');
+				return;
 			}
 			user.setPassword(req.body.password, function(err){
 				if(err) {
@@ -172,6 +176,7 @@ exports.reset_password = (req, res, next) => {
 						return res.json({errors : [err.message]});
 					}
 					res.json({'message':'Password change successful'});
+					return;
         });
 		});
 		});
@@ -183,14 +188,22 @@ exports.save_forecast = (req, res, next) => {
 	const now = new Date();
 	User.findById(userId)
 	.exec( function(err, found_user) {
-		if (err) { return next(err); }
+		if (err) { 
+			return res.json({errors : [err.message]});
+		 }
 		if (found_user) {
 			const forecasts = tools.modifyForecasts(found_user.weather_forecasts, forecast);
 			User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: forecasts}}, {}, function (err,mod_user) {
-				if (err) { return next(err); }
+				if (err) { 
+					return res.json({errors : [err.message]}); 
+				}
 				console.log('Forecast saved');
 				return res.json("Forecast saved");
 			});
+		} else {
+			res.status(404);
+			res.send('This user does not exist');
+			return;
 		}
 	});
 }
@@ -203,13 +216,16 @@ exports.get_forecast = (req, res, next) => {
   const end = new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDate(),23,59,0);
 	User.findById(userId)
 	.exec( function(err, found_user) {
-		if (err) { return next(err); }
+		if (err) { 
+			return res.json({errors : [err.message]});
+		}
 		if (found_user) {
 			if(found_user.weather_forecasts && found_user.weather_forecasts.length > 0){
 				const forecasts = tools.getForecasts(found_user.weather_forecasts, start, end);
-				if(forecasts.length == 0){
+				if(forecasts.length === 0){
 					res.status(204);
-					res.send("No content")
+					res.send("No content");
+					return;
 				}
 				else {
 					return res.json(forecasts);
@@ -217,8 +233,13 @@ exports.get_forecast = (req, res, next) => {
 			}
 			else {
 				res.status(204);
-        res.send("No content")
+				res.send("No content");
+				return;
 			}	
+		} else {
+			res.status(404);
+			res.send('This user does not exist');
+			return;
 		}
 	});
 }
@@ -227,12 +248,72 @@ exports.clear_forecast = (req,res,next) => {
 		const userId = req.session.userId;
 		User.findById(userId)
 		.exec( function(err, found_user) {
-			if (err) { return next(err); }
+			if (err) { 
+				return res.json({errors : [err.message]});
+			 }
 			if (found_user) {
 				User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: []}}, {}, function (err,mod_user) {
-					if (err) { return next(err); }
+					if (err) { 
+						return res.json({errors : [err.message]});
+					 }
 					return res.json("Forecast cleared");
 				});
 			}
 		});
+}
+
+exports.add_custom_answer = (req,res,next) => {
+	const userId = req.session.userId;
+	const option = req.body.option;
+	const value = req.body.value;
+	User.findById(userId)
+	.exec( function(err, found_user) {
+		if(err) {
+			return res.json({errors : [err.message]});
+		}
+		if(found_user) {
+			if(found_user.custom_answers[option]){
+				const answers = found_user.custom_answers[option].map((answer) => answer.toLowerCase());
+				if(!answers.includes(value.toLowerCase())){
+					found_user.custom_answers[option].push(value);
+					found_user.save(function(err) {
+						if (err) { 
+									return res.json({errors : [err.message]});
+								}
+								return res.json("Answer saved");
+					} )
+				} else {
+					return res.json("Answer already in database");
+				}
+			}
+		} else {
+			res.status(404);
+			res.send('This user does not exist');
+			return;
+		}
+	})
+}
+
+exports.get_custom_answers = (req,res,next) => {
+	const userId = req.session.userId;
+	User.findById(userId, 'custom_answers _id')
+	.exec( function(err, found_user) {
+		if(err) {
+			return res.json({errors : [err.message]});
+		}
+		if(found_user) {
+			// console.log(found_user);
+			if(found_user.custom_answers) {
+				res.json(found_user.custom_answers);
+			} else {
+				res.status(204);
+				res.send('No content');
+				return;
+			}
+		} else {
+			res.status(404);
+			res.send('This user does not exist');
+			return;
+		}
+	})
 }

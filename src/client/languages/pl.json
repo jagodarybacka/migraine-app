@@ -17,6 +17,8 @@
 		"oldPasswordIncorrect": "Stare hasło jest niepoprawne",
 		"dataChanged": "Dane zostały zmienione",
 		"passwordChanged": "Hasło zostało zmienione",
+		"exportData": "Eksportuj dane do PDF",
+		"generatePdf": "Wygeneruj PDF",
 		"formFieldsOptions": [
 			{"text":"Leki", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},
@@ -28,14 +30,26 @@
 			{"text":"Menstruacja", "field":"menstruation"},
 			{"text":"Lokalizacja", "field":"localization"}
 		],
-		"formFields": "Elementy wyświetlane w formularzu"
+		"formFields": "Elementy wyświetlane w formularzu",
+		"setCustomAnswers": "Dodaj własne odpowiedzi do formularza",
+		"customAnswers": [
+			{"text": "Lokalizacja", "field": "localization", "placeholder":"Lokalizację"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aurę"},
+			{"text": "Przyczyny", "field": "triggers", "placeholder":"Przyczynę"},
+			{"text": "Leki", "field": "medicines", "placeholder":"lek"},
+			{"text": "Pomoce", "field": "reliefs", "placeholder":"pomocny czynnik"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Wprowadź ",
+			"header": "Dodaj "
+		}
 
 	},
 	"home":{
 	    "add": "Dodaj ból głowy"
 	},
 	"join":{
-	    "migraine": "Migrena",
+	    "migraine": "Migraine app",
 		"logIn": "Zaloguj",
 		"signIn": "Rejestracja",
 		"orJoinWith": "lub dołącz przez"
@@ -54,14 +68,18 @@
 		"paragraph": "W tym formularzu możesz zanotować różne aspekty swojego stanu. Śledzenie wyzwalaczy migreny pomoże Ci uniknąć ich później.",
 		"feelBetter": "Mamy nadzieję, że wkrótce poczujesz się lepiej!",
 		"summary": "Podsumowanie",
-		"migraineRecord": "Zapis migreny"
+		"migraineRecord": "Zapis migreny",
+		"inside": "W ",
+		"settings": "ustawieniach aplikacji",
+		"customize": " możesz wybrać elementy wyświetlane w formularzu oraz dodać własne odpowiedzi."
 	},
 	"welcome":{
-		"migraine": "Migrena",
+		"migraine": "Migraine app",
 		"tapToStart": "Kliknij, aby rozpocząć..."
 	},
 	"recordCard":{
 		"migraine": "Migrena",
+		"notYetEnded": "Jeszcze się nie skończyła",
 		"noMigraines": "Brak migren"
 	},
 	"menuBar":{
@@ -108,6 +126,8 @@
 	},
 	"dateTime":{
 		"date": "Data",
+		"from": "Od",
+		"to": "Do",
 		"time":"Godzina",
 		"monthNames": ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
 						"Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"]
@@ -178,7 +198,9 @@
 			{"text": "Zmęcznie", "value": "Tiredness"},
 			{"text": "Odwodnienie", "value": "Dehydration"},
 			{"text": "Głód", "value": "Hunger"},
-			{"text": "Sport", "value": "Sport"}
+			{"text": "Sport", "value": "Sport"},
+			{"text": "Silny zapach", "value": "Strong smell"},
+			{"text": "Depresja", "value": "Depression"}
 		],
 		"auraAnswers": [
 			{"text": "Nudności", "value": "Nausea"},
@@ -200,11 +222,17 @@
 		]
 	},
 	"reports":{
+		"report": "Raport",
 		"summary": "Podsumowanie",
 		"pressure":"Ciśnienie atmosferyczne",
-		"oftenTogether": "Często występujace razem"
+		"oftenTogether": "Często występujace razem",
+		"summaryDescription": "Wybierz przedział czasu - sprawdź ilość i długość migren. Śledź postępy w leczeniu sprawdzając ilość dni bólu. Dokładnie zapisuj czas trwania migren, aby ten raport był wiarygodny.",
+		"pressureDescription":"Wybierz przedział czasu i zobacz na wykresie zaznaczone migreny oraz ciśnienie atmosferyczne. Szukaj korelacji pomiędzy zmianami w ciśnieniu, a migrenami. Ciśnienie atmosferyczne wyrażone jest w [hPa]",
+		"oftenTogetherDescription": "Wybierz nasilenie bólu i zobacz jakie czynniki wpływają na pojawienie się migren. Dodając migreny poświęć czas na dokładne wypełnienie formularza, aby raport był wiarygodny."
 	},
 	"atmosphericPressure": {
+		"errorPressure": "Brak danych o ciśnieniu atmosferycznym",
+		"errorMigraine": "Brak migren w tym przedziale czasu",
 		"noData": "Brak danych",
 		"noPressureData": "Brak danych o ciśnieniu"
 	},
@@ -216,7 +244,7 @@
 		"customPeriod": "Niestandardowy okres",
 		"painDays": "dni z bólem",
 		"noPainDays": "dni bez bólu",
-		"averge": "średni czas trwania ataku",
+		"average": "średni czas trwania ataku",
 		"total": "całkowity czas trwania ataków",
 		"migraine": "migrena",
 		"migraines": "migreny",
@@ -231,18 +259,55 @@
 			{"text": "Intensywny", "value": "Intense"},
 			{"text": "Maksymalny", "value": "Maximum"}
 		],
+		"humidity": "Wilgotność ",
 		"weather":"Pogoda",
 		"triggers": "Przyczyny",
+		"localization": "Lokalizacja",
+		"reliefs": "Pomocne w trakcie migreny",
+		"medicines": "Leki",
+		"error": "Brakuje Ci niektórych danych. Prosimy, w trakcie dodawania migreny poświęć czas na wypełnienie formularza, byśmy mogli dostarczyć Ci więcej przydatnych informacji.",
 		"weatherOptions":[
-			{"text": "Burza", "value": "Storm"},
-			{"text": "1018 hPa", "value": "1018 hPa"},
-			{"text": "Deszcz", "value": "Rain"}
+			{"text": "Burza", "value": "Thunderstorm"},
+			{"text": "Mżawka", "value": "Drizzle"},
+			{"text": "Deszcz", "value": "Rain"},
+			{"text": "Śnieg", "value": "Snow"},
+			{"text": "Mgła", "value": "Atmosphere"},
+			{"text": "Słońce", "value": "Clear"},
+			{"text": "Zachmurzenie", "value": "Clouds"}
 		],
 		"triggersOptions":[
-			{"text": "Odwodnienie", "value": "Dehydration"},
+			{"text": "Alkohol", "value": "Alcohol"},
 			{"text": "Stres", "value": "Stress"},
+			{"text": "Zmęcznie", "value": "Tiredness"},
+			{"text": "Odwodnienie", "value": "Dehydration"},
+			{"text": "Głód", "value": "Hunger"},
+			{"text": "Sport", "value": "Sport"},
 			{"text": "Silny zapach", "value": "Strong smell"},
 			{"text": "Depresja", "value": "Depression"}
+		],
+		"reliefsOptions":[
+			{"text": "Zaciemniony pokój", "value": "Dark room"},
+			{"text": "Joga/medytacja", "value": "Yoga/meditate"},
+			{"text": "Sen", "value": "Sleep"},
+			{"text": "Ciepły prysznic", "value": "Hot shower"},
+			{"text": "Zimny prysznic", "value": "Cold shower"},
+			{"text": "Kostki lodu", "value": "Ice packs"},
+			{"text": "Termofor", "value": "Heat pad"},
+			{"text": "Żadne/Inne", "value": "None/Others"}
+		],
+		"localizationOptions": [
+			{"text": "Dom", "value": "Home"},
+			{"text": "Na zewnątrz", "value": "Outside"},
+			{"text": "W drodze", "value": "Transit"},
+			{"text": "Praca", "value": "Work"},
+			{"text": "Łóżko", "value": "Bed"},
+			{"text": "Szkoła", "value": "School"}
+		],
+		"medicinesOptions": [
+			{"text": "Ibuprofen", "value": "Ibuprofen"},
+			{"text": "Paracetamol", "value": "Paracetamol"},
+			{"text": "Kodeina", "value": "Codeine"},
+			{"text": "Triptan", "value": "Triptans"}
 		]
 	},
 	"text":{
@@ -251,10 +316,26 @@
 	"web":{
 		"plAlt": "polski",
 		"engAlt": "angielski",
-		"title": "MIGRENA",
+		"title": "MIGRAINE APP",
 		"subtitle": "Stworzona by pomóc migrenowcom żyć bez bólów głowy i migren z aurą",
 		"headerText": "Aby uzyskać aplikację zeskanuj kod QR za pomocą telefonu",
-		"headerButton": "Dowiedz się więcej"
+		"headerButton": "Dowiedz się więcej",
+		"installApp": {
+			"android":"Zainstaluj aplikację na swoim urządzeniu z Androidem",
+			"iphone":"Zainstaluj aplikację na swoim urządzeniu z iOS"
+		}
+	},
+	"infoPage": {
+		"getApplication": "Pobierz aplikację",
+		"appName": "Migraine app",
+		"appDescription": "to Twój elektroniczny dziennik gdzie możesz śledzić swoje bóle głowy, migreny oraz aurę. Twórz notatki na temat swojego stanu, a otrzymasz pomocne informacje o jego przyczynach.",
+		"featuresHeader": "Funkcjonalności",
+		"featuresSubheader": "Zapisuj i przeglądaj",
+		"featuresDescription": "Kiedy chcesz zapisać informacje o migrenie możesz dostosować ilość informacji jakie chcesz uwzględnić. Twoje migreny będą dostępne do przeglądania i edycji w każdym momencie.",
+		"reportsSubheader": "Pomocne raporty",
+		"reportsDescription": "Trzy rodzaje raportów dadzą Ci dostęp do informacji o tym co może powodować Twoje migreny.",
+		"pdfSubheader": "Proste pobieranie danych",
+		"pdfDescription": "Wyeksportuj dane do pliku PDF i pokaż swojemu lekarzowi pełną listę twoich migren, statystyki ataków oraz przegląd możliwych przyczyn migreny."
 	},
 	"forgottenPassword": {
 		"resetPassword": "Zresetuj hasło",
@@ -268,5 +349,36 @@
 		"password": "Hasło",
 		"emailNotFound": "Nie znaleziono adresu email",
 		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę."
+	},
+	"pdfGeneration": {
+		"title": "MIGRAINE APP",
+		"subtitle": "Szczegółowy raport dotyczący Twoich migren",
+		"timeSpan": "Przedział czasu",
+		"stats30Header": "Ostatnie 30 dni",
+		"stats60Header": "Ostatnie 60 dni",
+		"statsYearHeader": "Ostatni rok",
+		"statsAllHeader": "Od czasu założenia konta",
+		"attacks": "Liczba migren",
+		"painDays": "Dni z bólem",
+		"noPainDays": "Dni bez bólu",
+		"average": "Średni czas trwania ataku [h]",
+		"total": "Całkowity czas trwania ataków [h]",
+		"painStrength": "Siła bólu: ",
+		"reportsTitle": "Lista migren",
+		"startDate": "Data rozpoczęcia: ",
+		"endDate": "Data zakończenia: ",
+		"durationTime": "Czas trwania: ",
+		"pain": "Intensywność bólu: ",
+		"medicines": "Leki: ",
+		"triggers": "Możliwe przyczyny: ",
+		"reliefs": "Pomocne w trakcie migreny: ",
+		"localization": "Lokalizacja: ",
+		"aura": "Aura: ",
+		"mood": "Nastrój: ",
+		"menstruation": "Menstruacja: ",
+		"bloodPressure": "Ciśnienie krwi: ",
+		"sleepDuration": "Długość snu: ",
+		"notes": "Notatka: ",
+		"migraineHeader": "Migrena"
 	}
 }

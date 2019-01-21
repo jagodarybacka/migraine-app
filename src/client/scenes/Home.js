@@ -13,7 +13,7 @@ import {languageText} from '../languages/MultiLanguage.js';
 const HomeComponent = styled.div`
   justify-content: center;
   display: block;
-  padding: 7rem 0;
+  padding: 5.5rem 0;
   margin: 0;
   text-align: center;
 `

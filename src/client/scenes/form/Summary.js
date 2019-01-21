@@ -36,6 +36,7 @@ const SummaryComponent = styled.section`
     box-sizing: border-box;
     border-radius: 10px;
     outline: none;
+    margin-bottom: 1em;
   }
 `
 const TimeDateComponent = styled.div`
@@ -142,7 +143,7 @@ class Summary extends Component {
     if(foundPair !== undefined)
       return foundPair.text;
     else
-      return "";
+      return toTranslate;
   }
 
   getUserFormField(field) {

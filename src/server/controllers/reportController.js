@@ -14,10 +14,12 @@ exports.report_detail = function(req, res, next) {
         .exec(callback);
     }
 	}, function(err, results) {
-    if (err) { return next(err); }
-	res.json(results);
+    if (err) { 
+        return res.json({errors : [err.message]});
+    }
+    res.json(results);
+    return;
   });
-
 };
 
 //GET User reports
@@ -25,15 +27,24 @@ exports.reports_all = function(req,res,next) {
 	const userId = req.session.userId;
 	User.findById(userId, 'username _id email')
 	.exec(function(err,found_user){
-		if(err) {return next(err);}
+		if(err) {
+            return res.json({errors : [err.message]});
+        }
 		if(found_user)
 		{
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
-				if(err) {return next(err);}
-				res.json(found_reports);
+				if(err) {
+                    return res.json({errors : [err.message]});
+                }
+                res.json(found_reports);
+                return;
 			});
-		}
+		} else {
+            res.status(404);
+            res.send('This user does not exist');
+            return;
+        }
 	});
 };
 
@@ -45,13 +56,17 @@ exports.reports_period = function(req,res,next) {
     const end = new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDate(),23,59,0);
     Report.find({user: userId, start_date : { $gte: start}, end_date : { $lte: end } }, '_id start_date end_date pain')
     .exec(function(err,found_reports){
-        if(err) {return next(err);}
+        if(err) {
+            return res.json({errors : [err.message]});
+        }
         if(found_reports.length === 0){
             res.status(204);
             res.send("No content");
+            return;
         }
         else {
             res.json(found_reports);
+            return;
         }
     });
     // res.json("not implemented yet");
@@ -61,15 +76,30 @@ exports.report_recent = function(req,res,next) {
 	const userId = req.session.userId;
 	User.findById(userId, 'username _id email')
 	.exec(function(err,found_user){
-		if(err) {return next(err);}
+		if(err) {
+            return res.json({errors : [err.message]});
+        }
 		if(found_user)
 		{
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
-				if(err) {return next(err);}
-				res.json(found_reports[0]);
+				if(err) {
+                    return res.json({errors : [err.message]});
+                }
+                if(found_reports.length === 0) {
+                    res.status(204);
+                    res.send("No content");
+                    return;
+                } else {
+                    res.json(found_reports[0]);
+                    return;
+                }
 			});
-		}
+		} else {
+            res.status(404);
+            res.send('This user does not exist');
+            return;
+        }
 	});
 };
 
@@ -104,7 +134,7 @@ exports.report_add = function(req, res,next) {
         });
     report.save(function (err,saved) {
         if (err) { return next(err); }
-        res.json(saved);
+        return res.json(saved);
     });
    }
    else {
@@ -126,8 +156,10 @@ exports.report_add = function(req, res,next) {
         weather: req.body.weather || {}
          });
     report.save(function (err,saved) {
-        if (err) { return next(err); }
-        res.json(saved);
+        if (err) { 
+            return res.json({errors : [err.message]});
+         }
+        return res.json(saved);
     });
    }
 };
@@ -139,8 +171,10 @@ exports.report_delete = function(req, res, next) {
     .exec( function(err, found_report) {
         if (err) { return next(err); }
 		Report.findByIdAndRemove(found_report._id, function deleteReport(err, delreport) {
-                if (err) { return next(err); }
-                res.json(delreport);
+                if (err) {  
+                    return res.json({errors : [err.message]});
+                }
+                return res.json(delreport);
             });
     });
 };
@@ -187,14 +221,23 @@ exports.report_update = function(req, res, next) {
       
     Report.findById(id)
     .exec( function(err, found_report) {
-            if (err) { return next(err); }
+            if (err) { 
+                return res.json({errors : [err.message]});
+             }
             if (found_report) {
                 var report = new Report(data);
-            Report.findByIdAndUpdate(id, data, {'new': true}, function (err,mod_report) {
-                if (err) { return next(err); }
-                res.json(report);
-            });
-        }
+                Report.findByIdAndUpdate(id, data, {'new': true}, function (err,mod_report) {
+                    if (err) { 
+                        return res.json({errors : [err.message]});
+                    }
+                    res.json(report);
+                    return;
+                });
+            } else {
+                res.status(204);
+                res.send("No content");
+                return;
+            }
     });
 };
 
@@ -202,46 +245,58 @@ exports.report_stats = function(req, res, next) {
     const days = req.params.days;
     const now = new Date();
     let endDate;
-    if(days === 30){
+    if(days === "30"){
         endDate = new Date(now.getFullYear(), now.getMonth()-1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-    } else if(days === 60) {
+    } else if(days === "60") {
         endDate = new Date(now.getFullYear(), now.getMonth()-2, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-    } else if(days ===365) {
+    } else if(days ==="365") {
         endDate = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
     }
     const userId = req.session.userId;
     User.findById(userId, 'username _id email registration_date')
     .exec(function(err,found_user){
-        if(err) {return next(err);}
+        if(err) {
+            return res.json({errors : [err.message]});
+        }
         if(found_user)
         {
             if(endDate) {
                 Report.find({user: found_user._id, start_date : { $gte: endDate }}).sort({start_date: -1})
                 .exec(function(err,found_reports){
-                    if(err) {return next(err);}
+                    if(err) {
+                        return res.json({errors : [err.message]});
+                    }
                     if(found_reports.length === 0){
                         res.status(204);
                         res.send("No content");
+                        return;
                     }
                     else {
                         const stats = tools.computeStats(found_reports, days, now);
                         res.json(stats);
+                        return;
                     }
                 });
             } else {
                 Report.find({user: found_user._id}).sort({start_date: -1})
                 .exec(function(err,found_reports){
-                    if(err) {return next(err);}
+                    if(err) {
+                        return res.json({errors : [err.message]});
+                    }
                     if(found_reports.length === 0){
                         res.status(204);
                         res.send("No content");
+                        return;
                     }
                     else {
                         const stats = tools.computeStats(found_reports, days, now, found_user);
                         res.json(stats);
+                        return;
                     }
                 });
             }
+        } else {
+            return res.json({errors : "User incorrect"});
         }
     });
 };
@@ -257,16 +312,126 @@ exports.report_stats_custom = function(req, res, next) {
         {
             Report.find({user: found_user._id, start_date : { $gte: start}, end_date : { $lte: end } }).sort({start_date: -1})
                 .exec(function(err,found_reports){
-                    if(err) {return next(err);}
+                    if(err) {
+                        return res.json({errors : [err.message]});
+                    }
                     if(found_reports.length === 0){
                         res.status(204);
                         res.send("No content");
+                        return;
                     }
                     else {
                         const stats = tools.computeCustomStats(found_reports,start,end);
                         res.json(stats);
+                        return;
                     }
                 });
+        } else {
+            res.status(404);
+            res.send('This user does not exist');
+            return;
         }
     });
 };
+
+exports.reports_together = function(req, res, next) {
+    const userId = req.session.userId;
+    const pain = req.params.pain;
+    Report.find({user: userId, pain: pain })
+    .exec(function(err,found_reports){
+        if(err) {
+            return res.json({errors : [err.message]});
+        }
+        if(found_reports && found_reports.length > 0) {
+            const results = tools.getInformations(found_reports);
+            res.json(results);
+            return;
+        } else {
+            res.status(204);
+            res.send("No content");
+            return;
+        }
+    })
+};
+
+exports.pdf_data = function(req, res, next) {
+    const userId = req.session.userId;
+    const now = new Date();
+    const endDate30 = new Date(now.getFullYear(), now.getMonth()-1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    const endDate60 = new Date(now.getFullYear(), now.getMonth()-2, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    const endDateYear = new Date(now.getFullYear()-1, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+	async.parallel({
+        user: function(callback) {
+            User.findById(userId, 'username _id email registration_date')
+            .exec(callback)
+        }, 
+        reports: function(callback) {
+            Report.find({user: userId}).sort({start_date: -1})
+            .exec(callback)
+        },
+        reports30: function(callback) {
+            Report.find({user: userId, start_date : { $gte: endDate30 }}).sort({start_date: -1})
+            .exec(callback)
+        },
+        reports60: function(callback) {
+            Report.find({user: userId, start_date : { $gte: endDate60 }}).sort({start_date: -1})
+            .exec(callback)
+        },
+        reportsYear: function(callback) {
+            Report.find({user: userId, start_date : { $gte: endDateYear }}).sort({start_date: -1})
+            .exec(callback)
+        },
+        togetherNoPain: function(callback) {
+            Report.find({user: userId, pain: "No pain"})
+            .exec(callback)
+        },
+        togetherMild: function(callback) {
+            Report.find({user: userId, pain: "Mild"})
+            .exec(callback)
+        },
+        togetherModerate: function(callback) {
+            Report.find({user: userId, pain: "Moderate"})
+            .exec(callback)
+        },
+        togetherIntense: function(callback) {
+            Report.find({user: userId, pain: "Intense"})
+            .exec(callback)
+        },
+        togetherMaximum: function(callback) {
+            Report.find({user: userId, pain: "Maximum"})
+            .exec(callback)
+        },
+	}, function(err, results) {
+        if (err) { 
+            return res.json({errors : [err.message]});
+        }
+        const reports = results.reports.length > 0 ? results.reports : [];
+        const statsAll =  results.reports.length > 0 ? tools.computeStats(results.reports, "all", new Date()) : {};
+        const stats30 =  results.reports30.length > 0 ? tools.computeStats(results.reports30, "30", new Date()) : {};
+        const stats60 =  results.reports60.length > 0 ? tools.computeStats(results.reports60, "60", new Date()) : {};
+        const statsYear =  results.reportsYear.length > 0 ? tools.computeStats(results.reportsYear, "365", new Date()) : {};
+        const noPain =  results.togetherNoPain.length > 0 ? tools.getInformations(results.togetherNoPain) : {};
+        const mild = results.togetherMild ? tools.getInformations(results.togetherMild) : {};
+        const moderate =  results.togetherModerate ? tools.getInformations(results.togetherModerate) : {};
+        const intense =  results.togetherIntense ? tools.getInformations(results.togetherIntense) : {};
+        const maximum =  results.togetherMaximum ? tools.getInformations(results.togetherMaximum) : {};
+        res.json({
+            "user": results.user,
+            "reports": reports, 
+            "stats":{
+                "statsAll": statsAll,
+                "stats30": stats30,
+                "stats60": stats60,
+                "statsYear": statsYear,
+            },
+            "together": {
+                "noPain": noPain, 
+                "mild": mild, 
+                "moderate": moderate, 
+                "intense": intense, 
+                "maximum": maximum
+            }
+        });
+        return;
+  });
+}

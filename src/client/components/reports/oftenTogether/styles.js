@@ -4,9 +4,17 @@ export const OftenTogetherComponent = styled.div`
   background: #fff;
   margin: 0 5%;
   padding: 1.5em 0;
+  position: relative;
   display: flex;
   flex-direction: column;
+  width: 90%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+  h2 {
+    text-align: center;
+    font-size: 1.3em;
+    margin: 0 0 .5em;
+  }
 
   .together__header {
     text-transform: uppercase;
@@ -19,8 +27,17 @@ export const OftenTogetherComponent = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 300px;
   }
+`
+
+export const QuestionIcon = styled.img`
+  width: 32px;
+  height: auto;
+  position: absolute;
+  top: 1em;
+  z-index: 100;
+  left: 1em;
+  opacity: 0.6;
 `
 
 export const Select = styled.select`
@@ -41,4 +58,15 @@ export const TogetherField = styled.div`
   border-radius: 10px;
   text-align: center;
 
+`
+
+export const ErrorMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: auto;
+  h5 {
+    font-weight: 300;
+    margin: 1em;
+  }
 `

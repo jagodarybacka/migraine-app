@@ -17,6 +17,8 @@
 		"oldPasswordIncorrect": "Old password incorrect",
 		"dataChanged": "User data changed",
 		"passwordChanged": "Password changed",
+		"exportData": "Export data to PDF",
+		"generatePdf": "Generate PDF",
 		"formFieldsOptions": [
 			{"text":"Medicines", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},
@@ -28,16 +30,28 @@
 			{"text":"Menstruation", "field":"menstruation"},
 			{"text":"Localization", "field":"localization"}
 		],
-		"formFields": "Form fields to include"
+		"formFields": "Form fields to include",
+		"setCustomAnswers": "Add custom answers to form",
+		"customAnswers": [
+			{"text": "Localization", "field": "localization", "placeholder":"Localization"},
+			{"text": "Aura", "field": "aura", "placeholder":"Aura"},
+			{"text": "Triggers", "field": "triggers", "placeholder":"Trigger"},
+			{"text": "Medicines", "field": "medicines", "placeholder":"Medicine"},
+			{"text": "Reliefs", "field": "reliefs", "placeholder":"Relief"}
+		],
+		"customAnswerModal": {
+			"placeholder": "Enter ",
+			"header": "Custom "
+		}
 
 	},
 	"home":{
 	    "add": "Add headache"
 	},
 	"join":{
-	    "migraine": "Migraine",
+	    "migraine": "Migraine app",
 		"logIn": "Log In",
-		"signIn": "Sign In",
+		"signIn": "Register",
 		"orJoinWith": "or join with"
 	},
 	"login":{
@@ -54,19 +68,23 @@
 		"paragraph": "In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.",
 		"feelBetter": "Feel better soon!",
 		"summary": "Save migraine",
-		"migraineRecord": "Migraine Record"
+		"migraineRecord": "Migraine Record",
+		"inside": "In ",
+		"settings": "app settings",
+		"customize": " you can choose form fields to include and add custom answers."
 	},
 	"welcome":{
-		"migraine": "Migraine",
+		"migraine": "Migraine app",
 		"tapToStart": "Tap to start..."
 	},
 	"recordCard":{
 		"migraine": "Migraine",
+		"notYetEnded": "Not yet ended",
 		"noMigraines": "No migraines yet"
 	},
 	"menuBar":{
 		"home": "Home",
-		"reports": "Raports",
+		"reports": "Reports",
 		"settings": "Settings"
 	},
 	"weather":{
@@ -108,6 +126,8 @@
 	},
 	"dateTime":{
 		"date": "Date",
+		"from": "From",
+		"to": "To",
 		"time":"Time",
 		"monthNames": ["January", "February", "March", "April", "May", "June",
 						"July", "August", "September", "October", "November", "December"]
@@ -178,7 +198,9 @@
 			{"text": "Tiredness", "value": "Tiredness"},
 			{"text": "Dehydration", "value": "Dehydration"},
 			{"text": "Hunger", "value": "Hunger"},
-			{"text": "Sport", "value": "Sport"}
+			{"text": "Sport", "value": "Sport"},
+			{"text": "Strong smell", "value": "Strong smell"},
+			{"text": "Depression", "value": "Depression"}
 		],
 		"auraAnswers": [
 			{"text": "Nausea", "value": "Nausea"},
@@ -200,11 +222,17 @@
 		]
 	},
 	"reports":{
+		"report": "Report",
 		"summary": "Summary",
 		"pressure":"Atmospheric pressure",
-		"oftenTogether": "Often together"
+		"oftenTogether": "Often together",
+		"summaryDescription": "Pick time period - check amount and duration of your migraines. Track your treatment progress by checking number of days with and without pain.",
+		"pressureDescription":"Pick time period and check atmospheric pressure and migraines marked on a graph. You should look for a correlation between pressure changes and migraines. Pressure unit - [hPa]",
+		"oftenTogetherDescription": "Pick pain intensity and check what may be your migraine trigger. Take your time when you fill new migraine form and this report will show you reliable informations."
 	},
 	"atmosphericPressure": {
+		"errorPressure": "No atmospheric pressure data available",
+		"errorMigraine": "No migraines to display in this period",
 		"noData": "No data",
 		"noPressureData": "No pressure data"
 	},
@@ -216,7 +244,7 @@
 		"customPeriod": "Custom period",
 		"painDays": "pain days",
 		"noPainDays": "no pain days",
-		"averge": "average attack duration",
+		"average": "average attack duration",
 		"total": "total attacks duration",
 		"migraine": "migraine",
 		"migraines": "migraines",
@@ -231,18 +259,55 @@
 			{"text": "Intense", "value": "Intense"},
 			{"text": "Maximum", "value": "Maximum"}
 		],
+		"humidity": "Humidity ",
 		"weather":"Weather",
 		"triggers": "Triggers",
+		"localization": "Localization",
+		"reliefs": "Helpful during migraine",
+		"medicines": "Medicines",
+		"error": "You're missing some data. Please, while recording a migraine, always take your time to fill out the form so we can provide you more useful informations.",
 		"weatherOptions":[
-			{"text": "Storm", "value": "Storm"},
-			{"text": "1018 hPa", "value": "1018 hPa"},
-			{"text": "Rain", "value": "Rain"}
+			{"text": "Storm", "value": "Thunderstorm"},
+			{"text": "Drizzle", "value": "Drizzle"},
+			{"text": "Rain", "value": "Rain"},
+			{"text": "Snow", "value": "Snow"},
+			{"text": "Mist", "value": "Atmosphere"},
+			{"text": "Sun", "value": "Clear"},
+			{"text": "Clouds", "value": "Clouds"}
 		],
 		"triggersOptions":[
-			{"text": "Dehydration", "value": "Dehydration"},
+			{"text": "Alcohol", "value": "Alcohol"},
 			{"text": "Stress", "value": "Stress"},
+			{"text": "Tiredness", "value": "Tiredness"},
+			{"text": "Dehydration", "value": "Dehydration"},
+			{"text": "Hunger", "value": "Hunger"},
+			{"text": "Sport", "value": "Sport"},
 			{"text": "Strong smell", "value": "Strong smell"},
 			{"text": "Depression", "value": "Depression"}
+		],
+		"reliefsOptions": [
+			{"text": "Dark room", "value": "Dark room"},
+			{"text": "Yoga/meditate", "value": "Yoga/meditate"},
+			{"text": "Sleep", "value": "Sleep"},
+			{"text": "Hot shower", "value": "Hot shower"},
+			{"text": "Cold shower", "value": "Cold shower"},
+			{"text": "Ice packs", "value": "Ice packs"},
+			{"text": "Heat pad", "value": "Heat pad"},
+			{"text": "None of these/others", "value": "None/Others"}
+		],
+		"localizationOptions": [
+			{"text": "Home", "value": "Home"},
+			{"text": "Outside", "value": "Outside"},
+			{"text": "Transit", "value": "Transit"},
+			{"text": "Work", "value": "Work"},
+			{"text": "Bed", "value": "Bed"},
+			{"text": "School", "value": "School"}
+		],
+		"medicinesOptions": [
+			{"text": "Ibuprofen", "value": "Ibuprofen"},
+			{"text": "Paracetamol", "value": "Paracetamol"},
+			{"text": "Codeine", "value": "Codeine"},
+			{"text": "Triptans", "value": "Triptans"}
 		]
 	},
 	"text":{
@@ -251,10 +316,26 @@
 	"web":{
 		"plAlt": "polish",
 		"engAlt": "english",
-		"title": "MIGRAINE",
+		"title": "MIGRAINE APP",
 		"subtitle": "Created to help migraineurs live without headaches and auras",
 		"headerText": "Scan QR code with your mobile phone to get the application",
-		"headerButton": "Find out more"
+		"headerButton": "Find out more",
+		"installApp": {
+			"android": "Install application on your Android mobile device",
+			"iphone": "Install application on your iOS mobile device"
+		}
+	},
+	"infoPage": {
+		"getApplication": "Get Application",
+		"appName": "Migraine app",
+		"appDescription": "is your digital diary where you keep track of your headaches, auras and migraines. Take notes about every condition you have and you will get back meaningful informations about your triggers.",
+		"featuresHeader": "Application features",
+		"featuresSubheader": "Quick save and easy browse",
+		"featuresDescription": "When you want to save informations about your migraine you can adjust the amount of informations you want to include. Your past migraines will be available to browse any time you will need them.",
+		"reportsSubheader": "Meaningful reports",
+		"reportsDescription": "Three kinds of reports will give you helpful informations what may caused your migraines.",
+		"pdfSubheader": "Easy data download",
+		"pdfDescription": "Export data to PDF file and show your doctor a full list of your migraines, attacks statistics and overview of possible migraine triggers."
 	},
 	"forgottenPassword": {
 		"resetPassword": "Reset Password",
@@ -268,5 +349,36 @@
 		"password": "Password",
 		"emailNotFound": "Email not found",
 		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number"
+	},
+	"pdfGeneration": {
+		"title": "MIGRAINE APP",
+		"subtitle": "Detailed report about your migraines",
+		"timeSpan": "Time span",
+		"stats30Header": "Last 30 days",
+		"stats60Header": "Last 60 days",
+		"statsYearHeader": "Last year",
+		"statsAllHeader": "Since register",
+		"attacks": "Migraines count",
+		"painDays": "Pain days",
+		"noPainDays": "No pain days",
+		"average": "Average attack duration [h]",
+		"total": "Total attacks duration [h]",
+		"painStrength": "Pain intensity: ",
+		"reportsTitle": "Migraine list",
+		"startDate": "Start date: ",
+		"endDate": "End date: ",
+		"durationTime": "Migraine duration: ",
+		"pain": "Pain intensity: ",
+		"medicines": "Medicines: ",
+		"triggers": "Triggers: ",
+		"reliefs": "Reliefs: ",
+		"localization": "Localization: ",
+		"aura": "Aura: ",
+		"mood": "Mood: ",
+		"menstruation": "Menstruation: ",
+		"bloodPressure": "Blood pressure: ",
+		"sleepDuration": "Sleep duration: ",
+		"notes": "Note: ",
+		"migraineHeader": "Migraine"
 	}
 }
