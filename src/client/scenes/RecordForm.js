@@ -13,16 +13,16 @@ import MonitorImg from '../assets/monitor.png'
 import {
   Start,
   End,
-  Menstruation,
-  Localization,
-  Mood,
   Pain,
   Medicines,
   Triggers,
+  Reliefs,
+  Localization,
   Aura,
+  Mood,
+  Menstruation,
   Pressure,
-  SleepDuration,
-  Reliefs
+  SleepDuration
 } from './form/AddForm';
 
 const Container = styled.article`
@@ -284,16 +284,16 @@ class RecordForm extends Component {
     return (
       data.start_date &&
       data.start_time &&
-      data.sleep_duration &&
-      data.pressure &&
       data.pain &&
-      data.menstruation &&
-      data.mood &&
-      data.localization &&
-      (data.aura && !!data.aura.length) &&
       (data.medicines && !!data.medicines.length) &&
       (data.triggers && !!data.triggers.length) &&
-      data.reliefs
+      data.reliefs &&
+      data.localization &&
+      (data.aura && !!data.aura.length) &&
+      data.mood &&
+      data.menstruation &&
+      data.pressure &&
+      data.sleep_duration
     )
   }
 
@@ -341,7 +341,7 @@ class RecordForm extends Component {
     const tabs = fields.map((field, id) => {
       if (this.getUserFormField(field.name)) {
         return (
-          <div className="record-tab" key={id}>
+          <div className="record-tab" key={id+4}>
             <field.component 
               customAnswers = {customAnswers[field.name]}
               values={data[field.name]} 
@@ -357,17 +357,17 @@ class RecordForm extends Component {
       <Container className="Form">
         <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
-          <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index) }>
-            <div className="record-tab">
+          <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index)}>
+            <div className="record-tab" key={0}>
               <Hello edit={this.edit} />
             </div>
-            <div className="record-tab">
+            <div className="record-tab" key={1}>
               <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
-            <div className="record-tab">
+            <div className="record-tab" key={2}>
               <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onNotYetClick={this.notYetEnd} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
-            <div className="record-tab">
+            <div className="record-tab" key={3}>
               <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
             </div>
             {
