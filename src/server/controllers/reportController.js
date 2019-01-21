@@ -382,7 +382,7 @@ exports.pdf_data = function(req, res, next) {
             .exec(callback)
         },
         togetherNoPain: function(callback) {
-            Report.find({user: userId, pain: "No pain"})
+            Report.find({user: userId, pain: "No Pain"})
             .exec(callback)
         },
         togetherMild: function(callback) {
@@ -411,10 +411,10 @@ exports.pdf_data = function(req, res, next) {
         const stats60 =  results.reports60.length > 0 ? tools.computeStats(results.reports60, "60", new Date()) : {};
         const statsYear =  results.reportsYear.length > 0 ? tools.computeStats(results.reportsYear, "365", new Date()) : {};
         const noPain =  results.togetherNoPain.length > 0 ? tools.getInformations(results.togetherNoPain) : {};
-        const mild = results.togetherMild ? tools.getInformations(results.togetherMild) : {};
-        const moderate =  results.togetherModerate ? tools.getInformations(results.togetherModerate) : {};
-        const intense =  results.togetherIntense ? tools.getInformations(results.togetherIntense) : {};
-        const maximum =  results.togetherMaximum ? tools.getInformations(results.togetherMaximum) : {};
+        const mild = results.togetherMild.length > 0? tools.getInformations(results.togetherMild) : {};
+        const moderate =  results.togetherModerate.length > 0 ? tools.getInformations(results.togetherModerate) : {};
+        const intense =  results.togetherIntense.length > 0 ? tools.getInformations(results.togetherIntense) : {};
+        const maximum =  results.togetherMaximum.length > 0 ? tools.getInformations(results.togetherMaximum) : {};
         res.json({
             "user": results.user,
             "reports": reports, 
