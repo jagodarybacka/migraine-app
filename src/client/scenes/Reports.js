@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { withTheme } from "@callstack/react-theme-provider";
+
 import Menubar from '../components/Menubar';
 import Header from '../components/Header';
 import Button from '../components/Button'
@@ -41,8 +43,8 @@ const ReportName = styled.h2`
 `
 
 const ReportsContainer = styled.div`
-  margin: 80px 0;
-  height: auto;
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
 `
 
 class Reports extends Component {
@@ -65,7 +67,7 @@ class Reports extends Component {
 
   render() {
     return (
-      <ReportsContainer>
+      <ReportsContainer theme={this.props.theme}>
         <Header />
         <Buttons>
           <Button small img={summaryImg} primary={this.state.mode === 1} onClick={() => this.toggleReport(1)}/>
@@ -83,4 +85,4 @@ class Reports extends Component {
 
 }
 
-export default Reports
+export default withTheme(Reports)

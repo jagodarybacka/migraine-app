@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withTheme } from "@callstack/react-theme-provider";
 
 const Check = styled.label`
   color: white;
@@ -14,6 +15,7 @@ const Check = styled.label`
   cursor: pointer;
 
   p {
+    z-index: 1;
     font-weight: 400;
     text-transform: none !important;
     font-size:  ${props => props.small ? '1em' : '1.2rem'};
@@ -23,6 +25,7 @@ const Check = styled.label`
   img {
     width: 24px;
     height: 24px;
+    z-index: 1;
   }
 
   input {
@@ -45,7 +48,7 @@ const FauxBg = styled.div`
   background-color: white;
   border-radius: 10px;
   border: 2px solid ${props => props.color || '#000'};
-  z-index: -1;
+  z-index: 0;
 `
 
 class Checkbox extends React.Component {
@@ -65,7 +68,7 @@ class Checkbox extends React.Component {
 
   render() {
     return (
-      <Check className="Check" color={this.props.color} small={this.props.small}>
+      <Check theme={this.props.theme} className="Check" color={this.props.color} small={this.props.small}>
         <input
           checked={this.props.checked}
           name={this.props.name}
@@ -89,4 +92,4 @@ class Checkbox extends React.Component {
 }
 
 
-export default Checkbox;
+export default withTheme(Checkbox);

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { withTheme } from "@callstack/react-theme-provider";
-
-import DateTimeCustomPeriod from './DateTimeCustomPeriod'
-import Button from './Button'
-import ExitIcon from '../assets/exit.png'
-import { CustomPeriodComponent } from './reports/summary/styles'
-import {languageText} from '../languages/MultiLanguage.js';
+import DateTime from '../../DateTime'
+import Button from '../../Button'
+import ExitIcon from '../../../assets/exit.png'
+import { CustomPeriodComponent } from './styles'
+import {languageText} from '../../../languages/MultiLanguage.js';
 
 class CustomPeriod extends Component {
   constructor(props) {
@@ -24,7 +22,7 @@ class CustomPeriod extends Component {
   handleDateChange(ev, name) {
   const state = {
       ...this.state,
-      [name]: new Date(`${ev.target.value}T00:00`)
+      [name]: new Date(ev.target.value)
     }
     this.setState(state)
     this.validate(state)
@@ -48,15 +46,15 @@ class CustomPeriod extends Component {
       <Button small text={languageText.reportsSummary.confirm} disabled/>
     )
     return (
-      <CustomPeriodComponent theme={this.props.theme}>
+      <CustomPeriodComponent>
         <h3 className="custom__header">{languageText.reportsSummary.customPeriod}</h3>
-        <img className="custom__cancel" src={ExitIcon} alt="exit" onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
-        <DateTimeCustomPeriod date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
-        <DateTimeCustomPeriod date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
+        <img className="custom__cancel" src={ExitIcon} onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
+        <DateTime date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
+        <DateTime date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
         { confirm }
       </CustomPeriodComponent>
     )
   }
 }
 
-export default withTheme(CustomPeriod);
+export default CustomPeriod;

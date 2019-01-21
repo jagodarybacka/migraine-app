@@ -1,5 +1,7 @@
 import React from 'react';
 import { isBrowser } from 'react-device-detect';
+import { ThemeProvider, withTheme } from "@callstack/react-theme-provider";
+import {currentTheme} from './themes/ThemeHandler.js';
 import Web from './base/web/Web'
 import Mobile from './base/mobile/Mobile'
 
@@ -17,7 +19,7 @@ const App = () => {
       </div>
     )
   }
-  return <Mobile />
+  return <ThemeProvider theme={currentTheme.theme}><Mobile /></ThemeProvider>
 }
 
 export default App;

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withTheme } from "@callstack/react-theme-provider";
+
 import BackImg from '../assets/back-arrow.png'
 import SaveImg from '../assets/save.png'
 import Logo from './Logo';
@@ -16,7 +18,7 @@ const TopHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   z-index: 1000000;
-  background-color: #FAF8F1;
+  background-color: ${props=>props.theme.backgroundColorSecondary};
 
   .header-img {
     width: 33px;
@@ -39,7 +41,7 @@ const TopHeader = styled.header`
 const Header = (props) => {
   let classes = props.isForm ? 'header-img' : 'header-img hidden'
   return (
-    <TopHeader className="Header">
+    <TopHeader theme={props.theme} className="Header">
       <Link to="/home" className={!props.isForm ? "hidden" : ''}>
         <img
           className={classes}
@@ -60,4 +62,4 @@ const Header = (props) => {
 }
 
 
-export default Header;
+export default withTheme(Header);

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import RecordCard from '../../components/RecordCard'
 
@@ -22,7 +23,8 @@ const HistoryComponent = styled.section`
     margin: 0 0 2rem 0;
     text-align: center;
   }
-
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
 `
 
 const Records = styled.ul`
@@ -146,7 +148,7 @@ class History extends Component {
     const { history, order } = this.state;
 
     return (
-      <HistoryComponent >
+      <HistoryComponent theme={this.props.theme}>
         <Header />
         <h2>{languageText.history.title}</h2>
         <div style={{ width: '100%' }}>
@@ -195,4 +197,4 @@ class History extends Component {
   }
 }
 
-export default withRouter(History);
+export default withRouter(withTheme(History));

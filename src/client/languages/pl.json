@@ -1,5 +1,8 @@
 {
 	"settings":{
+		"chooseTheme": "Wybierz kolorystykę",
+		"light": "Jasna",
+		"dark": "Ciemna",
 		"chooseLanguage": "Wybierz język",
 		"changeData": "Zmień dane",
 		"changePassword": "Zmień hasło",
@@ -375,5 +378,17 @@
 		"sleepDuration": "Długość snu: ",
 		"notes": "Notatka: ",
 		"migraineHeader": "Migrena"
-	}
+	},
+	"question":{
+		"didItWorked": "Czy to zadziałało: ",
+		"duration": "Jak długo działało: ",
+		"saved": "Zapisano, że",
+		"worked": "działa",
+		"notWorked": "nie działa"
+	},
+	"questionAnswered":{
+		"workedFor": "działał przez",
+		"didntWork": "nie zadziałał",
+		"didWork": "zadziałał"
+	}	
 }

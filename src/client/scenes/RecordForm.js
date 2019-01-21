@@ -5,6 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
 import moment from 'moment';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import Button from '../components/Button'
 import Header from '../components/Header'
@@ -28,7 +29,8 @@ import {
 const Container = styled.article`
   padding: 0;
   text-align: center;
-
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
   h2 {
     text-transform: uppercase;
     font-weight: 900;
@@ -146,6 +148,15 @@ class RecordForm extends Component {
         }
         if(data.report.end_date){
           data.report.end_date = data.report.end_date.substr(0,10)
+        }
+        if(data.report.medicines && data.report.medicines.length>0 &&data.report.medicines[0].name != undefined){
+          data.report.medicinesBeforeEdit = data.report.medicines;
+          data.report.medicines = data.report.medicines.map(m=>m.name);
+          
+        }
+        if(data.report.reliefs && data.report.reliefs.length>0 &&data.report.reliefs[0].name != undefined){
+          data.report.reliefsBeforeEdit = data.report.reliefs;
+          data.report.reliefs = data.report.reliefs.map(m=>m.name);
         }
         this.setState({ data: data.report })
       })
@@ -342,7 +353,7 @@ class RecordForm extends Component {
     }).filter(view => !!view);
 
     return (
-      <Container className="Form">
+      <Container theme={this.props.theme} className="Form">
         <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
           <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index) }>
@@ -389,4 +400,4 @@ class RecordForm extends Component {
   }
 }
 
-export default withRouter(RecordForm);
+export default withRouter(withTheme(RecordForm));

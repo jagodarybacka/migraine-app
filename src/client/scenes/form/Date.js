@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import Button from '../../components/Button'
 import DateTime from '../../components/DateTime'
@@ -32,13 +33,16 @@ const DateInputs = styled.div `
   text-align: center;
   width: 150px;
   height: 150px;
+
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.iconBackgroundColor};
 `
 
 const Date = (props) => { 
   return (
     <Time className="Date">
       <h2>{props.end ? languageText.date.painEnded : languageText.date.painStarted}</h2>
-      <DateInputs>
+      <DateInputs theme={props.theme}>
         <DateTime
           valueDate={props.valueDate}
           valueTime={props.valueTime}
@@ -67,4 +71,5 @@ const Date = (props) => {
   );
 }
 
-export default Date;
+export default withTheme(Date);
+

@@ -3,7 +3,7 @@ import styled from 'styled-components'
  export const SummaryComponent = styled.div`
   margin: 0 5%;
   min-width: 300px;
-  background-color: #fff;
+  background-color: ${props => (props.theme.backgroundColorSecondary)};
   padding: 1.5em 0;
   position: relative;
   display: flex;
@@ -55,13 +55,14 @@ import styled from 'styled-components'
 `
 
  export const Select = styled.select`
-  background: transparent;
+ background: ${props => (props.theme.backgroundColorSecondary)};
   font-size: 0.9em;
   font-weight: 300;
   border-radius: 22px;
   padding: 11px 27px;
   margin: auto;
   outline: none;
+  color: ${props => (props.theme.fontColor)};
 `
 
 export const CustomIcon = styled.img`
@@ -79,7 +80,7 @@ export const QuestionIcon = styled(CustomIcon)`
 
 export const CustomPeriodComponent = styled.div`
   position: absolute;
-  background: #fff;
+  background: ${props=>props.theme.iconBackgroundColor};
   width: 100%;
   height: 100%;
   text-align: center;
@@ -92,4 +93,5 @@ export const CustomPeriodComponent = styled.div`
   .custom__header {
     margin: 1em 0 0;
   }
+  color: ${props=>props.theme.fontColor};
 `

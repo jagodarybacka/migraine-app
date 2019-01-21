@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
 import Bubble from '../../components/Bubble';
+import Question from '../../components/Question'
+import QuestionAnswered from '../../components/QuestionAnswered'
 
 import date from '../../assets/date.png'
 import time from '../../assets/time.png'
@@ -14,7 +17,7 @@ import faceSmile from '../../assets/face-smile.png'
 import drop from '../../assets/drop.png'
 import eye from '../../assets/eye.png'
 import localizationIcon from '../../assets/localization.png'
-import medicine from '../../assets/medicine.png'
+import medicinePill from '../../assets/medicine.png'
 import questionmark from '../../assets/questionmark.png'
 import accept from '../../assets/accept.png'
 import {languageText} from '../../languages/MultiLanguage.js';
@@ -24,6 +27,9 @@ const SummaryComponent = styled.section`
   padding: 7rem 0;
   margin: 0;
   text-align: center;
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
+  height:100%;
   h2 {
     text-transform: uppercase;
     font-weight: 300;
@@ -47,6 +53,8 @@ const TimeDateComponent = styled.div`
   padding: 10px 0;
   background-color: #fff;
   border-radius: 20px;
+  color: ${props=>props.theme.fontColor};
+  background-color: ${props=>props.theme.iconBackgroundColor};
 
   img {
     width: 24px;
@@ -57,16 +65,16 @@ const TimeDateComponent = styled.div`
     border-bottom: 1px solid #9e9e9e;
   }
 `
-const TimeDate = (props) => {
+const TimeDate = withTheme((props) => {
   return (
-    <TimeDateComponent>
+    <TimeDateComponent theme={props.theme}>
       <img alt='date' src={date}/>
       <p>{props.date}</p>
       <img alt='time' src={time}/>
       <p>{props.time}</p>
     </TimeDateComponent>
   )
-}
+})
 
 const AcceptComponent = styled.button`
   background-color: #f0908b;
@@ -100,7 +108,11 @@ class Summary extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {notes: props.location.state.data.notes || ''};
+    this.state = {
+      notes: props.location.state.data.notes || '',
+      reliefsEffects: [],
+      medicineEffects: []
+    };
     this.submit = this.submit.bind(this);
     this.handleChangeNotes = this.handleChangeNotes.bind(this);
   }
@@ -119,9 +131,67 @@ class Summary extends Component {
     this.setState({notes: event.target.value});
   }
 
+  handleMedicineEffectChange(name, value) {
+    let newEffect = { name, value };
+    let medicineEffects = this.state.medicineEffects;
+    let idx = medicineEffects.findIndex(r => r.name === name);
+    idx > -1 ? medicineEffects[idx] = newEffect : medicineEffects.push(newEffect);
+    this.setState({ medicineEffects });
+  }
+
+  handleReliefsEffectChange(name, value) {
+    let newEffect = { name, value };
+    let reliefsEffects = this.state.reliefsEffects;
+    let idx = reliefsEffects.findIndex(r => r.name === name);
+    idx > -1 ? reliefsEffects[idx] = newEffect : reliefsEffects.push(newEffect);
+    this.setState({ reliefsEffects });
+  }
+
+  updateDataWithEffects(data) {
+    let reliefsEffects = this.state.reliefsEffects;
+    let reliefs = data["reliefs"];
+
+    if(reliefs !== undefined){
+      reliefs = reliefs.map(r => {
+        let idx = reliefsEffects.findIndex(e => e.name === r);
+        if (idx > -1) {
+          return reliefsEffects[idx];
+        } else {
+          let previousValue = data.reliefsBeforeEdit == undefined ? undefined : data.reliefsBeforeEdit.find(e => e.name === r);
+          if (previousValue === undefined)
+            return { "name": r, "value": false };
+          else
+            return { "name": r, "value": previousValue.value };
+        }
+      });
+      data["reliefs"] = reliefs;
+    }
+
+    let medicineEffects = this.state.medicineEffects;
+    let medicines = data["medicines"];
+    if(medicines !== undefined){
+      medicines = medicines.map(r => {
+        let idx = medicineEffects.findIndex(e => e.name === r);
+        if (idx > -1) {
+          return medicineEffects[idx];
+        } else {
+          let previousValue = data.medicinesBeforeEdit == undefined ? undefined : data.medicinesBeforeEdit.find(e => e.name === r);
+          if (previousValue === undefined)
+            return { "name": r, "value": 0 };
+          else
+            return { "name": r, "value": previousValue.value };
+        }
+      });
+    data["medicines"] = medicines;
+    }
+
+    return data;
+  }
+
   submit() {
     let { data, id } = this.props.location.state;
     data = { ...data, notes: this.state.notes }
+    data = this.updateDataWithEffects(data);
 
     const { match } = this.props
     let method = 'POST'
@@ -136,14 +206,19 @@ class Summary extends Component {
   }
 
   getTranslatedValue(toTranslate, type){
-    if(toTranslate === '')
+    if (toTranslate == '')
       return '';
-    let translationDict = languageText.addForm[type+"Answers"];
-    let foundPair = translationDict.find(f => f.value === toTranslate);
-    if(foundPair !== undefined)
+
+    if (toTranslate.name != undefined) {
+      toTranslate = toTranslate.name;
+    }
+
+    let translationDict = languageText.addForm[type + 'Answers'];
+    let foundPair = translationDict.find(f => f.value == toTranslate);
+    if (foundPair != undefined)
       return foundPair.text;
     else
-      return toTranslate;
+      return '';
   }
 
   getUserFormField(field) {
@@ -202,9 +277,26 @@ class Summary extends Component {
       ) : undefined_bubble;
 
       const medicines = data.medicines && data.medicines.length ?
-        data.medicines.map(name => (
-          <Bubble key={name} text={this.getTranslatedValue(name,"medicines")} img={medicine} color='#00bcd4' />
-        ))
+          data.medicines.map(medicine => (
+            <div>
+              <Bubble key={medicine} text={this.getTranslatedValue(medicine, "medicines")} img={medicinePill} color='#00bcd4' />
+              {!preview && <Question
+                previousValues={data.medicinesBeforeEdit}
+                key={medicine + '_q'}
+                name={medicine.name != undefined ? medicine.name : medicine}
+                value={medicine.value != undefined ? medicine.value : null}
+                displayName={this.getTranslatedValue(medicine, "medicines")}
+                numericInput={true}
+                changeHandler={this.handleMedicineEffectChange.bind(this)}
+                placeholder={"[h]"} />}
+              {preview &&
+                <QuestionAnswered
+                  name={this.getTranslatedValue(medicine, "medicines")}
+                  isNumeric={true}
+                  answer={medicine.value != undefined ? medicine.value : 0} />
+              }
+            </div>
+          ))
        : undefined_bubble;
 
       const triggers = data.triggers && data.triggers.length ?
@@ -219,14 +311,31 @@ class Summary extends Component {
         ))
        : undefined_bubble;
 
-      const reliefs = data.reliefs && data.reliefs.length ?
-        data.reliefs.map(name => (
-          <Bubble key={name} text={this.getTranslatedValue(name,"reliefs")} img={questionmark} color='#4169E1' />
-        ))
-       : undefined_bubble;
+       const reliefs = data.reliefs && data.reliefs.length ?
+       data.reliefs.map(relief => (
+         <div>
+           <Bubble key={relief} text={this.getTranslatedValue(relief, "reliefs")} img={questionmark} color='#4169E1' />
+           {!preview &&
+             <Question
+               previousValues={data.reliefsBeforeEdit}
+               key={relief + '_q'}
+               name={relief}
+               displayName={this.getTranslatedValue(relief, "reliefs")}
+               numericInput={false}
+               changeHandler={this.handleReliefsEffectChange.bind(this)} />
+           }
+           {preview &&
+             <QuestionAnswered
+               name={this.getTranslatedValue(relief, "reliefs")}
+               isNumeric={false}
+               answer={relief.value != undefined ? relief.value : false} />
+           }
+         </div>
+       ))
+        : undefined_bubble;
 
       result = (
-        <SummaryComponent>
+        <SummaryComponent theme={this.props.theme}>
           <Header />
           <h2>{languageText.addForm.summary}</h2>
 
@@ -278,4 +387,4 @@ class Summary extends Component {
   }
 }
 
-export default withRouter(Summary);
+export default withRouter(withTheme(Summary));

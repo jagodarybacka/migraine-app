@@ -1,5 +1,8 @@
 {
 	"settings":{
+		"chooseTheme": "Choose theme",
+		"light": "Light",
+		"dark": "Dark",
 		"chooseLanguage": "Choose language",
 		"changeData": "Change data",
 		"changePassword": "Change password",
@@ -375,5 +378,17 @@
 		"sleepDuration": "Sleep duration: ",
 		"notes": "Note: ",
 		"migraineHeader": "Migraine"
+	},
+	"question":{
+		"didItWorked": "Did it work: ",
+		"duration": "How long did it work: ",
+		"saved": "It is saved,",
+		"worked": "works",
+		"notWorked": "doesn't works"
+	},
+	"questionAnswered":{
+		"workedFor": "did work for",
+		"didntWork": "did not work",
+		"didWork": "did work"
 	}
 }

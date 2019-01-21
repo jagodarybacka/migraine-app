@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import { withTheme } from "@callstack/react-theme-provider";
 import {languageText, setLanguage} from '../languages/MultiLanguage.js';
 import pl from '../assets/lang/plIcon.png';
 import eng from '../assets/lang/engIcon.png';
 
 import Logo from '../components/Logo'
 import Button from '../components/Button'
+
+const JoinContainer = styled.div`
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
+`;
 
 const Language = styled.div`
   position: absolute;
@@ -42,7 +48,7 @@ class Join extends Component {
 
   render() {
     return (
-      <div>
+      <JoinContainer theme={this.props.theme}>
         <Language>
             <img className="language__button" src={pl} alt={languageText.web.plAlt} onClick={() => this.setNewLanguage('pl')} />
             <img className="language__button" src={eng} alt={languageText.web.engAlt} onClick={() => this.setNewLanguage('eng')} />
@@ -55,9 +61,9 @@ class Join extends Component {
         <Link to="/register">
           <Button text={languageText.join.signIn} />
         </Link>
-      </div>
+      </JoinContainer>
     )
   }
 }
 
-export default Join
+export default withTheme(Join)

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import { withTheme } from "@callstack/react-theme-provider";
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
 import { generatePdf } from '../utils/pdfGeneration';
 import CustomAnswer from './CustomAnswer';
@@ -16,6 +17,7 @@ import auraIcon from '../assets/eye.png'
 import axios from 'axios';
 import TextInput from '../components/TextInput';
 import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
+import {currentTheme, setTheme, getTheme} from '../themes/ThemeHandler.js';
 
 const SettingsComponent = styled.div`
   display: flex;
@@ -24,10 +26,8 @@ const SettingsComponent = styled.div`
   margin: 0;
   text-align: center;
   height: auto;
-
-  .chosenLang{
-    color: red;
-  }
+  background-color:${props => props.theme.backgroundColor}
+  color:${props => props.theme.fontColor}
 `
 
 const Buttons = styled.div`
@@ -56,6 +56,7 @@ const List = styled.div`
   width: 80%;
   flex-wrap: wrap;
   justify-content: center;
+  color: black;
   h4{
     margin: 5px;
     text-transform: uppercase;
@@ -299,6 +300,10 @@ class Settings extends Component {
     window.location.reload();
   }
 
+  setNewTheme(theme) {
+    setTheme(theme, false);
+  }
+
   toggleUserFormField(field) {
     const old = this.getUserFormField(field)
     localStorage.setItem(`form-${field}`, !old)
@@ -383,11 +388,15 @@ class Settings extends Component {
     ) : '';
 
     let currentLang = getLanguage();
+    let currentTheme = getTheme();
     return (
-      <SettingsComponent className="Settings">
+      <SettingsComponent theme={this.props.theme} className="Settings">
           <Header />
           <Divider text={languageText.settings.logout}/>
           <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
+          <Divider text={languageText.settings.chooseTheme}/>
+            <Button onClick={() => this.setNewTheme('DarkTheme')} text={languageText.settings.dark} primary={currentTheme == "DarkTheme" ? false : true} />
+            <Button onClick={() => this.setNewTheme('LightTheme')} text={languageText.settings.light} primary={currentTheme == "LightTheme" ? false : true} />
           <Divider text={languageText.settings.formFields}/>
           <div>
           {
@@ -489,4 +498,4 @@ class Settings extends Component {
 }
 
 
-export default Settings;
+export default withTheme(Settings);
