@@ -31,18 +31,22 @@ exports.register = async (req, res, next) => {
 		if (err) {
 			return res.json({errors : [err.message]});
 		}
-		passport.authenticate("local")(req, res, function() {
+		passport.authenticate("local", {session: true}, function(info,user,err) {
 			if (err) {
 				console.log("error",err);
 				return res.json({errors : [err.message]});
 			}
-			return res.json({
-				redirectURL:"/home",
-				userId: user._id,
-				userMail: user.email,
-				userName: user.username
+			req.logIn(user,function(err){
+				if(err) { return next(err);}
+				req.session.userId = req.user._id;
+				res.json(
+					{redirectURL:"/home",
+					userId: req.user._id,
+					userMail: req.user.email,
+					userName: req.user.username
+				});
 			});
-		});
+		})(req, res, next);
 	});
 };
 
