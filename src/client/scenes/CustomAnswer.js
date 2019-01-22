@@ -41,7 +41,7 @@ class CustomAnswer extends Component {
     this.state = {
       answer: '',
       answerType: props.answerType,
-      valid: ''
+      valid: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,10 +61,10 @@ class CustomAnswer extends Component {
   }
 
   validate(state) {
-    if (!state.answer) {
+    if (!state.answer || (state.answer && state.answer.length === 0)) {
       this.setState({valid: false});
       return;
-    } else if (state.answer) {
+    } else if (state.answer && state.answer.length > 0) {
       this.setState({valid: true});
       return;
     }
