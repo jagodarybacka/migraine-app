@@ -43,6 +43,8 @@ const ReportName = styled.h2`
 `
 
 const ReportsContainer = styled.div`
+  margin: 80px 0;
+  height: auto;
   background-color: ${props=>props.theme.backgroundColor};
   color: ${props=>props.theme.fontColor};
 `

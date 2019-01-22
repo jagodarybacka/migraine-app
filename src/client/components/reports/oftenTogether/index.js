@@ -8,8 +8,7 @@ import Help from '../../Help'
 import axios from 'axios';
 
 const SectionsContainer = styled.div`
-margin-bottom: 50px;
-overflow: auto;
+
 `
 class OftenTogether extends Component {
   constructor(props) {
