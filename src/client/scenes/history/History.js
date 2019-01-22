@@ -9,7 +9,8 @@ import RecordCard from '../../components/RecordCard'
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
-import { filer, filter } from '../../utils/Filter';
+import { filter } from '../../utils/Filter';
+import Select from '../../components/Select'
 
 import {languageText} from '../../languages/MultiLanguage.js';
 
@@ -51,7 +52,9 @@ class History extends Component {
     this.state = {
       history: {},
       order: [],
-      rawData: []
+      rawData: [],
+      localization: [],
+      pain: []
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -155,12 +158,45 @@ class History extends Component {
 
   render() {
     const { history, order } = this.state;
+    const fieldsLocalization = [{
+      value: 'home', label: 'Home' 
+    },{
+      value: 'outside', label: 'Outside' 
+    },{
+      value: 'transit', label: 'Transit'
+    }, {
+      value: 'work', label: 'Work'
+    }, {
+      value: 'bed', label: 'Bed'
+    },{
+      value: 'school', label: 'School'
+    }]
 
+    const fieldsPain = [{
+      value: 'noPain', label: 'No Pain' 
+    },{
+      value: 'mild', label: 'Mild' 
+    },{
+      value: 'moderate', label: 'Moderate'
+    }, {
+      value: 'intense', label: 'Intense'
+    }, {
+      value: 'maximum', label: 'Maximum'
+    }]
+    
     return (
       <HistoryComponent >
         <Header />
         <h2>{languageText.history.title}</h2>
         <div style={{ width: '100%' }}>
+        {/* <h3>localization</h3> */}
+        <Select
+          multiple={false}
+          options={fieldsLocalization}
+          onChange={this.handleChange}
+          value={this.state.localization}>
+        </Select>
+
           <Records>
             {!!order.length && order.map((chunk) => {
               const month = chunk.substring(4);
@@ -205,5 +241,7 @@ class History extends Component {
     );
   }
 }
+
+Select.defaultProps = { multiple: false }
 
 export default withRouter(History);
