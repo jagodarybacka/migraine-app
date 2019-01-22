@@ -59,12 +59,15 @@ class History extends Component {
   constructor(props) {
     super(props);
 
+    this.fieldsLocalization= ['Home', 'Outside','Transit', 'Work', 'Bed','School']
+    this.fieldsPain= ['No Pain','Mild','Moderate','Intense','Maximum']
+
     this.state = {
       history: {},
       order: [],
       rawData: [],
       localizations: {}, 
-      intensity: {}
+      intensity: {},
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -83,6 +86,17 @@ class History extends Component {
         this.parseHistory(data);
       })
       .catch((err) => console.log(err));
+
+    axios.get('/api/users/answer')
+    .then((res) => {
+      if(res.status === 204){
+        console.log("No content");
+      } else {
+        const answerLocalization = res.data.localization
+        this.fieldsLocalization = [...this.fieldsLocalization, ...answerLocalization]
+     }
+    })
+    .catch((err) => {console.log(err);})
   }
 
   getIntensity(key) {
@@ -143,7 +157,7 @@ class History extends Component {
     this.setState({ history, order, rawData: data },
       () => {
         const results = filter(this.state.rawData, 
-          //{start: new Date('2019-01-01'), end: new Date('2019-02-01')},
+          {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
           // {pain:"Mild"});
           //{localization:["Outside","Work"],triggers:"Sport"});
           {localization:["Outside","Work"]});
@@ -187,31 +201,6 @@ class History extends Component {
 
   render() {
     const { history, order } = this.state;
-    const fieldsLocalization = [{
-      name: 'home', label: 'Home'
-    },{
-      name: 'outside', label: 'Outside' 
-    },{
-      name: 'transit', label: 'Transit'
-    }, {
-      name: 'work', label: 'Work'
-    }, {
-      name: 'bed', label: 'Bed'
-    },{
-      name: 'school', label: 'School'
-    }]
-
-    const fieldsPain = [{
-      name: 'noPain', label: 'No Pain' 
-    },{
-      name: 'mild', label: 'Mild' 
-    },{
-      name: 'moderate', label: 'Moderate'
-    }, {
-      name: 'intense', label: 'Intense'
-    }, {
-      name: 'maximum', label: 'Maximum'
-    }]
 
     return (
       <HistoryComponent >
@@ -223,12 +212,12 @@ class History extends Component {
         <h3>Localization</h3>
          <div>
           {
-            fieldsLocalization.map((field) => (
+            this.fieldsLocalization.map((field) => (
               <Checkbox
-                key={field.name}
+                key={field}
                 small
-                text={field.label}
-                name={field.name}
+                text={field}
+                name={field}
                 onChange={this.handleChangeFilter}
               />
             ))
@@ -237,12 +226,12 @@ class History extends Component {
           <h3>Pain intensity</h3>
           <div>
           {
-            fieldsPain.map((field) => (
+            this.fieldsPain.map((field) => (
               <Checkbox
-              key={field.name}
+              key={field}
               small
-              text={field.label}
-              name={field.name}
+              text={field}
+              name={field}
               onChange={this.handleChangeFilter2}
               />
             ))
