@@ -80,6 +80,19 @@ const List = styled.div`
   }
 `
 
+const FormButtons = styled.div`
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+justify-content: space-evenly;
+flex: 1;
+  label {
+    width: 6.5em;
+    height: 2.75em;
+  }
+`
+
 const Menu = styled.ul`
   position: fixed;
   top: 4.25em;
@@ -446,7 +459,7 @@ class Settings extends Component {
         <Divider text={languageText.settings.exportData}/>
           <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
         <Divider text={languageText.settings.formFields}/>
-        <div>
+        <FormButtons>
         {
           fields.map((field, index) => (
             <Checkbox
@@ -459,7 +472,7 @@ class Settings extends Component {
             />
           ))
         }
-        </div>
+        </FormButtons>
         <Divider text={languageText.settings.setCustomAnswers}/>
         <Buttons>
           {
