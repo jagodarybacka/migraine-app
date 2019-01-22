@@ -315,10 +315,10 @@ exports.add_custom_answer = (req,res,next) => {
 							console.log(err);
 							return res.json({errors : [err.message]});
 							}
-							return res.json("Answer saved");
+							return res.json({confirm:"Answer saved"});
 					} )
 				} else {
-					return res.json("Answer already in database");
+					return res.json({info: "Answer already in database"});
 				}
 			}
 		} else {
