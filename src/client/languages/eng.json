@@ -222,7 +222,7 @@
 			{"text": "Cold shower", "value": "Cold shower"},
 			{"text": "Ice packs", "value": "Ice packs"},
 			{"text": "Heat pad", "value": "Heat pad"},
-			{"text": "None of these/others", "value": "None/Others"}
+			{"text": "Others", "value": "None/Others"}
 		]
 	},
 	"reports":{
@@ -361,7 +361,9 @@
 		"stats30Header": "Last 30 days",
 		"stats60Header": "Last 60 days",
 		"statsYearHeader": "Last year",
-		"statsAllHeader": "Since register",
+		"statsAllHeaderNone": "Since beginning",
+		"statsAllHeaderRegister": "Since register",
+		"statsAllHeaderAttack": "Since first migraine",
 		"attacks": "Migraines count",
 		"painDays": "Pain days",
 		"noPainDays": "No pain days",
