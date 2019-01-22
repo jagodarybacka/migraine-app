@@ -350,6 +350,12 @@ class Settings extends Component {
               alert(res.data.errors);
               return;
             }
+            if(res.data.user.email){
+              localStorage.setItem('userMail',res.data.user.email)
+            }
+            if(res.data.user.username){
+              localStorage.setItem('userName',res.data.user.username)
+            }
             alert(languageText.settings.dataChanged);
             this.clearFields();
           }
