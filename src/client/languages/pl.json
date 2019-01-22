@@ -222,7 +222,7 @@
 			{"text": "Zimny prysznic", "value": "Cold shower"},
 			{"text": "Kostki lodu", "value": "Ice packs"},
 			{"text": "Termofor", "value": "Heat pad"},
-			{"text": "Żadne/Inne", "value": "None/Others"}
+			{"text": "Inne", "value": "None/Others"}
 		]
 	},
 	"reports":{
@@ -361,7 +361,9 @@
 		"stats30Header": "Ostatnie 30 dni",
 		"stats60Header": "Ostatnie 60 dni",
 		"statsYearHeader": "Ostatni rok",
-		"statsAllHeader": "Od czasu założenia konta",
+		"statsAllHeaderNone": "Od początku",
+		"statsAllHeaderRegister": "Od czasu założenia konta",
+		"statsAllHeaderAttack": "Od pierwszej migreny",
 		"attacks": "Liczba migren",
 		"painDays": "Dni z bólem",
 		"noPainDays": "Dni bez bólu",

@@ -427,10 +427,10 @@ exports.pdf_data = function(req, res, next) {
             return res.json({errors : [err.message]});
         }
         const reports = results.reports.length > 0 ? results.reports : [];
-        const statsAll =  results.reports.length > 0 ? tools.computeStats(results.reports, "all", new Date()) : {};
-        const stats30 =  results.reports30.length > 0 ? tools.computeStats(results.reports30, "30", new Date()) : {};
-        const stats60 =  results.reports60.length > 0 ? tools.computeStats(results.reports60, "60", new Date()) : {};
-        const statsYear =  results.reportsYear.length > 0 ? tools.computeStats(results.reportsYear, "365", new Date()) : {};
+        const statsAll =  results.reports.length > 0 ? tools.computeStats(results.reports, "all", new Date(), results.user) : {};
+        const stats30 =  results.reports30.length > 0 ? tools.computeStats(results.reports30, "30", new Date(), results.user) : {};
+        const stats60 =  results.reports60.length > 0 ? tools.computeStats(results.reports60, "60", new Date(), results.user) : {};
+        const statsYear =  results.reportsYear.length > 0 ? tools.computeStats(results.reportsYear, "365", new Date(),  results.user) : {};
         const noPain =  results.togetherNoPain.length > 0 ? tools.getInformations(results.togetherNoPain) : {};
         const mild = results.togetherMild.length > 0? tools.getInformations(results.togetherMild) : {};
         const moderate =  results.togetherModerate.length > 0 ? tools.getInformations(results.togetherModerate) : {};
