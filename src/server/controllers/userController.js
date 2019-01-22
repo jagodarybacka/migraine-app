@@ -20,6 +20,7 @@ exports.validateRegister = (req, res, next) => {
 
 	const errors = req.validationErrors();
 	if (errors) {
+		console.log(errors);
 	  return res.json({body: req.body, errors: errors });
 	}
 	next(); // there were no errors!
@@ -29,6 +30,7 @@ exports.register = async (req, res, next) => {
 	const user = new User({username: req.body.username, email: req.body.email, registration_date: new Date() });
 	await User.register(user, req.body.password, function(err, user) {
 		if (err) {
+			console.log("error",err);
 			return res.json({errors : [err.message]});
 		}
 		passport.authenticate("local", {session: true}, function(info,user,err) {
@@ -37,7 +39,10 @@ exports.register = async (req, res, next) => {
 				return res.json({errors : [err.message]});
 			}
 			req.logIn(user,function(err){
-				if(err) { return next(err);}
+				if(err) { 
+					console.log("error",err);
+					return res.json({errors : [err.message]});
+				}
 				req.session.userId = req.user._id;
 				res.json(
 					{redirectURL:"/home",
@@ -55,11 +60,13 @@ exports.change_password = (req, res, next) => {
 	User.findById(user)
 	.exec(function(err, sanitizedUser){
 		if(err) {
+			console.log("error",err);
 			return res.json({errors : [err.message]});
 		}
     if (sanitizedUser){
 			sanitizedUser.changePassword(req.body.oldPassword, req.body.password, function(err){
 					if(err) {
+						console.log("error",err);
 						res.status(204)
 						res.send([err.message]);
 						return;
@@ -70,7 +77,7 @@ exports.change_password = (req, res, next) => {
 					return;
 			});
     } else {
-				res.status(404);
+				res.status(401);
 				res.send('This user does not exist');
 				return;
     }
@@ -82,25 +89,33 @@ exports.change_user_data = (req, res, next) => {
 	User.findById(user)
 	.exec(function(err, user){
 		if(err) {
+			console.log("error",err);
 			return res.json({errors : [err.message]});
 		}
     if (user){
-			//EMAIL CHANGE UPDATE SESSION?????????
 			if(req.body.email){
 				user.email = req.body.email;
 			}
 			if(req.body.username){
 				user.username = req.body.username;
 			}
-			user.save(function(err, user) {
+			user.save(function(err, saved_user) {
 				if(err){
 					return res.json({errors : [err.message]});
 				}
-				console.log(user);
-				res.json({'message':'User data change successful'});
+				req.logIn(saved_user,function(err){
+					if(err) { 
+						console.log(err);
+						return res.json({errors : [err.message]});
+					}
+					req.session.userId = req.user._id;
+					res.json(
+						{user: { username: saved_user.username, email: saved_user.email },message:'User data change successful'}
+					);
+				});
 			});
     } else {
-			res.status(404);
+			res.status(401);
 			res.send('This user does not exist');
 			return;
     }
@@ -118,10 +133,11 @@ exports.forgotten_password = (req, res, next) => {
     function(token, done) {
       User.findOne({ email: req.body.email }, function(err, user) {
 				if(err) {
+					console.log(err);
 					return res.json({errors : [err.message]});
 				}
         if (!user) {
-					res.status(404);
+					res.status(401);
           return res.send('No account with that email address exists.');
         }
         user.resetPasswordToken = token;
@@ -154,6 +170,10 @@ exports.forgotten_password = (req, res, next) => {
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
+				if(err) {
+					console.log(err);
+					return res.json({errors : [err.message]});
+				}
         res.json({'message': 'An e-mail has been sent to ' + user.email + ' with further instructions.'});
         done(err, 'done');
       });
@@ -164,6 +184,7 @@ exports.forgotten_password = (req, res, next) => {
 exports.reset_password = (req, res, next) => {
 		User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gte: Date.now() } }, function(err, user) {
 			if(err) {
+				console.log(err);
 				return res.json({errors : [err.message]});
 			}
 			if (!user) {
@@ -173,10 +194,12 @@ exports.reset_password = (req, res, next) => {
 			}
 			user.setPassword(req.body.password, function(err){
 				if(err) {
+					console.log(err);
 					return res.json({errors : [err.message]});
 				}
 				user.save(function(err, user) {
           if(err){
+						console.log(err);
 						return res.json({errors : [err.message]});
 					}
 					res.json({'message':'Password change successful'});
@@ -188,11 +211,14 @@ exports.reset_password = (req, res, next) => {
 
 exports.save_forecast = (req, res, next) => {
 	const userId = req.session.userId;
+	if(!req.body.weather_forecast) {
+		return res.json({errors : "No forecast to save"}); 
+	}
 	const forecast = req.body.weather_forecast;
-	const now = new Date();
 	User.findById(userId)
 	.exec( function(err, found_user) {
 		if (err) { 
+			console.log(err);
 			return res.json({errors : [err.message]});
 		 }
 		if (found_user) {
@@ -205,7 +231,7 @@ exports.save_forecast = (req, res, next) => {
 				return res.json("Forecast saved");
 			});
 		} else {
-			res.status(404);
+			res.status(401);
 			res.send('This user does not exist');
 			return;
 		}
@@ -221,6 +247,7 @@ exports.get_forecast = (req, res, next) => {
 	User.findById(userId)
 	.exec( function(err, found_user) {
 		if (err) { 
+			console.log(err);
 			return res.json({errors : [err.message]});
 		}
 		if (found_user) {
@@ -241,7 +268,7 @@ exports.get_forecast = (req, res, next) => {
 				return;
 			}	
 		} else {
-			res.status(404);
+			res.status(401);
 			res.send('This user does not exist');
 			return;
 		}
@@ -253,11 +280,13 @@ exports.clear_forecast = (req,res,next) => {
 		User.findById(userId)
 		.exec( function(err, found_user) {
 			if (err) { 
+				console.log(err);
 				return res.json({errors : [err.message]});
 			 }
 			if (found_user) {
 				User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: []}}, {}, function (err,mod_user) {
 					if (err) { 
+						console.log(err);
 						return res.json({errors : [err.message]});
 					 }
 					return res.json("Forecast cleared");
@@ -273,25 +302,27 @@ exports.add_custom_answer = (req,res,next) => {
 	User.findById(userId)
 	.exec( function(err, found_user) {
 		if(err) {
+			console.log(err);
 			return res.json({errors : [err.message]});
 		}
 		if(found_user) {
-			if(found_user.custom_answers[option]){
+			if(found_user.custom_answers && found_user.custom_answers[option]){
 				const answers = found_user.custom_answers[option].map((answer) => answer.toLowerCase());
 				if(!answers.includes(value.toLowerCase())){
 					found_user.custom_answers[option].push(value);
 					found_user.save(function(err) {
 						if (err) { 
-									return res.json({errors : [err.message]});
-								}
-								return res.json("Answer saved");
+							console.log(err);
+							return res.json({errors : [err.message]});
+							}
+							return res.json("Answer saved");
 					} )
 				} else {
 					return res.json("Answer already in database");
 				}
 			}
 		} else {
-			res.status(404);
+			res.status(401);
 			res.send('This user does not exist');
 			return;
 		}
@@ -303,6 +334,7 @@ exports.get_custom_answers = (req,res,next) => {
 	User.findById(userId, 'custom_answers _id')
 	.exec( function(err, found_user) {
 		if(err) {
+			console.log(err);
 			return res.json({errors : [err.message]});
 		}
 		if(found_user) {
@@ -315,7 +347,7 @@ exports.get_custom_answers = (req,res,next) => {
 				return;
 			}
 		} else {
-			res.status(404);
+			res.status(401);
 			res.send('This user does not exist');
 			return;
 		}
