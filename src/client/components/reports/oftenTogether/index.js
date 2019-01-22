@@ -67,8 +67,8 @@ class OftenTogether extends Component {
   }
 
   getWeather(){
-    const weather = this.state.data.weather;
-    if(weather) {
+    if(this.state.data.weather) {
+      const weather = this.state.data.weather;
       let answers = [];
       if(weather.pressure && weather.pressure.length !== 0){
         weather.pressure.forEach((value) => {
@@ -90,7 +90,7 @@ class OftenTogether extends Component {
           answers.push(value)
         })
       }
-    return answers;
+      return answers;
     }
   }
 

@@ -195,35 +195,47 @@ class RecordForm extends Component {
     })
   }
 
+  // handleChangeStartDate(evt) {
+  //   const {data} = this.state;
+  //   const { name, value, type } = evt.target;
+  //   if(name === "start_time"){
+
+  //   }
+  // }
+
+  // handleChangeEndDate(evt) {
+
+  // }
+
   handleChangeTabValue(evt) {
     const { data } = this.state;
     const { name, value, type } = evt.target;
     let result;
-      if (type === 'checkbox') {
-        result = data[name] || [];
-        const shouldUncheck = result.indexOf(value);
+    if (type === 'checkbox') {
+      result = data[name] || [];
+      const shouldUncheck = result.indexOf(value);
 
-        if (shouldUncheck >= 0) {
-          result.splice(shouldUncheck, 1);
-        } else {
-          result = [
-            ...result,
-            value,
-          ];
-        }
+      if (shouldUncheck >= 0) {
+        result.splice(shouldUncheck, 1);
       } else {
-        result = value;
+        result = [
+          ...result,
+          value,
+        ];
       }
+    } else {
+      result = value;
+    }
 
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          data: {
-            ...prevState.data,
-            [name]: result,
-          }
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        data: {
+          ...prevState.data,
+          [name]: result,
         }
-      })
+      }
+    })
   }
 
   changeTab(direction) {
@@ -343,7 +355,7 @@ class RecordForm extends Component {
         return (
           <div className="record-tab" key={id+4}>
             <field.component 
-              customAnswers = {customAnswers[field.name]}
+              customAnswers = {customAnswers[field.name] ? customAnswers[field.name] : []}
               values={data[field.name]} 
               valueData={data[field.name]} 
               onChange={this.handleChangeTabValue} />

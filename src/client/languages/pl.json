@@ -351,7 +351,7 @@
 		"resetPassword": "Zresetuj hasło",
 		"reset": "Resetuj",
 		"password": "Hasło",
-		"emailNotFound": "Nie znaleziono adresu email",
+		"emailNotFound": "Niepoprawny token lub ważność tokenu wygasła",
 		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę."
 	},
 	"pdfGeneration": {

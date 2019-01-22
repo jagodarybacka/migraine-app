@@ -100,7 +100,9 @@ class Summary extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {notes: props.location.state.data.notes || ''};
+    this.state = {
+      notes: props.location.state.data.notes || '',
+      submitButtonDisabled: false };
     this.submit = this.submit.bind(this);
     this.handleChangeNotes = this.handleChangeNotes.bind(this);
   }
@@ -120,19 +122,25 @@ class Summary extends Component {
   }
 
   submit() {
-    let { data, id } = this.props.location.state;
-    data = { ...data, notes: this.state.notes }
+    this.setState((prevState) => ({
+      ...prevState,
+      submitButtonDisabled: true
+    }), () => {
+      this.props.history.push('/home');
+      let { data, id } = this.props.location.state;
+      data = { ...data, notes: this.state.notes }
 
-    const { match } = this.props
-    let method = 'POST'
-    let url = "/api/reports/";
-    if (match.params.edit) {
-      method = 'PUT'
-      url += `${id}/`
-    }
-    return axios({ method, data, url })
-      .then(() => this.props.history.push('/home'))
-      .catch((err) => console.log(err))
+      const { match } = this.props
+      let method = 'POST'
+      let url = "/api/reports/";
+      if (match.params.edit) {
+        method = 'PUT'
+        url += `${id}/`
+      }
+      return axios({ method, data, url })
+        .then((res) => console.log("Done"))
+        .catch((err) => console.log(err))
+    })
   }
 
   getTranslatedValue(toTranslate, type){
@@ -268,7 +276,7 @@ class Summary extends Component {
 
           { !preview && [
           <Divider text={languageText.addForm.acceptRaport} />,
-          <AcceptButton key="accept_button" onClick={this.submit} />
+          <AcceptButton key="accept_button" onClick={() => this.submit()} disabled={this.state.submitButtonDisabled} />
           ]}
         </SummaryComponent>
       );
