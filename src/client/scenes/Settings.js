@@ -120,6 +120,9 @@ const MenuButton = styled.li`
     width: 30px;
     heigth: 30px;
   }
+  &.selected {
+    opacity: 1;
+  }
 `
 
 
@@ -425,10 +428,10 @@ class Settings extends Component {
   }
 
   render() {
-    const customAnswer = this.state.ifCustomAnswer 
-      ? (<CustomAnswer answerType={this.state.answerType} current={this.state.current} onConfirmFn={this.handleCustomAnswer.bind(this)}/>) 
+    const customAnswer = this.state.ifCustomAnswer
+      ? (<CustomAnswer answerType={this.state.answerType} current={this.state.current} onConfirmFn={this.handleCustomAnswer.bind(this)}/>)
       : '';
-    
+
     const { username, email, oldPassword, password } = this.state.fields;
     const fields = languageText.settings.formFieldsOptions;
     const answers = languageText.settings.customAnswers.map((answer) => {
@@ -441,8 +444,8 @@ class Settings extends Component {
       )
     })
 
-    const answersList = this.state.ifCustomAnswer 
-      ? languageText.addForm[this.state.answerType + `Answers`].concat(this.state.customAnswers[this.state.answerType]) 
+    const answersList = this.state.ifCustomAnswer
+      ? languageText.addForm[this.state.answerType + `Answers`].concat(this.state.customAnswers[this.state.answerType])
       : [];
 
     const Answers = answersList.length > 0 ? (
@@ -453,7 +456,7 @@ class Settings extends Component {
 
     let currentLang = getLanguage();
 
-    const CurrentSettings = this.state.currentTab === "form" 
+    const CurrentSettings = this.state.currentTab === "form"
     ? (
       <SettingsCard>
         <Divider text={languageText.settings.exportData}/>
@@ -478,13 +481,13 @@ class Settings extends Component {
           {
             answers.map((option, index) => (
               <div key={index}>
-              <Button 
+              <Button
               key={index}
               small
               onClick={() => this.addAnswer(option)}
-              primary={this.state.answerType ===option.field} 
-              img= {option.field === 'localization' 
-                ? localizationIcon 
+              primary={this.state.answerType ===option.field}
+              img= {option.field === 'localization'
+                ? localizationIcon
                 : option.field === "aura"
                   ? auraIcon
                   : option.field === "medicines"
@@ -497,14 +500,14 @@ class Settings extends Component {
             ))
           }
         </Buttons>
-        { this.state.ifCustomAnswer ? 
+        { this.state.ifCustomAnswer ?
           (<List>
             { Answers }
           </List>) : "" }
         { customAnswer }
       </SettingsCard>
-    ) 
-    : this.state.currentTab === "app" 
+    )
+    : this.state.currentTab === "app"
       ? (
         <SettingsCard>
           <Divider text={languageText.settings.chooseLanguage}/>
@@ -513,8 +516,8 @@ class Settings extends Component {
           <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
           </LanguageButtons>
         </SettingsCard>
-      ) 
-      : this.state.currentTab === "user" 
+      )
+      : this.state.currentTab === "user"
         ? (
           <SettingsCard>
             <Divider text={languageText.settings.logout}/>
@@ -572,21 +575,21 @@ class Settings extends Component {
           <Header />
           { CurrentSettings }
           <Menu>
-            <MenuButton onClick={() => this.handleChangeTab("form")}>
+            <MenuButton className={this.state.currentTab === 'form' && 'selected'} onClick={() => this.handleChangeTab("form")}>
               <img src={form} alt="form" />
               <h6>{languageText.settings.formCard}</h6>
             </MenuButton>
-            <MenuButton onClick={() => this.handleChangeTab("app")}>
+            <MenuButton className={this.state.currentTab === 'app' && 'selected'} onClick={() => this.handleChangeTab("app")}>
               <img src={app} alt="app" />
               <h6>{languageText.settings.appCard}</h6>
             </MenuButton>
-            <MenuButton onClick={() => this.handleChangeTab("user")}>
+            <MenuButton className={this.state.currentTab === 'user' && 'selected'} onClick={() => this.handleChangeTab("user")}>
               <img src={user} alt="user" />
               <h6>{languageText.settings.userCard}</h6>
             </MenuButton>
           </Menu>
           <Menubar />
-      </SettingsComponent> 
+      </SettingsComponent>
 
     );
   }
