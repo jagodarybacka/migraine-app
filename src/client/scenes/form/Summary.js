@@ -264,7 +264,7 @@ class Summary extends Component {
           { this.getUserFormField('localization') && localization }
 
           <Divider text={languageText.addForm.notes} />
-          <textarea key={"notes"} readOnly={preview} value={this.state.notes} onChange={this.handleChangeNotes} type="text"  placeholder={languageText.addForm.notesPlaceholder} />
+          <textarea key={"notes"} readOnly={preview} value={this.state.notes} onChange={this.handleChangeNotes} type="text" maxLength="1000" placeholder={languageText.addForm.notesPlaceholder} />
 
           { !preview && [
           <Divider text={languageText.addForm.acceptRaport} />,

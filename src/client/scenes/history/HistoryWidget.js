@@ -7,11 +7,11 @@ import RecordCard from '../../components/RecordCard'
 import {languageText} from '../../languages/MultiLanguage.js';
 
 const Widget = styled.section`
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   position: relative;
-  margin: 0 10%;
+  margin: 0 5%;
   text-align: initial;
 
   h3 {
@@ -24,7 +24,9 @@ const Widget = styled.section`
     margin: 1rem;
     align-self: flex-end;
     font-weight: 300;
-
+  }
+  .RecordCard {
+    margin: 0;
   }
 
 
@@ -52,7 +54,7 @@ class HistoryWidget extends Component {
     }
     if(duration.minutes() > 0){
       if(duration.days() === 0){
-        text+=duration.minutes() + "min";
+        text+=duration.minutes() + "m";
       }
     }
     return text;
