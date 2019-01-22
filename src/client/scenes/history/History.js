@@ -68,6 +68,7 @@ class History extends Component {
       rawData: [],
       localizations: {}, 
       intensity: {},
+      data: []
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -83,7 +84,7 @@ class History extends Component {
   componentDidMount() {
     axios.get('/api/reports')
       .then(({ data }) => {
-        this.parseHistory(data);
+        this.setState({ data });
       })
       .catch((err) => console.log(err));
 
@@ -132,9 +133,10 @@ class History extends Component {
 
   }
 
-  parseHistory(data) {
+  parseHistory() {
     let history = {};
     let order = [];
+    let data = this.state.data;
 
     if (data.length) {
       data.forEach((item) => {
@@ -153,17 +155,30 @@ class History extends Component {
         return objB - objA;
       });
     }
+    const localizations = this.state.localizations;
+    console.log(localizations)
+    const keyLocalizations = Object.keys(localizations)
+    const filterLocalizations = keyLocalizations.filter( keyLocalizations => localizations[keyLocalizations] === true)
+    console.log(filterLocalizations)
 
-    this.setState({ history, order, rawData: data },
-      () => {
-        const results = filter(this.state.rawData, 
-          {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
-          // {pain:"Mild"});
-          //{localization:["Outside","Work"],triggers:"Sport"});
-          {localization:["Outside","Work"]});
-          // {localization:"Outside",triggers:["Sport","Stress"]});
-        console.log(results);
-      });
+    const result = filter(data, null, { localizations: filterLocalizations })
+    console.log(result)
+
+
+    //this.setState({ order }
+    //this.setState({ order, rawData: data }
+      // () => {
+      //   const results = filter(this.state.rawData, 
+      //     {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
+      //     // {pain:"Mild"});
+      //     //{localization:["Outside","Work"],triggers:"Sport"});
+      //     {localization:["Outside","Work"]});
+      //     // {localization:"Outside",triggers:["Sport","Stress"]});
+      //   console.log(results);
+      // }
+     // );
+      
+  return {history, order}
   }
 
 
@@ -200,8 +215,9 @@ class History extends Component {
   }
 
   render() {
-    const { history, order } = this.state;
 
+    const { history, order } = this.parseHistory() 
+    
     return (
       <HistoryComponent >
         <Header />
