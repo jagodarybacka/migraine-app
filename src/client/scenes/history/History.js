@@ -10,9 +10,9 @@ import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
-import Select from '../../components/Select'
-
 import {languageText} from '../../languages/MultiLanguage.js';
+import Checkbox from '../../components/Checkbox';
+import customImg from '../../assets/custom-options.png'
 
 const HistoryComponent = styled.section`
   display: block;
@@ -24,7 +24,17 @@ const HistoryComponent = styled.section`
     margin: 0 0 2rem 0;
     text-align: center;
   }
+  h3 {
+    margin-left: 1rem;
+  }
 
+`
+const CustomIcon = styled.img`
+  width: 40px;
+  height: auto;
+  right: 1rem;
+  position: absolute;
+  margin-top: 2rem;
 `
 
 const Records = styled.ul`
@@ -53,8 +63,8 @@ class History extends Component {
       history: {},
       order: [],
       rawData: [],
-      localization: [],
-      pain: []
+      localizations: {}, 
+      intensity: {}
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -63,6 +73,7 @@ class History extends Component {
     this.parseHistory = this.parseHistory.bind(this);
     this.formatDuration = this.formatDuration.bind(this);
     this.handleChangeFilter = this.handleChangeFilter.bind(this);
+    this.handleChangeFilter2 = this.handleChangeFilter2.bind(this);
 
   }
 
@@ -132,7 +143,7 @@ class History extends Component {
     this.setState({ history, order, rawData: data },
       () => {
         const results = filter(this.state.rawData, 
-          {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
+          //{start: new Date('2019-01-01'), end: new Date('2019-02-01')},
           // {pain:"Mild"});
           {localization:["Outside","Work"],triggers:"Sport"});
           // {localization:["Outside","Work"]});
@@ -141,9 +152,21 @@ class History extends Component {
       });
   }
 
-  handleChangeFilter = (name, event) => {
-    const values = [...event.target.options].filter(o => o.selected).map(o => o.value)
-    this.setState({ [name]: values })
+
+  handleChangeFilter(e) {
+  const item = e.target.name;
+  const isChecked = e.target.checked;
+  
+  this.setState(prevState => ({ 
+    localizations:{ ...prevState.localizations, [item]: isChecked }}))
+}
+
+  handleChangeFilter2(e) {
+    const item = e.target.name;
+    const isChecked = e.target.checked;
+    
+    this.setState(prevState => ({ 
+      intensity:{ ...prevState.intensity, [item]: isChecked }}))
   }
 
   formatDuration(duration) {
@@ -165,39 +188,67 @@ class History extends Component {
   render() {
     const { history, order } = this.state;
     const fieldsLocalization = [{
-      value: 'home', label: 'Home' 
+      name: 'home', label: 'Home'
     },{
-      value: 'outside', label: 'Outside' 
+      name: 'outside', label: 'Outside' 
     },{
-      value: 'transit', label: 'Transit'
+      name: 'transit', label: 'Transit'
     }, {
-      value: 'work', label: 'Work'
+      name: 'work', label: 'Work'
     }, {
-      value: 'bed', label: 'Bed'
+      name: 'bed', label: 'Bed'
     },{
-      value: 'school', label: 'School'
+      name: 'school', label: 'School'
     }]
 
     const fieldsPain = [{
-      value: 'noPain', label: 'No Pain' 
+      name: 'noPain', label: 'No Pain' 
     },{
-      value: 'mild', label: 'Mild' 
+      name: 'mild', label: 'Mild' 
     },{
-      value: 'moderate', label: 'Moderate'
+      name: 'moderate', label: 'Moderate'
     }, {
-      value: 'intense', label: 'Intense'
+      name: 'intense', label: 'Intense'
     }, {
-      value: 'maximum', label: 'Maximum'
+      name: 'maximum', label: 'Maximum'
     }]
-    
+
     return (
       <HistoryComponent >
         <Header />
-        <h2>{languageText.history.title}</h2>
+        <h2>{languageText.history.title}
+        {/* <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> */}
+        </h2>
         <div style={{ width: '100%' }}>
-        {/* <h3>localization</h3> */}
-        <Select
-          name="localization"
+        <h3>Localization</h3>
+         <div>
+          {
+            fieldsLocalization.map((field) => (
+              <Checkbox
+                key={field.name}
+                small
+                text={field.label}
+                name={field.name}
+                onChange={this.handleChangeFilter}
+              />
+            ))
+          }
+          </div>
+          <h3>Pain intensity</h3>
+          <div>
+          {
+            fieldsPain.map((field) => (
+              <Checkbox
+              key={field.value}
+              small
+              text={field.label}
+              name={field.name}
+              onChange={this.handleChangeFilter2}
+              />
+            ))
+          }
+        </div>
+        {/* <Select
           multiple={false}
           options={fieldsLocalization}
           onChange={this.handleChangeFilter}
@@ -209,7 +260,7 @@ class History extends Component {
           options={fieldsPain}
           onChange={this.handleChangeFilter}
           value={this.state.pain}>
-        </Select>
+        </Select> */}
 
           <Records>
             {!!order.length && order.map((chunk) => {
