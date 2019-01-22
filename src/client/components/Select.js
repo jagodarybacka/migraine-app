@@ -23,7 +23,7 @@ const Select = props =>{
     )
   })
   return(
-    <Select2 multiple={props.multiple}> 
+    <Select2 multiple={props.multiple} onChange={(event)=> props.onChange(props.name, event) }> 
     {options}
     </Select2>
   )

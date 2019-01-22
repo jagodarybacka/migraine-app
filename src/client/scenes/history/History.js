@@ -62,6 +62,7 @@ class History extends Component {
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
     this.formatDuration = this.formatDuration.bind(this);
+    this.handleChangeFilter = this.handleChangeFilter.bind(this);
 
   }
 
@@ -140,6 +141,11 @@ class History extends Component {
       });
   }
 
+  handleChangeFilter = (name, event) => {
+    const values = [...event.target.options].filter(o => o.selected).map(o => o.value)
+    this.setState({ [name]: values })
+  }
+
   formatDuration(duration) {
     let text = "";
     if(duration.days() > 0){
@@ -191,10 +197,18 @@ class History extends Component {
         <div style={{ width: '100%' }}>
         {/* <h3>localization</h3> */}
         <Select
+          name="localization"
           multiple={false}
           options={fieldsLocalization}
-          onChange={this.handleChange}
+          onChange={this.handleChangeFilter}
           value={this.state.localization}>
+        </Select>
+        <Select
+          name="pain"
+          multiple={false}
+          options={fieldsPain}
+          onChange={this.handleChangeFilter}
+          value={this.state.pain}>
         </Select>
 
           <Records>
