@@ -52,52 +52,6 @@ const End = props => {
   )
 }
 
-const Menstruation = props => {
-  const answers = languageText.addForm.menstruationAnswers;//['Yes', 'Coming Soon', 'No']
-  return (
-    <SingleChoice
-      title={languageText.addForm.menstruation}
-      name="menstruation"
-      answers={answers}
-      onChange={props.onChange}
-      img={drop} imgColor={dropColor} color='#E91E63'
-      valueData={props.valueData}
-    />
-  );
-}
-
-const Localization = props => {
-  let answers = languageText.addForm.localizationAnswers;
-  if(props.customAnswers) {
-    answers = answers.concat(props.customAnswers) 
-  }
-  return (
-    <SingleChoice
-      title={languageText.addForm.localization}
-      name="localization"
-      answers={answers}
-      onChange={props.onChange}
-      img={localization} imgColor={localizationColor} color='#cddc39'
-      valueData={props.valueData}
-
-    />
-  );
-}
-
-const Mood = props => {
-  const answers = languageText.addForm.moodAnswers;
-  return (
-    <SingleChoice
-      title={languageText.addForm.mood}
-      name="mood"
-      answers={answers}
-      onChange={props.onChange}
-      img={faceSmile} imgColor={faceSmileColor} color='#ffc107'
-      valueData={props.valueData}
-    />
-  );
-}
-
 const Pain = props => {
   const answers =languageText.addForm.painAnswers;
   return (
@@ -146,6 +100,41 @@ const Triggers = props => {
   );
 }
 
+const Reliefs = props => {
+  let answers = languageText.addForm.reliefsAnswers;
+  if(props.customAnswers) {
+    answers = answers.concat(props.customAnswers) 
+  }
+  return (
+    <MultipleChoice
+      values={props.values}
+      title={languageText.addForm.reliefs}
+      name="reliefs"
+      answers={answers}
+      onChange={props.onChange}
+      img={questionmark} imgColor={questionmarkColor2} color='#4169E1'
+    />
+  )
+}
+
+const Localization = props => {
+  let answers = languageText.addForm.localizationAnswers;
+  if(props.customAnswers) {
+    answers = answers.concat(props.customAnswers) 
+  }
+  return (
+    <SingleChoice
+      title={languageText.addForm.localization}
+      name="localization"
+      answers={answers}
+      onChange={props.onChange}
+      img={localization} imgColor={localizationColor} color='#cddc39'
+      valueData={props.valueData}
+
+    />
+  );
+}
+
 const Aura = props => {
   let answers = languageText.addForm.auraAnswers;
   if(props.customAnswers) {
@@ -159,6 +148,34 @@ const Aura = props => {
       answers={answers}
       onChange={props.onChange}
       img={eye} imgColor={eyeColor} color='#67252e'
+    />
+  );
+}
+
+const Mood = props => {
+  const answers = languageText.addForm.moodAnswers;
+  return (
+    <SingleChoice
+      title={languageText.addForm.mood}
+      name="mood"
+      answers={answers}
+      onChange={props.onChange}
+      img={faceSmile} imgColor={faceSmileColor} color='#ffc107'
+      valueData={props.valueData}
+    />
+  );
+}
+
+const Menstruation = props => {
+  const answers = languageText.addForm.menstruationAnswers;//['Yes', 'Coming Soon', 'No']
+  return (
+    <SingleChoice
+      title={languageText.addForm.menstruation}
+      name="menstruation"
+      answers={answers}
+      onChange={props.onChange}
+      img={drop} imgColor={dropColor} color='#E91E63'
+      valueData={props.valueData}
     />
   );
 }
@@ -189,35 +206,18 @@ const SleepDuration = props => {
   )
 }
 
-const Reliefs = props => {
-  let answers = languageText.addForm.reliefsAnswers;
-  if(props.customAnswers) {
-    answers = answers.concat(props.customAnswers) 
-  }
-  return (
-    <MultipleChoice
-      values={props.values}
-      title={languageText.addForm.reliefs}
-      name="reliefs"
-      answers={answers}
-      onChange={props.onChange}
-      img={questionmark} imgColor={questionmarkColor2} color='#4169E1'
-    />
-  )
-}
-
 
 export {
   Start,
   End,
-  Menstruation,
-  Localization,
-  Mood,
   Pain,
   Medicines,
   Triggers,
+  Reliefs,
+  Localization,
   Aura,
+  Mood,
+  Menstruation,
   Pressure,
-  SleepDuration,
-  Reliefs
+  SleepDuration
 }

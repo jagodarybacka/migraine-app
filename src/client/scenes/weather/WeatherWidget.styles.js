@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 export const Widget = styled.section`
+
 width: 90%;
 margin: 1rem 5% 0 5%;
 display: flex;
 flex-direction: column;
 position: relative;
-color: #363636;
-background-color: white;
+background-color: ${props=>props.theme.backgroundColorSecondary};
+color: ${props=>props.theme.fontColor};
 padding: 0;
 margin-bottom: 4rem;
 box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
@@ -81,8 +82,8 @@ justify-content: flex-start;
 align-items: center;
 align-content: stretch;
 position: relative;
-color: #363636;
-background-color: white;
+background-color: ${props=>props.theme.backgroundColorSecondary};
+color: ${props=>props.theme.buttonFontColor};
 padding: 0;
 padding-bottom: 2rem;
 margin-bottom: 4rem;
@@ -98,4 +99,5 @@ export const Input = styled.input`
   font-weight: 300;
   margin-top: 10px;
   margin-bottom: 30px;
+  color: ${props=>props.theme.fontColor};
 `;

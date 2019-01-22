@@ -72,4 +72,3 @@ const Date = (props) => {
 }
 
 export default withTheme(Date);
-

@@ -174,4 +174,4 @@ class Register extends Component {
 	}
 }
 
-export default withTheme(Register)
+export default withTheme(Register);

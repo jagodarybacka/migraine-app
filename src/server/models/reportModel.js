@@ -47,7 +47,7 @@ pressure: {
     type: String,
 },
 medicines: [{
-    type: Object,
+    type: String,
 }],
 triggers: [{
     type: String,
@@ -56,7 +56,7 @@ notes: {
     type: String,
 },
 reliefs: [{
-    type: Object,
+    type: String,
 }],
 weather: {
     type: Object

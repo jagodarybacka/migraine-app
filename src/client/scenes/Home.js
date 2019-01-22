@@ -10,7 +10,7 @@ import Button from '../components/Button'
 import HistoryWidget from './history/HistoryWidget'
 import WeatherWidget from './weather/WeatherWidget'
 import {languageText} from '../languages/MultiLanguage.js';
-import {setTheme, getUserTheme} from '../themes/ThemeHandler.js';
+import {setTheme, getAutomaticThemeStatus} from '../themes/ThemeHandler.js';
 
 const HomeComponent = styled.div`
   justify-content: center;
@@ -36,11 +36,11 @@ class Home extends Component {
     axios.get('/api/recent')
       .then(({ data }) => {
 
-        if(getUserTheme() == "LightTheme"){
+        if(getAutomaticThemeStatus() == true){
           if (this.checkIfCurrentMigraine(data))
-            setTheme("DarkTheme", true);
+            setTheme("DarkTheme");
           else
-            setTheme("LightTheme",true);
+            setTheme("LightTheme");
         }
 
         this.setState({ recentMigraine: data });

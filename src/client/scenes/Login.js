@@ -11,8 +11,8 @@ import TextInput from '../components/TextInput'
 import {languageText} from '../languages/MultiLanguage.js';
 
 const LoginContainer = styled.div`
-background-color: ${props=>props.theme.backgroundColor};
-color: ${props=>props.theme.fontColor};
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
 `
 
 class Login extends Component {

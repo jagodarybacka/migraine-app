@@ -1,66 +1,26 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import { withTheme } from "@callstack/react-theme-provider";
+import {Link} from "react-router-dom";
 import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
-import { generatePdf } from '../utils/pdfGeneration';
-import CustomAnswer from './CustomAnswer';
+
 import Header from '../components/Header';
 import Menubar from '../components/Menubar';
 import Button from '../components/Button';
 import Divider from '../components/Divider';
-import Checkbox from '../components/Checkbox';
-import localizationIcon from '../assets/localization.png'
-import medicinesIcon from '../assets/medicine.png'
-import questionmarkIcon from '../assets/questionmark.png'
-import auraIcon from '../assets/eye.png'
-
 import axios from 'axios';
 import TextInput from '../components/TextInput';
 import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
-import {currentTheme, setTheme, getTheme} from '../themes/ThemeHandler.js';
 
 const SettingsComponent = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 5rem 0.25em;
+  padding: 7rem 0;
   margin: 0;
   text-align: center;
   height: auto;
-  background-color:${props => props.theme.backgroundColor}
-  color:${props => props.theme.fontColor}
-`
 
-const Buttons = styled.div`
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-top: 10px;
-  h6 {
-    margin: 5px 0 0 0;
-    text-transform: uppercase;
-  }
-  img {
-    width: 30px;
-    heigth: 30px;
-  }
-`
-
-const List = styled.div`
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  margin: 2em 10%;
-  margin-bottom: 1em;
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-  flex-wrap: wrap;
-  justify-content: center;
-  color: black;
-  h4{
-    margin: 5px;
-    text-transform: uppercase;
-    font-weight: 300;
+  .chosenLang{
+    color: red;
   }
 `
 
@@ -93,23 +53,16 @@ class Settings extends Component {
           isValid: false,
           errorMsg: '',
         }
-      },
-      ifCustomAnswer: false,
-      answerType: '',
-      current: {},
-      customAnswers: {}
+      }
     }
     this.baseFieldsState = this.state.fields;
 
-    this.toggleUserFormField = this.toggleUserFormField.bind(this);
     this.clearFields = this.clearFields.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
-    this.addAnswer = this.addAnswer.bind(this);
-    this.getAnswers = this.getAnswers.bind(this);
-  }
+  }  
 
   logout(){
     localStorage.setItem('isLogged',false);
@@ -118,57 +71,24 @@ class Settings extends Component {
         isLogged: false
       }
     ))
+    console.log(this.state)
   }
 
   handleLogOut() {
     axios.get('/api/logout').then(res => {
+      console.log(this.state.message); 
       this.setState({message: res.data.message});
       this.logout();
       window.location = '/';
 		}).catch(err =>{
 			console.log(err);
-			this.setState({message: languageText.settings.failed});
+			this.setState({message: "Failed to log out!"});
 		});
   };
-
+  
   componentDidMount() {
-    window.scrollTo(0, 0);
-    this.getAnswers();
+    window.scrollTo(0, 0)
   };
-
-  getAnswers() {
-    axios.get('/api/users/answer')
-    .then((res) => {
-      if(res.status === 204){
-        console.log("No content");
-      } else {
-        const data = this.parseCustomAnswers(res.data);
-        this.setState((prevState) => ({
-          ...prevState,
-          customAnswers: data
-        }))
-     }
-    })
-    .catch((err) => {console.log(err);})
-  }
-
-  parseCustomAnswers(answers) {
-    for(var op in answers) {
-      if(answers[op].length > 0){
-        answers[op] = this.mapValues(answers[op]);
-      }
-    }
-    return answers;
-  }
-
-  mapValues(values) {
-    return values.map((value) => {
-      return {
-        text: value,
-        value: value
-      }
-    })
-  }
 
   componentWillMount(){
     const isLoggedIn = localStorage.getItem('isLogged');
@@ -177,6 +97,7 @@ class Settings extends Component {
         isLogged: isLoggedIn === 'true'
       }
     ))
+    console.log(this.state.isLogged)
   }
 
   handleChange(evt) {
@@ -215,11 +136,11 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { oldPassword, password } = fields;
+    const { username, email, oldPassword, password} = fields;
 
     if (!validatePassword(password.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'password', false, languageText.register.error8chars);
+      fields = this.changeValidation(fields, 'password', false, 'This field must be greater than 8 characters and contains at least one uppercase letter, one lowercase letter, one digit and one special symbol');
     } else {
       fields = this.changeValidation(fields, 'password', true);
     }
@@ -231,18 +152,18 @@ class Settings extends Component {
           password: password.value
         })
         .then(res => {
-          if(res.status === 404){
-            alert(languageText.settings.sthWentWrong);
+          if(res.status == 404){
+            alert('Something went wrong');
             return;
-          } else if(res.status === 204){
-            alert(languageText.settings.oldPasswordIncorrect);
+          } else if(res.status == 204){
+            alert("Old password incorrect");
             return;
           } else {
             if(res.data.errors) {
               alert(res.data.errors);
               return;
             }
-            alert(languageText.settings.passwordChanged);
+            alert('Password changed');
             this.clearFields();
           }
         })
@@ -255,18 +176,18 @@ class Settings extends Component {
     e.preventDefault();
     let isValid = true;
     let fields = this.state.fields;
-    const { username, email } = fields;
+    const { username, email, oldPassword, password} = fields;
 
     if (username.value.length > 0 && !validateLength(username.value, 4)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'username', false, languageText.register.error4chars);
+      fields = this.changeValidation(fields, 'username', false, 'This field must be greater than 4 characters');
     } else {
       fields = this.changeValidation(fields, 'username', true);
     }
 
     if (email.value.length && !validateEmail(email.value)) {
       isValid = false;
-      fields = this.changeValidation(fields, 'email', false, languageText.register.invalidEmail);
+      fields = this.changeValidation(fields, 'email', false, 'Invalid email address.');
     } else {
       fields = this.changeValidation(fields, 'email', true);
     }
@@ -278,15 +199,15 @@ class Settings extends Component {
           email: email.value
         })
         .then(res => {
-          if(res.status === 404){
-            alert(languageText.settings.sthWentWrong);
+          if(res.status == 404){
+            alert('Something went wrong');
             return;
           } else {
             if(res.data.errors) {
               alert(res.data.errors);
               return;
             }
-            alert(languageText.settings.dataChanged);
+            alert('User data changed');
             this.clearFields();
           }
         })
@@ -300,152 +221,13 @@ class Settings extends Component {
     window.location.reload();
   }
 
-  setNewTheme(theme) {
-    setTheme(theme, false);
-  }
-
-  toggleUserFormField(field) {
-    const old = this.getUserFormField(field)
-    localStorage.setItem(`form-${field}`, !old)
-    this.forceUpdate();
-  }
-
-  getUserFormField(field) {
-    return localStorage.getItem(`form-${field}`) === 'true' || localStorage.getItem(`form-${field}`) === null;
-  }
-
-  addAnswer(option){
-    this.setState((prevState) => ({
-      ...prevState,
-      ifCustomAnswer: false,
-      answerType: option.field,
-      current: option
-    }), () => {
-      this.setState((prevState) => ({
-        ...prevState,
-        ifCustomAnswer: true
-      }))
-    })
-  }
-
-  handleCustomAnswer(data,cancel){
-    if(data.answer && data.answerType){
-      const option = {option: data.answerType, value: data.answer};
-      axios.post('/api/users/answer',option)
-      .then((res) => {
-        console.log(res.data);
-        this.setState((prevState) => ({
-          ...prevState,
-          ifCustomAnswer: false,
-          answerType: ''
-        }), () => this.getAnswers())
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        ifCustomAnswer: false,
-        answerType: ''
-      }))
-    }
-  }
-
-  getPdf() {
-    axios.get("/api/pdf")
-    .then((res) => {
-        generatePdf(res.data);
-    })
-    .catch((err) => console.log(err))
-  }
-
   render() {
-    const customAnswer = this.state.ifCustomAnswer 
-      ? (<CustomAnswer answerType={this.state.answerType} current={this.state.current} onConfirmFn={this.handleCustomAnswer.bind(this)}/>) 
-      : '';
-    
     const { username, email, oldPassword, password } = this.state.fields;
-    const fields = languageText.settings.formFieldsOptions;
-    const answers = languageText.settings.customAnswers.map((answer) => {
-      return ({
-        field: answer.field,
-        text: answer.text,
-        placeholder: answer.placeholder,
-        src: answer.field + 'Icon'
-      }
-      )
-    })
-
-    const answersList = this.state.ifCustomAnswer 
-      ? languageText.addForm[this.state.answerType + `Answers`].concat(this.state.customAnswers[this.state.answerType]) 
-      : [];
-
-    const Answers = answersList.length > 0 ? (
-      answersList.map((answer, index) => (
-        <h4 key={index}>{answer.text}</h4>
-      ))
-    ) : '';
-
     let currentLang = getLanguage();
-    let currentTheme = getTheme();
     return (
-      <SettingsComponent theme={this.props.theme} className="Settings">
-          <Header />
-          <Divider text={languageText.settings.logout}/>
+      <SettingsComponent className="Settings">
+        <Header />
           <Button type="submit" onClick={this.handleLogOut} text={languageText.settings.logout} primary />
-          <Divider text={languageText.settings.chooseTheme}/>
-            <Button onClick={() => this.setNewTheme('DarkTheme')} text={languageText.settings.dark} primary={currentTheme == "DarkTheme" ? false : true} />
-            <Button onClick={() => this.setNewTheme('LightTheme')} text={languageText.settings.light} primary={currentTheme == "LightTheme" ? false : true} />
-          <Divider text={languageText.settings.formFields}/>
-          <div>
-          {
-            fields.map((field, index) => (
-              <Checkbox
-              key={index}
-              small
-              text={field.text}
-              value={field.text}
-              checked={this.getUserFormField(field.field)}
-              onChange={() => this.toggleUserFormField(field.field)}
-              />
-            ))
-          }
-          </div>
-          <Divider text={languageText.settings.setCustomAnswers}/>
-          <Buttons>
-            {
-              answers.map((option, index) => (
-                <div key={index}>
-                <Button 
-                key={index}
-                small
-                onClick={() => this.addAnswer(option)}
-                primary={this.state.answerType ===option.field} 
-                img= {option.field === 'localization' 
-                  ? localizationIcon 
-                  : option.field === "aura"
-                    ? auraIcon
-                    : option.field === "medicines"
-                      ? medicinesIcon
-                      : option.field === "triggers"
-                        ? questionmarkIcon
-                        : questionmarkIcon}/>
-                <h6>{option.text}</h6>
-                </div>
-              ))
-            }
-          </Buttons>
-          { this.state.ifCustomAnswer ? 
-            (<List>
-               { Answers }
-            </List>) : "" }
-          { customAnswer }
-          <Divider text={languageText.settings.exportData}/>
-            <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
-          <Divider text={languageText.settings.chooseLanguage}/>
-            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
-            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
           <Divider text={languageText.settings.changeData}/>
           <TextInput
             type="text"
@@ -490,12 +272,14 @@ class Settings extends Component {
             onChange={this.handleChange}
           />
           <Button type="submit" onClick={this.handlePasswordChange} small="true" text={languageText.settings.buttonText} primary />
+          <Divider text={languageText.settings.chooseLanguage}/>
+            <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang == "eng" ? true : false} />
+            <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang == "pl" ? true : false} />
         <Menubar />
-      </SettingsComponent> 
-
+      </SettingsComponent>
     );
   }
 }
 
 
-export default withTheme(Settings);
+export default Settings;

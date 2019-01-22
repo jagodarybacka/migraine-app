@@ -25,7 +25,6 @@ const Label = styled.label`
   text-transform: uppercase;
   left: 0;
   font-weight: 700;
-  color: ${props => (!props.isValid ? "red" : props.theme.fontColor)};
 `;
 
 const ErrorMsg = styled.span`
@@ -38,7 +37,7 @@ const Field = styled.div`
   margin-bottom: 30px;
 
   ${Label} {
-    color: ${props => (!props.isValid ? "red" : "black")};
+    color: ${props => (!props.isValid ? "red" : props.theme.fontColor)};
   }
 
   ${Input} {
@@ -98,4 +97,4 @@ TextInput.defaultProps = {
   isValid: true,
 }
 
-export default withTheme(TextInput)
+export default withTheme(TextInput);

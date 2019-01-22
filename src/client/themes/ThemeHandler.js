@@ -1,13 +1,19 @@
-export function setTheme(theme, automatic=false){
+export function setTheme(theme, force = false){
 
-    if(!automatic)
-        localStorage.setItem('userTheme', theme);
+    if(force)
+        localStorage.setItem('automaticTheme', false);
 
     let currentTheme = localStorage.getItem('theme');
-    if(currentTheme !== theme){
+    if(currentTheme !== theme || force){
         localStorage.setItem('theme', theme);
         window.location.reload();
     }
+}
+
+export function toggleAutomaticThemeStatus(){
+    let isAutomatic = getAutomaticThemeStatus();
+    localStorage.setItem('automaticTheme', !isAutomatic);
+    window.location.reload();
 }
 
 export function getUserTheme(){
@@ -16,6 +22,15 @@ export function getUserTheme(){
             return "LightTheme"
         }else{
             return theme;
+        }
+}
+
+export function getAutomaticThemeStatus(){
+    let isAutomatic = localStorage.getItem('automaticTheme');
+        if(isAutomatic == 'false'){
+            return false
+        }else{
+            return true;
         }
 }
 
@@ -30,6 +45,10 @@ export function getTheme(){
 }
 
 export let currentTheme =(()=>{
+
+    if(localStorage.getItem('automaticTheme') == null)
+        localStorage.setItem('automaticTheme', false);
+
     if(window.themeFile == undefined){
         let theme = localStorage.getItem('theme');
         if(theme == null){

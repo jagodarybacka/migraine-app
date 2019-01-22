@@ -108,7 +108,7 @@ function reportsContent(object, reports) {
         }
         if(report.pressure){
             const pressure = report.pressure + 'mmHG';
-            const text = [languageText.pdfGeneration.pressure,{text: pressure, bold: true}];
+            const text = [languageText.pdfGeneration.bloodPressure,{text: pressure, bold: true}];
             object.content.push({text: text});
         }
         if(report.sleep_duration){

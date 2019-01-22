@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { OftenTogetherComponent, Select, TogetherField, ErrorMessage, QuestionIcon } from './styles'
 import { withTheme } from "@callstack/react-theme-provider";
+import styled from 'styled-components';
 import {languageText} from '../../../languages/MultiLanguage.js'
 import questionImg from '../../../assets/questionmark-circle.png'
 import Help from '../../Help'
 import axios from 'axios';
 
+const SectionsContainer = styled.div`
+margin-bottom: 50px;
+overflow: auto;
+`
 class OftenTogether extends Component {
   constructor(props) {
     super(props)
@@ -165,7 +170,7 @@ class OftenTogether extends Component {
           {selectables}
         </Select>
         { error }
-        <div>{sections}</div>
+        <SectionsContainer>{sections}</SectionsContainer>
         { helpModal }
       </OftenTogetherComponent>
     )

@@ -15,6 +15,7 @@ exports.report_detail = function(req, res, next) {
     }
 	}, function(err, results) {
     if (err) { 
+        console.log(err);
         return res.json({errors : [err.message]});
     }
     res.json(results);
@@ -28,6 +29,7 @@ exports.reports_all = function(req,res,next) {
 	User.findById(userId, 'username _id email')
 	.exec(function(err,found_user){
 		if(err) {
+            console.log(err);
             return res.json({errors : [err.message]});
         }
 		if(found_user)
@@ -35,13 +37,14 @@ exports.reports_all = function(req,res,next) {
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
 				if(err) {
+                    console.log(err);
                     return res.json({errors : [err.message]});
                 }
                 res.json(found_reports);
                 return;
 			});
 		} else {
-            res.status(404);
+            res.status(401);
             res.send('This user does not exist');
             return;
         }
@@ -57,6 +60,7 @@ exports.reports_period = function(req,res,next) {
     Report.find({user: userId, start_date : { $gte: start}, end_date : { $lte: end } }, '_id start_date end_date pain')
     .exec(function(err,found_reports){
         if(err) {
+            console.log(err);
             return res.json({errors : [err.message]});
         }
         if(found_reports.length === 0){
@@ -77,6 +81,7 @@ exports.report_recent = function(req,res,next) {
 	User.findById(userId, 'username _id email')
 	.exec(function(err,found_user){
 		if(err) {
+            console.log(err);
             return res.json({errors : [err.message]});
         }
 		if(found_user)
@@ -84,6 +89,7 @@ exports.report_recent = function(req,res,next) {
 			Report.find({user: found_user._id}).sort({start_date: -1})
 			.exec(function(err,found_reports){
 				if(err) {
+                    console.log(err);
                     return res.json({errors : [err.message]});
                 }
                 if(found_reports.length === 0) {
@@ -96,7 +102,7 @@ exports.report_recent = function(req,res,next) {
                 }
 			});
 		} else {
-            res.status(404);
+            res.status(401);
             res.send('This user does not exist');
             return;
         }
@@ -133,7 +139,10 @@ exports.report_add = function(req, res,next) {
         weather: req.body.weather || {}
         });
     report.save(function (err,saved) {
-        if (err) { return next(err); }
+        if (err) { 
+            console.log(err);
+            return res.json({errors : [err.message]}); 
+        }
         return res.json(saved);
     });
    }
@@ -157,7 +166,8 @@ exports.report_add = function(req, res,next) {
          });
     report.save(function (err,saved) {
         if (err) { 
-            return res.json({errors : [err.message]});
+            console.log(err);
+            return res.json({errors : [err.message]}); 
          }
         return res.json(saved);
     });
@@ -169,10 +179,14 @@ exports.report_delete = function(req, res, next) {
     const id = mongoose.Types.ObjectId(req.params.id.trim());
     Report.findById(id)
     .exec( function(err, found_report) {
-        if (err) { return next(err); }
+        if (err) {  
+            console.log(err);
+            return res.json({errors : [err.message]});  
+        }
 		Report.findByIdAndRemove(found_report._id, function deleteReport(err, delreport) {
                 if (err) {  
-                    return res.json({errors : [err.message]});
+                    console.log(err);
+                    return res.json({errors : [err.message]}); 
                 }
                 return res.json(delreport);
             });
@@ -190,7 +204,6 @@ exports.report_update = function(req, res, next) {
     let data ={
         $set: {
             user: userId,
-            //user: req.body.userId,
             start_time: req.body.start_time,
             start_date: start,
             menstruation: req.body.menstruation || undefined,
@@ -222,12 +235,14 @@ exports.report_update = function(req, res, next) {
     Report.findById(id)
     .exec( function(err, found_report) {
             if (err) { 
+                console.log(err);
                 return res.json({errors : [err.message]});
              }
             if (found_report) {
                 var report = new Report(data);
                 Report.findByIdAndUpdate(id, data, {'new': true}, function (err,mod_report) {
                     if (err) { 
+                        console.log(err);
                         return res.json({errors : [err.message]});
                     }
                     res.json(report);
@@ -256,6 +271,7 @@ exports.report_stats = function(req, res, next) {
     User.findById(userId, 'username _id email registration_date')
     .exec(function(err,found_user){
         if(err) {
+            console.log(err);
             return res.json({errors : [err.message]});
         }
         if(found_user)
@@ -264,6 +280,7 @@ exports.report_stats = function(req, res, next) {
                 Report.find({user: found_user._id, start_date : { $gte: endDate }}).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {
+                        console.log(err);
                         return res.json({errors : [err.message]});
                     }
                     if(found_reports.length === 0){
@@ -281,6 +298,7 @@ exports.report_stats = function(req, res, next) {
                 Report.find({user: found_user._id}).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {
+                        console.log(err);
                         return res.json({errors : [err.message]});
                     }
                     if(found_reports.length === 0){
@@ -313,6 +331,7 @@ exports.report_stats_custom = function(req, res, next) {
             Report.find({user: found_user._id, start_date : { $gte: start}, end_date : { $lte: end } }).sort({start_date: -1})
                 .exec(function(err,found_reports){
                     if(err) {
+                        console.log(err);
                         return res.json({errors : [err.message]});
                     }
                     if(found_reports.length === 0){
@@ -327,7 +346,7 @@ exports.report_stats_custom = function(req, res, next) {
                     }
                 });
         } else {
-            res.status(404);
+            res.status(401);
             res.send('This user does not exist');
             return;
         }
@@ -340,6 +359,7 @@ exports.reports_together = function(req, res, next) {
     Report.find({user: userId, pain: pain })
     .exec(function(err,found_reports){
         if(err) {
+            console.log(err);
             return res.json({errors : [err.message]});
         }
         if(found_reports && found_reports.length > 0) {
@@ -382,7 +402,7 @@ exports.pdf_data = function(req, res, next) {
             .exec(callback)
         },
         togetherNoPain: function(callback) {
-            Report.find({user: userId, pain: "No pain"})
+            Report.find({user: userId, pain: "No Pain"})
             .exec(callback)
         },
         togetherMild: function(callback) {
@@ -403,6 +423,7 @@ exports.pdf_data = function(req, res, next) {
         },
 	}, function(err, results) {
         if (err) { 
+            console.log(err);
             return res.json({errors : [err.message]});
         }
         const reports = results.reports.length > 0 ? results.reports : [];
@@ -411,10 +432,10 @@ exports.pdf_data = function(req, res, next) {
         const stats60 =  results.reports60.length > 0 ? tools.computeStats(results.reports60, "60", new Date()) : {};
         const statsYear =  results.reportsYear.length > 0 ? tools.computeStats(results.reportsYear, "365", new Date()) : {};
         const noPain =  results.togetherNoPain.length > 0 ? tools.getInformations(results.togetherNoPain) : {};
-        const mild = results.togetherMild ? tools.getInformations(results.togetherMild) : {};
-        const moderate =  results.togetherModerate ? tools.getInformations(results.togetherModerate) : {};
-        const intense =  results.togetherIntense ? tools.getInformations(results.togetherIntense) : {};
-        const maximum =  results.togetherMaximum ? tools.getInformations(results.togetherMaximum) : {};
+        const mild = results.togetherMild.length > 0? tools.getInformations(results.togetherMild) : {};
+        const moderate =  results.togetherModerate.length > 0 ? tools.getInformations(results.togetherModerate) : {};
+        const intense =  results.togetherIntense.length > 0 ? tools.getInformations(results.togetherIntense) : {};
+        const maximum =  results.togetherMaximum.length > 0 ? tools.getInformations(results.togetherMaximum) : {};
         res.json({
             "user": results.user,
             "reports": reports, 

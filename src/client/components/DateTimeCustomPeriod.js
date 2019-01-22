@@ -18,8 +18,8 @@ const TimeDateComponent = styled.div`
   border-radius: 20px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 
-  background-color:${props => props.theme.inputColor}
-  color:${props => props.theme.buttonFontColor}
+  background-color:${props => props.theme.backgroundColor}
+  color:${props => props.theme.fontColor}
 
   img {
     width: 24px;
@@ -32,7 +32,7 @@ const TimeDateComponent = styled.div`
     border-bottom: 1px solid #9e9e9e;
     margin: 0 0.5rem;
     align-text: center;
-    color:${props => props.theme.buttonFontColor}
+    color:${props => props.theme.fontColor}
   }
 
   label {

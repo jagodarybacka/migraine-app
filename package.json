@@ -14,7 +14,6 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "@callstack/react-theme-provider": "^1.0.7",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bcryptjs": "^2.4.3",
@@ -43,7 +42,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.2",
-    "react-swipeable-views": "^0.13.0",
+    "react-swipeable-views": "^0.13.1",
     "sendgrid": "^5.2.3",
     "styled-components": "^4.1.1"
   },

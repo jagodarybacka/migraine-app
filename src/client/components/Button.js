@@ -15,7 +15,7 @@ const ButtonComp = styled.button`
   border: none;
   border-radius: 7px;
   background-color: ${props => props.disabled ?
-    '#eee' : (
+    '#ddc' : (
       props.primary ?
       props.theme.buttonColor : props.theme.buttonColorSecondary
     )};

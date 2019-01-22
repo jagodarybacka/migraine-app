@@ -1,6 +1,8 @@
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import {withTheme } from "@callstack/react-theme-provider";
 import axios from 'axios';
+import styled from 'styled-components'
 
 import Welcome from '../../scenes/Welcome'
 import Join from '../../scenes/Join'
@@ -10,7 +12,7 @@ import ResetPassword from '../../scenes/ResetPassword'
 import Home from '../../scenes/Home'
 import RecordForm from '../../scenes/RecordForm'
 import Register from '../../scenes/Register'
-import Settings from '../../scenes/Settings'
+import Settings from '../../scenes/settings/Settings'
 import History from '../../scenes/history/History'
 import Summary from '../../scenes/form/Summary'
 import Reports from '../../scenes/Reports'
@@ -26,12 +28,18 @@ const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {
   );
 };
 
-const Mobile = () => {
+const AppComponent = styled.div`
+  background-color: ${props=>props.theme.backgroundColor};
+`
+
+const Mobile = (props) => {
+  document.body.style.backgroundColor = props.theme.backgroundColor; // style to body
+
   axios.defaults.withCredentials = true; // very important for session
   const isLogged = window.localStorage.getItem('isLogged') === 'true';
 
   return (
-    <div className="App">
+    <AppComponent theme={props.theme} className="App">
       <Router>
         <Switch>
           <Route exact path="/" component={Welcome}/>
@@ -49,8 +57,8 @@ const Mobile = () => {
           <PrivateRoute exact isLogged={isLogged} path="/reports" component={Reports} />
         </Switch>
       </Router>
-    </div>
+    </AppComponent>
   );
 }
 
-export default Mobile
+export default withTheme(Mobile);
