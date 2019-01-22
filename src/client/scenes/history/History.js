@@ -145,8 +145,8 @@ class History extends Component {
         const results = filter(this.state.rawData, 
           //{start: new Date('2019-01-01'), end: new Date('2019-02-01')},
           // {pain:"Mild"});
-          {localization:["Outside","Work"],triggers:"Sport"});
-          // {localization:["Outside","Work"]});
+          //{localization:["Outside","Work"],triggers:"Sport"});
+          {localization:["Outside","Work"]});
           // {localization:"Outside",triggers:["Sport","Stress"]});
         console.log(results);
       });
@@ -239,7 +239,7 @@ class History extends Component {
           {
             fieldsPain.map((field) => (
               <Checkbox
-              key={field.value}
+              key={field.name}
               small
               text={field.label}
               name={field.name}
@@ -248,19 +248,6 @@ class History extends Component {
             ))
           }
         </div>
-        {/* <Select
-          multiple={false}
-          options={fieldsLocalization}
-          onChange={this.handleChangeFilter}
-          value={this.state.localization}>
-        </Select>
-        <Select
-          name="pain"
-          multiple={false}
-          options={fieldsPain}
-          onChange={this.handleChangeFilter}
-          value={this.state.pain}>
-        </Select> */}
 
           <Records>
             {!!order.length && order.map((chunk) => {
@@ -306,7 +293,5 @@ class History extends Component {
     );
   }
 }
-
-Select.defaultProps = { multiple: false }
 
 export default withRouter(History);
