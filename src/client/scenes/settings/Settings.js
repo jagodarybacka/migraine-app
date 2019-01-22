@@ -1,130 +1,24 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
-import { validatePassword, validateLength, validateEmail } from '../utils/Validators';
-import { generatePdf } from '../utils/pdfGeneration';
+import { validatePassword, validateLength, validateEmail } from '../../utils/Validators';
+import { generatePdf } from '../../utils/pdfGeneration';
 import CustomAnswer from './CustomAnswer';
-import Header from '../components/Header';
-import Menubar from '../components/Menubar';
-import Button from '../components/Button';
-import Divider from '../components/Divider';
-import Checkbox from '../components/Checkbox';
-import localizationIcon from '../assets/localization.png'
-import medicinesIcon from '../assets/medicine.png'
-import questionmarkIcon from '../assets/questionmark.png'
-import auraIcon from '../assets/eye.png'
-import user from '../assets/user-male.png'
-import form from '../assets/form.png'
-import app from '../assets/app.png'
-
+import Header from '../../components/Header';
+import Menubar from '../../components/Menubar';
+import Button from '../../components/Button';
+import Divider from '../../components/Divider';
+import Checkbox from '../../components/Checkbox';
+import localizationIcon from '../../assets/localization.png'
+import medicinesIcon from '../../assets/medicine.png'
+import questionmarkIcon from '../../assets/questionmark.png'
+import auraIcon from '../../assets/eye.png'
+import user from '../../assets/user-male.png'
+import form from '../../assets/form.png'
+import app from '../../assets/app.png'
+import {languageText, setLanguage, getLanguage} from '../../languages/MultiLanguage.js';
 import axios from 'axios';
-import TextInput from '../components/TextInput';
-import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage.js';
-
-const SettingsComponent = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  padding: 8.25rem 0.25em;
-  padding-bottom: 5em;
-  margin: 0;
-  text-align: center;
-  height: auto;
-
-  .chosenLang{
-    color: red;
-  }
-`
-
-const SettingsCard = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const Buttons = styled.div`
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-top: 10px;
-  h6 {
-    margin: 5px 0 0 0;
-    text-transform: uppercase;
-  }
-  img {
-    width: 30px;
-    heigth: 30px;
-  }
-`
-
-const LanguageButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const List = styled.div`
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  margin: 2em 10%;
-  margin-bottom: 1em;
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-  flex-wrap: wrap;
-  justify-content: center;
-  h4{
-    margin: 5px;
-    text-transform: uppercase;
-    font-weight: 300;
-  }
-`
-
-const FormButtons = styled.div`
-width: 100%;
-display: flex;
-flex-wrap: wrap;
-flex-direction: row;
-justify-content: space-evenly;
-flex: 1;
-  label {
-    width: 6.5em;
-    height: 2.75em;
-  }
-`
-
-const Menu = styled.ul`
-  position: fixed;
-  top: 4.25em;
-  z-index: 1000;
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  background-color: #fff;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.12);
-`
-
-const MenuButton = styled.li`
-  margin: 0.5rem;
-  opacity: 0.6;
-  width: 6em;
-  h6 {
-    margin: 5px 0 0 0;
-    text-transform: uppercase;
-  }
-  img {
-    width: 30px;
-    heigth: 30px;
-  }
-  &.selected {
-    opacity: 1;
-  }
-`
-
+import TextInput from '../../components/TextInput';
+import { SettingsComponent, SettingsCard, Buttons, Error, 
+  LanguageButtons, List, FormButtons, Menu, MenuButton } from './styles';
 
 class Settings extends Component {
   constructor(props){
@@ -160,7 +54,8 @@ class Settings extends Component {
       answerType: '',
       current: {},
       customAnswers: {},
-      currentTab: "form"
+      currentTab: "form",
+      customAnswerError: ''
     }
     this.baseFieldsState = this.state.fields;
 
@@ -383,6 +278,7 @@ class Settings extends Component {
   addAnswer(option){
     this.setState((prevState) => ({
       ...prevState,
+      customAnswerError: "",
       ifCustomAnswer: false,
       answerType: option.field,
       current: option
@@ -396,26 +292,54 @@ class Settings extends Component {
 
   handleCustomAnswer(data,cancel){
     if(data.answer && data.answerType){
-      const option = {option: data.answerType, value: data.answer};
-      axios.post('/api/users/answer',option)
-      .then((res) => {
-        console.log(res.data);
+      if(!this.checkIfExist(data.answer, data.answerType)){
+        const option = {option: data.answerType, value: data.answer};
+        axios.post('/api/users/answer',option)
+        .then((res) => {
+          if(res.data.info){
+            this.setState((prevState) => ({
+              ...prevState,
+              customAnswerError: languageText.settings.customAnswerError
+            }))
+          } else {
+            this.setState((prevState) => ({
+              ...prevState,
+              customAnswerError: '',
+              ifCustomAnswer: false,
+              answerType: ''
+            }), () => this.getAnswers())
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+      } else {
         this.setState((prevState) => ({
           ...prevState,
-          ifCustomAnswer: false,
-          answerType: ''
-        }), () => this.getAnswers())
-      })
-      .catch((err) => {
-        console.log(err)
-      });
+          customAnswerError: languageText.settings.customAnswerError
+        }))
+      }
     } else {
       this.setState((prevState) => ({
         ...prevState,
+        customAnswerError: '',
         ifCustomAnswer: false,
         answerType: ''
       }))
+      
     }
+  }
+
+  checkIfExist(toTranslate, type) {
+    if(toTranslate === '')
+      return true;
+    let translationDict = languageText.addForm[type+"Answers"];
+    let foundPair = translationDict.find(f => f.value.toLowerCase() === toTranslate.toLowerCase() 
+      || f.text.toLowerCase() === toTranslate.toLowerCase());
+    if(foundPair !== undefined)
+      return true;
+    else
+      return false;
   }
 
   getPdf() {
@@ -459,6 +383,10 @@ class Settings extends Component {
         <h4 key={index}>{answer.text}</h4>
       ))
     ) : '';
+
+    const customError = this.state.customAnswerError.length > 0 
+      ? (<Error><h5>{this.state.customAnswerError}</h5></Error>)
+      : "";
 
     let currentLang = getLanguage();
 
@@ -506,10 +434,14 @@ class Settings extends Component {
             ))
           }
         </Buttons>
-        { this.state.ifCustomAnswer ?
-          (<List>
-            { Answers }
-          </List>) : "" }
+        { this.state.ifCustomAnswer 
+          ? (
+              <List>
+              { Answers }
+              </List>
+            ) 
+          : "" }
+        { this.state.ifCustomAnswer ? ( customError ) : "" }
         { customAnswer }
       </SettingsCard>
     )

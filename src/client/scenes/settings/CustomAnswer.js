@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
-import Button from '../components/Button'
-import ExitIcon from '../assets/exit.png'
-import {languageText} from '../languages/MultiLanguage.js';
+import Button from '../../components/Button'
+import ExitIcon from '../../assets/exit.png'
+import {languageText} from '../../languages/MultiLanguage.js';
 
 export const CustomAnswerComponent = styled.div`
   display: flex;

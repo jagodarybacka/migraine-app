@@ -22,6 +22,7 @@
 		"passwordChanged": "Hasło zostało zmienione",
 		"exportData": "Eksportuj dane do PDF",
 		"generatePdf": "Wygeneruj PDF",
+		"customAnswerError": "Odpowiedź już istnieje",
 		"formFieldsOptions": [
 			{"text":"Leki", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},

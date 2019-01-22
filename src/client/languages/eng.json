@@ -22,6 +22,7 @@
 		"passwordChanged": "Password changed",
 		"exportData": "Export data to PDF",
 		"generatePdf": "Generate PDF",
+		"customAnswerError": "Answer already exists",
 		"formFieldsOptions": [
 			{"text":"Medicines", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},
