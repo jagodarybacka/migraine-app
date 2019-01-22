@@ -23,8 +23,8 @@ import {languageText, setLanguage, getLanguage} from '../languages/MultiLanguage
 const SettingsComponent = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 4rem 0.25em;
-  padding-bottom: 9em;
+  padding: 8.25rem 0.25em;
+  padding-bottom: 5em;
   margin: 0;
   text-align: center;
   height: auto;
@@ -82,7 +82,8 @@ const List = styled.div`
 
 const Menu = styled.ul`
   position: fixed;
-  bottom: 4em;
+  top: 4.25em;
+  z-index: 1000;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -91,7 +92,7 @@ const Menu = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.12);
 `
 
 const MenuButton = styled.li`
