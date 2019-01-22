@@ -190,7 +190,7 @@ class Settings extends Component {
           password: password.value
         })
         .then(res => {
-          if(res.status === 404){
+          if(res.status === 401){
             alert(languageText.settings.sthWentWrong);
             return;
           } else if(res.status === 204){
@@ -237,7 +237,7 @@ class Settings extends Component {
           email: email.value
         })
         .then(res => {
-          if(res.status === 404){
+          if(res.status === 401){
             alert(languageText.settings.sthWentWrong);
             return;
           } else {
@@ -375,7 +375,7 @@ class Settings extends Component {
     })
 
     const answersList = this.state.ifCustomAnswer
-      ? languageText.addForm[this.state.answerType + `Answers`].concat(this.state.customAnswers[this.state.answerType])
+      ? languageText.addForm[this.state.answerType + `Answers`].concat(this.state.customAnswers[this.state.answerType] ? this.state.customAnswers[this.state.answerType] : [])
       : [];
 
     const Answers = answersList.length > 0 ? (

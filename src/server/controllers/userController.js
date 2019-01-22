@@ -137,8 +137,8 @@ exports.forgotten_password = (req, res, next) => {
 					return res.json({errors : [err.message]});
 				}
         if (!user) {
-					res.status(401);
-          return res.send('No account with that email address exists.');
+			res.status(401);
+          	return res.send('No account with that email address exists.');
         }
         user.resetPasswordToken = token;
 				user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
@@ -188,7 +188,7 @@ exports.reset_password = (req, res, next) => {
 				return res.json({errors : [err.message]});
 			}
 			if (!user) {
-				res.status(404);
+				res.status(401);
 				res.send('Reset token invalid or has expired');
 				return;
 			}
