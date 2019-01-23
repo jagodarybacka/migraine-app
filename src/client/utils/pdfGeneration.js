@@ -23,7 +23,11 @@ function createDocDefinition(data) {
         definition = togetherContent(definition, data.together);
     }
     if(data.stats) {
-        definition = statsContent(definition, data.stats, data.user);
+        if(data.reports.length > 0){
+            definition = statsContent(definition, data.stats, data.user, data.reports[data.reports.length-1]);
+        } else {
+            definition = statsContent(definition, data.stats, data.user, undefined);
+        } 
     }
     if(data.reports.length > 0) {
         if(data.together || data.stats) {
@@ -125,7 +129,7 @@ function reportsContent(object, reports) {
     return object;
 }
 
-function statsContent(object, stats, user) {
+function statsContent(object, stats, user, firstAttack) {
     const statsTitle = "\n" + languageText.reports.summary + "\n\n";
     object.content.push({text: statsTitle, style: 'header'})
     let table = {
@@ -141,9 +145,29 @@ function statsContent(object, stats, user) {
     for(let value in stats) {
         let row = [];
         if(value === "statsAll"){
-            const date = user.registration_date ? "(" + formatDate(user.registration_date) + ")" : "";
-            const header = languageText.pdfGeneration[value + 'Header'] + "\n" + date;
-            row.push(header);
+            if(user.registration_date) {
+                if(firstAttack && firstAttack.start_date){
+                    const attackDate = new Date(firstAttack.start_date);
+                    const registrationDate = new Date(user.registration_date);
+                    const header = attackDate.getTime() > registrationDate.getTime() 
+                        ? languageText.pdfGeneration[value + 'HeaderRegister'] + "\n(" + formatDate(registrationDate) + ")" 
+                        : languageText.pdfGeneration[value + 'HeaderAttack'] + "\n(" + formatDate(attackDate) + ")" ;
+                    row.push(header);
+                } else {
+                    const date = user.registration_date ? "(" + formatDate(user.registration_date) + ")" : "";
+                    const header = languageText.pdfGeneration[value + 'HeaderRegister'] + "\n" + date;
+                    row.push(header);
+                }
+            } else {
+                if(firstAttack && firstAttack.start_date){
+                    const date = "(" + formatDate(firstAttack.start_date) + ")";
+                    const header = languageText.pdfGeneration[value + 'HeaderAttack'] + "\n" + date;
+                    row.push(header);
+                } else {
+                    const header = languageText.pdfGeneration[value + 'HeaderNone'];
+                    row.push(header);
+                }
+            }  
         }
         else {
             const header = languageText.pdfGeneration[value + 'Header'];

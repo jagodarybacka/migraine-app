@@ -24,6 +24,7 @@ const Menu = styled.ul`
 const MenuButton = styled.li`
   margin: 0.5rem;
   opacity: 0.6;
+  width: 6em;
   a {
     display: flex;
     flex-direction: column;
@@ -38,24 +39,29 @@ const MenuButton = styled.li`
     width: 30px;
     heigth: 30px;
   }
+
+  &.selected {
+    opacity: 1;
+  }
 `
 
 const Menubar = () => {
+  const location = window.location.pathname;
   return (
     <Menu>
-      <MenuButton>
+      <MenuButton className={location === '/home' && 'selected'}>
         <Link to="/home">
         <img src={home} alt="home" />
         <h6>{languageText.menuBar.home}</h6>
         </Link>
       </MenuButton>
-      <MenuButton>
+      <MenuButton className={location === '/reports' && 'selected'}>
         <Link to="/reports">
         <img src={stats} alt="stats" />
         <h6>{languageText.menuBar.reports}</h6>
         </Link>
       </MenuButton>
-      <MenuButton>
+      <MenuButton className={location === '/settings' && 'selected'}>
         <Link to="/settings">
           <img src={settings} alt="settings" />
           <h6>{languageText.menuBar.settings}</h6>

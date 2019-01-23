@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
-import Button from '../components/Button'
-import ExitIcon from '../assets/exit.png'
-import {languageText} from '../languages/MultiLanguage.js';
+import Button from '../../components/Button'
+import ExitIcon from '../../assets/exit.png'
+import {languageText} from '../../languages/MultiLanguage.js';
 
 export const CustomAnswerComponent = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ export const CustomAnswerComponent = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: stretch;
-  width: 80%;
+  width: 100%;
   height: 80%;
   text-align: center;
   .custom__cancel {
@@ -41,7 +41,7 @@ class CustomAnswer extends Component {
     this.state = {
       answer: '',
       answerType: props.answerType,
-      valid: ''
+      valid: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,10 +61,10 @@ class CustomAnswer extends Component {
   }
 
   validate(state) {
-    if (!state.answer) {
+    if (!state.answer || (state.answer && state.answer.length === 0)) {
       this.setState({valid: false});
       return;
-    } else if (state.answer) {
+    } else if (state.answer && state.answer.length > 0) {
       this.setState({valid: true});
       return;
     }

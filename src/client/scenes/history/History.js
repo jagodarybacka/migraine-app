@@ -223,7 +223,7 @@ class History extends Component {
     }
     if(duration.minutes() > 0){
       if(duration.days() === 0){
-        text+=duration.minutes() + "min";
+        text+=duration.minutes() + "m";
       }
     }
     return text;

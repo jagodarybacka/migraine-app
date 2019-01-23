@@ -61,8 +61,8 @@ class ResetPassword extends Component {
                 password: passwordReset.value
             })
             .then(res => {
-                if(res.status === 404){
-                    console.log("404");
+                if(res.status === 401){
+                    console.log("401");
                     alert(languageText.resetPassword.emailNotFound);
                     return;
                 }

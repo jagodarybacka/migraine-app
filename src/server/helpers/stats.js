@@ -6,7 +6,6 @@ module.exports = {
         let pain = 0;
         let daysWithPain = 0;
         let firstAttack = reports[0].start_date;
-
         reports.forEach((report) => {
             if(report.end_date) {
                 if(report.start_date.getTime() < firstAttack.getTime()){
@@ -20,7 +19,7 @@ module.exports = {
         })
         const period = days !== "all" 
             ? days 
-            : user && user.registration_date 
+            : user && user.registration_date && new Date(user.registration_date).getTime() < firstAttack.getTime() 
                 ? Math.ceil((now.getTime() - new Date(user.registration_date).getTime())/(1000*60*60*24))
                 : Math.ceil((now.getTime() - firstAttack.getTime())/ (1000*60*60*24))
         const total = Math.round(pain / (60));

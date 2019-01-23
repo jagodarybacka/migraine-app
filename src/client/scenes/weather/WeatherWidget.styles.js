@@ -73,8 +73,8 @@ p {
 `
 
 export const City = styled.section`
-width: 80%;
-margin: 1rem 10% 0 10%;
+width: 90%;
+margin: 1rem 5% 0 5%;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
