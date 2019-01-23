@@ -27,9 +27,7 @@ const HistoryComponent = styled.section`
     margin: 0 0 2rem 0;
     text-align: center;
   }
-  h3 {
-    margin-left: 1rem;
-  }
+
   .date__header {
     text-align: center;
   }
