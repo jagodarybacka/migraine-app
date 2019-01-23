@@ -10,7 +10,7 @@ import Button from '../components/Button'
 import HistoryWidget from './history/HistoryWidget'
 import WeatherWidget from './weather/WeatherWidget'
 import {languageText} from '../languages/MultiLanguage.js';
-import {setTheme, getAutomaticThemeStatus} from '../themes/ThemeHandler.js';
+import {setTheme, getAutomaticThemeStatus,checkIfCurrentMigraine} from '../themes/ThemeHandler.js';
 
 const HomeComponent = styled.div`
   justify-content: center;
@@ -37,7 +37,7 @@ class Home extends Component {
       .then(({ data }) => {
 
         if(getAutomaticThemeStatus() == true){
-          if (this.checkIfCurrentMigraine(data))
+          if (checkIfCurrentMigraine(data))
             setTheme("DarkTheme");
           else
             setTheme("LightTheme");
@@ -48,14 +48,6 @@ class Home extends Component {
       .catch((err) => {
         console.log(err)
       });
-  }
-
-  checkIfCurrentMigraine(data){
-    if(data && (data['end_date'] == undefined || data['end_time'] == undefined)){
-      return true;
-    }else{
-      return false
-    }
   }
 
   render() {

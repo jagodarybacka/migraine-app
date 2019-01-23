@@ -8,7 +8,7 @@ import { withTheme } from "@callstack/react-theme-provider";
 const HelpComponent = styled(CustomPeriodComponent)`
   padding: 10px;
   box-sizing: border-box;
-  background: ${props=>props.theme.iconBackgroundColor};
+  background: ${props=>props.theme.backgroundColorSecondary};
 `
 
 const Help = (props) => {

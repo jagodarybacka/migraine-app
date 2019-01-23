@@ -52,7 +52,7 @@ const TimeDateComponent = styled.div`
   background-color: #fff;
   border-radius: 20px;
   color: ${props=>props.theme.fontColor};
-  background-color: ${props=>props.theme.iconBackgroundColor};
+  background-color: ${props=>props.theme.backgroundColorSecondary};
 
   img {
     width: 24px;
@@ -174,13 +174,13 @@ class Summary extends Component {
       const start_date = data.start_date && data.start_time ? (
         <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
       ) : (
-        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+        <TimeDateComponent theme={this.props.theme}>{languageText.addForm.notYet}</TimeDateComponent>
       );
 
       const end_date =  data.end_date && data.end_time  ? (
         <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />
       ) : (
-        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+        <TimeDateComponent theme={this.props.theme}>{languageText.addForm.notYet}</TimeDateComponent>
       );
 
       const pressure = data.pressure ? (

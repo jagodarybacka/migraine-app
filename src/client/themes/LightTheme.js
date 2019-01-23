@@ -1,6 +1,6 @@
 export const theme = {
     backgroundColor: "#FAF8F1",
-    backgroundColorSecondary: "#FAF8F1",
+    backgroundColorSecondary: "white",//"#FAF8F1",
     fontColor: "#212121", //// black
     inputColor: "#212121",
     buttonColor:"#006fd2",
