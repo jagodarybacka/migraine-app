@@ -7,10 +7,15 @@ import styled from 'styled-components';
 
 
 const CustomPeriodComponent = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
   button {
-    position: block;
-    display: flex;
-    margin-left: 1rem;
+    margin: auto;
+    padding: 10px;
+  }
+  div {
+    margin: 0.5em auto;
   }
 `
 

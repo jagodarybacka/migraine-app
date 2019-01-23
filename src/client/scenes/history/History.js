@@ -30,6 +30,9 @@ const HistoryComponent = styled.section`
   h3 {
     margin-left: 1rem;
   }
+  .date__header {
+    text-align: center;
+  }
 
 `
 const CustomIcon = styled.img`
@@ -315,7 +318,7 @@ class History extends Component {
 
     const filtersModal = this.state.filtersVisible ? (
       <div>
-      <h3>{languageText.dateTime.date}</h3>
+      <h3 className="date__header">{languageText.dateTime.date}</h3>
       <CustomPeriodHistory onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>
       { Checkboxes }
     </div>

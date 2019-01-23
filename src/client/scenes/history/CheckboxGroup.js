@@ -5,11 +5,17 @@ import languageText from '../../languages/MultiLanguage';
 
 const CheckboxGroupComponent = styled.div`
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    display: inline-block;
+    flex-direction: column;
+    display: flex;
     h3{
       text-transform: capitalize;
+      text-align: center;
+    }
+    .checkbox__group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 `
 
@@ -40,7 +46,9 @@ const CheckboxGroup = (props) => {
     return (
       <CheckboxGroupComponent>
         <h3>{props.title}</h3>
-        {items}
+        <div className="checkbox__group">
+          {items}
+        </div>
       </CheckboxGroupComponent>
     );
 }
