@@ -11,10 +11,10 @@ import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
-import Checkbox from '../../components/Checkbox';
-import customImg from '../../assets/custom-options.png'
+//import customImg from '../../assets/custom-options.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
+import CustomPeriodHistory from '../../components/CustomPeriodHistory';
 
 const HistoryComponent = styled.section`
   display: block;
@@ -31,13 +31,13 @@ const HistoryComponent = styled.section`
   }
 
 `
-const CustomIcon = styled.img`
-  width: 40px;
-  height: auto;
-  right: 1rem;
-  position: absolute;
-  margin-top: 2rem;
-`
+// const CustomIcon = styled.img`
+//   width: 40px;
+//   height: auto;
+//   right: 1rem;
+//   position: absolute;
+//   margin-top: 2rem;
+// `
 
 const Records = styled.ul`
     display:flex;
@@ -85,6 +85,8 @@ class History extends Component {
     this.getCustomAnswers = this.getCustomAnswers.bind(this);
     this.onFiltersChange = this.onFiltersChange.bind(this);
     this.makeQuery = this.makeQuery.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.filterData = this.filterData.bind(this);
   }
 
   componentDidMount() {
@@ -264,6 +266,10 @@ class History extends Component {
     return query;
   }
 
+  handleDateChange(name, value) {
+    this.setState(prevState => ({ dates: { ...prevState.dates, [name]: value }}))
+  }
+
   formatDuration(duration) {
     let text = "";
     if(duration.days() > 0){
@@ -283,7 +289,7 @@ class History extends Component {
   render() {
 
     const { history, order, checkboxData, filters } = this.state;
-    const fields = ['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
+    const fields =['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
     const Checkboxes = checkboxData ? fields.map((field,id) => {
       return(
         <CheckboxGroup 
@@ -291,7 +297,7 @@ class History extends Component {
           small
           answers={checkboxData[field] ? checkboxData[field] : []}
           values={filters[field]}
-          title={field}
+          title={languageText.addForm[field]}
           name={field}
           onChange={this.onFiltersChange}
           />
@@ -304,6 +310,8 @@ class History extends Component {
         {/* <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> */}
         </h2>
         <div style={{ width: '100%' }}>
+        <h3>Date</h3>
+        <CustomPeriodHistory onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}></CustomPeriodHistory>
         { Checkboxes }
         <Records>
           {!!order.length && order.map((chunk) => {

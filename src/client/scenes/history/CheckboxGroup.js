@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import Checkbox from '../../components/Checkbox';
 import styled from 'styled-components';
+import languageText from '../../languages/MultiLanguage';
 
 const CheckboxGroupComponent = styled.div`
     width: 100%;
-    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    display: inline-block;
+    h3{
+      text-transform: capitalize;
+    }
 `
 
 const CheckboxGroup = (props) => {
@@ -19,6 +23,7 @@ const CheckboxGroup = (props) => {
     const items = answers.map((answer, index) => {
       return (
         <Checkbox
+          title={languageText}
           small = {props.small}
           text={answer.text}
           key={index}
@@ -34,7 +39,7 @@ const CheckboxGroup = (props) => {
     })
     return (
       <CheckboxGroupComponent>
-        <h2>{props.title}</h2>
+        <h3>{props.title}</h3>
         {items}
       </CheckboxGroupComponent>
     );
