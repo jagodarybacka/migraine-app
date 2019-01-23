@@ -18,7 +18,7 @@ const TopHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   z-index: 1000000;
-  background-color: ${props=>props.theme.backgroundColorSecondary};
+  background-color: ${props=>props.theme.backgroundColor};
 
   .header-img {
     width: 33px;

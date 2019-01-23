@@ -80,7 +80,7 @@ export const QuestionIcon = styled(CustomIcon)`
 
 export const CustomPeriodComponent = styled.div`
   position: absolute;
-  background: ${props=>props.theme.iconBackgroundColor};
+  background: ${props=>props.theme.backgroundColorSecondary};
   width: 100%;
   height: 100%;
   text-align: center;
