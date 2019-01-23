@@ -35,16 +35,24 @@ const HistoryComponent = styled.section`
 
 `
 const CustomIcon = styled.img`
-  width: 40px;
+  width: 30px;
   height: auto;
   right: 1rem;
   position: absolute;
   margin-top: 2rem;
 `
 const ExitIcon = styled.img`
-  width: 20px;
+  width: 30px;
   height: auto;
   right: 1.2rem;
+  position: absolute;
+  margin-top: 2rem;
+`
+
+const ClearIcon = styled.img`
+  width: 25px;
+  height: auto;
+  left: 1.2rem;
   position: absolute;
   margin-top: 2rem;
 `
@@ -108,6 +116,8 @@ class History extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.filterData = this.filterData.bind(this);
     this.filterVisibleChange = this.filterVisibleChange.bind(this);
+    this.clearFilters = this.clearFilters.bind(this);
+    this.confirmDate = this.confirmDate.bind(this);
   }
 
   componentDidMount() {
@@ -273,6 +283,27 @@ class History extends Component {
     this.parseHistory(results);
   }
 
+  confirmDate() {
+    this.setState((prevState) => ({
+      ...prevState,
+      currentFilter: ''
+    }), () => this.filterData())
+  }
+
+  clearFilters() {
+    this.setState((prevState) => ({
+      ...prevState,
+      currentFilter: '',
+      filters: {},
+      dates: {
+        start: undefined,
+        end: undefined
+      },
+    }), () => {
+      this.parseHistory(this.state.rawData)
+    })
+  }
+
   makeQuery() {
     const {filters} = this.state;
     let query = {};
@@ -347,7 +378,7 @@ class History extends Component {
       <div>
       <Title className="date__header" onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
       { this.state.currentFilter === "date" && 
-        (<CustomPeriodHistory valueStart={this.state.dates.start} valueEnd={this.state.dates.end} onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>) }
+        (<CustomPeriodHistory valueStart={this.state.dates.start} valueEnd={this.state.dates.end} onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.confirmDate}/>) }
       { Checkboxes }
       </div>
     ) : ''
@@ -357,8 +388,12 @@ class History extends Component {
       <HistoryComponent >
         <Header />
         <h2>{languageText.history.title}
-        {this.state.filtersVisible === false ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/> :
-        <ExitIcon  src={exitIcon} onClick={() => this.setState({filtersVisible: false})}/>}
+        {this.state.filtersVisible === false 
+          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/> 
+          : <ExitIcon  src={collapseIcon} onClick={() => this.setState({filtersVisible: false})}/>}
+        {this.state.filtersVisible === true
+          ? (<ClearIcon src={exitIcon} alt="clear" onClick={this.clearFilters}/>) 
+          : ""}
         </h2>
         <div style={{ width: '100%' }}>
         {filtersModal}

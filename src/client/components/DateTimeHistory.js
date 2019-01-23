@@ -13,8 +13,8 @@ const TimeDateComponent = styled.div`
   padding: 1rem 1rem 1rem 1rem;
   border-radius: 20px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
-  margin-left: 0.5rem;
   margin: 1rem auto;
+  margin-top: 0;
   min-width: 200px;
 
   input {
