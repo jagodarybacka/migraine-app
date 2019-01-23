@@ -133,23 +133,36 @@ class History extends Component {
 
   }
 
+//   if filterLocalizations.length to filters = { localization: filterLocalizations }, i potem
+// if filterIntensity.length to filters = { ...filters, intensity: filterIntensity }
+// i na koniec data = filter(data, null, filters)
+
   parseHistory() {
     let history = {};
     let order = [];
     let data = this.state.data;
 
     const localizations = this.state.localizations;
-    console.log(localizations)
     const keyLocalizations = Object.keys(localizations)
+
+    const intensity = this.state.intensity;
+    const keyIntensity = Object.keys(intensity)
    
     const filterLocalizations = keyLocalizations.filter( key => localizations[key] === true)
+    const filterIntensity = keyIntensity.filter( key => intensity[key] === true)
+
+    var filters ={}
     if( filterLocalizations.length > 0){
-      console.log(filterLocalizations)
+      filters = { localization: filterLocalizations }
 
-      data = filter(data, null, { localization: filterLocalizations })
-      console.log(data)
+      if(filterIntensity.length > 0) {
+        filters = { ...filters, pain: filterIntensity }
+      }
     }
-
+    else if(filterIntensity.length > 0){
+      filters = { pain: filterIntensity }
+    }
+    data = filter(data, null, filters)
 
     if (data.length) {
       data.forEach((item) => {
