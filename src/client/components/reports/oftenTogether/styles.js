@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const OftenTogetherComponent = styled.div`
+  min-width: 300px;
   background: #fff;
   margin: 0 5%;
   padding: 1.5em 0;

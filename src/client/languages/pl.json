@@ -77,6 +77,12 @@
 		"settings": "ustawieniach aplikacji",
 		"customize": " możesz wybrać elementy wyświetlane w formularzu oraz dodać własne odpowiedzi."
 	},
+	"dateErrors": {
+		"invalidEndDate": "Data końcowa nie może być większa niż teraz",
+		"invalidStartDate": "Data początkowa nie może być większa niż teraz",
+		"invalidDatesEnd": "Data końcowa jest wcześniejsza od początkowej",
+		"invalidDatesStart": "Data początkowa jest późniejsza niż data końcowa"
+	},
 	"welcome":{
 		"migraine": "Migraine app",
 		"tapToStart": "Kliknij, aby rozpocząć..."

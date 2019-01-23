@@ -173,7 +173,6 @@ class WeatherWidget extends Component {
     ), () => {
       localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
       localStorage.setItem('weather_time', new Date());
-      localStorage.setItem('city_name', this.state.city_name.trim());
     })
   }
 
@@ -233,6 +232,7 @@ class WeatherWidget extends Component {
 
   async handleCityChange(e) {
     e.preventDefault();
+    localStorage.setItem('city_name', this.state.city_name.trim());
     this.checkIfGeolocation();
     this.checkIfGeolocationForecast();
   }
