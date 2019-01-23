@@ -68,6 +68,11 @@ const Container = styled.article`
   }
 `;
 
+const Error = styled.h4`
+  font-weight: 300;
+  color:  #ff471a; 
+`
+
 const Buttons = styled.div `
   display: flex;
   width: 90%;
@@ -133,7 +138,22 @@ class RecordForm extends Component {
         valid: true,
         err_msg: ""
       },
-      customAnswers: {}
+      customAnswers: {},
+      validDates: {
+        startDate: {
+          error: '',
+          valid: true
+        },
+        endDate: {
+          error: '',
+          valid: true,
+        },
+        endStart: {
+          error: '',
+          valid: true
+        }
+      },
+      correctDates: false
     };
 
     this.firstTab = 0;
@@ -145,6 +165,11 @@ class RecordForm extends Component {
     this.changeTab = this.changeTab.bind(this);
     this.handleChangeTabValue = this.handleChangeTabValue.bind(this);
     this.parseCustomAnswers = this.parseCustomAnswers.bind(this);
+    this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
+    this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
+    this.checkDate = this.checkDate.bind(this);
+    this.checkStartEnd = this.checkStartEnd.bind(this);
+    this.checkIfCorrectDates = this.checkIfCorrectDates.bind(this);
   }
 
   componentDidMount() {
@@ -159,7 +184,18 @@ class RecordForm extends Component {
         if(data.report.end_date){
           data.report.end_date = data.report.end_date.substr(0,10)
         }
-        this.setState({ data: data.report })
+        this.setState((prevState) => ({ 
+          data: data.report 
+        }), () => {
+          this.checkStartEnd();
+          if(this.state.data.start_date && this.state.data.start_time){
+            this.checkDate(this.state.data.start_time,this.state.data.start_date,"start")
+          }
+          if(this.state.data.end_date && this.state.data.end_time){
+            this.checkDate(this.state.data.end_time,this.state.data.end_date,"end")
+          }
+          this.checkIfCorrectDates();
+        })
       })
     }
     axios.get('/api/users/answer')
@@ -195,17 +231,174 @@ class RecordForm extends Component {
     })
   }
 
-  // handleChangeStartDate(evt) {
-  //   const {data} = this.state;
-  //   const { name, value, type } = evt.target;
-  //   if(name === "start_time"){
+  handleChangeStartDate(evt) {
+    const { data } = this.state;
+    const { name, value, type } = evt.target;
+    this.checkStartEnd();
+    this.setState((prevState) => ({
+        ...prevState,
+        data: {
+          ...prevState.data,
+          [name]: value,
+        }
+      }), () =>  this.checkStartEnd())
+    if(name === "start_time"){
+      if(data.start_date) {
+        this.checkDate(value,data.start_date,"start");
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+            validDates: {
+              ...prevState.validDates,
+              startDate: {
+                valid: true,
+                error: ''
+              }
+            }
+        }), () => this.checkIfCorrectDates())
+      }
+    } else {
+      if(data.start_time) {
+        this.checkDate(data.start_time,value,"start");
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+            validDates: {
+              ...prevState.validDates,
+              startDate: {
+                valid: true,
+                error: ''
+              }
+            }
+        }), () => this.checkIfCorrectDates())
+      }
+    }
+  }
 
-  //   }
-  // }
+  handleChangeEndDate(evt) {
+    const { data } = this.state;
+    const { name, value, type } = evt.target;
+    this.setState((prevState) => ({
+        ...prevState,
+        data: {
+          ...prevState.data,
+          [name]: value,
+        }
+      }), () =>  this.checkStartEnd())
+    if(name === "end_time"){
+      if(data.end_date) {
+        this.checkDate(value,data.end_date,"end");
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+            validDates: {
+              ...prevState.validDates,
+              endDate: {
+                valid: true,
+                error: ''
+              }
+            }
+        }), () => this.checkIfCorrectDates())
+      }
+    } else {
+      if(data.end_time) {
+        this.checkDate(data.end_time,value,"end");
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+            validDates: {
+              ...prevState.validDates,
+              endDate: {
+                valid: true,
+                error: ''
+              }
+            }
+        }), () => this.checkIfCorrectDates())
+      }
+    }
+  }
 
-  // handleChangeEndDate(evt) {
+  checkDate(value, date, type) {
+    const time = value.split(':');
+    const name = type + "Date";
+    const now = new Date();
+    const day = new Date(date);
+    const setDate = new Date(day.getFullYear(), day.getMonth(), day.getDate(), time[0], time[1]);
+    if(setDate.getTime() > now.getTime()){
+      this.setState((prevState) => ({
+        ...prevState,
+          validDates: {
+            ...prevState.validDates,
+            [name]: {
+              valid: false,
+              error: 'Date greater than now'
+            }
+          }
+      }), () => this.checkIfCorrectDates())
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+          validDates: {
+            ...prevState.validDates,
+            [name]: {
+              valid: true,
+              error: ''
+            }
+          }
+      }), () => this.checkIfCorrectDates())
+    }
+  }
 
-  // }
+  checkStartEnd() {
+    const { data } = this.state;
+    if(data.start_time && data.start_date && data.end_time && data.end_date) {
+      const startDate = new Date(data.start_date);
+      const startTime = data.start_time.split(":");
+      const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),startTime[0],startTime[1]);
+      const endDate = new Date(data.end_date);
+      const endTime = data.end_time.split(":");
+      const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(),endTime[0],endTime[1]);
+      if(start.getTime() > end.getTime()){
+        this.setState((prevState) => ({
+          ...prevState,
+            validDates: {
+              ...prevState.validDates,
+              endStart: {
+                valid: false,
+                error: 'Start date greater than end date'
+              }
+            }
+        }), () => this.checkIfCorrectDates())
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+            validDates: {
+              ...prevState.validDates,
+              endStart: {
+                valid: true,
+                error: ''
+              }
+            }
+        }), () => this.checkIfCorrectDates())
+      }
+    }
+  }
+
+  checkIfCorrectDates() {
+    const { data } = this.state;
+    if(!data.start_date || !data.start_time || (data.end_date && !data.end_time) || (!data.end_date && data.end_time)
+      || !this.state.validDates.startDate.valid || !this.state.validDates.endDate.valid || !this.state.validDates.endStart.valid){
+      this.setState((prevState) => ({
+        ...prevState,
+        correctDates: false
+      }))
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        correctDates: true
+      }))
+    }
+  }
 
   handleChangeTabValue(evt) {
     const { data } = this.state;
@@ -367,17 +560,22 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
+        <Header isForm isValid={ this.state.correctDates } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
+
           <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index)}>
             <div className="record-tab" key={0}>
               <Hello edit={this.edit} />
             </div>
             <div className="record-tab" key={1}>
-              <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
+              <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeStartDate} valueDate={data.start_date} valueTime={data.start_time}/>
+              { this.state.validDates.startDate.valid ? '' : (<Error>{languageText.dateErrors.invalidStartDate}</Error>)}
+              { this.state.validDates.endStart.valid ? '' : (<Error>{languageText.dateErrors.invalidDatesStart}</Error>)}
             </div>
             <div className="record-tab" key={2}>
-              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onNotYetClick={this.notYetEnd} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
+              <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onNotYetClick={this.notYetEnd} onChange={this.handleChangeEndDate} valueDate={data.end_date} valueTime={data.end_time}/>
+              { this.state.validDates.endDate.valid ? '' : (<Error>{languageText.dateErrors.invalidEndDate}</Error>)}
+              { this.state.validDates.endStart.valid ? '' : (<Error>{languageText.dateErrors.invalidDatesEnd}</Error>)}
             </div>
             <div className="record-tab" key={3}>
               <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
