@@ -173,7 +173,6 @@ class WeatherWidget extends Component {
     ), () => {
       localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
       localStorage.setItem('weather_time', new Date());
-      localStorage.setItem('city_name', this.state.city_name.trim());
     })
   }
 
@@ -184,8 +183,8 @@ class WeatherWidget extends Component {
       if(moment(localStorage.getItem('forecast_time'),'ddd MMM DD YYYY HH:mm:ss').isValid()){
         const now = new Date()
         const then = new Date(localStorage.getItem('forecast_time'))
-        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
-        if(diff > 6) {
+        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
+        if(diff > 30) {
           this.checkIfGeolocationForecast()
         }
       } else {
@@ -233,6 +232,7 @@ class WeatherWidget extends Component {
 
   async handleCityChange(e) {
     e.preventDefault();
+    localStorage.setItem('city_name', this.state.city_name.trim());
     this.checkIfGeolocation();
     this.checkIfGeolocationForecast();
   }
