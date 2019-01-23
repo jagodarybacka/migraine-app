@@ -1,5 +1,5 @@
 export function filter(reports, timePeriod, query) {
-    if(timePeriod) {
+    if(timePeriod.start && timePeriod.end) {
         let results = timeFilter(reports,timePeriod);
         return query ? results.filter(search, query) : results;
     } else {

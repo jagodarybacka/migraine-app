@@ -71,7 +71,11 @@ class History extends Component {
       rawData: [],
       checkboxData: { },
       data: [],
-      filters: {}
+      filters: {},
+      dates: {
+        start: undefined,
+        end: undefined
+      }
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -246,11 +250,9 @@ class History extends Component {
   }
 
   filterData() {
-    const { rawData } = this.state;
+    const { rawData, dates } = this.state;
     const query = this.makeQuery();
-    const results = filter(rawData, 
-      {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
-      query)
+    const results = filter(rawData, dates, query);
     this.parseHistory(results);
   }
 
