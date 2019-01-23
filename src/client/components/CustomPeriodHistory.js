@@ -65,7 +65,7 @@ class CustomPeriodHistory extends Component {
     )
     return (
       <CustomPeriodComponent>
-        {/* <img className="custom__cancel" src={ExitIcon} alt="exit" onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/> */}
+        <img className="custom__cancel" src={ExitIcon} alt="exit" onClick={this.props.onExit}/>
         <DateTimeHistory date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
         <DateTimeHistory date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
         { confirm }

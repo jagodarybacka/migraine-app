@@ -11,7 +11,7 @@ import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
-//import customImg from '../../assets/custom-options.png'
+import customImg from '../../assets/custom-options.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
@@ -31,13 +31,13 @@ const HistoryComponent = styled.section`
   }
 
 `
-// const CustomIcon = styled.img`
-//   width: 40px;
-//   height: auto;
-//   right: 1rem;
-//   position: absolute;
-//   margin-top: 2rem;
-// `
+const CustomIcon = styled.img`
+  width: 40px;
+  height: auto;
+  right: 1rem;
+  position: absolute;
+  margin-top: 2rem;
+`
 
 const Records = styled.ul`
     display:flex;
@@ -62,6 +62,7 @@ class History extends Component {
     super(props);
 
     this.state = {
+      filtersVisible: false,
       customAnswers: {},
       history: {},
       order: [],
@@ -287,9 +288,9 @@ class History extends Component {
   }
 
   render() {
-
     const { history, order, checkboxData, filters } = this.state;
     const fields =['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
+    
     const Checkboxes = checkboxData ? fields.map((field,id) => {
       return(
         <CheckboxGroup 
@@ -303,16 +304,25 @@ class History extends Component {
           />
       )
     }) : '';
+
+ 
+    const filtersModal = this.state.filtersVisible ? (
+      <div>
+      <h3>Date</h3>
+      <CustomPeriodHistory onExit={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>
+      { Checkboxes }
+    </div>
+    ) : ''
+
+
     return (
       <HistoryComponent >
         <Header />
         <h2>{languageText.history.title}
-        {/* <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> */}
+        <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/>
         </h2>
         <div style={{ width: '100%' }}>
-        <h3>Date</h3>
-        <CustomPeriodHistory onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}></CustomPeriodHistory>
-        { Checkboxes }
+        {filtersModal}
         <Records>
           {!!order.length && order.map((chunk) => {
             const month = chunk.substring(4);
