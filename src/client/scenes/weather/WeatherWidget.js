@@ -184,8 +184,8 @@ class WeatherWidget extends Component {
       if(moment(localStorage.getItem('forecast_time'),'ddd MMM DD YYYY HH:mm:ss').isValid()){
         const now = new Date()
         const then = new Date(localStorage.getItem('forecast_time'))
-        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60 * 60))
-        if(diff > 6) {
+        const diff = Math.round((now.getTime() - then.getTime()) / (1000 * 60))
+        if(diff > 30) {
           this.checkIfGeolocationForecast()
         }
       } else {
