@@ -13,6 +13,8 @@ import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
 import Checkbox from '../../components/Checkbox';
 import customImg from '../../assets/custom-options.png'
+import { check } from 'express-validator/check';
+import CheckboxGroup from './CheckboxGroup';
 
 const HistoryComponent = styled.section`
   display: block;
@@ -63,12 +65,13 @@ class History extends Component {
     this.fieldsPain= ['No Pain','Mild','Moderate','Intense','Maximum']
 
     this.state = {
+      customAnswers: {},
       history: {},
       order: [],
       rawData: [],
-      localizations: {}, 
-      intensity: {},
-      data: []
+      checkboxData: { },
+      data: [],
+      filters: {}
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -76,28 +79,86 @@ class History extends Component {
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
     this.formatDuration = this.formatDuration.bind(this);
-    this.handleChangeFilter = this.handleChangeFilter.bind(this);
-    this.handleChangeFilter2 = this.handleChangeFilter2.bind(this);
-
+    // this.handleChangeFilter = this.handleChangeFilter.bind(this);
+    // this.handleChangeFilter2 = this.handleChangeFilter2.bind(this);
+    this.parseCustomAnswers = this.parseCustomAnswers.bind(this);
+    this.fetchAnswers = this.fetchAnswers.bind(this);
+    this.getCustomAnswers = this.getCustomAnswers.bind(this);
+    this.onFiltersChange = this.onFiltersChange.bind(this);
+    this.makeQuery = this.makeQuery.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/reports')
       .then(({ data }) => {
-        this.setState({ data });
+        // this.setState({ data });
+        this.setState((prevState) => ({
+          ...prevState,
+          rawData: data
+        }), () => this.parseHistory(data))
       })
       .catch((err) => console.log(err));
+    this.getCustomAnswers();
+    this.fetchAnswers();
+  }
 
+  getCustomAnswers() {
     axios.get('/api/users/answer')
     .then((res) => {
       if(res.status === 204){
         console.log("No content");
+        this.fetchAnswers();
       } else {
-        const answerLocalization = res.data.localization
-        this.fieldsLocalization = [...this.fieldsLocalization, ...answerLocalization]
-     }
+        const data = this.parseCustomAnswers(res.data);
+        this.setState((prevState) => ({
+          ...prevState,
+          customAnswers: data
+        }), () => this.fetchAnswers())
+      }
     })
     .catch((err) => {console.log(err);})
+  }
+
+  fetchAnswers() {
+    const data = languageText.addForm;
+    for(let option in data){
+      if(option.includes("Answers")){
+        const op = option.replace('Answers','');
+        const answers = data[option].map((answer) => {
+          return ({
+            value: answer.value,
+            text: answer.text
+          })
+        })
+        const allAnswers = this.state.customAnswers[op] 
+        ? answers.concat(this.state.customAnswers[op]) : answers;
+        this.setState((prevState) => ({
+          ...prevState,
+          checkboxData: {
+            ...prevState.checkboxData,
+            [op]: allAnswers
+          }
+        }))
+      }
+    }
+  }
+
+  parseCustomAnswers(answers) {
+    for(var op in answers) {
+      if(answers[op].length > 0){
+        answers[op] = this.mapValues(answers[op]);
+      }
+    }
+    return answers;
+  }
+
+  mapValues(values) {
+    return values.map((value) => {
+      return {
+        text: value,
+        value: value
+      }
+    })
   }
 
   getIntensity(key) {
@@ -133,32 +194,9 @@ class History extends Component {
 
   }
 
-  parseHistory() {
+  parseHistory(data) {
     let history = {};
     let order = [];
-    let data = this.state.data;
-
-    const localizations = this.state.localizations;
-    const keyLocalizations = Object.keys(localizations)
-
-    const intensity = this.state.intensity;
-    const keyIntensity = Object.keys(intensity)
-   
-    const filterLocalizations = keyLocalizations.filter( key => localizations[key] === true)
-    const filterIntensity = keyIntensity.filter( key => intensity[key] === true)
-
-    var filters ={}
-    if( filterLocalizations.length > 0){
-      filters = { localization: filterLocalizations }
-
-      if(filterIntensity.length > 0) {
-        filters = { ...filters, pain: filterIntensity }
-      }
-    }
-    else if(filterIntensity.length > 0){
-      filters = { pain: filterIntensity }
-    }
-    data = filter(data, null, filters)
 
     if (data.length) {
       data.forEach((item) => {
@@ -177,24 +215,57 @@ class History extends Component {
         return objB - objA;
       });
     }
-      
-  return {history, order}
+
+    this.setState((prevState) => ({ 
+      ...prevState,
+      history : history,
+      order: order}));
   }
 
-  handleChangeFilter(e) {
-  const item = e.target.name;
-  const isChecked = e.target.checked;
-  
-  this.setState(prevState => ({ 
-    localizations:{ ...prevState.localizations, [item]: isChecked }}))
-}
+  onFiltersChange(evt) {
+    const { filters } = this.state;
+    const { name, value } = evt.target;
+    let result;
+    result = filters[name] || [];
+    const shouldUncheck = result.indexOf(value);
+    if (shouldUncheck >= 0) {
+      result.splice(shouldUncheck, 1);
+    } else {
+      result = [
+        ...result,
+        value,
+      ];
+    }
+    this.setState((prevState) => ({
+      ...prevState,
+      filters: {
+        ...prevState.filters,
+        [name]: result
+      }
+    }), () => this.filterData())
+  }
 
-  handleChangeFilter2(e) {
-    const item = e.target.name;
-    const isChecked = e.target.checked;
-    
-    this.setState(prevState => ({ 
-      intensity:{ ...prevState.intensity, [item]: isChecked }}))
+  filterData() {
+    const { rawData } = this.state;
+    const query = this.makeQuery();
+    const results = filter(rawData, 
+      {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
+      query)
+    this.parseHistory(results);
+  }
+
+  makeQuery() {
+    const {filters} = this.state;
+    let query = {};
+    for(let option in filters){
+      if(filters[option].length > 0){
+        query[option] = [];
+        filters[option].forEach((answer) => {
+          query[option].push(answer);
+        })
+      }
+    }
+    return query;
   }
 
   formatDuration(duration) {
@@ -215,8 +286,21 @@ class History extends Component {
 
   render() {
 
-    const { history, order } = this.parseHistory() 
-
+    const { history, order, checkboxData, filters } = this.state;
+    const fields = ['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
+    const Checkboxes = checkboxData ? fields.map((field,id) => {
+      return(
+        <CheckboxGroup 
+          key={id}
+          small
+          answers={checkboxData[field] ? checkboxData[field] : []}
+          values={filters[field]}
+          title={field}
+          name={field}
+          onChange={this.onFiltersChange}
+          />
+      )
+    }) : '';
     return (
       <HistoryComponent >
         <Header />
@@ -224,73 +308,45 @@ class History extends Component {
         {/* <CustomIcon src={customImg} onClick={() => this.setState({customPeriodVisible: true})}/> */}
         </h2>
         <div style={{ width: '100%' }}>
-        <h3>Localization</h3>
-         <div>
-          {
-            this.fieldsLocalization.map((field) => (
-              <Checkbox
-                key={field}
-                small
-                text={field}
-                name={field}
-                onChange={this.handleChangeFilter}
-              />
-            ))
-          }
-          </div>
-          <h3>Pain intensity</h3>
-          <div>
-          {
-            this.fieldsPain.map((field) => (
-              <Checkbox
-              key={field}
-              small
-              text={field}
-              name={field}
-              onChange={this.handleChangeFilter2}
-              />
-            ))
-          }
-        </div>
+        { Checkboxes }
+        <Records>
+          {!!order.length && order.map((chunk) => {
+            const month = chunk.substring(4);
+            const monthName = languageText.dateTime.monthNames[moment(month, 'MM').format('M') -1]
 
-          <Records>
-            {!!order.length && order.map((chunk) => {
-              const month = chunk.substring(4);
-              const monthName = languageText.dateTime.monthNames[moment(month, 'MM').format('M') -1]
-
-              return (
-                <li key={chunk}>
-                  <Records>
-                    <Divider text={monthName} />
-                    {history[chunk].map((item) => {
-                      const startDate = moment(item.start_date, 'YYYY-MM-DDTHH:mm:ss');
-                      const endDate =  item.end_date ? moment(item.end_date,'YYYY-MM-DDTHH:mm:ss') : moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
-                      const duration = moment.duration(endDate.diff(startDate));
-                      const formattedDuration = this.formatDuration(duration);
-                      return (
-                        <li key={item._id}>
-                          <RecordCard handleClick={() => this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
-                            duration={formattedDuration}
-                            intensity={this.getIntensity(item.pain)}
-                            isRecent={false}
-                            id={item._id}
-                            handleDelete={this.deleteReport}
-                            handleEdit={this.editReport}
-                            hasEnd={!!item.end_date}
-                            />
-                        </li>
-                      )
-                    })}
-                  </Records>
-                </li>
-              );
-            })}
-            <li key="9999">
-              <NoMoreStyle>
-                <Divider text={languageText.history.noMore} />
-              </NoMoreStyle>
-            </li>
-          </Records>
+            return (
+              <li key={chunk}>
+                <Records>
+                  <Divider text={monthName} />
+                  {history[chunk].map((item) => {
+                    const startDate = moment(item.start_date, 'YYYY-MM-DDTHH:mm:ss');
+                    const endDate =  item.end_date ? moment(item.end_date,'YYYY-MM-DDTHH:mm:ss') : moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
+                    const duration = moment.duration(endDate.diff(startDate));
+                    const formattedDuration = this.formatDuration(duration);
+                    return (
+                      <li key={item._id}>
+                        <RecordCard handleClick={() => this.summaryReport(item)} date={startDate.format('DD.MM.YYYY')}
+                          duration={formattedDuration}
+                          intensity={this.getIntensity(item.pain)}
+                          isRecent={false}
+                          id={item._id}
+                          handleDelete={this.deleteReport}
+                          handleEdit={this.editReport}
+                          hasEnd={!!item.end_date}
+                          />
+                      </li>
+                    )
+                  })}
+                </Records>
+              </li>
+            );
+          })}
+          <li key="9999">
+            <NoMoreStyle>
+              <Divider text={languageText.history.noMore} />
+            </NoMoreStyle>
+          </li>
+        </Records>
         </div>
         <Menubar />
       </HistoryComponent>
