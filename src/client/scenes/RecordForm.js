@@ -13,16 +13,16 @@ import MonitorImg from '../assets/monitor.png'
 import {
   Start,
   End,
-  Menstruation,
-  Localization,
-  Mood,
   Pain,
   Medicines,
   Triggers,
+  Reliefs,
+  Localization,
   Aura,
+  Mood,
+  Menstruation,
   Pressure,
-  SleepDuration,
-  Reliefs
+  SleepDuration
 } from './form/AddForm';
 
 const Container = styled.article`
@@ -55,6 +55,11 @@ const Container = styled.article`
     text-transform: initial;
     margin: 1em;
     opacity: 0.8;
+  }
+
+  a {
+    color: #2196f3;
+    font-weight: 500;
   }
 
   .form-container {
@@ -102,6 +107,13 @@ const Hello = (props) => {
       <img src={MonitorImg} alt='monitor'/>
       <p className="start-paragraph">{languageText.recordForm.paragraph}</p>
       <p className="start-paragraph">{languageText.recordForm.feelBetter}</p>
+      <p className="start-paragraph">
+        {languageText.recordForm.inside}
+        <Link to='/settings'>
+          {languageText.recordForm.settings}
+        </Link>
+        {languageText.recordForm.customize}
+      </p>
     </div>
   )
 }
@@ -146,6 +158,15 @@ class RecordForm extends Component {
         }
         if(data.report.end_date){
           data.report.end_date = data.report.end_date.substr(0,10)
+        }
+        if(data.report.medicines && data.report.medicines.length>0 &&data.report.medicines[0].name != undefined){
+          data.report.medicinesBeforeEdit = data.report.medicines;
+          data.report.medicines = data.report.medicines.map(m=>m.name);
+          
+        }
+        if(data.report.reliefs && data.report.reliefs.length>0 &&data.report.reliefs[0].name != undefined){
+          data.report.reliefsBeforeEdit = data.report.reliefs;
+          data.report.reliefs = data.report.reliefs.map(m=>m.name);
         }
         this.setState({ data: data.report })
       })
@@ -272,16 +293,16 @@ class RecordForm extends Component {
     return (
       data.start_date &&
       data.start_time &&
-      data.sleep_duration &&
-      data.pressure &&
       data.pain &&
-      data.menstruation &&
-      data.mood &&
-      data.localization &&
-      (data.aura && !!data.aura.length) &&
       (data.medicines && !!data.medicines.length) &&
       (data.triggers && !!data.triggers.length) &&
-      data.reliefs
+      data.reliefs &&
+      data.localization &&
+      (data.aura && !!data.aura.length) &&
+      data.mood &&
+      data.menstruation &&
+      data.pressure &&
+      data.sleep_duration
     )
   }
 
@@ -329,7 +350,7 @@ class RecordForm extends Component {
     const tabs = fields.map((field, id) => {
       if (this.getUserFormField(field.name)) {
         return (
-          <div className="record-tab" key={id}>
+          <div className="record-tab" key={id+4}>
             <field.component 
               customAnswers = {customAnswers[field.name]}
               values={data[field.name]} 
@@ -345,17 +366,17 @@ class RecordForm extends Component {
       <Container className="Form">
         <Header isForm isValid={ data.start_date && data.start_time } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
-          <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index) }>
-            <div className="record-tab">
+          <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index)}>
+            <div className="record-tab" key={0}>
               <Hello edit={this.edit} />
             </div>
-            <div className="record-tab">
+            <div className="record-tab" key={1}>
               <Start name="start" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onChange={this.handleChangeTabValue} valueDate={data.start_date} valueTime={data.start_time}/>
             </div>
-            <div className="record-tab">
+            <div className="record-tab" key={2}>
               <End name="end" onNowButtonClick={this.currentDate} onSubtractHourClick={this.subtractsOneHour} onNotYetClick={this.notYetEnd} onChange={this.handleChangeTabValue} valueDate={data.end_date} valueTime={data.end_time}/>
             </div>
-            <div className="record-tab">
+            <div className="record-tab" key={3}>
               <Pain valueData={data.pain} onChange={this.handleChangeTabValue} />
             </div>
             {

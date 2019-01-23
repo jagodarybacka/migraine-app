@@ -12,7 +12,10 @@ import ImgPressure from './assets/page-pressure.png'
 import ImgSummaryReport from './assets/page-summary-report.png'
 import ImgTogether from './assets/page-together.png'
 import ImgHeader from './assets/header.png'
-
+import ImgPdf1Pl from './assets/pdf1-pl.jpg'
+import ImgPdf2Pl from './assets/pdf2-pl.jpg'
+import ImgPdf1Eng from './assets/pdf1-eng.jpg'
+import ImgPdf2Eng from './assets/pdf2-eng.jpg'
 
 class Home extends Component {
   constructor(props) {
@@ -27,6 +30,15 @@ class Home extends Component {
   }
 
   render() {
+    let ImgPdf1;
+    let ImgPdf2;
+    if (localStorage.lang === "eng") {
+      ImgPdf1 = ImgPdf1Eng;
+      ImgPdf2 = ImgPdf2Eng;
+    } else {
+      ImgPdf1 = ImgPdf1Pl;
+      ImgPdf2 = ImgPdf2Pl;
+    }
     return (
       <Page>
       <Language>
@@ -69,6 +81,15 @@ class Home extends Component {
                 <img className="features__img" alt="Summary report" src={ImgSummaryReport}/>
                 <img className="features__img" alt="Atmospheric Pressure report" src={ImgPressure}/>
                 <img className="features__img" alt="Often together" src={ImgTogether}/>
+              </div>
+            </div>
+
+            <div className="features__section">
+              <h4 className="features__subheader">{languageText.infoPage.pdfSubheader}</h4>
+              <p>{languageText.infoPage.pdfDescription}</p>
+              <div className="features__imgs">
+                <img className="features__img" alt="pdf1" src={ImgPdf1}/>
+                <img className="features__img" alt="pdf2" src={ImgPdf2}/>
               </div>
             </div>
           </div>

@@ -1,5 +1,8 @@
 {
 	"settings":{
+		"formCard": "Form",
+		"appCard": "Application",
+		"userCard": "User",
 		"chooseLanguage": "Choose language",
 		"changeData": "Change data",
 		"changePassword": "Change password",
@@ -19,6 +22,7 @@
 		"passwordChanged": "Password changed",
 		"exportData": "Export data to PDF",
 		"generatePdf": "Generate PDF",
+		"customAnswerError": "Answer already exists",
 		"formFieldsOptions": [
 			{"text":"Medicines", "field":"medicines"},
 			{"text":"Aura", "field":"aura"},
@@ -68,7 +72,10 @@
 		"paragraph": "In this form you can note various aspects of your condition. Keeping track of your migraine triggers will help you avoid them later.",
 		"feelBetter": "Feel better soon!",
 		"summary": "Save migraine",
-		"migraineRecord": "Migraine Record"
+		"migraineRecord": "Migraine Record",
+		"inside": "In ",
+		"settings": "app settings",
+		"customize": " you can choose form fields to include and add custom answers."
 	},
 	"welcome":{
 		"migraine": "Migraine app",
@@ -209,10 +216,10 @@
 		],
 		"reliefsAnswers": [
 			{"text": "Dark room", "value": "Dark room"},
-			{"text": "Yoga/meditate", "value": "Yoga/meditate"},
+			{"text": "Yoga/meditation", "value": "Yoga/meditate"},
 			{"text": "Sleep", "value": "Sleep"},
 			{"text": "Hot shower", "value": "Hot shower"},
-			{"text": "Clod shower", "value": "Cold shower"},
+			{"text": "Cold shower", "value": "Cold shower"},
 			{"text": "Ice packs", "value": "Ice packs"},
 			{"text": "Heat pad", "value": "Heat pad"},
 			{"text": "None of these/others", "value": "None/Others"}
@@ -330,7 +337,9 @@
 		"featuresSubheader": "Quick save and easy browse",
 		"featuresDescription": "When you want to save informations about your migraine you can adjust the amount of informations you want to include. Your past migraines will be available to browse any time you will need them.",
 		"reportsSubheader": "Meaningful reports",
-		"reportsDescription": "Three kinds of reports will give you helpful informations what may caused your migraines."
+		"reportsDescription": "Three kinds of reports will give you helpful informations what may caused your migraines.",
+		"pdfSubheader": "Easy data download",
+		"pdfDescription": "Export data to PDF file and show your doctor a full list of your migraines, attacks statistics and overview of possible migraine triggers."
 	},
 	"forgottenPassword": {
 		"resetPassword": "Reset Password",
@@ -375,5 +384,17 @@
 		"sleepDuration": "Sleep duration: ",
 		"notes": "Note: ",
 		"migraineHeader": "Migraine"
+	},
+	"question":{
+		"didItWorked": "Did it work: ",
+		"duration": "How long did it work: ",
+		"saved": "It is saved,",
+		"worked": "works",
+		"notWorked": "doesn't works"
+	},
+	"questionAnswered":{
+		"workedFor": "did work for",
+		"didntWork": "did not work",
+		"didWork": "did work"
 	}
 }
