@@ -49,6 +49,26 @@ img {
   height: 60px;
 }
 
+.location {
+  padding: unset;
+  width: 32px;
+  height: auto;
+  opacity: ${props => props.localization === false ? '1' : '0.6'};
+  position: absolute;
+  top: 1em;
+  right: 0.5em;
+}
+
+.use__localization {
+  padding: unset;
+  width: 32px;
+  height: auto;
+  opacity: ${props => props.localization === true ? '1' : '0.6'};
+  position: absolute;
+  top: 1em;
+  left: 0.5em;
+}
+
 `
 
 export const Element = styled.div`
