@@ -61,9 +61,6 @@ class History extends Component {
   constructor(props) {
     super(props);
 
-    this.fieldsLocalization= ['Home', 'Outside','Transit', 'Work', 'Bed','School']
-    this.fieldsPain= ['No Pain','Mild','Moderate','Intense','Maximum']
-
     this.state = {
       customAnswers: {},
       history: {},
@@ -83,8 +80,6 @@ class History extends Component {
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
     this.formatDuration = this.formatDuration.bind(this);
-    // this.handleChangeFilter = this.handleChangeFilter.bind(this);
-    // this.handleChangeFilter2 = this.handleChangeFilter2.bind(this);
     this.parseCustomAnswers = this.parseCustomAnswers.bind(this);
     this.fetchAnswers = this.fetchAnswers.bind(this);
     this.getCustomAnswers = this.getCustomAnswers.bind(this);
@@ -95,7 +90,6 @@ class History extends Component {
   componentDidMount() {
     axios.get('/api/reports')
       .then(({ data }) => {
-        // this.setState({ data });
         this.setState((prevState) => ({
           ...prevState,
           rawData: data
