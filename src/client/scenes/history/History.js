@@ -308,7 +308,7 @@ class History extends Component {
  
     const filtersModal = this.state.filtersVisible ? (
       <div>
-      <h3>Date</h3>
+      <h3>{languageText.dateTime.date}</h3>
       <CustomPeriodHistory onExit={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>
       { Checkboxes }
     </div>
