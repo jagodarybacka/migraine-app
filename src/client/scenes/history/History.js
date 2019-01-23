@@ -133,10 +133,6 @@ class History extends Component {
 
   }
 
-//   if filterLocalizations.length to filters = { localization: filterLocalizations }, i potem
-// if filterIntensity.length to filters = { ...filters, intensity: filterIntensity }
-// i na koniec data = filter(data, null, filters)
-
   parseHistory() {
     let history = {};
     let order = [];
@@ -185,18 +181,6 @@ class History extends Component {
   return {history, order}
   }
 
-    //this.setState({ order }
-    //this.setState({ order, rawData: data }
-      // () => {
-      //   const results = filter(this.state.rawData, 
-      //     {start: new Date('2019-01-01'), end: new Date('2019-02-01')},
-      //     // {pain:"Mild"});
-      //     //{localization:["Outside","Work"],triggers:"Sport"});
-      //     {localization:["Outside","Work"]});
-      //     // {localization:"Outside",triggers:["Sport","Stress"]});
-      //   console.log(results);
-      // }
-     // );
   handleChangeFilter(e) {
   const item = e.target.name;
   const isChecked = e.target.checked;
