@@ -347,7 +347,7 @@ class History extends Component {
       <div>
       <Title className="date__header" onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
       { this.state.currentFilter === "date" && 
-        (<CustomPeriodHistory onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>) }
+        (<CustomPeriodHistory valueStart={this.state.dates.start} valueEnd={this.state.dates.end} onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>) }
       { Checkboxes }
       </div>
     ) : ''

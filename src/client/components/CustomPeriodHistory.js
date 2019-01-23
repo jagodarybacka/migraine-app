@@ -67,8 +67,8 @@ class CustomPeriodHistory extends Component {
     )
     return (
       <CustomPeriodComponent>
-        <DateTimeHistory date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
-        <DateTimeHistory date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
+        <DateTimeHistory value={this.props.valueStart} date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
+        <DateTimeHistory value={this.props.valueEnd}  date label="To" onChange={(ev) => this.handleDateChange(ev, 'to')}/>
         { confirm }
       </CustomPeriodComponent>
     )
