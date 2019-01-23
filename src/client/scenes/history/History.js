@@ -138,6 +138,19 @@ class History extends Component {
     let order = [];
     let data = this.state.data;
 
+    const localizations = this.state.localizations;
+    console.log(localizations)
+    const keyLocalizations = Object.keys(localizations)
+   
+    const filterLocalizations = keyLocalizations.filter( key => localizations[key] === true)
+    if( filterLocalizations.length > 0){
+      console.log(filterLocalizations)
+
+      data = filter(data, null, { localization: filterLocalizations })
+      console.log(data)
+    }
+
+
     if (data.length) {
       data.forEach((item) => {
         const key = moment(item.start_date).format('YYYYMM');
@@ -155,15 +168,9 @@ class History extends Component {
         return objB - objA;
       });
     }
-    const localizations = this.state.localizations;
-    console.log(localizations)
-    const keyLocalizations = Object.keys(localizations)
-    const filterLocalizations = keyLocalizations.filter( keyLocalizations => localizations[keyLocalizations] === true)
-    console.log(filterLocalizations)
-
-    const result = filter(data, null, { localizations: filterLocalizations })
-    console.log(result)
-
+      
+  return {history, order}
+  }
 
     //this.setState({ order }
     //this.setState({ order, rawData: data }
@@ -177,11 +184,6 @@ class History extends Component {
       //   console.log(results);
       // }
      // );
-      
-  return {history, order}
-  }
-
-
   handleChangeFilter(e) {
   const item = e.target.name;
   const isChecked = e.target.checked;
@@ -217,7 +219,7 @@ class History extends Component {
   render() {
 
     const { history, order } = this.parseHistory() 
-    
+
     return (
       <HistoryComponent >
         <Header />
