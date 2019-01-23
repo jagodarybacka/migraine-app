@@ -12,6 +12,8 @@ import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
 import customImg from '../../assets/custom-options.png'
+import collapseIcon from '../../assets/collapse.png'
+import expandIcon from '../../assets/expand.png'
 import exitIcon from '../../assets/exit.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
@@ -58,6 +60,15 @@ const Records = styled.ul`
       width: 100%;
     }
 `
+
+const Title = styled.h3`
+  img {
+    width: 15px;
+    height: auto;
+    margin-left: 5px;
+  }
+`
+
 const NoMoreStyle = styled.ul`
     padding: 0;
     margin-bottom: 5rem;
@@ -331,13 +342,14 @@ class History extends Component {
       )
     }) : '';
 
-
+    const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
     const filtersModal = this.state.filtersVisible ? (
       <div>
-      <h3 className="date__header">{languageText.dateTime.date}</h3>
-      <CustomPeriodHistory onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>
+      <Title className="date__header" onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
+      { this.state.currentFilter === "date" && 
+        (<CustomPeriodHistory onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>) }
       { Checkboxes }
-    </div>
+      </div>
     ) : ''
 
 

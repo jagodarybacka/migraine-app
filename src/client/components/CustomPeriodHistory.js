@@ -14,9 +14,6 @@ const CustomPeriodComponent = styled.div`
     margin: auto;
     padding: 10px;
   }
-  div {
-    margin: 0.5em auto;
-  }
 `
 
 class CustomPeriodHistory extends Component {

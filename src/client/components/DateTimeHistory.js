@@ -14,6 +14,8 @@ const TimeDateComponent = styled.div`
   border-radius: 20px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
   margin-left: 0.5rem;
+  margin: 1rem auto;
+  min-width: 200px;
 
   input {
     border: none;
