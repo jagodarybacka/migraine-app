@@ -222,14 +222,25 @@ exports.save_forecast = (req, res, next) => {
 			return res.json({errors : [err.message]});
 		 }
 		if (found_user) {
-			const forecasts = tools.modifyForecasts(found_user.weather_forecasts, forecast);
-			User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: forecasts}}, {}, function (err,mod_user) {
-				if (err) { 
-					return res.json({errors : [err.message]}); 
-				}
-				console.log('Forecast saved');
-				return res.json("Forecast saved");
-			});
+			if(found_user.weather_forecasts) {
+				const forecasts = tools.modifyForecasts(found_user.weather_forecasts, forecast);
+				User.findByIdAndUpdate(userId,  { $set: { weather_forecasts: forecasts}}, {}, function (err,mod_user) {
+					if (err) { 
+						return res.json({errors : [err.message]}); 
+					}
+					console.log('Forecast saved');
+					return res.json("Forecast saved");
+				});
+			} else {
+				const forecasts = tools.modifyForecasts([], forecast);
+				User.findByIdAndUpdate(userId,  { weather_forecasts: forecasts}, {}, function (err,mod_user) {
+					if (err) { 
+						return res.json({errors : [err.message]}); 
+					}
+					console.log('Forecast saved');
+					return res.json("Forecast saved");
+				});
+			}
 		} else {
 			res.status(401);
 			res.send('This user does not exist');
@@ -243,7 +254,7 @@ exports.get_forecast = (req, res, next) => {
 	const startTime = new Date(req.params.start);
 	const endTime = new Date(req.params.end);
 	const start = new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate(), 0,0,0);
-  const end = new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDate(),23,59,0);
+  	const end = new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDate(),23,59,0);
 	User.findById(userId)
 	.exec( function(err, found_user) {
 		if (err) { 
