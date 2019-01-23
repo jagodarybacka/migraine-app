@@ -12,6 +12,7 @@ import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
 import customImg from '../../assets/custom-options.png'
+import exitIcon from '../../assets/exit.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
@@ -38,7 +39,13 @@ const CustomIcon = styled.img`
   position: absolute;
   margin-top: 2rem;
 `
-
+const ExitIcon = styled.img`
+  width: 20px;
+  height: auto;
+  right: 1.2rem;
+  position: absolute;
+  margin-top: 2rem;
+`
 const Records = styled.ul`
     display:flex;
     flex-direction: column;
@@ -305,11 +312,11 @@ class History extends Component {
       )
     }) : '';
 
- 
+
     const filtersModal = this.state.filtersVisible ? (
       <div>
       <h3>{languageText.dateTime.date}</h3>
-      <CustomPeriodHistory onExit={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>
+      <CustomPeriodHistory onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.filterData}/>
       { Checkboxes }
     </div>
     ) : ''
@@ -319,7 +326,8 @@ class History extends Component {
       <HistoryComponent >
         <Header />
         <h2>{languageText.history.title}
-        <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/>
+        {this.state.filtersVisible === false ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/> :
+        <ExitIcon  src={exitIcon} onClick={() => this.setState({filtersVisible: false})}/>}
         </h2>
         <div style={{ width: '100%' }}>
         {filtersModal}
