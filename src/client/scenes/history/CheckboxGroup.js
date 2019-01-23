@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Checkbox from '../../components/Checkbox';
 import styled from 'styled-components';
 import languageText from '../../languages/MultiLanguage';
+import collapseIcon from '../../assets/collapse.png'
+import expandIcon from '../../assets/expand.png'
 
 const CheckboxGroupComponent = styled.div`
     width: 100%;
@@ -17,6 +19,14 @@ const CheckboxGroupComponent = styled.div`
       flex-wrap: wrap;
       justify-content: center;
     }
+`
+
+const Title = styled.h3`
+  img {
+    width: 15px;
+    height: auto;
+    margin-left: 5px;
+  }
 `
 
 const CheckboxGroup = (props) => {
@@ -43,12 +53,18 @@ const CheckboxGroup = (props) => {
         />
       )
     })
+
+    const icon = props.visible ? collapseIcon : expandIcon;
     return (
       <CheckboxGroupComponent>
-        <h3>{props.title}</h3>
-        <div className="checkbox__group">
+        <Title onClick={() => {props.onFilterChange(props.name)}}>{props.title}
+        <img src={icon} alt="arrow"/>
+        </Title>
+        { props.visible 
+          ? (<div className="checkbox__group">
           {items}
-        </div>
+          </div>) 
+          : "" }
       </CheckboxGroupComponent>
     );
 }

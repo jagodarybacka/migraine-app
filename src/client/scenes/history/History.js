@@ -27,9 +27,6 @@ const HistoryComponent = styled.section`
     margin: 0 0 2rem 0;
     text-align: center;
   }
-  h3 {
-    margin-left: 1rem;
-  }
   .date__header {
     text-align: center;
   }
@@ -83,7 +80,8 @@ class History extends Component {
       dates: {
         start: undefined,
         end: undefined
-      }
+      },
+      currentFilter: ''
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -98,6 +96,7 @@ class History extends Component {
     this.makeQuery = this.makeQuery.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.filterData = this.filterData.bind(this);
+    this.filterVisibleChange = this.filterVisibleChange.bind(this);
   }
 
   componentDidMount() {
@@ -297,6 +296,21 @@ class History extends Component {
     return text;
   }
 
+  filterVisibleChange(filter) {
+    if(this.state.currentFilter == filter) {
+      this.setState((prevState) => ({
+        ...prevState,
+        currentFilter: ''
+      }))
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        currentFilter: filter
+      }))
+    }
+    
+  }
+
   render() {
     const { history, order, checkboxData, filters } = this.state;
     const fields =['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
@@ -304,6 +318,7 @@ class History extends Component {
     const Checkboxes = checkboxData ? fields.map((field,id) => {
       return(
         <CheckboxGroup 
+          visible={this.state.currentFilter === field}
           key={id}
           small
           answers={checkboxData[field] ? checkboxData[field] : []}
@@ -311,6 +326,7 @@ class History extends Component {
           title={languageText.addForm[field]}
           name={field}
           onChange={this.onFiltersChange}
+          onFilterChange={this.filterVisibleChange}
           />
       )
     }) : '';
