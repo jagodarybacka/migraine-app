@@ -18,6 +18,7 @@ const TimeDateComponent = styled.div`
   min-width: 200px;
 
   input {
+    background-color: transparent;
     border: none;
     border-bottom: 1px solid #9e9e9e;
     margin: 0 0.5rem;
