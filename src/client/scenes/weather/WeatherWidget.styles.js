@@ -72,6 +72,12 @@ p {
 }
 `
 
+export const Error = styled.h5`
+  font-weight: 300;
+  color:  #ff471a; 
+  margin-top: 0;
+`
+
 export const City = styled.section`
 width: 90%;
 margin: 1rem 5% 0 5%;
