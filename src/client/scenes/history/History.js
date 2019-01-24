@@ -11,10 +11,11 @@ import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
-import customImg from '../../assets/custom-options.png'
-import collapseIcon from '../../assets/collapse.png'
+import customImg from '../../assets/filter.png'
+import closeIcon from '../../assets/exit.png'
 import expandIcon from '../../assets/expand.png'
-import exitIcon from '../../assets/exit.png'
+import collapseIcon from '../../assets/collapse.png'
+import clearFiltersIcon from '../../assets/nofilter.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
@@ -35,26 +36,26 @@ const HistoryComponent = styled.section`
 
 `
 const CustomIcon = styled.img`
-  width: 30px;
+  width: 25px;
   height: auto;
-  right: 1rem;
+  right: calc(50% - 12.5px);
   position: absolute;
-  margin-top: 2rem;
+  margin-top: 2.4rem;
 `
 const ExitIcon = styled.img`
-  width: 30px;
+  width: 20px;
   height: auto;
   right: 1.2rem;
   position: absolute;
-  margin-top: 2rem;
+  margin-top: calc(4rem);
 `
 
 const ClearIcon = styled.img`
-  width: 25px;
+  width: 20px;
   height: auto;
   left: 1.2rem;
   position: absolute;
-  margin-top: 2rem;
+  margin-top: 4rem;
 `
 const Records = styled.ul`
     display:flex;
@@ -70,11 +71,18 @@ const Records = styled.ul`
 `
 
 const Title = styled.h3`
+  &.date__header--applied {
+    color: #e91e63;
+  }
   img {
     width: 15px;
     height: auto;
     margin-left: 5px;
   }
+`
+
+const FiltersTitle = styled.h2`
+  font-size: 1.2em;
 `
 
 const NoMoreStyle = styled.ul`
@@ -100,7 +108,8 @@ class History extends Component {
         start: undefined,
         end: undefined
       },
-      currentFilter: ''
+      currentFilter: '',
+      datesApplied: false
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -161,7 +170,7 @@ class History extends Component {
             text: answer.text
           })
         })
-        const allAnswers = this.state.customAnswers[op] 
+        const allAnswers = this.state.customAnswers[op]
         ? answers.concat(this.state.customAnswers[op]) : answers;
         this.setState((prevState) => ({
           ...prevState,
@@ -247,7 +256,7 @@ class History extends Component {
       });
     }
 
-    this.setState((prevState) => ({ 
+    this.setState((prevState) => ({
       ...prevState,
       history : history,
       order: order}));
@@ -286,7 +295,8 @@ class History extends Component {
   confirmDate() {
     this.setState((prevState) => ({
       ...prevState,
-      currentFilter: ''
+      currentFilter: '',
+      datesApplied: true
     }), () => this.filterData())
   }
 
@@ -294,6 +304,7 @@ class History extends Component {
     this.setState((prevState) => ({
       ...prevState,
       currentFilter: '',
+      datesApplied: false,
       filters: {},
       dates: {
         start: undefined,
@@ -319,27 +330,43 @@ class History extends Component {
   }
 
   handleDateChange(name, value) {
-    this.setState(prevState => ({ dates: { ...prevState.dates, [name]: value }}))
+    this.setState(prevState => ({ 
+      dates: { 
+        ...prevState.dates, 
+        [name]: value }
+    }), () => {
+      if(!this.state.dates.start && !this.state.dates.end){
+        this.setState((prevState) => ({
+          ...prevState,
+          datesApplied: false
+        }))
+      }
+    })
   }
 
   formatDuration(duration) {
-    let text = "";
-    if(duration.days() > 0){
-      text+=duration.days() + "d ";
-    }
-    if(duration.hours() > 0){
-      text+=duration.hours() + "h ";
-    }
-    if(duration.minutes() > 0){
-      if(duration.days() === 0){
-        text+=duration.minutes() + "m";
+    const d = moment.duration(duration).asSeconds();
+    if(d < 60){
+      return languageText.history.now;
+    } else {
+      let text = "";
+      if(duration.days() > 0){
+        text+=duration.days() + "d ";
       }
+      if(duration.hours() > 0){
+        text+=duration.hours() + "h ";
+      }
+      if(duration.minutes() > 0){
+        if(duration.days() === 0){
+          text+=duration.minutes() + "m";
+        }
+      }
+      return text;
     }
-    return text;
   }
 
   filterVisibleChange(filter) {
-    if(this.state.currentFilter == filter) {
+    if(this.state.currentFilter === filter) {
       this.setState((prevState) => ({
         ...prevState,
         currentFilter: ''
@@ -350,16 +377,16 @@ class History extends Component {
         currentFilter: filter
       }))
     }
-    
+
   }
 
   render() {
     const { history, order, checkboxData, filters } = this.state;
     const fields =['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
-    
+
     const Checkboxes = checkboxData ? fields.map((field,id) => {
       return(
-        <CheckboxGroup 
+        <CheckboxGroup
           visible={this.state.currentFilter === field}
           key={id}
           small
@@ -372,12 +399,12 @@ class History extends Component {
           />
       )
     }) : '';
-
     const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
     const filtersModal = this.state.filtersVisible ? (
       <div>
-      <Title className="date__header" onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
-      { this.state.currentFilter === "date" && 
+      <FiltersTitle>{languageText.history.filters}</FiltersTitle>
+      <Title className={"date__header " + (this.state.datesApplied ? "date__header--applied": "")} onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
+      { this.state.currentFilter === "date" &&
         (<CustomPeriodHistory valueStart={this.state.dates.start} valueEnd={this.state.dates.end} onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.confirmDate}/>) }
       { Checkboxes }
       </div>
@@ -388,11 +415,11 @@ class History extends Component {
       <HistoryComponent >
         <Header />
         <h2>{languageText.history.title}
-        {this.state.filtersVisible === false 
-          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/> 
-          : <ExitIcon  src={collapseIcon} onClick={() => this.setState({filtersVisible: false})}/>}
+        {this.state.filtersVisible === false
+          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/>
+          : <ExitIcon  src={closeIcon} onClick={() => this.setState({filtersVisible: false})}/>}
         {this.state.filtersVisible === true
-          ? (<ClearIcon src={exitIcon} alt="clear" onClick={this.clearFilters}/>) 
+          ? (<ClearIcon src={clearFiltersIcon} alt="clear" onClick={this.clearFilters}/>)
           : ""}
         </h2>
         <div style={{ width: '100%' }}>
@@ -407,8 +434,8 @@ class History extends Component {
                 <Records>
                   <Divider text={monthName} />
                   {history[chunk].map((item) => {
-                    const startDate = moment(item.start_date, 'YYYY-MM-DDTHH:mm:ss');
-                    const endDate =  item.end_date ? moment(item.end_date,'YYYY-MM-DDTHH:mm:ss') : moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
+                    const startDate = moment(new Date(item.start_date));
+                    const endDate =  item.end_date ? moment(new Date(item.end_date)) :  moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
                     const duration = moment.duration(endDate.diff(startDate));
                     const formattedDuration = this.formatDuration(duration);
                     return (

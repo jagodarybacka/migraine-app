@@ -18,6 +18,9 @@ const CheckboxGroupComponent = styled.div`
 `
 
 const Title = styled.h3`
+  &.is-applied {
+    color: #e91e63;
+  }
   text-align: center;
   img {
     width: 15px;
@@ -32,7 +35,7 @@ const CheckboxGroup = (props) => {
     if (props.values && Array.isArray(props.values)) {
       values = props.values
     }
-  
+
     const items = answers.map((answer, index) => {
       return (
         <Checkbox
@@ -52,15 +55,16 @@ const CheckboxGroup = (props) => {
     })
 
     const icon = props.visible ? collapseIcon : expandIcon;
+    const isApplied = !!values.length;
     return (
       <CheckboxGroupComponent>
-        <Title onClick={() => {props.onFilterChange(props.name)}}>{props.title}
+        <Title className={isApplied && 'is-applied'} onClick={() => {props.onFilterChange(props.name)}}>{props.title}
         <img src={icon} alt="arrow"/>
         </Title>
-        { props.visible 
+        { props.visible
           ? (<div className="checkbox__group">
           {items}
-          </div>) 
+          </div>)
           : "" }
       </CheckboxGroupComponent>
     );
