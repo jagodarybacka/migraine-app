@@ -164,7 +164,8 @@
 		},
 		"pressure": {
 			"title": "Ciśnienie krwi",
-			"subtitle": "Jednostka - [mmHG], przykład: 120/80"
+			"subtitle": "Jednostka - [mmHG], przykład: 120/80",
+			"pressureError": "Nieprawidłowa wartość"
 		},
 		"aura": "aura",
 		"notes": "Notatki",

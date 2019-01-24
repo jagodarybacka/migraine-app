@@ -153,7 +153,8 @@ class RecordForm extends Component {
           valid: true
         }
       },
-      correctDates: false
+      correctDates: false,
+      correctPressure: true
     };
 
     this.firstTab = 0;
@@ -171,6 +172,7 @@ class RecordForm extends Component {
     this.checkStartEnd = this.checkStartEnd.bind(this);
     this.checkIfCorrectDates = this.checkIfCorrectDates.bind(this);
     this.validate = this.validate.bind(this);
+    this.validatePressure = this.validatePressure.bind(this);
   }
 
   componentDidMount() {
@@ -186,16 +188,11 @@ class RecordForm extends Component {
           data.report.end_date = data.report.end_date.substr(0,10)
         }
         this.setState((prevState) => ({ 
+          ...prevState,
           data: data.report 
         }), () => {
-          this.checkStartEnd();
-          if(this.state.data.start_date && this.state.data.start_time){
-            this.checkDate(this.state.data.start_time,this.state.data.start_date,"start")
-          }
-          if(this.state.data.end_date && this.state.data.end_time){
-            this.checkDate(this.state.data.end_time,this.state.data.end_date,"end")
-          }
-          this.checkIfCorrectDates();
+          this.validate()
+          this.validatePressure()
         })
       })
     }
@@ -234,8 +231,7 @@ class RecordForm extends Component {
 
   handleChangeStartDate(evt) {
     const { data } = this.state;
-    const { name, value, type } = evt.target;
-    this.checkStartEnd();
+    const { name, value } = evt.target;
     this.setState((prevState) => ({
         ...prevState,
         data: {
@@ -278,7 +274,7 @@ class RecordForm extends Component {
 
   handleChangeEndDate(evt) {
     const { data } = this.state;
-    const { name, value, type } = evt.target;
+    const { name, value } = evt.target;
     this.setState((prevState) => ({
         ...prevState,
         data: {
@@ -412,6 +408,60 @@ class RecordForm extends Component {
     }
   }
 
+  validate() {
+    this.checkStartEnd();
+    if(this.state.data.start_date && this.state.data.start_time){
+      this.checkDate(this.state.data.start_time,this.state.data.start_date,"start")
+    } else {
+      this.setState((prevState) => ({
+        validDates: {
+          ...prevState.validDates,
+          startDate: {
+            valid: true,
+            error: ''
+          }
+        }
+      }))
+    }
+    if(this.state.data.end_date && this.state.data.end_time){
+      this.checkDate(this.state.data.end_time,this.state.data.end_date,"end")
+    } else {
+      this.setState((prevState) => ({
+        validDates: {
+          ...prevState.validDates,
+          endDate: {
+            valid: true,
+            error: ''
+          }
+        }
+      }))
+    }
+    this.checkIfCorrectDates();
+  }
+
+  validatePressure() {
+    const {data} = this.state;
+    if(data.pressure) {
+      const regex = /^([1-2][0-9]{2}|[1-9][0-9])\/([1-2][0-9]{2}|[1-9][0-9])$/;
+      if(regex.test(String(data.pressure))){
+        this.setState((prevState) => ({
+          ...prevState,
+          correctPressure: true
+        }))
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          correctPressure: false
+        }))
+      }
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        correctPressure: true
+      }))
+    }
+  }
+
   handleChangeTabValue(evt) {
     const { data } = this.state;
     const { name, value, type } = evt.target;
@@ -432,15 +482,13 @@ class RecordForm extends Component {
       result = value;
     }
 
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        data: {
-          ...prevState.data,
-          [name]: result,
-        }
+    this.setState((prevState) => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        [name]: result,
       }
-    })
+    }), () => this.validatePressure())
   }
 
   changeTab(direction) {
@@ -461,17 +509,6 @@ class RecordForm extends Component {
   changeSwipeable(index){
     this.setState({ currentTab: index });
   }
-
-  validate() {
-    this.checkStartEnd();
-    if(this.state.data.start_date && this.state.data.start_time){
-      this.checkDate(this.state.data.start_time,this.state.data.start_date,"start")
-    }
-    if(this.state.data.end_date && this.state.data.end_time){
-      this.checkDate(this.state.data.end_time,this.state.data.end_date,"end")
-    }
-    this.checkIfCorrectDates();
-}
 
   currentDate(name){
     const { data } = this.state;
@@ -584,6 +621,9 @@ class RecordForm extends Component {
               values={data[field.name]} 
               valueData={data[field.name]} 
               onChange={this.handleChangeTabValue} />
+            { field.name === "pressure" && !this.state.correctPressure 
+                ? (<Error>{languageText.addForm.pressure.pressureError}</Error>)
+                : '' }
           </div>
         )
       }
@@ -592,7 +632,7 @@ class RecordForm extends Component {
 
     return (
       <Container className="Form">
-        <Header isForm isValid={ this.state.correctDates } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
+        <Header isForm isValid={ this.state.correctDates && this.state.correctPressure } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
 
           <SwipeableViews className="form-container" index={currentTab} onChangeIndex={(index)=> this.changeSwipeable(index)}>
@@ -624,7 +664,7 @@ class RecordForm extends Component {
             text="<"
           />
           {
-            this.isComplete() ? (
+            this.isComplete() && this.state.correctDates && this.state.correctPressure ? (
               <Link to={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}}>
                 <Button small text={languageText.recordForm.summary} />
               </Link>
