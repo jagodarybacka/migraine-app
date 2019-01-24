@@ -85,8 +85,8 @@ class AtmosphericPressure extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      daysPast: 8,
-      daysFuture: 1,
+      daysPast: 7,
+      daysFuture: 2,
       data: [],
       timePeriod: {
         from: new Date(),

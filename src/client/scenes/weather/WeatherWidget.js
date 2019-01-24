@@ -20,8 +20,9 @@ import foggyIcon from "../../assets/weather/foggy.png"
 import windIcon from "../../assets/weather/wind.png"
 import { getGeolocation } from '../../utils/GetGeolocation'
 import { getWeather, getWeatherForCity, getForecast, getForecastForCity } from '../Weather'
-import {Widget, Header, Element, City, Input} from './WeatherWidget.styles'
+import {Widget, Header, Error, Element, City, Input} from './WeatherWidget.styles'
 import {languageText} from '../../languages/MultiLanguage.js';
+
 
 class WeatherWidget extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class WeatherWidget extends Component {
     this.state = {
       city_name: localStorage.getItem('city_name') || "",
       currentWeather: undefined,
+      errorCity: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -158,8 +160,15 @@ class WeatherWidget extends Component {
       return;
     }
     const weather = await getWeatherForCity(city);
+    if(weather.cod === "404"){
+      this.setState((prevState) => ({
+        ...prevState,
+        errorCity: true
+      }))
+    } else {
     this.setState((prevState) => ({
-      ...prevState.city_name,
+      ...prevState,
+      errorCity: false,
       currentWeather: {
         weather: weather,
         temperature: weather.main.temp,
@@ -174,6 +183,7 @@ class WeatherWidget extends Component {
       localStorage.setItem('weather', JSON.stringify(this.state.currentWeather));
       localStorage.setItem('weather_time', new Date());
     })
+    }
   }
 
   getWeatherForecast() {
@@ -217,17 +227,28 @@ class WeatherWidget extends Component {
     }
     const forecast = await getForecastForCity(city);
     const url = 'api/forecast';
-    axios.post(url, {
-      weather_forecast: forecast
-    })
-    .then((res) => {
-      if(res.data.errors) {
-        console.log(res.data.errors);
-        return;
-      }
-      localStorage.setItem('forecast_time', new Date())
-    })
-    .catch((err) => console.log(err));
+    if(forecast.cod == "404"){
+      this.setState((prevState) => ({
+        ...prevState,
+        errorCity: true
+      }))
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        errorCity: false
+      }))
+      axios.post(url, {
+        weather_forecast: forecast
+      })
+      .then((res) => {
+        if(res.data.errors) {
+          console.log(res.data.errors);
+          return;
+        }
+        localStorage.setItem('forecast_time', new Date())
+      })
+      .catch((err) => console.log(err));
+    }
   }
 
   async handleCityChange(e) {
@@ -300,6 +321,9 @@ class WeatherWidget extends Component {
             placeholder={placeholder}
             value={this.state.city_name}
             onChange={this.handleChange}/>
+          { this.state.errorCity
+              ? (<Error>{languageText.weather.errorCity}</Error>) 
+              : "" }
           <Button type="submit" onClick={this.handleCityChange} small="true" text={languageText.weather.setLocation} primary />
         </City>
       )}

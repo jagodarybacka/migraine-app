@@ -170,6 +170,7 @@ class RecordForm extends Component {
     this.checkDate = this.checkDate.bind(this);
     this.checkStartEnd = this.checkStartEnd.bind(this);
     this.checkIfCorrectDates = this.checkIfCorrectDates.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   componentDidMount() {
@@ -381,6 +382,17 @@ class RecordForm extends Component {
             }
         }), () => this.checkIfCorrectDates())
       }
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+          validDates: {
+            ...prevState.validDates,
+            endStart: {
+              valid: true,
+              error: ''
+            }
+          }
+      }), () => this.checkIfCorrectDates())
     }
   }
 
@@ -450,16 +462,30 @@ class RecordForm extends Component {
     this.setState({ currentTab: index });
   }
 
+  validate() {
+    this.checkStartEnd();
+    if(this.state.data.start_date && this.state.data.start_time){
+      this.checkDate(this.state.data.start_time,this.state.data.start_date,"start")
+    }
+    if(this.state.data.end_date && this.state.data.end_time){
+      this.checkDate(this.state.data.end_time,this.state.data.end_date,"end")
+    }
+    this.checkIfCorrectDates();
+}
+
   currentDate(name){
     const { data } = this.state;
     const time = moment().format('HH:mm');
     const date = moment().format('YYYY-MM-DD');
-    this.setState({
+    this.setState((prevState) => ({
+      ...prevState,
       data:{
         ...data,
         [`${name}_time`]: time,
         [`${name}_date`]: date
       }
+    }), () => {
+        this.validate();
     });
   }
 
@@ -467,20 +493,26 @@ class RecordForm extends Component {
     const { data } = this.state;
     const currentTime = data[`${name}_time`]
     const newTime = moment(currentTime,'HH:mm').subtract(1, 'hour').format('HH:mm');
-    this.setState({
+    this.setState((prevState) => ({
+      ...prevState,
       data:{
         ...data,
         [`${name}_time`]: newTime
       }
-    })
+    }), () => {
+      this.validate();
+    });
   }
 
   notYetEnd(){
     const { data } = this.state;
     const {end_time, end_date, ...rest} = data
 
-    this.setState({
+    this.setState((prevState) => ({
+      ...prevState,
       data: rest
+    }), () => {
+      this.validate();
     });
   }
 

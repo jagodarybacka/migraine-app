@@ -106,7 +106,8 @@
 		"geolocationDisabled": "Your geolocation is disabled. You can set your city manually:",
 		"placeholder": "Enter ",
 		"city": "city",
-		"setLocation": "Set localization"
+		"setLocation": "Set localization",
+		"errorCity": "No city found"
 	},
 	"register":{
 		"invalidEmail": "Invalid email address.",

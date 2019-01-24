@@ -106,7 +106,8 @@
 		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
 		"placeholder": "Wprowadź ",
 		"city": "miasto",
-		"setLocation": "Ustaw lokalizację"
+		"setLocation": "Ustaw lokalizację",
+		"errorCity": "Nie znaleziono miasta"
 	},
 	"register":{
 		"invalidEmail": "Nieprawidłowy adres email",
