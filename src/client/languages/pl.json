@@ -131,7 +131,8 @@
 		"filters": "Filtry",
 		"deleteMessage": "Czy na pewno chcesz usunąć migrenę?",
 		"cancel": "Anuluj",
-		"delete": "Usuń"
+		"delete": "Usuń",
+		"now": "Teraz"
 	},
 	"date":{
 		"painStarted": "Ból zaczął się",

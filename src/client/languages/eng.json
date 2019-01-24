@@ -131,7 +131,8 @@
 		"filters": "Filters",
 		"deleteMessage": "Are you sure you want to delete migraine?",
 		"cancel": "Cancel",
-		"delete": "Delete"
+		"delete": "Delete",
+		"now": "Now"
 	},
 	"date":{
 		"painStarted": "Pain started at",
