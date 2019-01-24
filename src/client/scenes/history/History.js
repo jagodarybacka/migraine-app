@@ -14,6 +14,7 @@ import {languageText} from '../../languages/MultiLanguage.js';
 import customImg from '../../assets/filter.png'
 import closeIcon from '../../assets/exit.png'
 import expandIcon from '../../assets/expand.png'
+import collapseIcon from '../../assets/collapse.png'
 import clearFiltersIcon from '../../assets/nofilter.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
@@ -382,7 +383,7 @@ class History extends Component {
           />
       )
     }) : '';
-    const icon = this.state.currentFilter === "date" ? closeIcon : expandIcon;
+    const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
     const filtersModal = this.state.filtersVisible ? (
       <div>
       <FiltersTitle>{languageText.history.filters}</FiltersTitle>
