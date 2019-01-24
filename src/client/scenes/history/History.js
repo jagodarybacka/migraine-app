@@ -15,7 +15,6 @@ import customImg from '../../assets/custom-options.png'
 import collapseIcon from '../../assets/collapse.png'
 import expandIcon from '../../assets/expand.png'
 import exitIcon from '../../assets/exit.png'
-import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
 
@@ -107,7 +106,8 @@ class History extends Component {
         start: undefined,
         end: undefined
       },
-      currentFilter: ''
+      currentFilter: '',
+      datesApplied: false
     }
 
     this.getIntensity = this.getIntensity.bind(this);
@@ -293,7 +293,8 @@ class History extends Component {
   confirmDate() {
     this.setState((prevState) => ({
       ...prevState,
-      currentFilter: ''
+      currentFilter: '',
+      datesApplied: true
     }), () => this.filterData())
   }
 
@@ -301,6 +302,7 @@ class History extends Component {
     this.setState((prevState) => ({
       ...prevState,
       currentFilter: '',
+      datesApplied: false,
       filters: {},
       dates: {
         start: undefined,
@@ -346,7 +348,7 @@ class History extends Component {
   }
 
   filterVisibleChange(filter) {
-    if(this.state.currentFilter == filter) {
+    if(this.state.currentFilter === filter) {
       this.setState((prevState) => ({
         ...prevState,
         currentFilter: ''
@@ -380,12 +382,10 @@ class History extends Component {
       )
     }) : '';
     const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
-    // TODO: please change line below - to indicate when date filter is applied
-    const dateHeaderIsApplied = !!this.state.dates.start && !!this.state.dates.end;
     const filtersModal = this.state.filtersVisible ? (
       <div>
       <FiltersTitle>{languageText.history.filters}</FiltersTitle>
-      <Title className={"date__header " + (dateHeaderIsApplied ? "date__header--applied": "")} onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
+      <Title className={"date__header " + (this.state.datesApplied ? "date__header--applied": "")} onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
       { this.state.currentFilter === "date" &&
         (<CustomPeriodHistory valueStart={this.state.dates.start} valueEnd={this.state.dates.end} onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.confirmDate}/>) }
       { Checkboxes }
