@@ -6,7 +6,7 @@ export const theme = {
     buttonColor:"#BDBDBD",
     buttonColorSecondary:"#757575",
     buttonColorHover:"#E0E0E0",
-    dividerColor:"#333333",
+    dividerColor: "#282828",
     buttonFontColor:"#212121",
     iconBackgroundColor:"#424242"
 };
