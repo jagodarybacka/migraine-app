@@ -50,7 +50,7 @@ import styled from 'styled-components'
     text-align: center;
     margin: 0.5em 0 0;
     font-size: 1em;
-    opacity: 0.6;
+    opacity: 0.7;
   }
 `
 
@@ -71,11 +71,12 @@ export const CustomIcon = styled.img`
   position: absolute;
   top: 2em;
   right: 1em;
+  opacity: 0.7;
 `
 
 export const QuestionIcon = styled(CustomIcon)`
   left: 1em;
-  opacity: 0.6;
+  opacity: 0.7;
 `
 
 export const CustomPeriodComponent = styled.div`

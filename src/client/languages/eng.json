@@ -131,7 +131,9 @@
 	},
 	"history":{
 		"noMore": "No more entries",
-		"title":"Recent migraines"
+		"title":"Recent migraines",
+		"filters": "Filters",
+		"now": "Now"
 	},
 	"date":{
 		"painStarted": "Pain started at",

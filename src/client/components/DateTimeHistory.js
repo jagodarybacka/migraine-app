@@ -6,7 +6,6 @@ import {languageText} from '../languages/MultiLanguage.js';
 
 const TimeDateComponent = styled.div`
   display: inline-block;
-  border: 2px solid #000;
   align-items: center;
   background-color: #FFFFFF;
   justify-content: center;

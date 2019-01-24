@@ -38,7 +38,7 @@ export const QuestionIcon = styled.img`
   top: 1em;
   z-index: 100;
   left: 1em;
-  opacity: 0.6;
+  opacity: 0.7;
 `
 
 export const Select = styled.select`
