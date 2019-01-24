@@ -41,6 +41,7 @@ const CustomIcon = styled.img`
   right: calc(50% - 12.5px);
   position: absolute;
   margin-top: 2.4rem;
+  opacity: 0.7;
 `
 const ExitIcon = styled.img`
   width: 20px;
@@ -48,6 +49,7 @@ const ExitIcon = styled.img`
   right: 1.2rem;
   position: absolute;
   margin-top: calc(4rem);
+  opacity: 0.7;
 `
 
 const ClearIcon = styled.img`
@@ -56,6 +58,7 @@ const ClearIcon = styled.img`
   left: 1.2rem;
   position: absolute;
   margin-top: 4rem;
+  opacity: 0.7;
 `
 const Records = styled.ul`
     display:flex;
