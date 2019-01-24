@@ -128,7 +128,10 @@
 	"history":{
 		"noMore": "Koniec wpisów",
 		"title": "Ostatnie migreny",
-		"filters": "Filtry"
+		"filters": "Filtry",
+		"deleteMessage": "Czy na pewno chcesz usunąć migrenę?",
+		"cancel": "Anuluj",
+		"delete": "Usuń"
 	},
 	"date":{
 		"painStarted": "Ból zaczął się",

@@ -128,7 +128,10 @@
 	"history":{
 		"noMore": "No more entries",
 		"title":"Recent migraines",
-		"filters": "Filters"
+		"filters": "Filters",
+		"deleteMessage": "Are you sure you want to delete migraine?",
+		"cancel": "Cancel",
+		"delete": "Delete"
 	},
 	"date":{
 		"painStarted": "Pain started at",
