@@ -8,6 +8,7 @@ import {getTheme} from '../../themes/ThemeHandler.js';
 
 import RecordCard from '../../components/RecordCard'
 
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
@@ -100,7 +101,18 @@ const NoMoreStyle = styled.ul`
     padding: 0;
     margin-bottom: 5rem;
 `
+const DeleteModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: calc(50% - 150px);
+  z-index: 100;
+  background: ${props=>props.theme.backgroundColor}
+  text-align: center;
+  width: 300px;
+  padding-bottom: 1em;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 
+`
 
 class History extends Component {
   constructor(props) {
@@ -120,11 +132,16 @@ class History extends Component {
         end: undefined
       },
       currentFilter: '',
-      datesApplied: false
+      datesApplied: false,
+
+      showDeleteModal: false,
+      idToDelete: null
     }
 
     this.getIntensity = this.getIntensity.bind(this);
     this.deleteReport = this.deleteReport.bind(this);
+    this.askToDelete = this.askToDelete.bind(this);
+    this.cancelDeleteModal = this.cancelDeleteModal.bind(this);
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
     this.formatDuration = this.formatDuration.bind(this);
@@ -231,18 +248,41 @@ class History extends Component {
     history.push(`summary/`, {data: item, preview: true})
   }
 
-  deleteReport(evt){
-    evt.stopPropagation()
-    if(evt.target.id){
-      const id = evt.target.id;
-      const url = "/api/reports/" + id;
-      axios.delete(url)
-      .then((res) => {
-        this.componentDidMount();
+  askToDelete(ev) {
+    ev.stopPropagation()
+    const id = ev.target.id
+    if (id){
+      this.setState({
+        idToDelete: id,
+        showDeleteModal: true
       })
-      .catch((err) => console.log(err));
     }
+  }
 
+  deleteReport() {
+    this.setState({
+      showDeleteModal: false,
+    }, () => {
+      const id = this.state.idToDelete;
+      const url = "/api/reports/" + id;
+      if (id) {
+        axios.delete(url)
+        .then((res) => {
+          this.setState({
+            idToDelete: null
+          })
+          this.componentDidMount();
+        })
+        .catch((err) => console.log(err));
+      }
+    })
+  }
+
+  cancelDeleteModal() {
+    this.setState({
+      showDeleteModal: false,
+      idToDelete: null
+    })
   }
 
   parseHistory(data) {
@@ -425,10 +465,18 @@ class History extends Component {
       </div>
     ) : ''
 
+    const deleteModal = this.state.showDeleteModal ? (
+      <DeleteModal theme={this.props.theme}>
+        <h3>{languageText.history.deleteMessage}</h3>
+        <Button small text={languageText.history.cancel} onClick={this.cancelDeleteModal}/>
+        <Button small primary text={languageText.history.delete} onClick={this.deleteReport}/>
+      </DeleteModal>
+    ) : "";
 
     return (
       <HistoryComponent theme={this.props.theme}>
         <Header />
+        { deleteModal }
         <h2>{languageText.history.title}
         {this.state.filtersVisible === false
           ? <CustomIcon src={getTheme()=="DarkTheme" ? customImgWhite : customImg}  onClick={() => this.setState({filtersVisible: true})}/>
@@ -460,7 +508,7 @@ class History extends Component {
                           intensity={this.getIntensity(item.pain)}
                           isRecent={false}
                           id={item._id}
-                          handleDelete={this.deleteReport}
+                          handleDelete={this.askToDelete}
                           handleEdit={this.editReport}
                           hasEnd={!!item.end_date}
                           />

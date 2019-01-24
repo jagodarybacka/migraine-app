@@ -103,7 +103,7 @@ export const Menu = styled.ul`
 
 export const MenuButton = styled.li`
   margin: 0.5rem;
-  opacity: 0.6;
+  opacity: 0.7;
   width: 6em;
   h6 {
     margin: 5px 0 0 0;

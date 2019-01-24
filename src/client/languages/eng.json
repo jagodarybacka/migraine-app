@@ -133,6 +133,9 @@
 		"noMore": "No more entries",
 		"title":"Recent migraines",
 		"filters": "Filters",
+		"deleteMessage": "Are you sure you want to delete migraine?",
+		"cancel": "Cancel",
+		"delete": "Delete",
 		"now": "Now"
 	},
 	"date":{
@@ -173,7 +176,7 @@
 			"subtitle": "Unit - [mmHG], example: 120/80",
 			"pressureError": "Wrong pressure value"
 		},
-		"aura": "aura",
+		"aura": "Aura",
 		"notes": "Notes",
 		"notesPlaceholder": "Write something...",
 		"reliefs": "Reliefs",
