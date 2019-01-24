@@ -35,26 +35,26 @@ const HistoryComponent = styled.section`
 
 `
 const CustomIcon = styled.img`
-  width: 30px;
+  width: 25px;
   height: auto;
   right: 1rem;
   position: absolute;
   margin-top: 2rem;
 `
 const ExitIcon = styled.img`
-  width: 30px;
+  width: 25px;
   height: auto;
   right: 1.2rem;
   position: absolute;
-  margin-top: 2rem;
+  margin-top: calc(4rem - 5px);
 `
 
 const ClearIcon = styled.img`
-  width: 25px;
+  width: 20px;
   height: auto;
   left: 1.2rem;
   position: absolute;
-  margin-top: 2rem;
+  margin-top: 4rem;
 `
 const Records = styled.ul`
     display:flex;
@@ -70,11 +70,18 @@ const Records = styled.ul`
 `
 
 const Title = styled.h3`
+  &.date__header--applied {
+    color: #e91e63;
+  }
   img {
     width: 15px;
     height: auto;
     margin-left: 5px;
   }
+`
+
+const FiltersTitle = styled.h2`
+  font-size: 1.2em;
 `
 
 const NoMoreStyle = styled.ul`
@@ -161,7 +168,7 @@ class History extends Component {
             text: answer.text
           })
         })
-        const allAnswers = this.state.customAnswers[op] 
+        const allAnswers = this.state.customAnswers[op]
         ? answers.concat(this.state.customAnswers[op]) : answers;
         this.setState((prevState) => ({
           ...prevState,
@@ -247,7 +254,7 @@ class History extends Component {
       });
     }
 
-    this.setState((prevState) => ({ 
+    this.setState((prevState) => ({
       ...prevState,
       history : history,
       order: order}));
@@ -350,16 +357,16 @@ class History extends Component {
         currentFilter: filter
       }))
     }
-    
+
   }
 
   render() {
     const { history, order, checkboxData, filters } = this.state;
     const fields =['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
-    
+
     const Checkboxes = checkboxData ? fields.map((field,id) => {
       return(
-        <CheckboxGroup 
+        <CheckboxGroup
           visible={this.state.currentFilter === field}
           key={id}
           small
@@ -372,12 +379,14 @@ class History extends Component {
           />
       )
     }) : '';
-
     const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
+    // TODO: please change line below - to indicate when date filter is applied
+    const dateHeaderIsApplied = !!this.state.dates.start && !!this.state.dates.end;
     const filtersModal = this.state.filtersVisible ? (
       <div>
-      <Title className="date__header" onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
-      { this.state.currentFilter === "date" && 
+      <FiltersTitle>{languageText.history.filters}</FiltersTitle>
+      <Title className={"date__header " + (dateHeaderIsApplied ? "date__header--applied": "")} onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
+      { this.state.currentFilter === "date" &&
         (<CustomPeriodHistory valueStart={this.state.dates.start} valueEnd={this.state.dates.end} onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.confirmDate}/>) }
       { Checkboxes }
       </div>
@@ -388,11 +397,11 @@ class History extends Component {
       <HistoryComponent >
         <Header />
         <h2>{languageText.history.title}
-        {this.state.filtersVisible === false 
-          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/> 
+        {this.state.filtersVisible === false
+          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/>
           : <ExitIcon  src={collapseIcon} onClick={() => this.setState({filtersVisible: false})}/>}
         {this.state.filtersVisible === true
-          ? (<ClearIcon src={exitIcon} alt="clear" onClick={this.clearFilters}/>) 
+          ? (<ClearIcon src={exitIcon} alt="clear" onClick={this.clearFilters}/>)
           : ""}
         </h2>
         <div style={{ width: '100%' }}>
