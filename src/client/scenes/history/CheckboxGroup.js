@@ -9,10 +9,6 @@ const CheckboxGroupComponent = styled.div`
     width: 100%;
     flex-direction: column;
     display: flex;
-    h3{
-      text-transform: capitalize;
-      text-align: center;
-    }
     .checkbox__group {
       display: flex;
       flex-direction: row;
@@ -22,6 +18,7 @@ const CheckboxGroupComponent = styled.div`
 `
 
 const Title = styled.h3`
+  text-align: center;
   img {
     width: 15px;
     height: auto;
