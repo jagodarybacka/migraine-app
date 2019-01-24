@@ -8,14 +8,16 @@ export const SettingsComponent = styled.div`
   margin: 0;
   text-align: center;
   height: auto;
-  height: 100%;
   background-color:${props => props.theme.backgroundColor}
   color:${props => props.theme.fontColor}
+
+  .chosenLang{
+    color: red;
+  }
 `
 
 export const SettingsCard = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

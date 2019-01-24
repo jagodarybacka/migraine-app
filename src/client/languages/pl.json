@@ -81,6 +81,12 @@
 		"settings": "ustawieniach aplikacji",
 		"customize": " możesz wybrać elementy wyświetlane w formularzu oraz dodać własne odpowiedzi."
 	},
+	"dateErrors": {
+		"invalidEndDate": "Data końcowa nie może być większa niż teraz",
+		"invalidStartDate": "Data początkowa nie może być większa niż teraz",
+		"invalidDatesEnd": "Data końcowa jest wcześniejsza od początkowej",
+		"invalidDatesStart": "Data początkowa jest późniejsza niż data końcowa"
+	},
 	"welcome":{
 		"migraine": "Migraine app",
 		"tapToStart": "Kliknij, aby rozpocząć..."
@@ -104,7 +110,8 @@
 		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
 		"placeholder": "Wprowadź ",
 		"city": "miasto",
-		"setLocation": "Ustaw lokalizację"
+		"setLocation": "Ustaw lokalizację",
+		"errorCity": "Nie znaleziono miasta"
 	},
 	"register":{
 		"invalidEmail": "Nieprawidłowy adres email",
@@ -161,7 +168,8 @@
 		},
 		"pressure": {
 			"title": "Ciśnienie krwi",
-			"subtitle": "Jednostka - [mmHG], przykład: 120/80"
+			"subtitle": "Jednostka - [mmHG], przykład: 120/80",
+			"pressureError": "Nieprawidłowa wartość"
 		},
 		"aura": "aura",
 		"notes": "Notatki",
@@ -226,7 +234,7 @@
 			{"text": "Zimny prysznic", "value": "Cold shower"},
 			{"text": "Kostki lodu", "value": "Ice packs"},
 			{"text": "Termofor", "value": "Heat pad"},
-			{"text": "Żadne/Inne", "value": "None/Others"}
+			{"text": "Inne", "value": "None/Others"}
 		]
 	},
 	"reports":{
@@ -355,7 +363,7 @@
 		"resetPassword": "Zresetuj hasło",
 		"reset": "Resetuj",
 		"password": "Hasło",
-		"emailNotFound": "Nie znaleziono adresu email",
+		"emailNotFound": "Niepoprawny token lub ważność tokenu wygasła",
 		"error8chars": "Pole musi być wypełnione conajmniej 8 znakami i posiadać co najmniej jedną literę i jedną cyfrę."
 	},
 	"pdfGeneration": {
@@ -365,7 +373,9 @@
 		"stats30Header": "Ostatnie 30 dni",
 		"stats60Header": "Ostatnie 60 dni",
 		"statsYearHeader": "Ostatni rok",
-		"statsAllHeader": "Od czasu założenia konta",
+		"statsAllHeaderNone": "Od początku",
+		"statsAllHeaderRegister": "Od czasu założenia konta",
+		"statsAllHeaderAttack": "Od pierwszej migreny",
 		"attacks": "Liczba migren",
 		"painDays": "Dni z bólem",
 		"noPainDays": "Dni bez bólu",

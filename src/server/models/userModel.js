@@ -26,9 +26,9 @@ var UserSchema = new Schema({
 	}],
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
-	weather_forecasts: {
+	weather_forecasts: [{
 		type: Object
-	},
+	}],
 	custom_answers: {
 		localization: [{ type: String }],
 		aura: [{ type: String }],

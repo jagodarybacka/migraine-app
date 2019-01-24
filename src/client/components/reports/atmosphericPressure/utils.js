@@ -22,7 +22,7 @@ const parseForecast = (forecast, from, to) => {
   }))
 
   forecast.forEach((el) => {
-    const index = dates.findIndex(({date}) => date.toString()  === new Date(el.dt_txt).toString())
+    const index = dates.findIndex(({date}) => date.getTime()  === new Date(el.dt_txt).getTime())
     if (dates[index]) {
       dates[index].pressure = el.main.pressure;
       dates[index].omit = false;

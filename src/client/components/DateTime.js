@@ -58,7 +58,9 @@ const DateTime = (props) => {
     inputDate = props.valueDate.substr(0,10)
   }
 
-
+  const currentDate = new Date();
+  const maxDate = currentDate.getFullYear() + "-" + ("00" + (currentDate.getMonth()+1)).substr(-2,2) + "-" + currentDate.getDate();
+  
   const el = props.date ? (
     <TimeDateComponent>
       <label>{languageText.dateTime.date}</label>
@@ -67,6 +69,7 @@ const DateTime = (props) => {
         value={inputDate}
         name={`${props.name}_date`}
         type='date'
+        max={maxDate}
         id={props.id}
         onChange={props.onChange}
       />

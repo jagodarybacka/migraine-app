@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const OftenTogetherComponent = styled.div`
   background:${props => (props.theme.backgroundColorSecondary)};
+  min-width: 300px;
   margin: 0 5%;
   padding: 1.5em 0;
   position: relative;
