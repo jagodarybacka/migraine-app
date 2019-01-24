@@ -65,7 +65,7 @@ class ForgottenPassword extends Component {
                 email: emailReset.value
             })
             .then(res => {
-                if(res.status === 404){
+                if(res.status === 401){
                     alert(languageText.forgottenPassword.emailNotFound);
                     return;
                 }

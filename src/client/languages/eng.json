@@ -81,6 +81,12 @@
 		"settings": "app settings",
 		"customize": " you can choose form fields to include and add custom answers."
 	},
+	"dateErrors": {
+		"invalidEndDate": "End date can't be greater than now",
+		"invalidStartDate": "Start date can't be greater than now",
+		"invalidDatesEnd": "End date is lower than start date",
+		"invalidDatesStart": "Start date is greater than end date"
+	},
 	"welcome":{
 		"migraine": "Migraine app",
 		"tapToStart": "Tap to start..."
@@ -104,7 +110,8 @@
 		"geolocationDisabled": "Your geolocation is disabled. You can set your city manually:",
 		"placeholder": "Enter ",
 		"city": "city",
-		"setLocation": "Set localization"
+		"setLocation": "Set localization",
+		"errorCity": "No city found"
 	},
 	"register":{
 		"invalidEmail": "Invalid email address.",
@@ -226,7 +233,7 @@
 			{"text": "Cold shower", "value": "Cold shower"},
 			{"text": "Ice packs", "value": "Ice packs"},
 			{"text": "Heat pad", "value": "Heat pad"},
-			{"text": "None of these/others", "value": "None/Others"}
+			{"text": "Others", "value": "None/Others"}
 		]
 	},
 	"reports":{
@@ -355,7 +362,7 @@
 		"resetPassword": "Reset Password",
 		"reset": "Reset",
 		"password": "Password",
-		"emailNotFound": "Email not found",
+		"emailNotFound": "Reset token invalid or has expired",
 		"error8chars": "This field must be greater than 8 characters and contain at least one letter and one number"
 	},
 	"pdfGeneration": {
@@ -365,7 +372,9 @@
 		"stats30Header": "Last 30 days",
 		"stats60Header": "Last 60 days",
 		"statsYearHeader": "Last year",
-		"statsAllHeader": "Since register",
+		"statsAllHeaderNone": "Since beginning",
+		"statsAllHeaderRegister": "Since register",
+		"statsAllHeaderAttack": "Since first migraine",
 		"attacks": "Migraines count",
 		"painDays": "Pain days",
 		"noPainDays": "No pain days",

@@ -7,7 +7,7 @@ import App from './client/App';
 
 import * as serviceWorker from './client/serviceWorker';
 
-//axios.defaults.baseURL = 'http://localhost:8080';
+// axios.defaults.baseURL = 'http://localhost:8080';
 
 axios.interceptors.response.use(response => {
     return response;
