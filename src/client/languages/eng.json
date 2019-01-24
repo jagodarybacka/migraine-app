@@ -164,7 +164,8 @@
 		},
 		"pressure": {
 			"title": "Blood pressure",
-			"subtitle": "Unit - [mmHG], example: 120/80"
+			"subtitle": "Unit - [mmHG], example: 120/80",
+			"pressureError": "Wrong pressure value"
 		},
 		"aura": "aura",
 		"notes": "Notes",
