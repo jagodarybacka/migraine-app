@@ -21,7 +21,7 @@ import axios from 'axios';
 import TextInput from '../../components/TextInput';
 import { SettingsComponent, SettingsCard, Buttons, Error, 
   LanguageButtons, List, FormButtons, Menu, MenuButton } from './styles';
-import {currentTheme, setTheme, getTheme, toggleAutomaticThemeStatus, getAutomaticThemeStatus} from '../../themes/ThemeHandler.js';
+import {setTheme, getTheme, toggleAutomaticThemeStatus, getAutomaticThemeStatus} from '../../themes/ThemeHandler.js';
 
 
 class Settings extends Component {
