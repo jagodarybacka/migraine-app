@@ -47,7 +47,7 @@ const AtmosphericPressureComponent = styled.div`
     right: 0;
     top: 1em;
     font-size: 1em;
-    opacity: 0.6;
+    opacity: 0.7;
   }
 `
 
@@ -58,10 +58,11 @@ export const CustomIcon = styled.img`
   top: 1em;
   right: 1em;
   z-index: 100;
+  opacity: 0.7;
 `
 export const QuestionIcon = styled(CustomIcon)`
   left: 1em;
-  opacity: 0.6;
+  opacity: 0.7;
 `
 export const CustomPeriodComponent = styled.div`
   position: absolute;

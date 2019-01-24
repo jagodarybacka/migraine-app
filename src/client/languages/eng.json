@@ -129,6 +129,9 @@
 		"noMore": "No more entries",
 		"title":"Recent migraines",
 		"filters": "Filters",
+		"deleteMessage": "Are you sure you want to delete migraine?",
+		"cancel": "Cancel",
+		"delete": "Delete",
 		"now": "Now"
 	},
 	"date":{

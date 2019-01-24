@@ -129,6 +129,9 @@
 		"noMore": "Koniec wpisów",
 		"title": "Ostatnie migreny",
 		"filters": "Filtry",
+		"deleteMessage": "Czy na pewno chcesz usunąć migrenę?",
+		"cancel": "Anuluj",
+		"delete": "Usuń",
 		"now": "Teraz"
 	},
 	"date":{

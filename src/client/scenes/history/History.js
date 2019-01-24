@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import RecordCard from '../../components/RecordCard'
 
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
@@ -16,7 +17,6 @@ import closeIcon from '../../assets/exit.png'
 import expandIcon from '../../assets/expand.png'
 import collapseIcon from '../../assets/collapse.png'
 import clearFiltersIcon from '../../assets/nofilter.png'
-import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
 
@@ -41,6 +41,7 @@ const CustomIcon = styled.img`
   right: calc(50% - 12.5px);
   position: absolute;
   margin-top: 2.4rem;
+  opacity: 0.7;
 `
 const ExitIcon = styled.img`
   width: 20px;
@@ -48,6 +49,7 @@ const ExitIcon = styled.img`
   right: 1.2rem;
   position: absolute;
   margin-top: calc(4rem);
+  opacity: 0.7;
 `
 
 const ClearIcon = styled.img`
@@ -56,6 +58,7 @@ const ClearIcon = styled.img`
   left: 1.2rem;
   position: absolute;
   margin-top: 4rem;
+  opacity: 0.7;
 `
 const Records = styled.ul`
     display:flex;
@@ -89,7 +92,18 @@ const NoMoreStyle = styled.ul`
     padding: 0;
     margin-bottom: 5rem;
 `
+const DeleteModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: calc(50% - 150px);
+  z-index: 100;
+  background: #fff;
+  text-align: center;
+  width: 300px;
+  padding-bottom: 1em;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 
+`
 
 class History extends Component {
   constructor(props) {
@@ -109,11 +123,16 @@ class History extends Component {
         end: undefined
       },
       currentFilter: '',
-      datesApplied: false
+      datesApplied: false,
+
+      showDeleteModal: false,
+      idToDelete: null
     }
 
     this.getIntensity = this.getIntensity.bind(this);
     this.deleteReport = this.deleteReport.bind(this);
+    this.askToDelete = this.askToDelete.bind(this);
+    this.cancelDeleteModal = this.cancelDeleteModal.bind(this);
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
     this.formatDuration = this.formatDuration.bind(this);
@@ -220,18 +239,41 @@ class History extends Component {
     history.push(`summary/`, {data: item, preview: true})
   }
 
-  deleteReport(evt){
-    evt.stopPropagation()
-    if(evt.target.id){
-      const id = evt.target.id;
-      const url = "/api/reports/" + id;
-      axios.delete(url)
-      .then((res) => {
-        this.componentDidMount();
+  askToDelete(ev) {
+    ev.stopPropagation()
+    const id = ev.target.id
+    if (id){
+      this.setState({
+        idToDelete: id,
+        showDeleteModal: true
       })
-      .catch((err) => console.log(err));
     }
+  }
 
+  deleteReport() {
+    this.setState({
+      showDeleteModal: false,
+    }, () => {
+      const id = this.state.idToDelete;
+      const url = "/api/reports/" + id;
+      if (id) {
+        axios.delete(url)
+        .then((res) => {
+          this.setState({
+            idToDelete: null
+          })
+          this.componentDidMount();
+        })
+        .catch((err) => console.log(err));
+      }
+    })
+  }
+
+  cancelDeleteModal() {
+    this.setState({
+      showDeleteModal: false,
+      idToDelete: null
+    })
   }
 
   parseHistory(data) {
@@ -410,10 +452,18 @@ class History extends Component {
       </div>
     ) : ''
 
+    const deleteModal = this.state.showDeleteModal ? (
+      <DeleteModal>
+        <h3>{languageText.history.deleteMessage}</h3>
+        <Button small text={languageText.history.cancel} onClick={this.cancelDeleteModal}/>
+        <Button small primary text={languageText.history.delete} onClick={this.deleteReport}/>
+      </DeleteModal>
+    ) : "";
 
     return (
       <HistoryComponent >
         <Header />
+        { deleteModal }
         <h2>{languageText.history.title}
         {this.state.filtersVisible === false
           ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/>
@@ -445,7 +495,7 @@ class History extends Component {
                           intensity={this.getIntensity(item.pain)}
                           isRecent={false}
                           id={item._id}
-                          handleDelete={this.deleteReport}
+                          handleDelete={this.askToDelete}
                           handleEdit={this.editReport}
                           hasEnd={!!item.end_date}
                           />
