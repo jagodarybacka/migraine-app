@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment';
 import { withTheme } from "@callstack/react-theme-provider";
+import {getTheme} from '../../themes/ThemeHandler.js';
 
 import RecordCard from '../../components/RecordCard'
 
@@ -16,6 +17,10 @@ import customImg from '../../assets/custom-options.png'
 import collapseIcon from '../../assets/collapse.png'
 import expandIcon from '../../assets/expand.png'
 import exitIcon from '../../assets/exit.png'
+import customImgWhite from '../../assets/custom-options-white.png'
+import collapseIconWhite from '../../assets/collapse-white.png'
+import expandIconWhite from '../../assets/expand-white.png'
+import exitIconWhite from '../../assets/exit-white.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
@@ -376,7 +381,10 @@ class History extends Component {
       )
     }) : '';
 
-    const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
+    const collapseIconColored = getTheme()=="DarkTheme" ? collapseIconWhite : collapseIcon;
+    const expandIconColored = getTheme()=="DarkTheme" ? expandIconWhite : expandIcon;
+
+    const icon = this.state.currentFilter === "date" ? collapseIconColored : expandIconColored;
     const filtersModal = this.state.filtersVisible ? (
       <div>
       <Title className="date__header" onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
@@ -392,10 +400,10 @@ class History extends Component {
         <Header />
         <h2>{languageText.history.title}
         {this.state.filtersVisible === false 
-          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/> 
-          : <ExitIcon  src={collapseIcon} onClick={() => this.setState({filtersVisible: false})}/>}
+          ? <CustomIcon src={getTheme()=="DarkTheme" ? customImgWhite : customImg} onClick={() => this.setState({filtersVisible: true})}/> 
+          : <ExitIcon  src={collapseIconColored} onClick={() => this.setState({filtersVisible: false})}/>}
         {this.state.filtersVisible === true
-          ? (<ClearIcon src={exitIcon} alt="clear" onClick={this.clearFilters}/>) 
+          ? (<ClearIcon src={getTheme()=="DarkTheme" ? exitIconWhite :exitIcon} alt="clear" onClick={this.clearFilters}/>) 
           : ""}
         </h2>
         <div style={{ width: '100%' }}>
