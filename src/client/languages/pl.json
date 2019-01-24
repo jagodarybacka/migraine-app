@@ -128,7 +128,8 @@
 	"history":{
 		"noMore": "Koniec wpisów",
 		"title": "Ostatnie migreny",
-		"filters": "Filtry"
+		"filters": "Filtry",
+		"now": "Teraz"
 	},
 	"date":{
 		"painStarted": "Ból zaczął się",
