@@ -11,10 +11,10 @@ import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
-import customImg from '../../assets/custom-options.png'
-import collapseIcon from '../../assets/collapse.png'
+import customImg from '../../assets/filter.png'
+import closeIcon from '../../assets/exit.png'
 import expandIcon from '../../assets/expand.png'
-import exitIcon from '../../assets/exit.png'
+import clearFiltersIcon from '../../assets/nofilter.png'
 import { check } from 'express-validator/check';
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
@@ -37,16 +37,16 @@ const HistoryComponent = styled.section`
 const CustomIcon = styled.img`
   width: 25px;
   height: auto;
-  right: 1rem;
+  right: calc(50% - 12.5px);
   position: absolute;
-  margin-top: 2rem;
+  margin-top: 2.4rem;
 `
 const ExitIcon = styled.img`
-  width: 25px;
+  width: 20px;
   height: auto;
   right: 1.2rem;
   position: absolute;
-  margin-top: calc(4rem - 5px);
+  margin-top: calc(4rem);
 `
 
 const ClearIcon = styled.img`
@@ -379,7 +379,7 @@ class History extends Component {
           />
       )
     }) : '';
-    const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
+    const icon = this.state.currentFilter === "date" ? closeIcon : expandIcon;
     // TODO: please change line below - to indicate when date filter is applied
     const dateHeaderIsApplied = !!this.state.dates.start && !!this.state.dates.end;
     const filtersModal = this.state.filtersVisible ? (
@@ -399,9 +399,9 @@ class History extends Component {
         <h2>{languageText.history.title}
         {this.state.filtersVisible === false
           ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/>
-          : <ExitIcon  src={collapseIcon} onClick={() => this.setState({filtersVisible: false})}/>}
+          : <ExitIcon  src={closeIcon} onClick={() => this.setState({filtersVisible: false})}/>}
         {this.state.filtersVisible === true
-          ? (<ClearIcon src={exitIcon} alt="clear" onClick={this.clearFilters}/>)
+          ? (<ClearIcon src={clearFiltersIcon} alt="clear" onClick={this.clearFilters}/>)
           : ""}
         </h2>
         <div style={{ width: '100%' }}>
