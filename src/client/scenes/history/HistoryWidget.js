@@ -68,8 +68,8 @@ class HistoryWidget extends Component {
   render() {
     const item = this.props.item;
     if(item){
-      const startDate = moment(new Date(item.start_date),'ddd MMM DD YYYY HH:mm:ss');
-                    const endDate =  item.end_date ? moment(new Date(item.end_date),'ddd MMM DD YYYY HH:mm:ss') : moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
+      const startDate = moment(new Date(item.start_date));
+      const endDate =  item.end_date ? moment(new Date(item.end_date)) :  moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
       const duration = moment.duration(endDate.diff(startDate));
       const formattedDuration = this.formatDuration(duration);
       return (
