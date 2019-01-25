@@ -70,9 +70,9 @@ export function getTheme() {
 export let currentTheme = (() => {
 
     if (localStorage.getItem('automaticTheme') == null)
-        localStorage.setItem('automaticTheme', false);
+        localStorage.setItem('automaticTheme', true);
 
-    if (window.themeFile == undefined) {
+    if (window.themeFile === undefined) {
         let theme = localStorage.getItem('theme');
         if (theme == null) {
             localStorage.setItem('theme', 'LightTheme');

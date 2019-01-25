@@ -22,7 +22,7 @@ import {languageText} from '../../languages/MultiLanguage.js';
 
 const SummaryComponent = styled.section`
   display: block;
-  padding: 7rem 0;
+  padding: 7rem 0 0 0;
   margin: 0;
   text-align: center;
   background-color: ${props=>props.theme.backgroundColor};

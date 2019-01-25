@@ -13,13 +13,10 @@ const TimeDateComponent = styled.div`
   align-items: center;
   justify-content: center;
   margin: 1rem 10%;
-  padding: 2.5rem 1rem 1.5rem 1rem;
+  padding: 2rem 1rem 1.5rem 1rem;
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
-
-  background-color:${props => props.theme.backgroundColor}
-  color:${props => props.theme.fontColor}
 
   img {
     width: 24px;
@@ -32,13 +29,12 @@ const TimeDateComponent = styled.div`
     border-bottom: 1px solid #9e9e9e;
     margin: 0 0.5rem;
     align-text: center;
-    color:${props => props.theme.fontColor}
   }
 
   label {
+    color: #4C5062;
     position: absolute;
     top: 0.5rem;
-//    left: 45px;
     font-size: 0.8rem;
     text-transform: uppercase;
   }
@@ -91,4 +87,4 @@ const  DateTimeCustomPeriod = (props) => {
 }
 
 
-export default withTheme(DateTimeCustomPeriod);
+export default DateTimeCustomPeriod;
