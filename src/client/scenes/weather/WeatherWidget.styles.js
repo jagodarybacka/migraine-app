@@ -18,6 +18,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 position: relative;
+width: 100%;
 padding: 0.5em 0 0;
 
 p {
@@ -47,6 +48,26 @@ img {
   padding: 0 0.5rem 0 1rem;
   width: 60px;
   height: 60px;
+}
+
+.location {
+  padding: unset;
+  width: 32px;
+  height: auto;
+  opacity: ${props => props.localization === false ? '1' : '0.3'};
+  position: absolute;
+  top: 1em;
+  right: 0.5em;
+}
+
+.use__localization {
+  padding: unset;
+  width: 32px;
+  height: auto;
+  opacity: ${props => props.localization === true ? '1' : '0.3'};
+  position: absolute;
+  top: 1em;
+  left: 0.5em;
 }
 
 `

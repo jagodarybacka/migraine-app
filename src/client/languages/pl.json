@@ -110,6 +110,7 @@
 		"pressure": "Ciśnienie atmosferyczne",
 		"windSpeed": "Prędkość wiatru",
 		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
+		"changeCity": "Zmień miasto:",
 		"placeholder": "Wprowadź ",
 		"city": "miasto",
 		"setLocation": "Ustaw lokalizację",

@@ -92,6 +92,9 @@ class Login extends Component {
               localStorage.removeItem('weather_time');
               localStorage.removeItem('weather');
               localStorage.removeItem('city_name');
+              localStorage.removeItem('theme');
+              localStorage.removeItem('automaticTheme');
+              localStorage.removeItem('use_localization');
             }
           }
 					localStorage.setItem('isLogged', true);
