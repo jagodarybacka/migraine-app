@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { validatePassword, validateLength, validateEmail } from '../../utils/Validators';
+import { withTheme } from "@callstack/react-theme-provider";
+
 import { generatePdf } from '../../utils/pdfGeneration';
 import CustomAnswer from './CustomAnswer';
 import Header from '../../components/Header';
@@ -19,6 +21,8 @@ import axios from 'axios';
 import TextInput from '../../components/TextInput';
 import { SettingsComponent, SettingsCard, Buttons, Error, 
   LanguageButtons, List, FormButtons, Menu, MenuButton } from './styles';
+import {setTheme, getTheme, toggleAutomaticThemeStatus, getAutomaticThemeStatus} from '../../themes/ThemeHandler.js';
+
 
 class Settings extends Component {
   constructor(props){
@@ -265,6 +269,10 @@ class Settings extends Component {
     window.location.reload();
   }
 
+  setNewTheme(theme) {
+    setTheme(theme, true);
+  }
+
   toggleUserFormField(field) {
     const old = this.getUserFormField(field)
     localStorage.setItem(`form-${field}`, !old)
@@ -389,7 +397,8 @@ class Settings extends Component {
       : "";
 
     let currentLang = getLanguage();
-
+    let currentTheme = getTheme();
+    let automaticThemeStatus =getAutomaticThemeStatus();
     const CurrentSettings = this.state.currentTab === "form"
     ? (
       <SettingsCard>
@@ -448,10 +457,14 @@ class Settings extends Component {
     : this.state.currentTab === "app"
       ? (
         <SettingsCard>
+          <Divider text={languageText.settings.chooseTheme}/>
+            <Button onClick={() => this.setNewTheme('DarkTheme')} text={languageText.settings.dark} primary={currentTheme == "DarkTheme" && !automaticThemeStatus ? false : true} />
+            <Button onClick={() => this.setNewTheme('LightTheme')} text={languageText.settings.light} primary={currentTheme == "LightTheme" && !automaticThemeStatus ? false : true} />
+            <Button onClick={() => toggleAutomaticThemeStatus()} text={languageText.settings.automatic} primary={automaticThemeStatus == true ? false : true} />
           <Divider text={languageText.settings.chooseLanguage}/>
           <LanguageButtons>
-          <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? true : false} />
-          <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? true : false} />
+          <Button onClick={() => this.setNewLanguage('eng')} text={languageText.settings.eng} primary={currentLang === "eng" ? false : true} />
+          <Button onClick={() => this.setNewLanguage('pl')} text={languageText.settings.pol} primary={currentLang === "pl" ? false : true} />
           </LanguageButtons>
         </SettingsCard>
       )
@@ -509,10 +522,10 @@ class Settings extends Component {
         : "";
 
     return (
-      <SettingsComponent className="Settings">
+      <SettingsComponent theme={this.props.theme} className="Settings">
           <Header />
           { CurrentSettings }
-          <Menu>
+          <Menu theme={this.props.theme}>
             <MenuButton className={this.state.currentTab === 'form' && 'selected'} onClick={() => this.handleChangeTab("form")}>
               <img src={form} alt="form" />
               <h6>{languageText.settings.formCard}</h6>
@@ -534,4 +547,4 @@ class Settings extends Component {
 }
 
 
-export default Settings;
+export default withTheme(Settings);

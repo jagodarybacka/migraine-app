@@ -8,6 +8,8 @@ export const SettingsComponent = styled.div`
   margin: 0;
   text-align: center;
   height: auto;
+  background-color:${props => props.theme.backgroundColor}
+  color:${props => props.theme.fontColor}
 
   .chosenLang{
     color: red;
@@ -62,6 +64,7 @@ export const List = styled.div`
   width: 80%;
   flex-wrap: wrap;
   justify-content: center;
+  color: black;
   h4{
     margin: 5px;
     text-transform: uppercase;
@@ -90,7 +93,8 @@ export const Menu = styled.ul`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #fff;
+  background-color:${props => props.theme.backgroundColorSecondary}
+  color:${props => props.theme.fontColor}
   list-style-type: none;
   padding: 0;
   margin: 0;

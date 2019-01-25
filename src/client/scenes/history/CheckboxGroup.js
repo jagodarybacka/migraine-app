@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import languageText from '../../languages/MultiLanguage';
 import collapseIcon from '../../assets/collapse.png'
 import expandIcon from '../../assets/expand.png'
+import collapseIconWhite from '../../assets/collapse-white.png'
+import expandIconWhite from '../../assets/expand-white.png'
+
+import {getTheme} from '../../themes/ThemeHandler.js';
 
 const CheckboxGroupComponent = styled.div`
     width: 100%;
@@ -54,7 +58,10 @@ const CheckboxGroup = (props) => {
       )
     })
 
-    const icon = props.visible ? collapseIcon : expandIcon;
+    const collapseIconColored = getTheme()=="DarkTheme" ? collapseIconWhite : collapseIcon;
+    const expandIconColored = getTheme()=="DarkTheme" ? expandIconWhite : expandIcon;
+
+    const icon = props.visible ? collapseIconColored : expandIconColored;
     const isApplied = !!values.length;
     return (
       <CheckboxGroupComponent>

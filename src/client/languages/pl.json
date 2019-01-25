@@ -1,5 +1,9 @@
 {
 	"settings":{
+		"chooseTheme": "Wybierz kolorystykę",
+		"light": "Jasna",
+		"dark": "Ciemna",
+		"automatic": "Automatycznie",
 		"formCard": "Formularz",
 		"appCard": "Aplikacja",
 		"userCard": "Użytkownik",
@@ -50,7 +54,9 @@
 
 	},
 	"home":{
-	    "add": "Dodaj ból głowy"
+	    "add": "Dodaj ból głowy",
+			"hi": "Witaj",
+			"howru": "jak się czujesz?"
 	},
 	"join":{
 	    "migraine": "Migraine app",
@@ -104,6 +110,7 @@
 		"pressure": "Ciśnienie atmosferyczne",
 		"windSpeed": "Prędkość wiatru",
 		"geolocationDisabled": "Twoja geolokalizacja jest wyłączona. Możesz ustawić miasto ręcznie:",
+		"changeCity": "Zmień miasto:",
 		"placeholder": "Wprowadź ",
 		"city": "miasto",
 		"setLocation": "Ustaw lokalizację",

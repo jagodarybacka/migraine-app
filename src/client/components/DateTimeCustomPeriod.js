@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withTheme } from "@callstack/react-theme-provider";
+
 import dateImg from '../assets/date.png'
 import timeImg from '../assets/time.png'
 
@@ -11,11 +13,10 @@ const TimeDateComponent = styled.div`
   align-items: center;
   justify-content: center;
   margin: 1rem 10%;
-  padding: 2.5rem 1rem 1.5rem 1rem;
+  padding: 2rem 1rem 1.5rem 1rem;
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
-
 
   img {
     width: 24px;
@@ -31,9 +32,9 @@ const TimeDateComponent = styled.div`
   }
 
   label {
+    color: #4C5062;
     position: absolute;
     top: 0.5rem;
-//    left: 45px;
     font-size: 0.8rem;
     text-transform: uppercase;
   }
@@ -57,7 +58,7 @@ const  DateTimeCustomPeriod = (props) => {
 
 
   const el = props.date ? (
-    <TimeDateComponent>
+    <TimeDateComponent theme={props.theme}>
       <label>{props.label==="From" ? languageText.dateTime.from : languageText.dateTime.to}</label>
       <img src={dateImg} alt="date"/>
       <input
@@ -69,7 +70,7 @@ const  DateTimeCustomPeriod = (props) => {
       />
     </TimeDateComponent>
   ) : (
-    <TimeDateComponent>
+    <TimeDateComponent theme={props.theme}>
       <label>{languageText.dateTime.time}</label>
       <img src={timeImg} alt="time"/>
       <input

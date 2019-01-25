@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { withTheme } from "@callstack/react-theme-provider";
+
 import {languageText} from '../languages/MultiLanguage.js';
 
 const Input = styled.input`
@@ -15,6 +17,8 @@ const Input = styled.input`
   border-bottom: solid 1px #4c5062;
 
   font-weight: 300;
+  border-color: ${props => props.theme.inputColor};
+  color: ${props => props.theme.inputColor};
 `;
 
 const Label = styled.label`
@@ -33,7 +37,7 @@ const Field = styled.div`
   margin-bottom: 30px;
 
   ${Label} {
-    color: ${props => (!props.isValid ? "red" : "black")};
+    color: ${props => (!props.isValid ? "red" : props.theme.fontColor)};
   }
 
   ${Input} {
@@ -57,7 +61,7 @@ const Field = styled.div`
 `;
 
 const TextInput = (props) => {
-  const { id, type, name, value, placeholder, isValid, errorMsg, onChange } = props;
+  const { id, type, name, value, placeholder, isValid, errorMsg, onChange, theme } = props;
   const text = languageText.textInput.enterYour + ` ${placeholder.toLowerCase()}`
   const hasError = !isValid && !!errorMsg;
 
@@ -65,6 +69,7 @@ const TextInput = (props) => {
     <Field isValid={!hasError}>
       <Label htmlFor={id}>{name}</Label>
       <Input
+        theme={theme}
         type={type}
         id={id} name={id}
         placeholder={text}
@@ -92,4 +97,4 @@ TextInput.defaultProps = {
   isValid: true,
 }
 
-export default TextInput
+export default withTheme(TextInput);

@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
 export const Widget = styled.section`
+
 width: 90%;
-margin: 1rem 5% 0 5%;
+margin: 1rem 5% 2em 5%;
 display: flex;
 flex-direction: column;
 position: relative;
-color: #363636;
-background-color: white;
-padding: 0;
-margin-bottom: 4rem;
+background-color: ${props=>props.theme.backgroundColorSecondary};
+color: ${props=>props.theme.fontColor};
+padding: 0.5em 0;
 box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
 `
 
@@ -18,7 +18,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 position: relative;
-padding: 2.7rem 0 0 0;
+width: 100%;
+padding: 0.5em 0 0;
 
 p {
   position: absolute;
@@ -49,6 +50,26 @@ img {
   height: 60px;
 }
 
+.location {
+  padding: unset;
+  width: 32px;
+  height: auto;
+  opacity: ${props => props.localization === false ? '1' : '0.3'};
+  position: absolute;
+  top: 1em;
+  right: 0.5em;
+}
+
+.use__localization {
+  padding: unset;
+  width: 32px;
+  height: auto;
+  opacity: ${props => props.localization === true ? '1' : '0.3'};
+  position: absolute;
+  top: 1em;
+  left: 0.5em;
+}
+
 `
 
 export const Element = styled.div`
@@ -74,7 +95,7 @@ p {
 
 export const Error = styled.h5`
   font-weight: 300;
-  color:  #ff471a; 
+  color:  #ff471a;
   margin-top: 0;
 `
 
@@ -87,8 +108,8 @@ justify-content: flex-start;
 align-items: center;
 align-content: stretch;
 position: relative;
-color: #363636;
-background-color: white;
+background-color: ${props=>props.theme.backgroundColorSecondary};
+color: ${props=>props.theme.buttonFontColor};
 padding: 0;
 padding-bottom: 2rem;
 margin-bottom: 4rem;
@@ -104,4 +125,5 @@ export const Input = styled.input`
   font-weight: 300;
   margin-top: 10px;
   margin-bottom: 30px;
+  color: ${props=>props.theme.fontColor};
 `;

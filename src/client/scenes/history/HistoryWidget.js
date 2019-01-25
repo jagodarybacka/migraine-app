@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
 import moment from 'moment';
-
+import Divider from '../../components/Divider';
 import RecordCard from '../../components/RecordCard'
 import {languageText} from '../../languages/MultiLanguage.js';
 
@@ -13,17 +13,19 @@ const Widget = styled.section`
   position: relative;
   margin: 0 5%;
   text-align: initial;
-
   h3 {
-    text-transform: uppercase;
-    font-weight: 300;
-    margin: 1rem 0;
-    align-self: flex-start;
+    margin-bottom: 1.5em;
   }
   a {
+    position: relative;
+    text-align: initial;
+
+  }
+  .history__all {
     margin: 1rem;
-    align-self: flex-end;
+    margin-bottom: 0;
     font-weight: 300;
+    text-align: right;
   }
   .RecordCard {
     margin: 0;
@@ -74,8 +76,8 @@ class HistoryWidget extends Component {
       const formattedDuration = this.formatDuration(duration);
       return (
         <Widget >
-          <h3>{languageText.historyWidget.title}</h3>
-          {item && (
+          <Divider text={languageText.historyWidget.title}/>
+          <Link to="/history">
             <RecordCard
               date={`${moment(item.start_date).format('DD.MM.YYYY')}`}
               duration={formattedDuration}
@@ -83,20 +85,22 @@ class HistoryWidget extends Component {
               isRecent={true}
               hasEnd={!!item.end_date}
             />
-          )}
-          <Link to="/history">{languageText.historyWidget.seeAll}</Link>
+            <p className="history__all">{languageText.historyWidget.seeAll}</p>
+          </Link>
         </Widget>
       );
     }
     else {
       return (
         <Widget >
-          <h3>{languageText.historyWidget.title}</h3>
-          <RecordCard
-            isMock
-            isRecent={true}
-          />
-          <Link to="/history">{languageText.historyWidget.seeAll}</Link>
+          <Divider text={languageText.historyWidget.title}/>
+          <Link to="/history">
+            <RecordCard
+              isMock
+              isRecent={true}
+            />
+            <p className="history__all">{languageText.historyWidget.seeAll}</p>
+          </Link>
         </Widget>
       )
     }
