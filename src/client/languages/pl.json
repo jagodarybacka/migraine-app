@@ -1,5 +1,9 @@
 {
 	"settings":{
+		"chooseTheme": "Wybierz kolorystykę",
+		"light": "Jasna",
+		"dark": "Ciemna",
+		"automatic": "Automatycznie",
 		"formCard": "Formularz",
 		"appCard": "Aplikacja",
 		"userCard": "Użytkownik",

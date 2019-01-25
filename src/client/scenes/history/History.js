@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment';
+import { withTheme } from "@callstack/react-theme-provider";
+import {getTheme} from '../../themes/ThemeHandler.js';
 
 import RecordCard from '../../components/RecordCard'
 
@@ -13,10 +15,15 @@ import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
 import customImg from '../../assets/filter.png'
+import customImgWhite from '../../assets/filter-white.png'
 import closeIcon from '../../assets/exit.png'
+import closeIconWhite from '../../assets/exit-white.png'
 import expandIcon from '../../assets/expand.png'
+import expandIconWhite from '../../assets/expand-white.png'
 import collapseIcon from '../../assets/collapse.png'
+import collapseIconWhite from '../../assets/collapse-white.png'
 import clearFiltersIcon from '../../assets/nofilter.png'
+import clearFiltersIconWhite from '../../assets/nofilter-white.png'
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
 
@@ -30,6 +37,8 @@ const HistoryComponent = styled.section`
     margin: 0 0 2rem 0;
     text-align: center;
   }
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
   .date__header {
     text-align: center;
   }
@@ -97,7 +106,7 @@ const DeleteModal = styled.div`
   top: 50%;
   left: calc(50% - 150px);
   z-index: 100;
-  background: #fff;
+  background: ${props=>props.theme.backgroundColor}
   text-align: center;
   width: 300px;
   padding-bottom: 1em;
@@ -441,7 +450,11 @@ class History extends Component {
           />
       )
     }) : '';
-    const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
+
+    const collapseIconColored = getTheme()=="DarkTheme" ? collapseIconWhite : collapseIcon;
+    const expandIconColored = getTheme()=="DarkTheme" ? expandIconWhite : expandIcon;
+
+    const icon = this.state.currentFilter === "date" ? collapseIconColored : expandIconColored;
     const filtersModal = this.state.filtersVisible ? (
       <div>
       <FiltersTitle>{languageText.history.filters}</FiltersTitle>
@@ -453,7 +466,7 @@ class History extends Component {
     ) : ''
 
     const deleteModal = this.state.showDeleteModal ? (
-      <DeleteModal>
+      <DeleteModal theme={this.props.theme}>
         <h3>{languageText.history.deleteMessage}</h3>
         <Button small text={languageText.history.cancel} onClick={this.cancelDeleteModal}/>
         <Button small primary text={languageText.history.delete} onClick={this.deleteReport}/>
@@ -461,15 +474,15 @@ class History extends Component {
     ) : "";
 
     return (
-      <HistoryComponent >
+      <HistoryComponent theme={this.props.theme}>
         <Header />
         { deleteModal }
         <h2>{languageText.history.title}
         {this.state.filtersVisible === false
-          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/>
-          : <ExitIcon  src={closeIcon} onClick={() => this.setState({filtersVisible: false})}/>}
+          ? <CustomIcon src={getTheme()=="DarkTheme" ? customImgWhite : customImg}  onClick={() => this.setState({filtersVisible: true})}/>
+          : <ExitIcon   src={getTheme()=="DarkTheme" ? closeIconWhite : closeIcon} onClick={() => this.setState({filtersVisible: false})}/>}
         {this.state.filtersVisible === true
-          ? (<ClearIcon src={clearFiltersIcon} alt="clear" onClick={this.clearFilters}/>)
+          ? (<ClearIcon src={getTheme()=="DarkTheme" ? clearFiltersIconWhite : clearFiltersIcon} alt="clear" onClick={this.clearFilters}/>)
           : ""}
         </h2>
         <div style={{ width: '100%' }}>
@@ -519,4 +532,4 @@ class History extends Component {
   }
 }
 
-export default withRouter(History);
+export default withRouter(withTheme(History));

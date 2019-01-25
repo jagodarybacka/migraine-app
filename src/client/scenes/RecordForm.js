@@ -5,6 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import axios from 'axios';
 import {languageText} from '../languages/MultiLanguage.js';
 import moment from 'moment';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import Button from '../components/Button'
 import Header from '../components/Header'
@@ -28,6 +29,8 @@ import {
 const Container = styled.article`
   padding: 0;
   text-align: center;
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
 
   h2 {
     text-transform: uppercase;
@@ -631,7 +634,7 @@ class RecordForm extends Component {
     }).filter(view => !!view);
 
     return (
-      <Container className="Form">
+      <Container theme={this.props.theme} className="Form">
         <Header isForm isValid={ this.state.correctDates && this.state.correctPressure } saveLink={{ pathname: this.edit ? '/summary/edit/' : 'summary/', state: { data, id: match.params.id }}} />
         <form>
 
@@ -683,4 +686,4 @@ class RecordForm extends Component {
   }
 }
 
-export default withRouter(RecordForm);
+export default withRouter(withTheme(RecordForm));

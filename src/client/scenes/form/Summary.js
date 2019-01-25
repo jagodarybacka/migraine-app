@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
@@ -21,9 +22,12 @@ import {languageText} from '../../languages/MultiLanguage.js';
 
 const SummaryComponent = styled.section`
   display: block;
-  padding: 7rem 0;
+  padding: 7rem 0 0 0;
   margin: 0;
   text-align: center;
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
+  height:100%;
   h2 {
     text-transform: uppercase;
     font-weight: 300;
@@ -47,6 +51,8 @@ const TimeDateComponent = styled.div`
   padding: 10px 0;
   background-color: #fff;
   border-radius: 20px;
+  color: ${props=>props.theme.fontColor};
+  background-color: ${props=>props.theme.backgroundColorSecondary};
 
   img {
     width: 24px;
@@ -57,16 +63,16 @@ const TimeDateComponent = styled.div`
     border-bottom: 1px solid #9e9e9e;
   }
 `
-const TimeDate = (props) => {
+const TimeDate = withTheme((props) => {
   return (
-    <TimeDateComponent>
+    <TimeDateComponent theme={props.theme}>
       <img alt='date' src={date}/>
       <p>{props.date}</p>
       <img alt='time' src={time}/>
       <p>{props.time}</p>
     </TimeDateComponent>
   )
-}
+})
 
 const AcceptComponent = styled.button`
   background-color: #f0908b;
@@ -176,13 +182,13 @@ class Summary extends Component {
       const start_date = data.start_date && data.start_time ? (
         <TimeDate date={data.start_date.substr(0,10)} time={data.start_time} />
       ) : (
-        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+        <TimeDateComponent theme={this.props.theme}>{languageText.addForm.notYet}</TimeDateComponent>
       );
 
       const end_date =  data.end_date && data.end_time  ? (
         <TimeDate date={data.end_date.substr(0,10)} time={data.end_time} />
       ) : (
-        <TimeDateComponent>{languageText.addForm.notYet}</TimeDateComponent>
+        <TimeDateComponent theme={this.props.theme}>{languageText.addForm.notYet}</TimeDateComponent>
       );
 
       const pressure = data.pressure ? (
@@ -234,7 +240,7 @@ class Summary extends Component {
        : undefined_bubble;
 
       result = (
-        <SummaryComponent>
+        <SummaryComponent theme={this.props.theme}>
           <Header />
           <h2>{languageText.addForm.summary}</h2>
 
@@ -286,4 +292,4 @@ class Summary extends Component {
   }
 }
 
-export default withRouter(Summary);
+export default withRouter(withTheme(Summary));

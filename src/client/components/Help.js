@@ -3,10 +3,12 @@ import ExitIcon from '../assets/exit.png'
 import { CustomPeriodComponent } from './reports/summary/styles'
 import {languageText} from '../languages/MultiLanguage.js';
 import styled from 'styled-components'
+import { withTheme } from "@callstack/react-theme-provider";
 
 const HelpComponent = styled(CustomPeriodComponent)`
   padding: 10px;
   box-sizing: border-box;
+  background: ${props=>props.theme.backgroundColorSecondary};
 `
 
 const Help = (props) => {
@@ -26,7 +28,7 @@ const Help = (props) => {
     }
   }
   return (
-    <HelpComponent>
+    <HelpComponent theme={props.theme}>
       <h3 className="custom__header">{ content[type].header }</h3>
       <img className="custom__cancel" src={ExitIcon} alt="exit" onClick={() => props.onConfirmFn()}/>
       <p>{ content[type].description }</p>
@@ -35,4 +37,4 @@ const Help = (props) => {
 }
 
 
-export default Help;
+export default withTheme(Help);

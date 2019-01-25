@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Button from '../../components/Button';
 import moment from 'moment';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import cloudyIcon from "../../assets/weather/cloudy.png"
 import humidityIcon from "../../assets/weather/humidity.png"
@@ -269,9 +270,9 @@ class WeatherWidget extends Component {
   
   render() {
     if(this.state.currentWeather) {
-      const {temperature,icon, humidity, pressure, rain, wind } = this.state.currentWeather
+      const {temperature,icon, humidity, pressure, rain, wind } = this.state.currentWeather;
       return (
-      <Widget >
+      <Widget theme={this.props.theme}>
         <Header>
           <p>{languageText.weather.forecast}</p>
           <img src={this.icons[icon]} alt="weatherIcon" />
@@ -310,12 +311,13 @@ class WeatherWidget extends Component {
     } else {
       const placeholder = languageText.weather.placeholder + languageText.weather.city;
       return (
-        <City>
+        <City theme={this.props.theme}>
           <Header>
             <p>{languageText.weather.forecast}</p>
             <p className="text">{languageText.weather.geolocationDisabled}</p>
           </Header>
           <Input
+            theme={this.props.theme}
             type="text"
             name="city_name"
             placeholder={placeholder}
@@ -330,4 +332,4 @@ class WeatherWidget extends Component {
   }
 }
 
-export default WeatherWidget;
+export default withTheme(WeatherWidget);

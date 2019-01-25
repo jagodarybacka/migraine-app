@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withTheme } from "@callstack/react-theme-provider";
+
 import CustomPeriod from '../../CustomPeriod'
 import Help from '../../Help'
 import { SummaryComponent, Select, CustomIcon, QuestionIcon } from './styles'
@@ -128,8 +130,9 @@ class Summary extends Component {
     )
 
     return (
-      <SummaryComponent>
+      <SummaryComponent theme={this.props.theme}>
         <Select
+          theme={this.props.theme}
           onChange={this.handleSelectChange}
           value={selectedOption}>
             {options.map((option, i) => {
@@ -164,4 +167,4 @@ class Summary extends Component {
   }
 }
 
-export default Summary;
+export default withTheme(Summary);

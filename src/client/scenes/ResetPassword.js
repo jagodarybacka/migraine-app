@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
 import axios from'axios';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import { validatePassword } from '../utils/Validators';
 import TextInput from '../components/TextInput'
@@ -10,6 +11,8 @@ import languageText from '../languages/MultiLanguage';
 
 const FormComp = styled.form`
   text-align: center;
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
 `
 
 class ResetPassword extends Component {
@@ -95,7 +98,7 @@ class ResetPassword extends Component {
     const { passwordReset } = this.state.fields;
 
     return (
-      <FormComp name="Reset password" submit="Reset" onSubmit={this.handleSubmit}>
+      <FormComp theme={this.props.theme} name="Reset password" submit="Reset" onSubmit={this.handleSubmit}>
         <h1>{languageText.resetPassword.resetPassword}</h1>
         <TextInput
           type="password"
@@ -114,4 +117,4 @@ class ResetPassword extends Component {
 }
 
 
-export default withRouter(ResetPassword);
+export default withRouter(withTheme(ResetPassword));

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Button from '../../components/Button'
 import ExitIcon from '../../assets/exit.png'
 import {languageText} from '../../languages/MultiLanguage.js';
+import { withTheme } from "@callstack/react-theme-provider";
 
 export const CustomAnswerComponent = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ export const Input = styled.input`
   font-weight: 300;
   margin-top: 10px;
   margin-bottom: 30px;
+  color: ${props=>props.theme.fontColor};
 `
 
 class CustomAnswer extends Component {
@@ -83,7 +85,8 @@ class CustomAnswer extends Component {
         <CustomAnswerComponent id="#custom-answer">
           <h3 className="custom__header">{header}</h3>
           <img className="custom__cancel" src={ExitIcon} alt="exit" onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
-          <Input 
+          <Input
+              theme = {this.props.theme}
               type="text"
               name="answer"
               placeholder={placeholder}
@@ -95,4 +98,4 @@ class CustomAnswer extends Component {
   }
 }
 
-export default CustomAnswer;
+export default withTheme(CustomAnswer);

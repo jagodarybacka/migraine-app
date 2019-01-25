@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { OftenTogetherComponent, Select, TogetherField, ErrorMessage, QuestionIcon } from './styles'
+import { withTheme } from "@callstack/react-theme-provider";
+import styled from 'styled-components';
 import {languageText} from '../../../languages/MultiLanguage.js'
 import questionImg from '../../../assets/questionmark-circle.png'
 import Help from '../../Help'
 import axios from 'axios';
 
+const SectionsContainer = styled.div`
+
+`
 class OftenTogether extends Component {
   constructor(props) {
     super(props)
@@ -154,20 +159,21 @@ class OftenTogether extends Component {
       ? (<ErrorMessage><h5>{languageText.oftenTogether.error}</h5></ErrorMessage>) : '';
 
     return (
-      <OftenTogetherComponent>
+      <OftenTogetherComponent theme={this.props.theme}>
         { IconQuestion }
         <h2>{languageText.addForm.pain}</h2>
         <Select
+          theme={this.props.theme}
           onChange={this.handleSelectChange}
           value={selectedOption}>
           {selectables}
         </Select>
         { error }
-        <div>{sections}</div>
+        <SectionsContainer>{sections}</SectionsContainer>
         { helpModal }
       </OftenTogetherComponent>
     )
   }
 }
 
-export default OftenTogether;
+export default withTheme(OftenTogether);

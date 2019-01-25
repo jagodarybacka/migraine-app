@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components'
+import { withTheme } from "@callstack/react-theme-provider";
 
 import { validateEmail, validateLength, validatePassword } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
 import {languageText} from '../languages/MultiLanguage.js';
+
+const RegisterContainer = styled.div`
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
+`;
 
 class Register extends Component {
 	constructor(props) {
@@ -129,40 +136,42 @@ class Register extends Component {
     const { username, email, password } = this.state.fields;
 
 		return (
-      <FormSimple name={languageText.register.signUp} submit={languageText.register.getStarted} onSubmit={this.handleSubmit}>
-      <TextInput
-        type="text"
-        id="username"
-        placeholder={languageText.register.usernamePlaceholder}
-        name={languageText.register.username}
-        value={username.value}
-        isValid={username.isValid}
-        errorMsg={username.errorMsg}
-        onChange={this.handleChange}
-      />
-      <TextInput
-        type="email"
-        id="email"
-        placeholder="Email"
-        name="Email"
-        value={email.value}
-        isValid={email.isValid}
-        errorMsg={email.errorMsg}
-        onChange={this.handleChange}
-      />
-      <TextInput
-        type="password"
-        id="password"
-        placeholder={languageText.register.password}
-        name={languageText.register.password}
-        value={password.value}
-        isValid={password.isValid}
-        errorMsg={password.errorMsg}
-        onChange={this.handleChange}
-      />
-    </FormSimple>
+      <RegisterContainer theme={this.props.theme}>
+        <FormSimple name={languageText.register.signUp} submit={languageText.register.getStarted} onSubmit={this.handleSubmit}>
+        <TextInput
+          type="text"
+          id="username"
+          placeholder={languageText.register.usernamePlaceholder}
+          name={languageText.register.username}
+          value={username.value}
+          isValid={username.isValid}
+          errorMsg={username.errorMsg}
+          onChange={this.handleChange}
+        />
+        <TextInput
+          type="email"
+          id="email"
+          placeholder="Email"
+          name="Email"
+          value={email.value}
+          isValid={email.isValid}
+          errorMsg={email.errorMsg}
+          onChange={this.handleChange}
+        />
+        <TextInput
+          type="password"
+          id="password"
+          placeholder={languageText.register.password}
+          name={languageText.register.password}
+          value={password.value}
+          isValid={password.isValid}
+          errorMsg={password.errorMsg}
+          onChange={this.handleChange}
+        />
+      </FormSimple>
+    </RegisterContainer>
 		);
 	}
 }
 
-export default Register
+export default withTheme(Register);

@@ -1,5 +1,9 @@
 {
 	"settings":{
+		"chooseTheme": "Choose theme",
+		"light": "Light",
+		"dark": "Dark",
+		"automatic": "Automatic",
 		"formCard": "Form",
 		"appCard": "Application",
 		"userCard": "User",
