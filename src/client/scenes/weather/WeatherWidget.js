@@ -92,6 +92,8 @@ class WeatherWidget extends Component {
     this.getWeatherForecast();
   }
 
+
+  //CURRENT WEATHER 
   checkIfGeolocation() {
     navigator.geolocation.getCurrentPosition(this.success,this.fail,{timeout:10000});
   }
@@ -280,7 +282,6 @@ class WeatherWidget extends Component {
     }
   }
 
-
   //METHODS
   useLocalization() {
       this.setState((prevState) => ({
@@ -339,7 +340,7 @@ class WeatherWidget extends Component {
             ? (<img className="use__localization" src={backArrow} alt="localization" onClick={this.changeCity}/>)
             : "" }
           { this.state.ifChangeCity 
-            ? (<p className="text">Change city </p>)
+            ? (<p className="text">{languageText.weather.changeCity}</p>)
             : (<p className="text">{languageText.weather.geolocationDisabled}</p>)}
         </Header>
         <Input

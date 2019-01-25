@@ -108,6 +108,7 @@
 		"pressure": "Atmospheric pressure",
 		"windSpeed": "Wind speed",
 		"geolocationDisabled": "Your geolocation is disabled. You can set your city manually:",
+		"changeCity": "Change city:",
 		"placeholder": "Enter ",
 		"city": "city",
 		"setLocation": "Set localization",
