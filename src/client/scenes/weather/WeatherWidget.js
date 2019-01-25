@@ -100,7 +100,7 @@ class WeatherWidget extends Component {
   getWeather() {
     if(!localStorage.getItem('weather')  || !localStorage.getItem('weather_time')) {
       this.checkIfGeolocation()
-    } 
+    }
     else {
       if(moment(localStorage.getItem('weather_time'),'ddd MMM DD YYYY HH:mm:ss').isValid()) {
         const now = new Date()
@@ -267,14 +267,13 @@ class WeatherWidget extends Component {
       }
     ))
   }
-  
+
   render() {
     if(this.state.currentWeather) {
       const {temperature,icon, humidity, pressure, rain, wind } = this.state.currentWeather;
       return (
       <Widget theme={this.props.theme}>
         <Header>
-          <p>{languageText.weather.forecast}</p>
           <img src={this.icons[icon]} alt="weatherIcon" />
           <h3>{temperature}{String.fromCharCode(176)}C </h3>
         </Header>
@@ -307,7 +306,7 @@ class WeatherWidget extends Component {
           </p>
         </Element>
       </Widget>
-      ) 
+      )
     } else {
       const placeholder = languageText.weather.placeholder + languageText.weather.city;
       return (
@@ -324,7 +323,7 @@ class WeatherWidget extends Component {
             value={this.state.city_name}
             onChange={this.handleChange}/>
           { this.state.errorCity
-              ? (<Error>{languageText.weather.errorCity}</Error>) 
+              ? (<Error>{languageText.weather.errorCity}</Error>)
               : "" }
           <Button type="submit" onClick={this.handleCityChange} small="true" text={languageText.weather.setLocation} primary />
         </City>
