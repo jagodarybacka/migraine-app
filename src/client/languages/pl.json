@@ -54,7 +54,9 @@
 
 	},
 	"home":{
-	    "add": "Dodaj ból głowy"
+	    "add": "Dodaj ból głowy",
+			"hi": "Witaj",
+			"howru": "jak się czujesz?"
 	},
 	"join":{
 	    "migraine": "Migraine app",

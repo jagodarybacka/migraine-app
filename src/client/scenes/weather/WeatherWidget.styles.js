@@ -3,14 +3,13 @@ import styled from 'styled-components';
 export const Widget = styled.section`
 
 width: 90%;
-margin: 1rem 5% 0 5%;
+margin: 1rem 5% 2em 5%;
 display: flex;
 flex-direction: column;
 position: relative;
 background-color: ${props=>props.theme.backgroundColorSecondary};
 color: ${props=>props.theme.fontColor};
-padding: 0;
-margin-bottom: 4rem;
+padding: 0.5em 0;
 box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
 `
 
@@ -19,8 +18,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 position: relative;
-padding: 2.7rem 0 0 0;
 width: 100%;
+padding: 0.5em 0 0;
 
 p {
   position: absolute;
@@ -96,7 +95,7 @@ p {
 
 export const Error = styled.h5`
   font-weight: 300;
-  color:  #ff471a; 
+  color:  #ff471a;
   margin-top: 0;
 `
 

@@ -54,7 +54,9 @@
 
 	},
 	"home":{
-	    "add": "Add headache"
+	    "add": "Add headache",
+			"hi": "Hi",
+			"howru": "how are you?"
 	},
 	"join":{
 	    "migraine": "Migraine app",

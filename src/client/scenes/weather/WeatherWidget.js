@@ -329,13 +329,12 @@ class WeatherWidget extends Component {
       }
     ))
   }
-  
+
   render() {
     const placeholder = languageText.weather.placeholder + languageText.weather.city;
     const ChangeCity =
       (<City theme={this.props.theme}>
         <Header lozalization={this.state.useLocalization}>
-          <p>{languageText.weather.forecast}</p>
           {this.state.currentWeather 
             ? (<img className="use__localization" src={backArrow} alt="localization" onClick={this.changeCity}/>)
             : "" }
@@ -362,7 +361,6 @@ class WeatherWidget extends Component {
       return (
       <Widget theme={this.props.theme}>
         <Header localization={this.state.useLocalization}>
-          <p>{languageText.weather.forecast}</p>
           <img className="location" src={locationIcon} alt="localization" onClick={this.changeCity}/>
           <img className="use__localization" src={useLocalizationIcon} alt="localization" onClick={this.useLocalization}/>
           <img src={this.icons[icon]} alt="weatherIcon" />
@@ -397,7 +395,7 @@ class WeatherWidget extends Component {
           </p>
         </Element>
       </Widget>
-      ) 
+      )
     } else {
       return (
        ChangeCity
