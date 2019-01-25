@@ -1,5 +1,9 @@
 {
 	"settings":{
+		"chooseTheme": "Choose theme",
+		"light": "Light",
+		"dark": "Dark",
+		"automatic": "Automatic",
 		"formCard": "Form",
 		"appCard": "Application",
 		"userCard": "User",
@@ -127,7 +131,12 @@
 	},
 	"history":{
 		"noMore": "No more entries",
-		"title":"Recent migraines"
+		"title":"Recent migraines",
+		"filters": "Filters",
+		"deleteMessage": "Are you sure you want to delete migraine?",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"now": "Now"
 	},
 	"date":{
 		"painStarted": "Pain started at",
@@ -167,7 +176,7 @@
 			"subtitle": "Unit - [mmHG], example: 120/80",
 			"pressureError": "Wrong pressure value"
 		},
-		"aura": "aura",
+		"aura": "Aura",
 		"notes": "Notes",
 		"notesPlaceholder": "Write something...",
 		"reliefs": "Reliefs",

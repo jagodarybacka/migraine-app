@@ -2,11 +2,18 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import axios from'axios';
 import { Link } from 'react-router-dom'
+import styled from 'styled-components';
+import { withTheme } from "@callstack/react-theme-provider";
 
 import { validateEmail, validateLength } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
 import TextInput from '../components/TextInput'
 import {languageText} from '../languages/MultiLanguage.js';
+
+const LoginContainer = styled.div`
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
+`
 
 class Login extends Component {
   constructor(props) {
@@ -85,6 +92,9 @@ class Login extends Component {
               localStorage.removeItem('weather_time');
               localStorage.removeItem('weather');
               localStorage.removeItem('city_name');
+              localStorage.removeItem('theme');
+              localStorage.removeItem('automaticTheme');
+              localStorage.removeItem('use_localization');
             }
           }
 					localStorage.setItem('isLogged', true);
@@ -119,34 +129,34 @@ class Login extends Component {
     const { email, password } = this.state.fields;
 
     return (
-      <div>
-      <FormSimple name={languageText.login.welcome} submit={languageText.login.logIn} onSubmit={this.handleSubmit}>
-        <TextInput
-          type="email"
-          id="email"
-          placeholder="Email"
-          name="Email"
-          value={email.value}
-          isValid={email.isValid}
-          errorMsg={email.errorMsg}
-          onChange={this.handleChange}
-        />
-        <TextInput
-          type="password"
-          id="password"
-          placeholder={languageText.login.password}
-          name={languageText.login.password}
-          value={password.value}
-          isValid={password.isValid}
-          errorMsg={password.errorMsg}
-          onChange={this.handleChange}
-        />
-      </FormSimple>
-      <Link to="/forgot"><span>{languageText.login.forgottenPassword}</span></Link>
-      </div>
+      <LoginContainer theme={this.props.theme}>
+        <FormSimple name={languageText.login.welcome} submit={languageText.login.logIn} onSubmit={this.handleSubmit}>
+          <TextInput
+            type="email"
+            id="email"
+            placeholder="Email"
+            name="Email"
+            value={email.value}
+            isValid={email.isValid}
+            errorMsg={email.errorMsg}
+            onChange={this.handleChange}
+          />
+          <TextInput
+            type="password"
+            id="password"
+            placeholder={languageText.login.password}
+            name={languageText.login.password}
+            value={password.value}
+            isValid={password.isValid}
+            errorMsg={password.errorMsg}
+            onChange={this.handleChange}
+          />
+        </FormSimple>
+        <Link to="/forgot"><span>{languageText.login.forgottenPassword}</span></Link>
+      </LoginContainer>
     )
   }
 }
 
 
-export default withRouter(Login);
+export default withRouter(withTheme(Login));

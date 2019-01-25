@@ -1,5 +1,9 @@
 {
 	"settings":{
+		"chooseTheme": "Wybierz kolorystykę",
+		"light": "Jasna",
+		"dark": "Ciemna",
+		"automatic": "Automatycznie",
 		"formCard": "Formularz",
 		"appCard": "Aplikacja",
 		"userCard": "Użytkownik",
@@ -127,7 +131,12 @@
 	},
 	"history":{
 		"noMore": "Koniec wpisów",
-		"title": "Ostatnie migreny"
+		"title": "Ostatnie migreny",
+		"filters": "Filtry",
+		"deleteMessage": "Czy na pewno chcesz usunąć migrenę?",
+		"cancel": "Anuluj",
+		"delete": "Usuń",
+		"now": "Teraz"
 	},
 	"date":{
 		"painStarted": "Ból zaczął się",
@@ -167,7 +176,7 @@
 			"subtitle": "Jednostka - [mmHG], przykład: 120/80",
 			"pressureError": "Nieprawidłowa wartość"
 		},
-		"aura": "aura",
+		"aura": "Aura",
 		"notes": "Notatki",
 		"notesPlaceholder": "Zanotuj objaw lub zrób notatkę...",
 		"reliefs": "Pomoce",

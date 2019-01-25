@@ -3,6 +3,8 @@ import React, {
 } from 'react'
 import styled from 'styled-components';
 import _ from 'lodash'
+import { withTheme } from "@callstack/react-theme-provider";
+
 import CustomPeriod from '../../CustomPeriod'
 import Help from '../../Help'
 import customImg from '../../../assets/custom-options.png'
@@ -34,6 +36,7 @@ const AtmosphericPressureComponent = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  color: ${props=>props.theme.iconBackgroundColor};
   canvas {
     background-color: #fff;
   }
@@ -47,7 +50,7 @@ const AtmosphericPressureComponent = styled.div`
     right: 0;
     top: 1em;
     font-size: 1em;
-    opacity: 0.6;
+    opacity: 0.7;
   }
 `
 
@@ -58,10 +61,11 @@ export const CustomIcon = styled.img`
   top: 1em;
   right: 1em;
   z-index: 100;
+  opacity: 0.7;
 `
 export const QuestionIcon = styled(CustomIcon)`
   left: 1em;
-  opacity: 0.6;
+  opacity: 0.7;
 `
 export const CustomPeriodComponent = styled.div`
   position: absolute;
@@ -382,7 +386,7 @@ class AtmosphericPressure extends Component {
       : ( <QuestionIcon src={questionImg}  onClick={() => this.setState({helpVisible: true})} /> )
 
     return (
-      <AtmosphericPressureComponent width={300} height={300}>
+      <AtmosphericPressureComponent theme={this.props.theme} width={300} height={300}>
         { IconQuestion }
         { IconPeriod }
         { periodRange }
@@ -394,4 +398,4 @@ class AtmosphericPressure extends Component {
   }
 }
 
-export default AtmosphericPressure;
+export default withTheme(AtmosphericPressure);

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
+import { withTheme } from "@callstack/react-theme-provider";
 
 const ButtonComp = styled.button`
   min-width: ${props => props.small ? '' : '150px'};
@@ -10,13 +11,13 @@ const ButtonComp = styled.button`
   text-transform: uppercase;
 
   outline: none;
-  color: white;
+  color: ${props => props.theme.buttonFontColor}
   border: none;
   border-radius: 7px;
   background-color: ${props => props.disabled ?
-    '#eee' : (
+    '#ddc' : (
       props.primary ?
-      '#006fd2' : '#67AEED'
+      props.theme.buttonColor : props.theme.buttonColorSecondary
     )};
   font-family: 'Roboto', sans-serif;
   font-size: ${props => props.small ? '1em' : '1.2em'};
@@ -24,7 +25,7 @@ const ButtonComp = styled.button`
   pointer-events: ${props => props.disabled ? 'none' : 'all'}
 
   &:hover {
-    background: #276aa6;
+    background: ${props => props.theme.buttonColorHover}
   }
 `
 const Img = styled.img`
@@ -40,6 +41,7 @@ const Button = (props) => {
       onClick={props.onClick}
       disabled={props.disabled}
       small={props.small}
+      theme={props.theme}
     >
       {props.text}
       {props.img && imgContent}
@@ -51,4 +53,4 @@ Button.propTypes = {
   text: PropTypes.string
 }
 
-export default Button
+export default withTheme(Button)

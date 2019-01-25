@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 export const OftenTogetherComponent = styled.div`
+  background:${props => (props.theme.backgroundColorSecondary)};
   min-width: 300px;
-  background: #fff;
   margin: 0 5%;
   padding: 1.5em 0;
   position: relative;
@@ -38,17 +38,18 @@ export const QuestionIcon = styled.img`
   top: 1em;
   z-index: 100;
   left: 1em;
-  opacity: 0.6;
+  opacity: 0.7;
 `
 
 export const Select = styled.select`
-  background: transparent;
+  background: ${props => (props.theme.backgroundColorSecondary)};
   font-size: 0.9em;
   font-weight: 300;
   border-radius: 22px;
   padding: 11px 27px;
   margin: auto;
   outline: none;
+  color: ${props => (props.theme.fontColor)};
 `
 export const TogetherField = styled.div`
   background: ${props => (props.color || '#00bcd4')};

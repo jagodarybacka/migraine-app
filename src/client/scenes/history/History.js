@@ -3,19 +3,27 @@ import styled from 'styled-components';
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment';
+import { withTheme } from "@callstack/react-theme-provider";
+import {getTheme} from '../../themes/ThemeHandler.js';
 
 import RecordCard from '../../components/RecordCard'
 
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Menubar from '../../components/Menubar';
 import Divider from '../../components/Divider';
 import { filter } from '../../utils/Filter';
 import {languageText} from '../../languages/MultiLanguage.js';
-import customImg from '../../assets/custom-options.png'
-import collapseIcon from '../../assets/collapse.png'
+import customImg from '../../assets/filter.png'
+import customImgWhite from '../../assets/filter-white.png'
+import closeIcon from '../../assets/exit.png'
+import closeIconWhite from '../../assets/exit-white.png'
 import expandIcon from '../../assets/expand.png'
-import exitIcon from '../../assets/exit.png'
-import { check } from 'express-validator/check';
+import expandIconWhite from '../../assets/expand-white.png'
+import collapseIcon from '../../assets/collapse.png'
+import collapseIconWhite from '../../assets/collapse-white.png'
+import clearFiltersIcon from '../../assets/nofilter.png'
+import clearFiltersIconWhite from '../../assets/nofilter-white.png'
 import CheckboxGroup from './CheckboxGroup';
 import CustomPeriodHistory from '../../components/CustomPeriodHistory';
 
@@ -29,32 +37,37 @@ const HistoryComponent = styled.section`
     margin: 0 0 2rem 0;
     text-align: center;
   }
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
   .date__header {
     text-align: center;
   }
 
 `
 const CustomIcon = styled.img`
-  width: 30px;
+  width: 25px;
   height: auto;
-  right: 1rem;
+  right: calc(50% - 12.5px);
   position: absolute;
-  margin-top: 2rem;
+  margin-top: 2.4rem;
+  opacity: 0.7;
 `
 const ExitIcon = styled.img`
-  width: 30px;
+  width: 20px;
   height: auto;
   right: 1.2rem;
   position: absolute;
-  margin-top: 2rem;
+  margin-top: calc(4rem);
+  opacity: 0.7;
 `
 
 const ClearIcon = styled.img`
-  width: 25px;
+  width: 20px;
   height: auto;
   left: 1.2rem;
   position: absolute;
-  margin-top: 2rem;
+  margin-top: 4rem;
+  opacity: 0.7;
 `
 const Records = styled.ul`
     display:flex;
@@ -70,6 +83,9 @@ const Records = styled.ul`
 `
 
 const Title = styled.h3`
+  &.date__header--applied {
+    color: #e91e63;
+  }
   img {
     width: 15px;
     height: auto;
@@ -77,11 +93,26 @@ const Title = styled.h3`
   }
 `
 
+const FiltersTitle = styled.h2`
+  font-size: 1.2em;
+`
+
 const NoMoreStyle = styled.ul`
     padding: 0;
     margin-bottom: 5rem;
 `
+const DeleteModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: calc(50% - 150px);
+  z-index: 100;
+  background: ${props=>props.theme.backgroundColor}
+  text-align: center;
+  width: 300px;
+  padding-bottom: 1em;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 
+`
 
 class History extends Component {
   constructor(props) {
@@ -100,11 +131,17 @@ class History extends Component {
         start: undefined,
         end: undefined
       },
-      currentFilter: ''
+      currentFilter: '',
+      datesApplied: false,
+
+      showDeleteModal: false,
+      idToDelete: null
     }
 
     this.getIntensity = this.getIntensity.bind(this);
     this.deleteReport = this.deleteReport.bind(this);
+    this.askToDelete = this.askToDelete.bind(this);
+    this.cancelDeleteModal = this.cancelDeleteModal.bind(this);
     this.editReport = this.editReport.bind(this);
     this.parseHistory = this.parseHistory.bind(this);
     this.formatDuration = this.formatDuration.bind(this);
@@ -161,7 +198,7 @@ class History extends Component {
             text: answer.text
           })
         })
-        const allAnswers = this.state.customAnswers[op] 
+        const allAnswers = this.state.customAnswers[op]
         ? answers.concat(this.state.customAnswers[op]) : answers;
         this.setState((prevState) => ({
           ...prevState,
@@ -211,18 +248,41 @@ class History extends Component {
     history.push(`summary/`, {data: item, preview: true})
   }
 
-  deleteReport(evt){
-    evt.stopPropagation()
-    if(evt.target.id){
-      const id = evt.target.id;
-      const url = "/api/reports/" + id;
-      axios.delete(url)
-      .then((res) => {
-        this.componentDidMount();
+  askToDelete(ev) {
+    ev.stopPropagation()
+    const id = ev.target.id
+    if (id){
+      this.setState({
+        idToDelete: id,
+        showDeleteModal: true
       })
-      .catch((err) => console.log(err));
     }
+  }
 
+  deleteReport() {
+    this.setState({
+      showDeleteModal: false,
+    }, () => {
+      const id = this.state.idToDelete;
+      const url = "/api/reports/" + id;
+      if (id) {
+        axios.delete(url)
+        .then((res) => {
+          this.setState({
+            idToDelete: null
+          })
+          this.componentDidMount();
+        })
+        .catch((err) => console.log(err));
+      }
+    })
+  }
+
+  cancelDeleteModal() {
+    this.setState({
+      showDeleteModal: false,
+      idToDelete: null
+    })
   }
 
   parseHistory(data) {
@@ -247,7 +307,7 @@ class History extends Component {
       });
     }
 
-    this.setState((prevState) => ({ 
+    this.setState((prevState) => ({
       ...prevState,
       history : history,
       order: order}));
@@ -286,7 +346,8 @@ class History extends Component {
   confirmDate() {
     this.setState((prevState) => ({
       ...prevState,
-      currentFilter: ''
+      currentFilter: '',
+      datesApplied: true
     }), () => this.filterData())
   }
 
@@ -294,6 +355,7 @@ class History extends Component {
     this.setState((prevState) => ({
       ...prevState,
       currentFilter: '',
+      datesApplied: false,
       filters: {},
       dates: {
         start: undefined,
@@ -319,27 +381,43 @@ class History extends Component {
   }
 
   handleDateChange(name, value) {
-    this.setState(prevState => ({ dates: { ...prevState.dates, [name]: value }}))
+    this.setState(prevState => ({ 
+      dates: { 
+        ...prevState.dates, 
+        [name]: value }
+    }), () => {
+      if(!this.state.dates.start && !this.state.dates.end){
+        this.setState((prevState) => ({
+          ...prevState,
+          datesApplied: false
+        }))
+      }
+    })
   }
 
   formatDuration(duration) {
-    let text = "";
-    if(duration.days() > 0){
-      text+=duration.days() + "d ";
-    }
-    if(duration.hours() > 0){
-      text+=duration.hours() + "h ";
-    }
-    if(duration.minutes() > 0){
-      if(duration.days() === 0){
-        text+=duration.minutes() + "m";
+    const d = moment.duration(duration).asSeconds();
+    if(d < 60){
+      return languageText.history.now;
+    } else {
+      let text = "";
+      if(duration.days() > 0){
+        text+=duration.days() + "d ";
       }
+      if(duration.hours() > 0){
+        text+=duration.hours() + "h ";
+      }
+      if(duration.minutes() > 0){
+        if(duration.days() === 0){
+          text+=duration.minutes() + "m";
+        }
+      }
+      return text;
     }
-    return text;
   }
 
   filterVisibleChange(filter) {
-    if(this.state.currentFilter == filter) {
+    if(this.state.currentFilter === filter) {
       this.setState((prevState) => ({
         ...prevState,
         currentFilter: ''
@@ -350,16 +428,16 @@ class History extends Component {
         currentFilter: filter
       }))
     }
-    
+
   }
 
   render() {
     const { history, order, checkboxData, filters } = this.state;
     const fields =['pain','medicines', 'triggers','reliefs', 'localization', 'aura','mood', 'menstruation'];
-    
+
     const Checkboxes = checkboxData ? fields.map((field,id) => {
       return(
-        <CheckboxGroup 
+        <CheckboxGroup
           visible={this.state.currentFilter === field}
           key={id}
           small
@@ -373,26 +451,38 @@ class History extends Component {
       )
     }) : '';
 
-    const icon = this.state.currentFilter === "date" ? collapseIcon : expandIcon;
+    const collapseIconColored = getTheme()=="DarkTheme" ? collapseIconWhite : collapseIcon;
+    const expandIconColored = getTheme()=="DarkTheme" ? expandIconWhite : expandIcon;
+
+    const icon = this.state.currentFilter === "date" ? collapseIconColored : expandIconColored;
     const filtersModal = this.state.filtersVisible ? (
       <div>
-      <Title className="date__header" onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
-      { this.state.currentFilter === "date" && 
+      <FiltersTitle>{languageText.history.filters}</FiltersTitle>
+      <Title className={"date__header " + (this.state.datesApplied ? "date__header--applied": "")} onClick={() => this.filterVisibleChange("date")}>{languageText.dateTime.date}<img src={icon} alt="arrow"/></Title>
+      { this.state.currentFilter === "date" &&
         (<CustomPeriodHistory valueStart={this.state.dates.start} valueEnd={this.state.dates.end} onClick={() => this.setState({filtersVisible: false})} onChangeDate={this.handleDateChange} onConfirmFn={this.confirmDate}/>) }
       { Checkboxes }
       </div>
     ) : ''
 
+    const deleteModal = this.state.showDeleteModal ? (
+      <DeleteModal theme={this.props.theme}>
+        <h3>{languageText.history.deleteMessage}</h3>
+        <Button small text={languageText.history.cancel} onClick={this.cancelDeleteModal}/>
+        <Button small primary text={languageText.history.delete} onClick={this.deleteReport}/>
+      </DeleteModal>
+    ) : "";
 
     return (
-      <HistoryComponent >
+      <HistoryComponent theme={this.props.theme}>
         <Header />
+        { deleteModal }
         <h2>{languageText.history.title}
-        {this.state.filtersVisible === false 
-          ? <CustomIcon src={customImg} onClick={() => this.setState({filtersVisible: true})}/> 
-          : <ExitIcon  src={collapseIcon} onClick={() => this.setState({filtersVisible: false})}/>}
+        {this.state.filtersVisible === false
+          ? <CustomIcon src={getTheme()=="DarkTheme" ? customImgWhite : customImg}  onClick={() => this.setState({filtersVisible: true})}/>
+          : <ExitIcon   src={getTheme()=="DarkTheme" ? closeIconWhite : closeIcon} onClick={() => this.setState({filtersVisible: false})}/>}
         {this.state.filtersVisible === true
-          ? (<ClearIcon src={exitIcon} alt="clear" onClick={this.clearFilters}/>) 
+          ? (<ClearIcon src={getTheme()=="DarkTheme" ? clearFiltersIconWhite : clearFiltersIcon} alt="clear" onClick={this.clearFilters}/>)
           : ""}
         </h2>
         <div style={{ width: '100%' }}>
@@ -407,8 +497,8 @@ class History extends Component {
                 <Records>
                   <Divider text={monthName} />
                   {history[chunk].map((item) => {
-                    const startDate = moment(item.start_date, 'YYYY-MM-DDTHH:mm:ss');
-                    const endDate =  item.end_date ? moment(item.end_date,'YYYY-MM-DDTHH:mm:ss') : moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
+                    const startDate = moment(new Date(item.start_date));
+                    const endDate =  item.end_date ? moment(new Date(item.end_date)) :  moment(new Date(),'ddd MMM DD YYYY HH:mm:ss');
                     const duration = moment.duration(endDate.diff(startDate));
                     const formattedDuration = this.formatDuration(duration);
                     return (
@@ -418,7 +508,7 @@ class History extends Component {
                           intensity={this.getIntensity(item.pain)}
                           isRecent={false}
                           id={item._id}
-                          handleDelete={this.deleteReport}
+                          handleDelete={this.askToDelete}
                           handleEdit={this.editReport}
                           hasEnd={!!item.end_date}
                           />
@@ -442,4 +532,4 @@ class History extends Component {
   }
 }
 
-export default withRouter(History);
+export default withRouter(withTheme(History));

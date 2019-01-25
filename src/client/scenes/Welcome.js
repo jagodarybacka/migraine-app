@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import { withTheme } from "@callstack/react-theme-provider";
+
 import {languageText, setLanguage} from '../languages/MultiLanguage.js';
 import pl from '../assets/lang/plIcon.png';
 import eng from '../assets/lang/engIcon.png';
 
 import Logo from '../components/Logo';
 
+const WelocmeContainer = styled.div`
+  background-color: ${props=>props.theme.backgroundColor};
+  color: ${props=>props.theme.fontColor};
+`
 
 const Text = styled.h1`
   font-weight: 900;
@@ -56,22 +62,22 @@ class Welcome extends Component {
 
   render() {
     return (
-      <div>
-      <Language>
-            <img className="language__button" src={pl} alt={languageText.web.plAlt} onClick={() => this.setNewLanguage('pl')} />
-            <img className="language__button" src={eng} alt={languageText.web.engAlt} onClick={() => this.setNewLanguage('eng')} />
-      </Language>
-      <Link to="/join">
-        <div className="Welcome">
-          <Logo notlink></Logo>
-          <Text>{languageText.welcome.migraine}</Text>
-          <MiniText>{languageText.welcome.tapToStart}</MiniText>
-        </div>
-      </Link>
-      </div>
+      <WelocmeContainer theme={this.props.theme}>
+        <Language>
+              <img className="language__button" src={pl} alt={languageText.web.plAlt} onClick={() => this.setNewLanguage('pl')} />
+              <img className="language__button" src={eng} alt={languageText.web.engAlt} onClick={() => this.setNewLanguage('eng')} />
+        </Language>
+        <Link to="/join">
+          <div className="Welcome">
+            <Logo notlink></Logo>
+            <Text>{languageText.welcome.migraine}</Text>
+            <MiniText>{languageText.welcome.tapToStart}</MiniText>
+          </div>
+        </Link>
+      </WelocmeContainer>
     );
   }
 
 }
 
-export default Welcome;
+export default withTheme(Welcome);

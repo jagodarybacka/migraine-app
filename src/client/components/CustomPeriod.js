@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withTheme } from "@callstack/react-theme-provider";
+
 import DateTimeCustomPeriod from './DateTimeCustomPeriod'
 import Button from './Button'
 import ExitIcon from '../assets/exit.png'
@@ -46,7 +48,7 @@ class CustomPeriod extends Component {
       <Button small text={languageText.reportsSummary.confirm} disabled/>
     )
     return (
-      <CustomPeriodComponent>
+      <CustomPeriodComponent theme={this.props.theme}>
         <h3 className="custom__header">{languageText.reportsSummary.customPeriod}</h3>
         <img className="custom__cancel" src={ExitIcon} alt="exit" onClick={() => this.props.onConfirmFn({...this.state, cancel: true})}/>
         <DateTimeCustomPeriod date label="From" onChange={(ev) => this.handleDateChange(ev, 'from')}/>
@@ -57,4 +59,4 @@ class CustomPeriod extends Component {
   }
 }
 
-export default CustomPeriod;
+export default withTheme(CustomPeriod);
