@@ -402,8 +402,6 @@ class Settings extends Component {
     const CurrentSettings = this.state.currentTab === "form"
     ? (
       <SettingsCard>
-        <Divider text={languageText.settings.exportData}/>
-          <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
         <Divider text={languageText.settings.formFields}/>
         <FormButtons>
         {
@@ -452,6 +450,8 @@ class Settings extends Component {
           : "" }
         { this.state.ifCustomAnswer ? ( customError ) : "" }
         { customAnswer }
+        <Divider text={languageText.settings.exportData}/>
+          <Button onClick={this.getPdf} text={languageText.settings.generatePdf}/>
       </SettingsCard>
     )
     : this.state.currentTab === "app"
