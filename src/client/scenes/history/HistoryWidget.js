@@ -26,6 +26,7 @@ const Widget = styled.section`
     margin-bottom: 0;
     font-weight: 300;
     text-align: right;
+    opacity: 0.5;
   }
   .RecordCard {
     margin: 0;
