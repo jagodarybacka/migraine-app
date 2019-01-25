@@ -211,7 +211,7 @@ exports.reset_password = (req, res, next) => {
 
 exports.save_forecast = (req, res, next) => {
 	const userId = req.session.userId;
-	if(!req.body.weather_forecast) {
+	if(!req.body.weather_forecast || req.body.weather_forecast.message) {
 		return res.json({errors : "No forecast to save"}); 
 	}
 	const forecast = req.body.weather_forecast;

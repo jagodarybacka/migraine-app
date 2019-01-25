@@ -174,11 +174,11 @@ class WeatherWidget extends Component {
 
   async getWeatherForCity() {
     const city = this.state.city_name.trim();
-    if(city.length === 0){
+    if(city.length == 0){
       return;
     }
     const weather = await getWeatherForCity(city);
-    if(weather.cod === "404"){
+    if(weather.cod == "404" || weather.cod == "401"){
       this.setState((prevState) => ({
         ...prevState,
         errorCity: true
@@ -253,12 +253,12 @@ class WeatherWidget extends Component {
 
   async getForecastForCity() {
     const city = this.state.city_name.trim();
-    if(city.length === 0){
+    if(city.length == 0){
       return;
     }
     const forecast = await getForecastForCity(city);
     const url = 'api/forecast';
-    if(forecast.cod == "404"){
+    if(forecast.cod == "404" || forecast.cod == "401"){
       this.setState((prevState) => ({
         ...prevState,
         errorCity: true
@@ -302,7 +302,7 @@ class WeatherWidget extends Component {
   async handleCityChange(e) {
     e.preventDefault();
     const weather = await getWeatherForCity(this.state.city_name.trim());
-    if(weather.cod === "404"){
+    if(weather.cod == "404" || weather.cod == "401"){
       this.setState((prevState) => ({
         ...prevState,
         errorCity: true
@@ -343,6 +343,7 @@ class WeatherWidget extends Component {
             : (<p className="text">{languageText.weather.geolocationDisabled}</p>)}
         </Header>
         <Input
+          maxLength="100"
           theme={this.props.theme}
           type="text"
           name="city_name"
