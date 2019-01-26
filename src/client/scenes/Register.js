@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import { withTheme } from "@callstack/react-theme-provider";
+import { Link } from 'react-router-dom'
+
 
 import { validateEmail, validateLength, validatePassword } from '../utils/Validators';
 import FormSimple from '../components/FormSimple'
@@ -11,7 +13,18 @@ import {languageText} from '../languages/MultiLanguage.js';
 const RegisterContainer = styled.div`
   background-color: ${props=>props.theme.backgroundColor};
   color: ${props=>props.theme.fontColor};
+
 `;
+const Rodo = styled.div`
+    margin-bottom: 1rem;
+    text-align: center;
+    span{
+      display: inline-block;
+      margin-left: 10px;
+      text-decoration: underline;
+    }
+
+`
 
 class Register extends Component {
 	constructor(props) {
@@ -22,6 +35,7 @@ class Register extends Component {
     }
 
 		this.state = {
+      isActive: false,
       fields: {
         username: {
           value: '',
@@ -42,8 +56,15 @@ class Register extends Component {
       errors: []
     };
 
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleClick() {
+    this.setState(prevState => ({
+      isActive: !prevState.isActive
+    }))
   }
 
   handleChange(evt) {
@@ -64,7 +85,11 @@ class Register extends Component {
     let isValid = true;
     let fields = this.state.fields;
     const { username, email, password } = fields;
-
+    const active = this.state.isActive;
+    if(active === false)
+    { return}
+    if(active ===true){
+  
     if (!validateLength(username.value, 4)) {
       isValid = false;
       fields = this.changeValidation(fields, 'username', false, languageText.register.error4chars);
@@ -86,9 +111,8 @@ class Register extends Component {
       fields = this.changeValidation(fields, 'password', true);
     }
 
-
     this.setState({ fields });
-
+    
     if (isValid) {
       var _this = this;
       axios.post("/api/users", {
@@ -121,6 +145,7 @@ class Register extends Component {
       }).catch(error => {
         console.log(error);
       });
+      }
     }
   }
 
@@ -140,7 +165,7 @@ class Register extends Component {
 
 		return (
       <RegisterContainer theme={this.props.theme}>
-        <FormSimple name={languageText.register.signUp} submit={languageText.register.getStarted} onSubmit={this.handleSubmit}>
+        <FormSimple active={this.state.isActive} name={languageText.register.signUp} submit={languageText.register.getStarted} onSubmit={this.handleSubmit}>
         <TextInput
           type="text"
           id="username"
@@ -171,10 +196,27 @@ class Register extends Component {
           errorMsg={password.errorMsg}
           onChange={this.handleChange}
         />
+        <Rodo>
+          <label>
+            By using Migrainne App you must agree to our 
+            <Link to="/privacy_policy">
+              <span>
+              Privacy Policy
+              </span>
+            </Link>
+            <input 
+              type="checkbox" 
+              name="name" 
+              checked={this.state.isActive}
+              onChange={this.handleClick}
+              />
+          </label>
+        </Rodo>
       </FormSimple>
     </RegisterContainer>
 		);
 	}
 }
+
 
 export default withTheme(Register);
