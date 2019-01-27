@@ -47,7 +47,7 @@ const Mobile = (props) => {
           <Route path="/join" component={Join}/>
           <Route path="/login" component={Login}/>
           <Route path="/register" component={Register}/>
-          <Route path="/privacy_policy" component={PrivacyPolicy}/>
+          <Route path="/privacypolicy" component={PrivacyPolicy}/>
           <Route path="/forgot" component={ForgottenPassword}/>
           <Route path="/reset/:token" component={ResetPassword}/>
           <PrivateRoute exact isLogged={isLogged} path="/home" component={Home} />

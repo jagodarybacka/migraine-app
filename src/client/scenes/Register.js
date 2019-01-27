@@ -203,7 +203,7 @@ class Register extends Component {
         <Rodo>
           <label>
             {languageText.privacyPolicy.information}
-            <Link to="/privacy_policy"  onClick={ () => {localStorage.setItem('username', this.state.fields.username.value); localStorage.setItem('email', this.state.fields.email.value) }}>
+            <Link to="/privacypolicy"  onClick={ () => {localStorage.setItem('username', this.state.fields.username.value); localStorage.setItem('email', this.state.fields.email.value) }}>
               <span>
                 {languageText.privacyPolicy.privacyPolicy}
               </span>
