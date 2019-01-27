@@ -406,5 +406,9 @@
 		"sleepDuration": "Sleep duration: ",
 		"notes": "Note: ",
 		"migraineHeader": "Migraine"
+	},
+	"privacyPolicy" : {
+		"information": "By using Migraine App you must agree to our",
+		"privacyPolicy": "Privacy Policy"
 	}
 }

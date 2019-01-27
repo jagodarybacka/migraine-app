@@ -406,5 +406,10 @@
 		"sleepDuration": "Długość snu: ",
 		"notes": "Notatka: ",
 		"migraineHeader": "Migrena"
+	},
+	"privacyPolicy" : {
+		"information": "By skorzystać z Migraine App musisz zaakceptować naszą",
+		"privacyPolicy": "Politykę Prywatności"
 	}
+
 }

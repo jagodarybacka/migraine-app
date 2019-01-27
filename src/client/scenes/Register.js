@@ -20,7 +20,7 @@ const Rodo = styled.div`
     text-align: center;
     span{
       display: inline-block;
-      margin-left: 10px;
+      margin-left: 6px;
       text-decoration: underline;
     }
 
@@ -38,7 +38,7 @@ class Register extends Component {
       isActive: false,
       fields: {
         username: {
-          value: '',
+          value: localStorage.getItem('username') || '',
           isValid: false,
           errorMsg: '',
         },
@@ -48,7 +48,7 @@ class Register extends Component {
           errorMsg: '',
         },
         email: {
-          value: '',
+          value: localStorage.getItem('email') || '',
           isValid: false,
           errorMsg: '',
         }
@@ -145,6 +145,10 @@ class Register extends Component {
       }).catch(error => {
         console.log(error);
       });
+
+      localStorage.removeItem('username');
+      localStorage.removeItem('email');
+
       }
     }
   }
@@ -198,10 +202,10 @@ class Register extends Component {
         />
         <Rodo>
           <label>
-            By using Migrainne App you must agree to our 
-            <Link to="/privacy_policy">
+            {languageText.privacyPolicy.information}
+            <Link to="/privacy_policy"  onClick={ () => {localStorage.setItem('username', this.state.fields.username.value); localStorage.setItem('email', this.state.fields.email.value) }}>
               <span>
-              Privacy Policy
+                {languageText.privacyPolicy.privacyPolicy}
               </span>
             </Link>
             <input 
