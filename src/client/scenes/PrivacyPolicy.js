@@ -13,12 +13,15 @@ const ExitIcon = styled.img`
   width: 20px;
   height: auto;
   right: 1.2rem;
-  position: absolute;
+  position: fixed;
   opacity: 0.7;
 `
 
-const PrivacyPolicy2 =  styled.div`
+const PrivacyPolicy2 =  styled.p`
   font-weight: 300;
+  justify-content: left;
+  padding: 0 5%;
+  height: 100vh;
 `;
 
 
@@ -26,10 +29,10 @@ const PrivacyPolicy = () => {
     
     return (
         <PrivacyPolicy2>
-          <Link to="/register">
-            <ExitIcon   src={getTheme()=="DarkTheme" ? closeIconWhite : closeIcon} /> 
+          <Link to="/register" >
+            <ExitIcon src={getTheme()=="DarkTheme" ? closeIconWhite : closeIcon} /> 
           </Link>
-            <h3>Hello</h3>
+            <p>Privacy Policy </p>
         </PrivacyPolicy2>
     )
 }
