@@ -12,9 +12,10 @@ const ExitIcon = styled.img`
   clear: both;
   width: 20px;
   height: auto;
-  right: 1.2rem;
-  position: fixed;
-  opacity: 0.7;
+  top: 1em;
+  right: 1em;
+  position: absolute;
+  opacity: 0.6;
 `
 
 const PrivacyPolicy2 =  styled.div`
@@ -22,6 +23,11 @@ const PrivacyPolicy2 =  styled.div`
   justify-content: left;
   padding: 0 5%;
   height: 100vh;
+  text-align: justify;
+  list-style-type: none;
+  h4 {
+    margin: 10px;
+  }
 `;
 
 
@@ -44,13 +50,13 @@ const PrivacyPolicy = () => {
 
             <h3>{languageText.privacyPolicy.types}</h3>
 
-            <li>{languageText.privacyPolicy.personal}</li>
+            <li><h4>{languageText.privacyPolicy.personal}</h4></li>
               <p>{languageText.privacyPolicy.personalParagraph}</p>
 
-            <li>{languageText.privacyPolicy.record}</li>
+            <li><h4>{languageText.privacyPolicy.record}</h4></li>
               <p>{languageText.privacyPolicy.recordParagraph}</p>
 
-            <li>{languageText.privacyPolicy.location}</li>
+            <li><h4>{languageText.privacyPolicy.location}</h4></li>
              <p>{languageText.privacyPolicy.locationParagraph}</p>
 
           <h2>{languageText.privacyPolicy.disclosure}</h2>
@@ -84,9 +90,7 @@ const PrivacyPolicy = () => {
 
           <h2>{languageText.privacyPolicy.contact}</h2>
             <p>{languageText.privacyPolicy.contactParagraph}</p>
-            <ul>
-              <li>E-mail: migraine.app@vp.pl</li>       
-            </ul>  
+              <h4>E-mail: migraine.app@vp.pl</h4>     
 
          </PrivacyPolicy2>
     )

@@ -11,6 +11,8 @@ import TextInput from '../components/TextInput'
 import {languageText} from '../languages/MultiLanguage.js';
 
 const LoginContainer = styled.div`
+  width: 60%;
+  margin: auto;
   background-color: ${props=>props.theme.backgroundColor};
   color: ${props=>props.theme.fontColor};
 `

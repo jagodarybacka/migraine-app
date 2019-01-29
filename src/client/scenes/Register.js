@@ -11,10 +11,13 @@ import TextInput from '../components/TextInput'
 import {languageText} from '../languages/MultiLanguage.js';
 
 const RegisterContainer = styled.div`
+  width: 60%;
+  margin: auto;
   background-color: ${props=>props.theme.backgroundColor};
   color: ${props=>props.theme.fontColor};
 
 `;
+
 const Rodo = styled.div`
     margin-bottom: 1rem;
     text-align: center;
@@ -202,18 +205,18 @@ class Register extends Component {
         />
         <Rodo>
           <label>
+          <input 
+              type="checkbox" 
+              name="name" 
+              checked={this.state.isActive}
+              onChange={this.handleClick}
+              />
             {languageText.privacyPolicy.information}
             <Link to="/privacypolicy"  onClick={ () => {localStorage.setItem('username', this.state.fields.username.value); localStorage.setItem('email', this.state.fields.email.value) }}>
               <span>
                 {languageText.privacyPolicy.privacyPolicy}
               </span>
             </Link>
-            <input 
-              type="checkbox" 
-              name="name" 
-              checked={this.state.isActive}
-              onChange={this.handleClick}
-              />
           </label>
         </Rodo>
       </FormSimple>
