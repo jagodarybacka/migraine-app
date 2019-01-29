@@ -79,33 +79,42 @@ module.exports = {
     },
 
     getInformations(reports) {
+        // console.log(reports);
         const significanceLevel = 0.7;
         let weather = {};
         let triggers = {};
         let localization = {};
         let reliefs = {};
         let medicines = {};
+        let triggersCount = 0;
+        let localizationCount = 0;
+        let reliefsCount = 0; 
+        let medicinesCount = 0;
         reports.forEach((report) => {
             if(report.triggers)
                 triggers = this.modifyObject(triggers,report.triggers);
+                triggersCount++;
             if(report.localization)
                 localization = this.modifyObject(localization,report.localization);
+                localizationCount++;
             if(report.reliefs)
                 reliefs = this.modifyObject(reliefs,report.reliefs);
+                reliefsCount++;
             if(report.medicines)
                 medicines = this.modifyObject(medicines,report.medicines);
+                medicinesCount++;
             if(report.weather)
                 weather = this.modifyWeather(weather,report.weather);
         })
         // console.log(triggers,localization,reliefs,medicines,weather);
-        const { triggersCount, localizationCount, reliefsCount, medicinesCount } = this.countSum(triggers,localization,reliefs, medicines);
+        // const { triggersCount, localizationCount, reliefsCount, medicinesCount } = this.countSum(triggers,localization,reliefs, medicines);
         const weatherCount = this.countWeatherSum(weather);
         const triggersSignificance = this.countSignificance(triggers,triggersCount, significanceLevel);
         const localizationSignificance = this.countSignificance(localization,localizationCount, significanceLevel);
         const reliefsSignificance = this.countSignificance(reliefs,reliefsCount, significanceLevel);
         const medicinesSignificance = this.countSignificance(medicines,medicinesCount,significanceLevel);
         const weatherSignificance = this.countWeatherSignificance(weather,weatherCount, significanceLevel);
-        // console.log(triggersSignificance, localizationSignificance, reliefsSignificance, weatherSignificance);
+        // console.log(triggersSignificance, localizationSignificance, reliefsSignificance, medicinesSignificance, weatherSignificance);
         return {
             triggers: this.getSignificant(triggersSignificance),
             localization: this.getSignificant(localizationSignificance),
