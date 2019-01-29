@@ -10,7 +10,7 @@ const FormComp = styled.form`
 `
 
 const FormSimple = (props) => {
-  const { name, submit, children, onSubmit } = props;
+  const { name, submit, children, onSubmit, active } = props;
 
   return (
     <FormComp method="POST" onSubmit={onSubmit} noValidate="noValidate">
@@ -18,10 +18,19 @@ const FormSimple = (props) => {
       <Logo size="80px" margin="0 0 10% 0"/>
       <div>
         {children}
-        <Button type="submit" text={submit} />
+
+        {active === true ? (
+          <Button type="submit" text={submit} disabled={false} />
+        ): (
+          <Button type="submit" text={submit}  disabled={true} />
+        )}
       </div>
     </FormComp>
   )
+}
+
+FormSimple.defaultProps = {
+  active: true,
 }
 
 export default FormSimple
