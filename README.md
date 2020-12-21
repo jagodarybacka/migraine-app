@@ -1,7 +1,16 @@
 # Migraine App - Headache Diary
 
-## Track and Anticipate Migraines
+Final university project. Made with a team of four developers.
 
-[![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
-[![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
-[![forthebadge](https://forthebadge.com/images/badges/made-with-crayons.svg)](https://forthebadge.com)
+- ✨ created with MERN stack
+- ✨ designed as a Progressive Web Application
+- ✨ hosted on heroku
+- ✨ tested with real people 
+
+
+## Project Goal - track and anticipate migraines
+
+Digital diary where you keep track of your headaches, auras and migraines.
+
+
+
